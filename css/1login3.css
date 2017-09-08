@@ -1,0 +1,99 @@
+.login3{
+	background: url('../images/login-bg.png') no-repeat;
+	background-size: 100% 100%;
+	font-size: 0.3rem;
+}
+a{
+	text-decoration: underline;
+}
+.img-sign01{
+	width: 1.89rem;
+	display: block;
+	padding-bottom:0.15rem;
+}
+@media (max-width:640px){
+.login .login01,.login .login02{
+	font-size: 0.7rem;
+}
+.login2-header{
+	padding-right:0.6rem;
+}
+}
+.img-sign02{
+	width:3.9rem;
+	padding: 0 0 0.58rem 0;
+}
+.login-con{
+	padding: 0.2rem 0.65rem 1.08rem 0.65rem;
+}
+.login-table{
+	border-radius: 0.1rem;
+	overflow: hidden;
+	width:100%;
+	border: 0.01rem solid #e3e3e3;
+    background: white;
+}
+.login-table>p{
+	border-bottom: 0.01rem solid #e3e3e3;
+	padding:0.3rem;
+}
+input{
+	color: #dadada;
+}
+.name{
+	color:#7a530e;
+	padding-right: 0.3rem;
+}
+.name02{
+	width:60%;
+}
+.login-table .codes{
+	display:inline;
+	padding-right:0.2rem;
+}
+.input-phone{
+	background:red;
+	width:50%;
+}
+.phone-con{
+    width: 66%;
+}
+.wrong-con{
+	padding: 0.3rem 0 0.2rem 0;
+	text-align: center;
+}
+.login3-btn{
+	box-shadow: 0 0.04rem 0.06rem rgba(222,188,96,1);
+	background: #ab8b51;
+}
+.agreement{
+	width:100%;
+	text-align:center;
+	padding:0.24rem 0 0.56rem 0;
+}
+.agreement .icon-agree{
+	color:#7a530e;
+	font-size:0.4rem;
+}
+.agreement .icon-agreeNO{
+	color:#7a530e;
+	font-size:0.5rem;
+}
+.me-agree{
+	position: relative;
+    bottom: 0.05rem;
+    font-size:0.24rem;
+    color:#7a530e;
+}
+.have-user{
+	text-align: center;
+	font-size:0.28rem;
+}
+.img-sign03{
+	width:4.2rem;
+	padding-bottom: 0.58rem;
+}
+.img-sign04{
+	width:3.7rem;
+	padding-bottom: 0.58rem;
+}

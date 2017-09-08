@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../../css/api.css">
+        <link rel="stylesheet" href="../../css/common.css">
+        <link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
+        <link rel="stylesheet" href="../../css/1login.css">
+        <script src="../../script/common.js"></script>
+    </head>
+    <body>
+        <div class="login">
+            <header class="login-header hide">
+                <p class="fl">
+                    <span class="login01">Login</span>
+                    <span class="login02">登录</span>
+                </p>
+                <p class="fr img-triangle01"><img src="../../image/triangle01.png" alt="" class="img-size"></p>
+            </header>
+            <div class="login-con">
+                <table>
+                    <tr>
+                        <td colspan="2" class="hide">
+                            <span class="fl">选择您的角色</span>
+                            <i class="iconfont icon-gengduo2 icon-check fr"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>电话</span>
+                            <span class="input-num"><input type="text" value="19843832942"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>密码</span>
+                            <span class="input-num"><input type="password" value="19843832942"></span>
+                        </td>
+                    </tr>
+                </table>
+                <div class="register-con">
+                    <span class="register" onclick="register()">注册帐号</span>
+                    <span class="line">|</span>
+                    <span onclick="forgot()">忘记密码</span>
+                </div>
+                <div class="wrong-con">
+                    <i class="iconfont icon-jingshi icon-warn"></i>
+                    <span class="wrong-num">帐号密码有误</span>
+                </div>
+                <p class="login-btns">
+                    <button class="login-btn">登录</button>
+                </p>
+            </div>
+        </div>
+        <!-- role -->
+        <div class="login" style="display:none">
+            <header class="login-header hide">
+                <p class="fl">
+                    <span class="login01">Login</span>
+                    <span class="login02">登录</span>
+                </p>
+                <p class="fr img-triangle01"><img src="../../image/triangle01.png" alt="" class="img-size"></p>
+            </header>
+            <div class="login-con">
+                <table class="table-role">
+                    <tr>
+                        <td colspan="2" class="hide">
+                            <span class="fl">选择您的角色</span>
+                            <i class="iconfont icon-gengduo2 icon-check fr"></i>
+                        </td>
+                    </tr>
+                    <tr style="text-align:center;color:#303030;">
+                        <td>学生或家长</td>
+                    </tr>
+                    <tr style="text-align:center;color:#303030;" class="add-bgColor">
+                        <td>班主任</td>
+                    </tr>
+                    <tr style="text-align:center;color:#303030;">
+                        <td>联盟商家</td>
+                    </tr>
+                </table>
+                <div class="register-con">
+                    <span class="register">注册帐号</span>
+                    <span class="line">|</span>
+                    <span>忘记密码</span>
+                </div>
+                <div class="wrong-con">
+                    <i class="iconfont icon-jingshi icon-warn"></i>
+                    <span class="wrong-num">帐号密码有误</span>
+                </div>
+                <p class="login-btns">
+                    <button class="login-btn login01-btn">登录</button>
+                </p>
+            </div>
+        </div>
+    </body>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+    apiready = function(){
+
+    }
+
+    //跳到注册页
+    function register(){
+       api.openWin({
+           name: 'register',
+           url: './1login2.html',
+           pageParam: {
+
+           }
+       });
+
+    }
+
+    //忘记密码
+    function forgot(){
+       api.openWin({
+           name: 'forgot',
+           url: './1login4.html',
+           pageParam: {
+
+           }
+       });
+
+    }
+</script>

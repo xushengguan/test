@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+		<meta charset="UTF-8">
+		<title>我的收益</title>
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<link rel="stylesheet" href="../../css/api.css">
+		<link rel="stylesheet" href="../../css/common.css">
+		<link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
+		<link rel="stylesheet" href="../../css/7earnings.css">
+		<script src="../../script/common.js"></script>
+		<script src="../../script/my.js"></script>
+</head>
+<body>
+	<div class="7earnings">
+		<header class="homePage-header" onclick="go_back()">
+			<h4>我的收益</h4>
+			<i class="iconfont icon-fanhui icon-return"></i>
+		</header>
+		<div class="earnings-con">
+			<div class="earnings-top">
+				<p class="credit-con credit-con1">
+					<i class="iconfont icon-up"></i>
+					<span>拥有学分</span>
+					<span class="credit-two">260学分</span>
+				</p>
+				<p class="credit-con" style="border-bottom:none;">
+					<i class="iconfont icon-shouyi" style="font-size: 0.35rem;padding-right: 0.06rem;"></i>
+					<span>拥有学分</span>
+					<span class="money">26元</span>
+					<span class="cashs" onclick="get_money()">提现</span>
+				</p>
+			</div>
+			<div class="earn-con">
+				<h6>最近4周收益(本周)</h6>
+				<div class="credit-week">
+					<p>
+						<span class="fives"><label>50</label>学分</span>
+						<span class="tens"><label>10</label>元</span>
+					</p>
+					<p class="dates">2017年8月1日-8月6日</p>
+					<span class="backs"><i class="iconfont icon-fanhui icon-return1"></i></span>
+					<span class="backs2"><i class="iconfont icon-fanhui-copy icon-return1" style="left:0.01rem;"></i></span>
+				</div>
+			</div>
+			<div class="earnings-bottom">
+				<h6>收益明细</h6>
+				<div class="flower-con hide">
+					<p class="fl">
+						<span class="flow-earn flow-earn1">粉丝收益</span>
+						<span class="last-money">2017-08-19&nbsp;11:20:20</span>
+					</p>
+					<p class="fr">
+						<span class="flow-earn" style="color:#fca958;">+20学分</span>
+						<span class="last-money">余额:200学分</span>
+					</p>
+				</div>
+				<div class="flower-con hide">
+					<p class="fl">
+						<span class="flow-earn flow-earn1">粉丝收益</span>
+						<span class="last-money">2017-08-19&nbsp;11:20:20</span>
+					</p>
+					<p class="fr">
+						<span class="flow-earn" style="color:#fca958;">+20学分</span>
+						<span class="last-money">余额:200学分</span>
+					</p>
+				</div>
+				<div class="flower-con hide">
+					<p class="fl">
+						<span class="flow-earn flow-earn1">粉丝收益</span>
+						<span class="last-money">2017-08-19&nbsp;11:20:20</span>
+					</p>
+					<p class="fr">
+						<span class="flow-earn" style="color:#fca958;">+20学分</span>
+						<span class="last-money">余额:200学分</span>
+					</p>
+					<p class="fr" style="padding-right:0.7rem;">
+						<span class="flow-earn" style="color:#4c5be5;">+20元</span>
+						<span class="last-money">余额:200元</span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+		apiready = function(){
+
+		}
+
+		//打开window
+		function get_money(){
+				api.openWin({
+				    name: '7earnings2',
+				    url: './7earnings2.html',
+				    pageParam: {
+
+				    }
+				});
+
+		}
+</script>

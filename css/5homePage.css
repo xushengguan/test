@@ -1,0 +1,103 @@
+.homePage{
+	width: 100%;
+	box-sizing: border-box;
+}
+.header-msg{
+	background:url('../images/bg02.png') no-repeat;
+	background-size: 100% 100%;
+}
+.msg-con{
+	color:#212121;
+	font-size: 0.24rem;
+	padding: 0.1rem 0.22rem 0.4rem 0.32rem;
+	position: relative;
+}
+.msg-pic{
+	width:1.2rem;
+	height: 1.2rem;
+	line-height: 1.2rem;
+	background:white;
+	border-radius: 50%;
+}
+.msg-name{
+	padding: 0.2rem 0.3rem 0 0.3rem;
+}
+.rank{
+	font-size: 0.28rem;
+	display:block;
+    padding-bottom: 0.2rem;
+}
+.rank label{
+	font-size: 0.24rem;
+	padding-left: 0.1rem;
+}
+.follower{
+	font-size: 0.24rem;
+}
+.watchs{
+	width:1.1rem;
+	background:#3c3c3d;
+	color:white;
+	border-radius:0.04rem;
+	position: absolute;
+	right: 0.22rem;
+	bottom: 0.4rem;
+}
+.watchs span{
+	padding:0.14rem 0;
+	font-size: 0.26rem;
+    position: relative;
+    right: 0.07rem;
+}
+.watchs .icon-add{
+	font-size: 0.4rem;
+	color:white;
+    position: relative;
+    top: 0.05rem;
+}
+.homePage-con{
+	width: 100%;
+}
+.publish-con{
+	width: 100%;
+	background: white;
+	padding: 0 0.22rem;
+	margin-bottom: 0.04rem;
+}
+.publish-con .icon-flane{
+	font-size: 0.5rem;
+	color:#212121;
+    position: relative;
+    top: 0.18rem;
+}
+.publish-con h5{
+	font-size: 0.26rem;
+	color:#212121;
+	padding: 0.26rem 0;
+}
+.publish-contents{
+	width: 100%;
+	background: white;
+	margin-bottom: 0.04rem;
+	padding:0.16rem 0.22rem;
+}
+.publish-contents h6{
+	font-size: 0.24rem;
+	color:#bdbdbd;
+	padding-bottom:0.2rem;
+}
+.publish-contents p{
+	font-size: 0.26rem;
+	color:#212121;
+	line-height:0.36rem;
+}
+.publish-ul{
+	padding: 0.2rem 1.2rem 0 0;
+}
+.publish-ul>li{
+	float: left;
+	width:1.1rem;
+	height:1.1rem;
+	background:#02a685;
+	margin: 0 0.05rem 0.05rem 0;
+}

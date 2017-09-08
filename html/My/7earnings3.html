@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+		<meta charset="UTF-8">
+		<title>提现</title>
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<link rel="stylesheet" href="../../css/api.css">
+		<link rel="stylesheet" href="../../css/common.css">
+		<link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
+		<link rel="stylesheet" href="../../css/7earnings3.css">
+		<script src="../../script/common.js"></script>
+		<script src="../../script/my.js"></script>
+</head>
+<body>
+	<div class="7earnings3">
+		<header class="homePage-header" onclick="go_back()">
+			<h4>提现</h4>
+			<i class="iconfont icon-fanhui icon-return"></i>
+		</header>
+		<div class="earnings3-con">
+			<div class="earnings3-top">
+				<img src="../../image/money1.png" alt="" class="img-money1">
+				<p>已提现30元，预计30个工作日内到账</p>
+			</div>
+			<p class="cash-btn"><button onclick="Determine()">确定</button></p>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+		apiready = function(){
+
+		}
+
+		//打开window
+		function Determine(){
+				api.openWin({
+				    name: 'My_earnings',
+				    url: './7earnings.html',
+				    pageParam: {
+
+				    }
+				});
+
+		}
+</script>

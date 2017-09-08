@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>账户设置</title>
+	<link rel="stylesheet" href="../../css/api.css">
+	<link rel="stylesheet" href="../../css/common.css">
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
+	<link rel="stylesheet" href="../../css/7account.css">
+	<script src="../../script/common.js"></script>
+	<script src="../../script/my.js"></script>
+	<style media="screen">
+	.invite-con{
+		width: 5.8rem;
+		background:white;
+		font-size: 0.28rem;
+		color:#212121;
+		text-align:center;
+		border-radius:0.1rem;
+		position: absolute;
+		left:50%;
+		margin-left: -2.9rem;
+		top: 50%;
+		margin-top:-3.7rem;
+	}
+	.img-tip01{
+		display: block;
+		margin: 0 auto;
+		padding: 0.4rem 0 0.2rem 0;
+	}
+	.touch{
+		font-size: 0.26rem;
+		color:#b4b4b4;
+			padding: 0.4rem 0 0.2rem 0;
+	}
+	.input-box{
+		padding:0 0.5rem;
+		width: 100%;
+	}
+	.input-box input{
+		border: 0.02rem solid #e5e5e5;
+		padding:0.26rem;
+		width: 100%;
+		border-radius:0.06rem;
+	}
+	.invite-btn{
+		padding:0 0.5rem;
+		font-size: 0.32rem;
+		margin: 0.22rem 0 0.42rem 0;
+	}
+	.invite-btn button{
+		padding:0.26rem 0.2rem;
+		width: 100%;
+		border-radius:0.06rem;
+		color:white;
+		background:#fca958;
+		text-align:center;
+	}
+
+	</style>
+</head>
+
+<body>
+	<div class="7account">
+		<header class="homePage-header" onclick="go_back()">
+			<h4>账户设置</h4>
+			<i class="iconfont icon-fanhui icon-return"></i>
+		</header>
+		<div class="account-con">
+			<div class="account-top hide">
+				<img class="circle fl">
+				<p class="fr choice">
+					<span>选择头像</span>
+					<i class="iconfont icon-gengduo1 icon-more"></i>
+				</p>
+			</div>
+			<div class="msg-con hide" onclick="account_info()">
+				<span class="fl">账户信息</span>
+				<p class="fr">
+					<span style="color:#fca958;">去完善</span>
+					<i class="iconfont icon-gengduo1 icon-more"></i>
+				</p>
+			</div>
+			<div class="msg-con hide">
+				<span class="fl">更改密码</span>
+				<i class="iconfont icon-gengduo1 icon-more fr"></i>
+			</div>
+			<p class="msg-con" onclick="invite_regist()"><span>邀请注册</span></p>
+			<p class="msg-con"><span style="color:#757575;">退出登录</span></p>
+		</div>
+	</div>
+
+	<!-- 邀请注册 -->
+	<div class="fu-body" style="display:none">
+		<div class="invite-con hide">
+			<img src="../../image/tip01.png" alt="" class="img-tip01">
+			<p>邀请好友注册成为会员</p>
+			<p>赢取<span style="color:#fca958;">100</span>学分</p>
+			<p class="touch">请填写您邀请的好友联系方式</p>
+			<span class="input-box"><input type="text" value="手机号"></span>
+			<p class="invite-btn"><button>确认邀请</button></p>
+		</div>
+	</div>
+</body>
+
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+ 		apiready = function(){
+
+		}
+
+		//账户信息
+		function account_info(){
+				api.openWin({
+				    name: '7account2_title',
+				    url: './7account2_title.html',
+				    pageParam: {
+
+				    }
+				});
+
+		}
+
+		//邀请注册
+		function invite_regist(){
+				$api.css($api.dom('.fu-body'),'display:block');//设置所传入的DOM元素的样式，可传入多条样式
+
+		}
+</script>

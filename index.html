@@ -1,99 +1,167 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>Hello APP</title>
-    <link rel="stylesheet" type="text/css" href="./css/api.css" />
-    <style type="text/css">
-    html,body{
-        height: 100%;
-    }
-    #wrap{
-        height: 100%;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-flex-flow: column;
-    }
-    #header{
-        text-align: center; 
-		background-color: #81a9c3; 
-		color: #fff;
-        width: 100%;
-    }
-    #header h1{
-        font-size: 20px; 
-		height: 44px; 
-		line-height: 44px; 
-		margin: 0em; 
-		color: #fff;
-    }
-    #main{
-        -webkit-box-flex: 1; 
-        -webkit-flex: 1;
-    }
-    #footer{
-        height: 30px; 
-		line-height: 30px;
-        background-color: #81a9c3; 
-        width: 100%;
-        text-align: center;
-    }
-    #footer h5{
-        color: white;
-    }
-    .con{
-		font-size: 28px; 
-		text-align: center;
-	}
+    <title>首页</title>
+    <link rel="stylesheet" type="text/css" href="./css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/style.css"/>
+    <style>
+
+        #footer{  background-color: #fff; }
+        #footer ul li{  padding-top: 36px; padding-bottom: 6px; background: url() no-repeat center 6px; background-size: auto 25px; text-align: center; color: #212121;}
+        #footer ul li.active{ color: #212121; }
+        #footer ul li:nth-child(1){ background-image: url(./image/my.png); }
+        #footer ul li:nth-child(2){ background-image: url(./image/activity.png); }
+        #footer ul li:nth-child(3){ background-image: url(./image/circle.png); }
+        #footer ul li:nth-child(4){ background-image: url(./image/mall.png); }
+        #footer ul li:nth-child(1).active{ background-image: url(./image/my1.png); }
+        #footer ul li:nth-child(2).active{ background-image: url(./image/activity1.png); }
+        #footer ul li:nth-child(3).active{ background-image: url(./image/circle1.png); }
+        #footer ul li:nth-child(4).active{ background-image: url(./image/mall1.png); }
+        .flex-con{
+          overflow: auto
+        }
     </style>
 </head>
 <body>
-    <div id="wrap">
-        <div id="header">
-            <h1>APICloud</h1>
-        </div>
-        <div id="main">
-                
-        </div>
-        <div id="footer">
-            <h5>Copyright &copy;<span id="year"></span> </h5>
-        </div>
-    </div>
-</body>
-<script type="text/javascript" src="./script/api.js"></script>
-<script type="text/javascript">
-    apiready = function(){
-		//输出Log，Log将显示在APICloud Studio控制台
-		console.log("Hello APICloud");
+<div id="wrap" class="flex-wrap flex-vertical">
 
-        var header = $api.byId('header');
-        //适配iOS7+，Android4.4+状态栏沉浸式效果，详见config文档statusBarAppearance字段
-        $api.fixStatusBar(header);
-		//动态计算header的高度，因iOS7+和Android4.4+上支持沉浸式效果，
-		//因此header的实际高度可能为css样式中声明的44px加上设备状态栏高度
-		//其中，IOS状态栏高度为20px，Android为25px
-        var headerH = $api.offset(header).h;
-		//footer高度为css样式中声明的30px
-		var footerH = 30;
-		//frame的高度为当前window高度减去header和footer的高度
-		var frameH = api.winHeight - headerH - footerH;
-        api.openFrame({
-            name: 'main',
-            url: 'html/main.html',
-            bounces: true,
-            rect: {
-                x: 0,
-                y: headerH,
-                w: 'auto',
-                h: frameH
-            }
+    <div id="main" class="flex-con">
+
+    </div>
+    <div id="footer" class="border-t">
+        <ul class="flex-wrap" >
+            <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con active" >个人中心</li>
+            <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con" >活动汇</li>
+            <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con" >学客圈</li>
+            <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con" >商城</li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript" src="script/api.js"></script>
+<script type="text/javascript">
+    //此事件是在api对象准备完毕后产生，在每个Window或Frame的HTML代码中都需要监听此事件，以确定APICloud扩展对象已经准备完毕，可以调用了。
+    apiready = function () {
+        //适配iOS7+、Android4.4+系统状态栏，为传入的DOM元素增加适当的上内边距，避免header与状态栏重叠
+        // $api.fixStatusBar( $api.dom('#main') );
+
+        //设置状态栏样式为白色（适用于深色背景）或黑色（适用于浅色背景），以及设置状态栏背景颜色
+        api.setStatusBarStyle({
+            style: 'dark',
+            color: '#fcd058'
         });
 
-        var year = $api.byId('year');
-        year.innerHTML = new Date().getFullYear();
+        funIniGroup();
+    }
 
-    };
+    function funIniGroup(){
+        var footerLis = $api.domAll('#footer li'),
+            frames = [];
+
+        if (api.pageParam.pageIndex == 1) {//联盟商家发起活动页面的传参
+            var indexTag = api.pageParam.pageIndex;
+            go_EventSink(indexTag);
+
+            for (var i = 0,len = footerLis.length; i < len; i++) {
+                frames.push({
+                    name: 'frame'+i,
+                    url: './html/frame'+i+'.html',
+                    bgColor : 'rgba(0,0,0,.2)',
+                    bounces:true,
+                    pageParam:{
+                        index:indexTag
+                    }
+                })
+            }
+
+            //打开 frame 组,frame 组打开后，当前页面加载完成后，页面会预加载后面指定个数页面
+            api.openFrameGroup({
+                name: 'group',
+                scrollEnabled: false,
+                rect: {
+                    x: 0,
+                    y: 'auto',
+                    w: api.winWidth,
+                    h: $api.dom('#main').offsetHeight
+                },
+                index: 1,
+                frames: frames
+            }, function (ret, err) {
+
+            });
+        }else{
+            for (var i = 0,len = footerLis.length; i < len; i++) {
+                frames.push({
+                    name: 'frame'+i,
+                    url: './html/frame'+i+'.html',
+                    bgColor : 'rgba(0,0,0,.2)',
+                    bounces:true
+                })
+            }
+
+            //打开 frame 组,frame 组打开后，当前页面加载完成后，页面会预加载后面指定个数页面
+            api.openFrameGroup({
+                name: 'group',
+                scrollEnabled: false,
+                rect: {
+                    x: 0,
+                    y: 'auto',
+                    w: api.winWidth,
+                    h: $api.dom('#main').offsetHeight
+                },
+                index: 0,
+                frames: frames
+            }, function (ret, err) {
+                console.log(JSON.stringify(ret))
+            });
+       }
+    }
+
+    // 随意切换按钮
+    function randomSwitchBtn( tag ) {
+        if( tag == $api.dom('#footer li.active') )return;
+        var eFootLis = $api.domAll('#footer li'),
+            index = 0;
+        for (var i = 0,len = eFootLis.length; i < len; i++) {
+            if( tag == eFootLis[i] ){
+                index = i;
+            }else{
+                $api.removeCls(eFootLis[i], 'active');
+            }
+        }
+        $api.addCls( eFootLis[index], 'active');
+
+        //设置 frame 组当前可见 frame
+        api.setFrameGroupIndex({
+            name: 'group',
+            index: index
+        });
+
+        // //将任意一个自定义事件广播出去，该事件可在任意页面通过 addEventListener 监听收到。
+        api.sendEvent({
+            name: 'myEvent',
+            extra: {
+                index: index
+            }
+        });
+    }
+
+    //走到相应的活动汇页面
+    function go_EventSink(indexTag){
+        if( indexTag == $api.dom('#footer li.active') )return;
+        var eFootLis = $api.domAll('#footer li');
+        for (var i = 0,len = eFootLis.length; i < len; i++) {
+            $api.removeCls(eFootLis[i], 'active');
+        }
+        $api.addCls( eFootLis[indexTag], 'active');
+        //设置 frame 组当前可见 frame
+        api.setFrameGroupIndex({
+            name: 'group',
+            index: indexTag
+        });
+    }
 </script>
-</html>

@@ -32,6 +32,7 @@ input,button,textarea {
 	padding:0;
 	font-size:1em;
 	line-height:1em;
+	outline:none;
 	/*-webkit-appearance:none;*/
 	background-color:rgba(0, 0, 0, 0);
 }
@@ -75,7 +76,7 @@ td,th {
 	background: url(../image/loading_more.gif) no-repeat center;
 	-webkit-background-size: contain;
 	background-size: contain;
-} 
+}
 .loading_more:after {
-	content: '加载更多';	
+	content: '加载更多';
 }

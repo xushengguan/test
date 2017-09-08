@@ -1,0 +1,146 @@
+.earnings-con{
+	width: 100%;
+	box-sizing: border-box;
+}
+.earnings-top{
+	width: 100%;
+	box-sizing: border-box;
+	margin-bottom: 0.2rem;
+}
+.credit-con{
+	width: 100%;
+	background: white;
+	border-bottom: 0.01rem solid #757575;
+	padding: 0.28rem 0.22rem;
+	font-size: 0.28rem;
+	color: #757575;
+	position: relative;
+}
+.credit-con .icon-up{
+	font-size: 0.45rem;
+	color: #757575;
+    position: relative;
+    right: 0.24rem;
+}
+.credit-con1 span{
+    position: relative;
+    bottom: 0.05rem;
+    right: 0.4rem;
+}
+.credit-two{
+	color:#fca958;
+}
+.money{
+	color:#4c5be5;
+}
+.cashs{
+	position: absolute;
+	right: 0.22rem;
+	bottom:0.17rem;
+	font-size: 0.3rem;
+	color:white;
+	background:#fca958;
+	padding:0.15rem 0;
+	width: 1.4rem;
+	text-align: center;
+	border-radius: 0.08rem;
+}
+.earn-con{
+	width: 100%;
+	box-sizing: border-box;
+	background:white;
+	color:#8c8c8c;
+	font-size: 0.24rem;	
+}
+.earn-con h6{
+	font-size: 0.24rem;	
+	padding:0.2rem 0.24rem;
+}
+.credit-week{
+	width: 100%;
+	box-sizing: border-box;
+	text-align:center;
+	padding:0.46rem 0 0.58rem 0;
+	position: relative;
+}
+.fives{
+	color:#fca958;
+	font-size: 0.32rem;
+}
+.fives label{
+	font-size: 0.43rem;
+}
+.tens{
+	color:#4c5be5;
+	font-size: 0.32rem;
+}
+.tens label{
+	font-size: 0.43rem;
+}
+.credit-week .dates{
+	padding-top: 0.3rem;
+}
+.credit-week .backs{
+	height: 0.44rem;
+	width: 0.44rem;
+	background:#fca958;
+	border-radius:50%;
+	text-align:center;
+	color:white;
+	position: absolute;
+	left: 0.82rem;
+	bottom:1rem;
+}
+.credit-week .icon-return1{
+	font-size: 0.35rem;
+	position:relative;
+	top:0.02rem;
+	right:0.01rem;
+}
+.earn-con .credit-week .backs2{
+	right: 0.82rem;
+	bottom:1rem;
+}
+.credit-week .backs2{
+	height: 0.44rem;
+	width: 0.44rem;
+	background:#fca958;
+	border-radius:50%;
+	text-align:center;
+	color:white;
+	position: absolute;
+	right: 0.82rem;
+	bottom:1rem;
+}
+.earnings-bottom{
+	width: 100%;
+	box-sizing: border-box;
+	font-size: 0.26rem;
+}
+.earnings-bottom h6{
+	font-size: 0.28rem;
+	padding: 0.24rem 0.22rem;
+	color:#b1b1b1;
+}
+.flower-con{
+	width: 100%;
+	color:#a1a1a1;
+	box-sizing: border-box;
+	padding:0.2rem 0.22rem 0.22rem 0.22rem;
+	border-bottom:0.01rem solid #d2d3d5;
+	background:white;
+}
+.flower-con span{
+	display: block;
+}
+.flow-earn{
+	color:#212121;
+	padding-bottom: 0.2rem;
+	text-align:right;
+}
+.last-money{
+	font-size: 0.24rem;
+}
+.flower-con .flow-earn1{
+	text-align:left;
+}

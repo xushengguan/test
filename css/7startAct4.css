@@ -1,0 +1,71 @@
+body{
+	height: 0;
+}
+.homePage-header{
+	position: fixed;
+	left: 0;
+	top: 0;
+	width:100%;
+	z-index: 3;
+}
+.startAct4-con{
+	width: 100%;
+	box-sizing: border-box;
+    margin-top: 2.99rem;
+}
+.credit-con{
+	padding:0.32rem 0.22rem 0.24rem 0.22rem;
+	position: fixed;
+	left: 0;
+    top: 1.44rem;
+	width:100%;
+	z-index: 3;
+	background:white;
+}
+.credit-left p{
+	font-size: 0.28rem;
+	color: #212121;
+	padding-bottom: 0.1rem;
+}
+.credit-left label{
+	color: #fca958;
+}
+.credit-left .golds{
+	font-size: 0.26rem;
+	color: #212121;
+}
+.exchange{
+	width:15%;
+	padding:0.12rem 0;
+	border:0.01rem solid #dc8835;
+	background: #fca958;
+	color:white;
+	font-size: 0.32rem;
+	text-align: center;
+	border-radius: 0.06rem;
+}
+.share-con{
+	width: 100%;
+	box-sizing:border-box;
+	background:white;
+	padding:0.2rem 0.22rem;
+	border-bottom: 0.01rem solid #d2d3d5;
+}
+.share{
+	font-size: 0.26rem;
+	color:#525252;
+	padding-bottom:0.26rem;
+}
+.times{
+	font-size: 0.24rem;
+	color:#cfcfcf;
+}
+.share-right p:nth-of-type(1){
+	font-size: 0.26rem;
+	color:#fca958;
+	padding-bottom:0.26rem;
+	text-align:right;
+}
+.share-right p.on{
+	color: #4c5be5;
+}

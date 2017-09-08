@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>创建活动</title>
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<link rel="stylesheet" href="../../css/api.css">
+	<link rel="stylesheet" href="../../css/common.css">
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
+	<link rel="stylesheet" href="../../css/3creatAct.css">
+	<script src="../../script/common.js"></script>
+	<script src="../../script/my.js"></script>
+	<script src="../../script/3creatAct_title.js"></script>
+</head>
+
+<body>
+
+	<!-- 学生家长-有输入 -->
+	<div class="creatAct-con">
+		<div class="creatAct-title">
+			<p style="width:100%;">
+				<span class="title-line"></span>
+				<span>活动标题</span>
+			</p>
+			<p class="create-head">为您的活动创建一个标题</p>
+			<p class="competition" style="padding-top:0.5rem;"></p>
+		</div>
+		<div class="creatAct-section hide">
+			<div class="section-left fl">
+				<p>
+					<span class="title-line"></span>
+					<span>学科章节</span>
+				</p>
+				<p class="create-head">选择活动内容的章节</p>
+			</div>
+			<div class="section-right fr">
+				<span>一年级语文第一章</span>
+				<i class="iconfont icon-gengduo"></i>
+			</div>
+		</div>
+		<div class="creatAct-class" style="padding-bottom:0.74rem;">
+			<p style="width:100%;">
+				<span class="title-line"></span>
+				<span class="grade">活动人数<label></label>人</span>
+			</p>
+		</div>
+		<div class="creatAct-section">
+			<div class="creatAct-top hide">
+				<div class="section-left fl">
+					<p>
+						<span class="title-line"></span>
+						<span>活动口令</span>
+					</p>
+					<p class="create-head">玩家需要通过口令参加比赛</p>
+				</div>
+				<i class="iconfont icon-guanyu fr"></i>
+			</div>
+			<p class="competition hide">
+				<span class="fl">3325fadfafdf3456</span>
+				<span class="fr">
+						<label class="commond">口令过长</label>
+						<i class="iconfont icon-jingshi"></i>
+					</span>
+			</p>
+		</div>
+		<p class="img-plane02" onclick="creatAct()"><img src="../../image/plane02.png" alt=""></p>
+	</div>
+
+	<!-- 选择章节 -->
+	<div class="fu-body fu-bodySec" style="display:none">
+		<div class="fu-section fu-section1">
+			<span>选择章节</span>
+			<span>第1章</span>
+			<span>第2章</span>
+			<span>第3章</span>
+			<span style="border-bottom:0;">第4章</span>
+		</div>
+	</div>
+
+	<!-- 选择科目 -->
+	<div class="fu-body fu-bodySec" style="display:none">
+		<div class="fu-section" style="margin-top:-2.52rem;">
+			<span>选择科目</span>
+			<div class="section-all login2 hide">
+				<span class="fl">数学</span>
+				<i class="iconfont icon-gengduo1 icon-more fr"></i>
+			</div>
+			<div class="section-all login2 hide">
+				<span class="fl">英语</span>
+				<i class="iconfont icon-gengduo1 icon-more fr"></i>
+			</div>
+			<div class="section-all login2 hide">
+				<span class="fl">物理</span>
+				<i class="iconfont icon-gengduo1 icon-more fr"></i>
+			</div>
+			<div class="section-all login2 hide" style="border-bottom:0;">
+				<span class="fl">化学</span>
+				<i class="iconfont icon-gengduo1 icon-more fr"></i>
+			</div>
+		</div>
+	</div>
+
+	<!-- 选择年级 -->
+	<div class="fu-body fu-bodySec" style="display:none">
+		<div class="fu-section" style="margin-top:-3.52rem;">
+			<span>选择年级</span>
+			<div class="section-all login2 hide">
+				<span class="fl">一年级</span>
+				<i class="iconfont icon-gengduo1 icon-more fr"></i>
+			</div>
+			<div class="section-all login2 hide">
+				<span class="fl">二年级</span>
+				<i class="iconfont icon-gengduo1 icon-more fr"></i>
+			</div>
+			<div class="section-all login2 hide">
+				<span class="fl">三年级</span>
+				<i class="iconfont icon-gengduo1 icon-more fr"></i>
+			</div>
+			<div class="section-all login2 hide">
+				<span class="fl">四年级</span>
+				<i class="iconfont icon-gengduo1 icon-more fr"></i>
+			</div>
+			<div class="section-all login2 hide">
+				<span class="fl">五年级</span>
+				<i class="iconfont icon-gengduo1 icon-more fr"></i>
+			</div>
+			<div class="section-all login2 hide">
+				<span class="fl">六年级</span>
+				<i class="iconfont icon-gengduo1 icon-more fr"></i>
+			</div>
+		</div>
+	</div>
+
+	<!-- 活动口令 -->
+	<div class="fu-body fu-bodySec" style="display:none">
+		<div class="fu-section fu-command" style="margin-top:-1.53rem;">
+			<div class="command-top">
+				<p style="color:black;">活动口令</p>
+				<p>创建活动口令后,玩家即可通过输入此口令参加比赛</p>
+			</div>
+			<p style="padding: 0 0.4rem;"><button>确定</button></p>
+		</div>
+	</div>
+</body>
+
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+		apiready = function(){
+
+		}
+
+		function creatAct(){
+				api.toast({
+				    msg: '创建成功',
+				    duration: 2000,
+				    location: 'middle'
+				});
+
+				api.openWin({
+				    name: '4promotion_clickRank',
+				    url: './4promotion_clickRank.html',
+				    pageParam: {
+				        name: 'test'
+				    }
+				});
+
+
+		}
+</script>

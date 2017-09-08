@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+		<meta charset="UTF-8">
+		<title>提现</title>
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<link rel="stylesheet" href="../../css/api.css">
+		<link rel="stylesheet" href="../../css/common.css">
+		<link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
+		<link rel="stylesheet" href="../../css/7earnings2.css">
+		<script src="../../script/common.js"></script>
+		<script src="../../script/my.js"></script>
+</head>
+<body>
+	<div class="7earnings2">
+		<header class="homePage-header" onclick="go_back()">
+			<h4>提现</h4>
+			<i class="iconfont icon-fanhui icon-return"></i>
+		</header>
+		<div class="earnings2-con">
+			<div class="cash-con">
+				<span class="wallet">提现至钱包</span>
+				<i class="iconfont icon-weixinzhifu1 icon-wechat"></i>
+				<span>微信钱包</span>
+			</div>
+			<p class="balance-con">可用余额:20元</p>
+			<div class="wechat-con">
+				<span>微信账号</span>
+				<input type="text" value="请输入微信账号">
+			</div>
+			<div class="wechat-con">
+				<span>真实姓名</span>
+				<input type="text" value="请输入真实姓名">
+			</div>
+			<div class="wechat-con" style="position:relative;">
+				<span>短信验证码</span>
+				<input type="text" value="请输入短信验证码">
+				<span class="note">获取验证码</span>
+			</div>
+			<p class="cash-btn"><button onclick="Withdrawals()">全部提现50元</button></p>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+		apiready = function(){
+
+		}
+
+		//打开window
+		function Withdrawals(){
+				api.openWin({
+				    name: 'Withdrawals',
+				    url: './7earnings3.html',
+				    pageParam: {
+
+				    }
+				});
+
+		}
+</script>

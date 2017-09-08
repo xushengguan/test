@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" href="../css/api.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
+    <link rel="stylesheet" href="../css/2activity.css">
+    <script src="../script/common.js"></script>
+</head>
+
+<body>
+
+    <div class="activity">
+        <header class="activity-top hide">
+            <span class="img-plane fr"><img src="../image/plane01.png" alt="" class="img-size"></span>
+        </header>
+        <div class="activity-con">
+            <span class="img-head01"><img src="../image/head01.png" alt="" class="img-size"></span>
+            <div class="setting-top hide">
+                <span class="setting-account" onclick="mineInfo()">帐户设置</span>
+                <p class="setting-name">王同学</p>
+                <div class="setting-brone">
+                    <span class="img-brone"><img src="../image/brone01.png" alt="" class="img-size"></span>
+                    <p class="rolls">
+                        <span class="setting-num">124/120</span>
+                        <span class="setting-num2"></span>
+                    </p>
+                </div>
+                <ul class="setting-ul hide">
+                    <li onclick="crdeitDetail()">
+                        <span class="two">200</span>
+                        <span class="credit">学分</span>
+                    </li>
+                    <li style="border-right:0;" onclick="MyFans()">
+                        <span class="two">40</span>
+                        <span class="credit">粉丝</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 联盟商家（升级）添加 -->
+            <p class="upgrade hide" style="display:none">
+                <span class="fl" style="position: relative;top: 0.1rem;">您可以升级为银牌商家</span>
+                <span class="fr grade-num" onclick="upgrade()">立即升级</span>
+            </p>
+
+            <!-- 家长学生升级 -->
+            <p class="upgrade hide" style="display:none">
+                <span class="fl" style="position: relative;top: 0.1rem;">您可以升级为银牌用户</span>
+                <span class="fr grade-num">立即升级</span>
+            </p>
+
+            <!-- 联盟商家（完善资料）添加 -->
+            <p class="upgrade hide">
+                <span class="fl" style="position: relative;top: 0.1rem;">完善账号资料可以获得学分</span>
+                <span class="fr grade-num" onclick="go_perfect()">前去完善</span>
+            </p>
+
+            <ul class="con-ul hide">
+                <li onclick="go_activity()">
+                    <span><img src="../image/pic01.png" alt="" class="img-size"></span>
+                    <span class="orders">我发起的活动</span>
+                </li>
+                <li onclick="go_order()">
+                    <span><img src="../image/pic02.png" alt="" class="img-size"></span>
+                    <span class="orders">我的订单</span>
+                </li>
+                <li onclick="credit_rating()">
+                    <span><img src="../image/pic03.png" alt="" class="img-size"></span>
+                    <span class="orders">信用评级</span>
+                </li>
+                <li onclick="achievement()">
+                    <span><img src="../image/pic04.png" alt="" class="img-size"></span>
+                    <span class="orders">我的业绩</span>
+                </li>
+                <li onclick="Profit()">
+                    <span><img src="../image/pic05.png" alt="" class="img-size"></span>
+                    <span class="orders">我的收益</span>
+                </li>
+
+                <!-- 若为家长学生添加 -->
+                <li onclick="Growth_record()">
+                    <span><img src="../image/pic06.png" alt="" class="img-size"></span>
+                    <span class="orders">成长记录</span>
+                </li>
+
+                <li onclick="help()">
+                    <span><img src="../image/pic07.png" alt="" class="img-size"></span>
+                    <span class="orders">规则与帮助</span>
+                </li>
+            </ul>
+
+        </div>
+
+        <ul class="act-btns hide">
+            <li style="background:#3c3c3d;margin-right:0.06rem;" onclick="launchAct()">发起活动</li>
+            <li style="background:#fcd058;" onclick="joinAct()">参与活动</li>
+        </ul>
+
+        <!-- 回到房间 -->
+        <button class="login-btn room-btn"  style="display:none" onclick="goRoom()">回到房间</button>
+
+
+    </div>
+
+    <!-- fu-body-确认升级  -->
+    <div class="fu-body" style="display:none" id="upgrade">
+        <div class="fu-bottom">
+            <p>确认升级</p>
+            <p>此次升级会消耗您<span style="color:#e64340;">1000</span>学分</p>
+            <ul class="hide fu-ul">
+                <li id="cancel">取消</li>
+                <li id="decision" style="border-right:0;color:#fca958;">确认</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- fu-body-获得奖牌 -->
+    <div class="fu-body" id="Medal" style="display: none;">
+        <div class="fu-bottom02">
+            <i class="iconfont icon-guanbi" onclick="closeMedal()"></i>
+            <span class="img-gold"><img src="../image/gold01.png" alt="" class="img-size"></span>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+     apiready = function(){
+
+     }
+
+     //跳到账户设置
+     function mineInfo(){
+          api.openWin({
+              name: 'mineInfo',
+              url: './My/7account.html',
+              pageParam: {
+                  name: 'test'
+              }
+          });
+
+     }
+
+     //我发起的活动
+     function go_activity(){
+         api.openWin({
+             name: 'activity',
+             url: './My/7startAct2.html',
+             pageParam: {
+                 name: 'test'
+             }
+         });
+
+     }
+
+     //我的订单
+     function go_order(){
+         api.openWin({
+             name: 'order',
+             url: './mall/order_title.html',
+             pageParam: {
+                 name: 'test'
+             }
+         });
+
+     }
+
+     //信用评级
+     function credit_rating(){
+         api.openWin({
+             name: 'credit_rating_title',
+             url: '../html/My/credit_rating_title.html',
+             pageParam: {
+
+             }
+         });
+
+     }
+
+     //我的业绩
+     function achievement(){
+         api.openWin({
+             name: 'My_achievement',
+             url: '../html/My/My_achievement.html',
+             pageParam: {
+
+             }
+         });
+
+     }
+
+     //我的收益
+     function Profit(){
+         api.openWin({
+             name: '7earnings',
+             url: '../html/My/7earnings.html',
+             pageParam: {
+
+             }
+         });
+
+     }
+
+     //成长记录
+     function Growth_record(){
+         api.openWin({
+             name: '7study_title',
+             url: './My/7study_title.html',
+             pageParam: {
+
+             }
+         });
+     }
+
+     //发起活动
+     function launchAct(){
+         var index = 1;
+         //班主任身份则打开creatAct_headmaster.html,学生家长身份打开creatAct_Pstudy.html，商家身份打开creatAct_business.html
+         if (index == 1) {
+           api.openWin({
+               name: 'creatAct_headmaster',
+               url: './My/creatAct_headmaster.html',
+               pageParam: {
+
+               }
+           });
+         }else if(index == 2){
+           api.openWin({
+               name: 'creatAct_Pstudy',
+               url: './creatAct_Pstudy.html',
+               pageParam: {
+
+               }
+           });
+         }else if (index == 3) {
+           api.openWin({
+               name: 'creatAct_business',
+               url: './My/creatAct_business.html',
+               pageParam: {
+
+               }
+           });
+         }
+     }
+
+     //参与活动
+     function joinAct(){
+         api.openWin({
+             name: '3creatAct_join',
+             url: './My/3creatAct_join.html',
+             pageParam: {
+                 name: 'test'
+             }
+         });
+
+     }
+
+     //立即升级
+     function upgrade(){
+        $api.css($api.dom("#upgrade"),'display:block');
+        //取消
+        $api.dom("#cancel").addEventListener('click',function(){
+            $api.css($api.dom("#upgrade"),'display:none');
+        })
+        //确认
+        $api.dom("#decision").addEventListener('click',function(){
+
+            $api.css($api.dom("#upgrade"),'display:none');
+            $api.css($api.dom("#Medal"),'display:block');
+
+        })
+     }
+
+     //关闭金牌弹出层
+     function closeMedal(){
+         $api.css($api.dom("#Medal"),'display:none');
+     }
+
+     //跳到学分明细
+     function crdeitDetail(){
+
+     }
+
+     //跳到我的粉丝
+     function MyFans(){
+         api.openWin({
+             name: 'MyFans',
+             url: './My/MyFans.html',
+             pageParam: {
+                 name: 'test'
+             }
+         });
+     }
+
+     //前去完善
+     function go_perfect(){
+         api.openWin({
+             name: '7account2_title',
+             url: './My/7account2_title.html',
+             pageParam: {
+                 name: 'test'
+             }
+         });
+
+     }
+
+     //回到房间
+     function goRoom(){
+         api.openWin({
+             name: '4promotion_clickRank',
+             url: './My/4promotion_clickRank.html',
+             pageParam: {
+                 name: 'test'
+             }
+         });
+     }
+
+     //规则与帮助
+     function help(){
+         api.toast({
+             msg: '暂未开发',
+             duration: 2000,
+             location: 'middle'
+         });
+     }
+</script>

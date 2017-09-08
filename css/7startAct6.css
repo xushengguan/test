@@ -1,0 +1,48 @@
+.salves-con{
+	width: 100%;
+	box-sizing: border-box;
+	background: white;
+	font-size: 0.32rem;
+	padding: 0.3rem 0.22rem 0.5rem 0.2rem;
+	margin-bottom: 0.1rem;
+}
+.salves-left h4{
+	color: #212121;
+	display: inline;
+	font-size: 0.32rem;
+    position: relative;
+    bottom: 0.08rem;
+}
+.two{
+	color:#fca958;
+	position: relative;
+	top:0.08rem;
+}
+.salves-num1{
+	padding: 0.2rem 0.22rem 0.2rem 0.22rem; 
+	border-bottom: 0.01rem solid #d2d3d5;
+	background:white;
+}
+.num1-left{
+	width:55%;
+}
+.num1-right{
+	width:45%;
+}
+.salves-left .icon-sale{
+	color: #cccccc;
+	font-size: 0.6rem;
+}
+.num1-left .one1{
+	text-align: left;
+	color:#212121;
+}
+.one{
+	font-size: 0.26rem;
+	padding-bottom: 0.25rem;
+	text-align: right;
+}
+.times{
+	font-size: 0.24rem;
+	color:#b4b4b4;
+}

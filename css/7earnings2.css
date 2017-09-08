@@ -1,0 +1,47 @@
+.cash-con{
+	width: 100%;
+	box-sizing: border-box;
+	background: white;
+	padding: 0.15rem 0.22rem;
+	font-size: 0.28rem;
+	color: #4a4745;
+}
+.cash-con .wallet{
+	font-size: 0.3rem;
+	color: #34302d;
+}
+.cash-con .icon-wechat{
+	font-size: 0.55rem;
+	color: #59b64c;
+}
+.cash-con span{
+	position: relative;
+	bottom: 0.1rem;
+}
+.balance-con{
+	padding:0.13rem 0.22rem 0.46rem 0.22rem;
+	font-size: 0.26rem;
+	color:#757575;
+}
+.wechat-con{
+	padding:0.3rem 0.22rem;
+	font-size: 0.3rem;
+	color:#34302d;
+	background:white;
+	border-bottom: 0.01rem solid #d3d4d5;
+}
+.wechat-con input{
+	color:#cccccc;
+	padding-left: 0.2rem;
+}
+.note{
+	width: 1.6rem;
+	padding: 0.2rem 0;
+	background:#fca958;
+	color:white;
+	text-align: center;
+	border-radius: 0.06rem;
+	position: absolute;
+	right: 0.22rem;
+	bottom:0.1rem;
+}

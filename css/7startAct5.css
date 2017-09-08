@@ -1,0 +1,140 @@
+.startAct5-con{
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0 0.22rem 1.62rem 0.22rem;
+}
+.money-con{
+	width: 100%;	
+	border-bottom: 0.01rem solid #e5e5e5;
+	padding: 0.4rem 0;
+	font-size: 0.26rem;
+	color: #757575;
+}
+.money-con span{
+    position: relative;
+    bottom: 0.1rem;
+}
+.money-con label{
+	color: #909090;
+}
+.money-con .icon-xue{
+	color: #fca958;
+	font-size: 0.6rem;
+}
+.exchange-con{
+	width: 100%;
+	box-sizing:border-box;
+}
+.exchange-con h6{
+	font-size: 0.26rem;
+	color:#8b8b8b;
+	padding:0 0 0.24rem 0;
+}
+.exchange-ul{
+	width:100%;
+	display: flex;
+}
+.exchange-ul>div{
+	float: left;
+	flex:1;
+	background:white;
+	padding:0.24rem 0 0.19rem 0;
+	margin-right: 0.4rem;
+	border-radius: 0.06rem;
+	margin-bottom: 0.28rem; 
+}
+.exchange-ul p:nth-of-type(1){
+	font-size: 0.26rem;
+	text-align: center;
+}
+.exchange-ul p:nth-of-type(2){
+	font-size: 0.24rem;
+	text-align: center;
+}
+.ulHave{
+	box-shadow: 0 0.02rem 0.04rem rgba(0,0,0,0.1);
+	border-bottom:0.02rem solid #e8e8e8;
+}
+.agreen-con{
+	padding:0 0.08rem;
+}
+.pay-btn button{
+	width: 100%;
+	background: #fca958;
+	color:white;
+	border-radius:0.06rem;
+	padding: 0.26rem 0;
+	font-size: 0.36rem;
+	text-align:center;
+	margin-bottom:0.22rem;
+	box-shadow:0 0.04rem 0.06rem rgba(0,0,0,0.1); 
+}
+.agreens{
+	font-size: 0.22rem;
+	color:#757575;
+	text-align:center;
+}
+.agreens .icon-check{
+	font-size: 0.45rem;
+	color:#fca958;
+}
+.agreens span{
+	position: relative;
+	bottom:0.08rem;
+	left: 0.05rem;
+}
+.agreens label{
+	color:#fca958;
+}
+/* success5-con */
+.success5{
+	height:100%;
+	width: 100%;
+	background:white;
+}
+.success5-con{
+	width: 100%;
+	padding-top:1.4rem;
+	text-align:center;
+}
+.sucess-right{
+	width:1.76rem;
+	height: 1.76rem;
+	line-height: 1.6rem;
+	background:#fca958;
+	color:white;
+	border-radius:50%;
+	text-align: center;
+	margin:0 auto;
+}
+.sucess-right .icon-right{
+	font-size: 0.7rem;
+}
+.ex-success{
+	font-size: 0.32rem;
+	color:#212121;
+	padding-top: 0.55rem;
+	padding-bottom: 0.2rem;
+}
+.ex-money{
+	font-size: 0.28rem;
+	color:#757575;
+	padding-bottom:1.3rem;
+}
+.ex-btns{
+	font-size: 0.36rem;
+	padding: 0 0.3rem 0 0.3rem;
+	text-align:center;
+}
+.ex-btns button{
+	width: 100%;
+	display:block;
+	color:white;
+	background:#fca958;
+	padding:0.28rem 0;
+	border-radius:0.1rem;
+	box-shadow:0 0.04rem 0.06rem rgba(0,0,0,0.1);
+}
+.ex-btns button:nth-of-type(1){
+	margin-bottom:0.23rem;
+}

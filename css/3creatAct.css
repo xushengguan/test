@@ -1,0 +1,166 @@
+.creatAct-con{
+	padding:0.46rem 0.5rem 0.52rem 0.36rem;
+}
+.creatAct-title{
+	font-size:0.28rem;
+	padding-bottom:0.7rem;
+}
+.creatAct-title span:nth-of-type(2){
+	color:#212121;
+}
+.create-head{
+	font-size:0.24rem;
+	color:#7e7e7e;
+	padding: 0.1rem 0 0.2rem 0.14rem;
+}
+.competition{
+	padding-left:0.1rem;
+	color:#212121;
+	font-size:0.32rem;
+	border-bottom: 0.01rem solid #d2d3d5;
+	padding-bottom: 0.1rem;
+}
+.creatAct-con .icon-right{
+	font-size: 0.22rem;
+	color:#1cc01a;
+	position: relative;
+	top:0.15rem;
+}
+.creatAct-class{
+	font-size:0.28rem;
+	padding-bottom:0.8rem;
+}
+.creatAct-class label{
+	border-bottom: 0.01rem solid #d2d3d5;
+	padding-bottom:0.1rem;
+	width:0.9rem;
+	text-align:center;
+	margin: 0 0.14rem;
+}
+.creatAct-section{
+	font-size:0.28rem;
+	padding-bottom:0.9rem;
+	color:#212121;
+	width:100%;
+}
+.section-right{
+	padding-top: 0.1rem;
+}
+.section-right span:nth-of-type(1){
+    position: relative;
+    bottom: 0.1rem;
+}
+.section-right .icon-gengduo{
+	color:#fcd058;
+	font-size:0.6rem;
+}
+.creatAct-section .icon-guanyu{
+	color:#fca958;
+	font-size:0.35rem;
+}
+.img-plane02{
+	width:1.2rem;
+	height:1.2rem;
+	line-height:1rem;
+	border-radius:50%;
+	background:#face56;
+	text-align:center;
+	overflow:hidden;
+	z-index: 3;
+	position: fixed;
+	bottom:0.8rem;
+	left: 50%;
+	margin-left: -0.6rem;
+}
+/* fu-body */
+.fu-bottom{
+	width:2.4rem;
+	height:2.4rem;
+	text-align:center;
+	background: rgba(0,0,0,0.65);
+	border-radius:0.1rem;
+	position: absolute;
+	left:50%;
+	margin-left:-1.2rem;
+	top:50%;
+	margin-top:-1.2rem;
+}
+.fu-bottom .icon-right{
+	font-size:0.6rem;
+	color:white;
+	position: relative;
+	top:0.2rem;
+}
+.create-success{
+	font-size:0.26rem;
+	color:#f3f3f3;
+	display:block;
+	padding-top:0.3rem;
+}
+/* 学生家长-有输入 */
+.competition .commond{
+	font-size:0.26rem;
+	color:#f43530;
+}
+.competition .icon-jingshi{
+	font-size:0.35rem;
+	color:#f43530;
+}
+/* 选择章节 */
+.fu-bodySec{
+	background: rgba(0,0,0,0.5);
+}
+.fu-section{
+	font-size:0.32rem;
+	color:#303030;
+	z-index:3;
+	width:5rem;
+	background:white;
+	overflow:hidden;
+	text-align:center;
+	border-radius:0.1rem;
+	position: absolute;
+	top:50%;
+	margin-top:-2.4rem;
+	left:50%;
+	margin-left:-2.5rem;
+}
+.fu-section1>span{
+	display:block;
+	border-bottom:0.01rem solid #d2d3d5;
+}
+.fu-section span{
+	padding:0.3rem 0;
+}
+.fu-section>span:nth-of-type(1){
+	font-weight:bold;
+	background:#fbce56;
+	width:100%;
+}
+/* 选择科目 */
+.section-all{
+	width:100%;
+	padding: 0 0.3rem;
+	border-bottom:0.01rem solid #d2d3d5;
+}
+.section-all .icon-more{
+	padding-top:0.3rem;
+}
+/* 活动口令 */
+.fu-command{
+	text-align:center;
+}
+.command-top{
+	padding: 0.5rem 0.4rem 0 0.4rem;
+	border-bottom:0.01rem solid #d2d3d5;
+}
+.fu-command p:nth-of-type(2){
+	color:#999999;
+	font-size:0.28rem;
+	padding:0.2rem 0;
+}
+.fu-command button{
+	padding:0.34rem 0;
+	color:#fcaf63;
+	width:100%;
+}

@@ -1,0 +1,126 @@
+.account2-con{
+	width: 100%;
+	box-sizing: border-box;
+	background:white;
+}
+.office-con{
+	width: 100%;
+	padding: 0.3rem 0.22rem;
+	color: #212121;
+	font-size: 0.3rem;
+	border-bottom: 0.01rem solid #eaeaea;
+}
+.office-con input{
+	color: #dadada;
+	padding-left: 0.5rem;
+}
+.license-con{
+	padding:0.3rem 0.22rem;
+	color: #212121;
+	font-size: 0.3rem;
+	border-bottom: 0.01rem solid #eaeaea;
+}
+.license-con .icon-license{
+	font-size: 1.2rem;
+	color:#cccccc;
+}
+.license-con span{
+    position: relative;
+    bottom: 0.4rem;
+}
+@media (max-width:640px){
+.account2 .read-con{
+	position: absolute;
+    bottom: 1rem;
+}
+}
+@media (max-width:640px){
+body .account2 .read-con3{
+    position: static;
+    margin: 0.6rem 0 0.6rem 0;
+}
+}
+.read-con{
+	width: 100%;
+	padding:0 0.3rem 0 0.3rem;
+	color: #b0b0b0;
+	font-size: 0.26rem;
+  margin-top: 0.65rem;
+}
+.read-con .icon-square{
+	font-size: 0.4rem;
+    padding-left: 0.1rem;
+}
+.read-top{
+	position: relative;
+}
+.read-top .icon-right{
+	position: absolute;
+    color: red;
+    font-size: 0.1rem;
+	left: 0.37rem;
+    top: 0.14rem;
+}
+.agree{
+    position: relative;
+    right: 0.1rem;
+    top: 0.01rem;
+}
+.save-btn{
+	padding:0 0.3rem;
+	font-size: 0.36rem;
+	margin-top: 0.1rem;
+}
+.save-btn button{
+	padding: 0.26rem 0;
+	color:white;
+	background: #fca958;
+	border-radius: 0.1rem;
+	border: 0.01rem solid #e8923f;
+	text-align: center;
+	width: 100%;
+}
+/* 家长信息 */
+.parent-con{
+	width:100%;
+	box-sizing:border-box;
+	font-size: 0.3rem;
+	color:#212121;
+	padding: 0 0.22rem;
+	background:white;
+	border-bottom:0.01rem solid #e7e7e7;
+}
+.parent-con h6{
+	font-size: 0.28rem;
+	color:#aaaaaa;
+	padding:0.16rem 0;
+}
+.sex-con{
+	padding:0.2rem 0.22rem;
+	font-size: 0.3rem;
+	color:#212121;
+	background:white;
+}
+.circle{
+	width: 0.46rem;
+	height: 0.46rem;
+	border-radius:50%;
+	background:#e1e1e1;
+	border: 0.01rem solid #cdcdcd;
+}
+.circle2{
+    position: relative;
+    bottom: 0.05rem;
+}
+.girls{
+    position: relative;
+    bottom: 0.15rem;
+}
+.sex-con .icon-right{
+    position: relative;
+    left: 0.1rem;
+    color:white;
+}
+.add-bgColor{
+	background:#fca958;
+}

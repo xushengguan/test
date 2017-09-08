@@ -1,0 +1,30 @@
+.performance-con{
+	width: 100%;
+	box-sizing: border-box;
+}
+.performance-bottom{
+	width: 100%;
+	box-sizing: border-box;
+	font-size: 0.3rem;
+	color: #212121;
+	background:white;
+}
+.performance-bottom h6{
+	width: 100%;
+	font-size: 0.26rem;
+	color: #757575;
+	padding: 0.2rem 0.22rem;
+}
+.detils-con{
+	width: 100%;
+	box-sizing: border-box;
+	font-size: 0.3rem;
+	color: #212121;
+	background:white;
+	padding: 0.32rem 0.22rem;
+	border-bottom:0.01rem solid #999999;
+}
+.detils-con .icon-more{
+	font-size: 0.3rem;
+	color: #999999;
+}

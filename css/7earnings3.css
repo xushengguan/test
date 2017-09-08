@@ -1,0 +1,18 @@
+.earnings3-con{
+	width: 100%;
+	box-sizing: border-box;
+}
+.earnings3-top{
+	width: 100%;
+	box-sizing: border-box;
+	text-align: center;
+	background: white;
+	font-size: 0.3rem;
+}
+.img-money1{
+	padding: 0.85rem 0 0.76rem 0;
+}
+.earnings3-top p{
+	color: #4a4745;
+	padding-bottom: 0.92rem;
+}

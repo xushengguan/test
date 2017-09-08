@@ -1,0 +1,29 @@
+.startAct2-con{
+	width: 100%;
+	box-sizing: border-box;
+}
+.plan-con{
+	width: 100%;
+	padding: 0.2rem 0.22rem;
+	margin-bottom: 0.1rem;
+	background: white;
+}
+.plan-con img{
+	width: 100%;
+	display: block;
+	padding-bottom: 0.1rem;
+}
+.plan-con h6{
+	width: 100%;
+	color: #212121;
+	font-size: 0.28rem;
+	padding-bottom: 0.14rem;
+}
+.publish-con{
+	width: 100%;
+	font-size: 0.24rem;
+	color:#a1a1a1;
+}
+.publish-con span{
+	color:#a1a1a1;
+}

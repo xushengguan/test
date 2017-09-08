@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>（玩家房间）活动排名</title>
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<link rel="stylesheet" href="../../css/api.css">
+	<link rel="stylesheet" href="../../css/style.css">
+	<link rel="stylesheet" href="../../css/common.css">
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
+	<link rel="stylesheet" href="../../css/4promotion2.css">
+	<script src="../../script/common.js"></script>
+	<script src="../../script/my.js"></script>
+
+</head>
+
+<body>
+
+	<div id="wrap" class="flex-wrap flex-vertical">
+		<div class="header">
+			<header class="header-top">
+				<i class="iconfont icon-fanhui" onclick="go_back()"></i>
+				<span class="header-word">活动排名</span>
+			</header>
+			<div class="promotion2-con">
+        <!-- 未点击输入框之前 -->
+				<p class="input-con" style="display:none">
+					<i class="iconfont icon-search"></i>
+					<input class="on" type="text" placeholder="搜索房间内用户">
+				</p>
+        <!-- 点击输入框后的状态 -->
+				<p class="input-con fu-input hide">
+					<i class="iconfont icon-search" style="left:0.35rem;"></i>
+					<input type="text" placeholder="" class="fl" style="width:88%;text-align:left; padding:0.16rem 0.15rem 0.16rem 0.6rem;">
+					<span class="fr fu-cancel">取消</span>
+				</p>
+
+			</div>
+		</div>
+		<div id="main" class="ranking-con flex-con">
+			<div class="ranking-top hide">
+				<div class="fl">
+					<p class="ranking-num1">学令牌第一届校园争霸赛</p>
+					<p class="ranking-num2">一年级语文第三章</p>
+				</div>
+				<div class="fr">
+					<p class="ranking-num1">活动口令:3456</p>
+					<p class="ranking-num2">房间人数:6人</p>
+				</div>
+			</div>
+			<div class="ranking-bottom">
+				<h4>排名列表</h4>
+				<div class="ranking-list hide" style="border-top: 0.01rem solid #e5e5e5;">
+					<span class="img-head02 fl"><img src="../../image/head02.png" alt=""></span>
+					<div class="list-left fl">
+						<p>王同学</p>
+						<p>一年级(等级信息)</p>
+					</div>
+					<span class="list-right fr">第一名</span>
+				</div>
+				<div class="ranking-list hide">
+					<span class="img-head02 fl"><img src="../../image/head02.png" alt=""></span>
+					<div class="list-left fl">
+						<p>王同学</p>
+						<p>一年级(等级信息)</p>
+					</div>
+					<span class="list-right fr">第一名</span>
+				</div>
+				<div class="ranking-list hide">
+					<span class="img-head02 fl"><img src="../../image/head02.png" alt=""></span>
+					<div class="list-left fl">
+						<p>王同学</p>
+						<p>一年级(等级信息)</p>
+					</div>
+					<span class="list-right fr">第一名</span>
+				</div>
+				<div class="ranking-list hide">
+					<span class="img-head02 fl"><img src="../../image/head02.png" alt=""></span>
+					<div class="list-left fl">
+						<p>王同学</p>
+						<p>一年级(等级信息)</p>
+					</div>
+					<span class="list-right fr" style="color:#757575;">请继续加油</span>
+				</div>
+				<div class="ranking-list hide">
+					<span class="img-head02 fl"><img src="../../image/head02.png" alt=""></span>
+					<div class="list-left fl">
+						<p>王同学</p>
+						<p>一年级(等级信息)</p>
+					</div>
+					<span class="list-right fr">第一名</span>
+				</div>
+				<div class="ranking-list hide">
+					<span class="img-head02 fl"><img src="../../image/head02.png" alt=""></span>
+					<div class="list-left fl">
+						<p>王同学</p>
+						<p>一年级(等级信息)</p>
+					</div>
+					<span class="list-right fr">第一名</span>
+				</div>
+				<div class="ranking-list hide">
+					<span class="img-head02 fl"><img src="../../image/head02.png" alt=""></span>
+					<div class="list-left fl">
+						<p>王同学</p>
+						<p>一年级(等级信息)</p>
+					</div>
+					<span class="list-right fr" style="color:#757575;">请继续加油</span>
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			<ul class="footer">
+				<li class="date" style="width:65%;">活动时长
+					<font style="color:#fca958;">1:40:23</font>
+				</li>
+				<li style="width:35%;"><button onclick="share()">立即分享</button></li>
+			</ul>
+		</div>
+	</div>
+
+
+	<!-- fu-body -->
+	<div class="fu-body" style="display:none;">
+		<div class="quitAct">
+			<h6>退出活动</h6>
+			<p>请确认是否退出活动</p>
+			<ul>
+				<li style="border-right:0.01rem solid #d2d3d5;color:#212121;">取消</li>
+				<li style="color:#fca958;">确认</li>
+			</ul>
+		</div>
+	</div>
+	<!-- 活动排名-选择排名 fu-body-->
+	<div class="fixed-body" style="display:none">
+		<div class="search-con">
+			<p class="search-name"><span>王先生</span></p>
+		</div>
+		<div class="search-con">
+			<p class="search-name"><span>王先生1</span></p>
+		</div>
+		<div class="search-con">
+			<p class="search-name"><span>王先生</span></p>
+		</div>
+
+	</div>
+
+</body>
+
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+	apiready = function() {
+		//解决键盘弹出底部导航被顶上来的bug
+		var h = document.body.scrollHeight;
+		window.onresize = function() {
+			if (document.body.scrollHeight < h) {
+				document.getElementById('footer').style.display = "none";
+			} else {
+				document.getElementById('footer').style.display = "block";
+			}
+		};
+	}
+
+	//跳到分享页分享
+	function share(){
+			api.openWin({
+			    name: '4promotion3',
+			    url: './4promotion3.html',
+			    pageParam: {
+			        name: 'test'
+			    }
+			});
+
+	}
+</script>

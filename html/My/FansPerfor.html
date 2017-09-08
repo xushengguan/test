@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>粉丝业绩</title>
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<link rel="stylesheet" href="../../css/api.css">
+	<link rel="stylesheet" href="../../css/common.css">
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
+	<link rel="stylesheet" href="../../css/7startAct7.css">
+	<script src="../../script/common.js"></script>
+	<script src="../../script/my.js"></script>
+</head>
+
+<body>
+
+	<div class="startAct6-con">
+		<div class="salves-num1 hide" onclick="go_MyFans()">
+			<div class="num1-left fl">
+				<p class="one" style="color:#212121;">增加19人</p>
+				<p class="times">2017/06/23</p>
+			</div>
+			<div class="num1-right fr">
+				<span><label>+10</label>学分</span>
+				<i class="iconfont icon-gengduo1 icon-more"></i>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+		apiready = function(){
+
+		}
+
+		//打开我的粉丝窗口
+		function go_MyFans(){
+				api.openWin({
+				    name: 'MyFans',
+				    url: './MyFans.html',
+				    pageParam: {
+
+				    }
+				});
+
+		}
+</script>

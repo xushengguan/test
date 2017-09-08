@@ -1,0 +1,127 @@
+.salves-num1{
+	background:white;
+	padding:0.3rem 0.22rem;
+	border-bottom: 0.01rem solid #d2d3d5;
+}
+.one{
+	font-size: 0.28rem;
+	padding-bottom:0.2rem;
+}
+.times{
+	font-size: 0.24rem;
+	color: #757575;
+}
+.num1-right{
+	font-size: 0.22rem;
+	padding-top:0.2rem;
+}
+.num1-right span{
+	color: #757575;
+	display: inline;
+}
+.num1-right label{
+	font-size: 0.28rem;
+	color:#fca958;
+	padding-right: 0.1rem;
+}
+.num1-right .icon-more{
+	font-size: 0.3rem;
+	color:#cccccc;
+	display: inline;
+}
+/* 我的粉丝 */
+.startAct7-con{
+	width: 100%;
+	box-sizing: border-box;
+}
+.flowers-cons{
+	width: 100%;
+	background:white;
+	margin-bottom: 0.2rem;
+}
+.startAct7-con .haveflows{
+	font-size: 0.28rem;
+	color:#212121;
+	text-align: center;
+	padding: 0.46rem 0 0.2rem 0;
+}
+.startAct7-con .haveflows span{
+	font-size: 0.22rem;
+	color:#818181;
+}
+.flowers{
+	font-size: 0.36rem;
+	color:#fca958;
+	text-align: center;
+	padding-bottom: 0.4rem;
+}
+.flowers-ul{
+	width: 100%;
+	padding:0 0.7rem; 
+	text-align: center;
+	font-size: 0.26rem;
+}
+.flowers-ul>li{
+	float: left;
+	width: 33.3%;
+	text-align: center;
+}
+.peoples{
+	font-size: 0.22rem;
+	color:#bdbdbd;
+	padding-top: 0.16rem;
+}
+.peoples span{
+	font-size: 0.28rem;
+	color:#fca958;
+}
+.flower-btn{
+	padding:0.33rem 0.64rem 0.75rem 0.64rem;
+}
+.flower-btn button{
+	width: 100%;
+	padding:0.19rem 0; 
+	text-align: center;
+	font-size: 0.3rem;
+	color: #fca958;
+	border: 0.01rem solid #fca958;
+	border-radius: 0.06rem;
+}
+.listHead{
+	font-size: 0.28rem;
+	color:#3c3c3c;
+	padding: 0.22rem;
+	background:white;
+	width: 100%;
+}
+.flower-list{
+	font-size: 0.28rem;
+	color:#3c3c3c;
+	background:white;
+	width: 100%;
+	padding: 0.17rem 0.22rem;
+	border-bottom:0.01rem solid #dbdee5;
+	border-top:0.01rem solid #dbdee5;
+}
+.circles{
+	width: 0.86rem;
+	height: 0.86rem;
+	background: #bcbcbc;
+	border-radius:50%;
+}
+.name{
+	padding:0.2rem 0 0 0.2rem;
+}
+.care{
+	padding:0.15rem 0; 
+	width:1.16rem;
+	text-align: center;
+	color: white;
+	background:#fca958;
+	border: 0.01rem solid #fca958;
+	border-radius: 0.06rem;
+	box-shadow: 0 0.04rem 0.06rem rgba(0,0,0,0.1);
+}
+.flower-list .bg-care{
+	background:#fcd058;
+}

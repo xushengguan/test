@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+		<meta charset="UTF-8">
+		<title>充值</title>
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<link rel="stylesheet" href="../../css/api.css">
+		<link rel="stylesheet" href="../../css/common.css">
+		<link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
+		<link rel="stylesheet" href="../../css/7startAct5.css">
+		<script src="../../script/common.js"></script>
+		<script src="../../script/my.js"></script>
+</head>
+<body>
+	<!-- 充值金额 -->
+	<div class="startAct5">
+		<header class="homePage-header">
+			<h4>充值</h4>
+			<i class="iconfont icon-fanhui icon-return" onclick="go_back()"></i>
+		</header>
+		<div class="startAct5-con">
+			<p class="money-con">
+				<span>余额:<label>200学分</label></span>
+				<i class="iconfont icon-xue"></i>
+			</p>
+			<div class="exchange-con">
+				<h6 style="padding-top:0.6rem;">充值金额</h6>
+				<div class="exchange-ul hide">
+					<div class="ulHave">
+						<p>100学分</p>
+						<p>20元</p>
+					</div>
+					<div class="ulHave">
+						<p>200学分</p>
+						<p>40元</p>
+					</div>
+					<div style="margin-right:0;" class="ulHave">
+						<p>300学分</p>
+						<p>60元</p>
+					</div>
+				</div>
+				<div class="exchange-ul hide">
+					<div class="ulHave">
+						<p>350学分</p>
+						<p>70元</p>
+					</div>
+					<div class="ulHave">
+						<p>380学分</p>
+						<p>76元</p>
+					</div>
+					<div style="margin-right:0;" class="ulHave">
+						<p>400学分</p>
+						<p>80元</p>
+					</div>
+				</div>
+				<div class="exchange-ul hide">
+					<div class="ulHave">
+						<p>450学分</p>
+						<p>90元</p>
+					</div>
+					<div class="ulHave">
+						<p>480学分</p>
+						<p>96元</p>
+					</div>
+					<div style="margin-right:0;" class="ulHave">
+						<p>1000学分</p>
+						<p>200元</p>
+					</div>
+				</div>
+			</div>
+			<div class="exchange-con">
+				<h6 style="padding-top:0.1rem;">充值金额</h6>
+				<div class="exchange-ul hide">
+					<div class="ulHave">
+						<p>100学分</p>
+						<p>20元</p>
+					</div>
+					<div style="background:none;"></div>
+					<div style="margin-right:0;background:none;"></div>
+				</div>
+			</div>
+			<div class="agreen-con">
+				<p class="pay-btn"><button onclick="Pay()">立即支付40元</button></p>
+				<p class="agreens">
+					<i class="iconfont icon-weixuanzhongxianxing icon-check"></i>
+					<span>同意并接受<label>支付条款</label></span>
+				</p>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+		apiready = function(){
+
+		}
+
+		//跳到支付成功页面
+		function Pay(){
+				api.openWin({
+				    name: 'credit_recharge_success',
+				    url: './credit_recharge_success.html',
+				    pageParam: {//带参
+				        name: 'test'
+				    }
+				});
+
+		}
+</script>

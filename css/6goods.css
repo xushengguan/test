@@ -1,0 +1,29 @@
+.goods-con{
+	width: 100%;
+	box-sizing: border-box;
+    padding-bottom: 1.14rem;
+}
+.img-size{
+	display: block;
+}
+.use-date{
+	width: 100%;
+	background: white;
+	padding: 0.2rem 0.22rem 0.22rem 0.22rem;
+	border-top: 0.01rem solid #d2d3d5;
+}
+.use-date h5{
+	font-size: 0.28rem;
+	position: relative;
+	bottom: 0.06rem;
+	left: 0.1rem;
+}
+.title-line{
+	position: relative;
+	top: 0.03rem;
+}
+.use-date p{
+	font-size: 0.24rem;
+	line-height: 0.35rem;
+}
+

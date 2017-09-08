@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../css/api.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
+    <link rel="stylesheet" href="../../css/1login2.css">
+    <script src="../../script/common.js"></script>
+</head>
+
+<body>
+    <div class="login2 login">
+        <header class="login2-header hide">
+            <!-- <i class="iconfont icon-fanhui icon-back"></i> -->
+            <div class="hide">
+                <p class="header-left fl">
+                    <span class="login01">Select Identity</span>
+                    <span class="login02">选择身份</span>
+                </p>
+                <p class="fr img-triangle01"><img src="../../image/triangle01.png" alt="" class="img-size"></p>
+            </div>
+        </header>
+        <div class="login-con">
+            <div class="login-content hide" onclick="go_ParentStudent(1)">
+                <span class="fl">家长和学生</span>
+                <i class="iconfont icon-gengduo1 icon-more fr"></i>
+            </div>
+            <div class="login-content hide" onclick="go_ParentStudent(2)">
+                <span class="fl">班主任</span>
+                <i class="iconfont icon-gengduo1 icon-more fr"></i>
+            </div>
+            <div class="login-content hide" onclick="go_ParentStudent(3)">
+                <span class="fl">联盟商家</span>
+                <i class="iconfont icon-gengduo1 icon-more fr"></i>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+
+    }
+
+    //跳到相应身份注册页
+    function go_ParentStudent(index) {
+        api.openWin({
+            name: 'goRegister',
+            url: './1login3.html',
+            pageParam: {//传参到跳转的页面
+                index: index
+            }
+        });
+
+    }
+</script>

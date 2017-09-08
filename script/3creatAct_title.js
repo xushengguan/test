@@ -1,0 +1,10 @@
+document.writeln("<header class=\'creatAct-header login2\' onclick=\'go_back()\'>");
+document.writeln("			<i class=\'iconfont icon-fanhui icon-back\'></i>");
+document.writeln("			<div class=\'headerAct-con hide\'>");
+document.writeln("				<div class=\'headerAct-left fl\'>");
+document.writeln("					<span>创建活动</span>");
+document.writeln("					<span>Post activity</span>");
+document.writeln("				</div>");
+document.writeln("				<span class=\'img-head01 fr\'><img src=\'../../image/head01.png\' alt=\'\' class=\'img-size\'></span>");
+document.writeln("			</div>");
+document.writeln("		</header>");

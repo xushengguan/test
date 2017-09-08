@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>活动汇</title>
+    <link rel="stylesheet" href="../css/api.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
+    <link rel="stylesheet" href="../css/5enter.css">
+    <script src="../script/common.js"></script>
+    <style media="screen">
+        #act_header{height: 118px;}
+    </style>
+</head>
+
+<body>
+    <!-- 活动汇-全部报名 -->
+    <div id="act_header">
+        <header class="enter-header">
+            <h5>活动汇</h5>
+        </header>
+        <ul class="hide enter-ul" id="Tag">
+            <li class="addColor" onclick="btn_list(this)">全部活动</li>
+            <li onclick="btn_list(this)">已报名</li>
+        </ul>
+    </div>
+
+    <div id="content" class=""></div>
+
+
+
+</body>
+
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+        if (api.pageParam.index == 1) {
+            activtiyGroup();
+        }
+        //监听事件，支持系统事件和自定义事件
+        api.addEventListener({
+            name: 'myEvent'
+        }, function(ret, err){
+            if( ret.value.index == 1 ){
+                 activtiyGroup();
+            }else{
+                api.setFrameGroupAttr({
+                    name: 'activityGroup',
+                    hidden: true
+                });
+            }
+        });
+
+    }
+
+    function activtiyGroup(){
+        var TagLis = $api.domAll("#Tag li");
+        frames = [];
+        var top = $api.dom("#act_header").offsetHeight;
+
+        for (var i = 0; i < TagLis.length; i++) {
+            frames.push({
+                name:'activity'+i,
+                url:'./activity/activity'+i+'.html',
+                baColor:'rgba(0,0,0,.2)'
+            })
+        }
+
+        api.openFrameGroup ({
+            name: 'activityGroup',
+            background: '#fff',
+            scrollEnabled: false,
+            rect: {
+                 x: 0,
+                 y: top,
+                 w: api.winWidth,
+                 h: api.winHeight - 179
+            },
+            index: 0,
+            frames: frames
+        }, function(ret, err){
+            if( ret ){
+
+                //  alert( JSON.stringify( ret ) );
+            }else{
+                //  alert( JSON.stringify( err ) );
+            }
+        });
+
+    }
+
+    //随意切换导航
+    function btn_list(tag) {
+
+        if (tag == $api.dom("#Tag li.addColor")) { //如果点击的dom等于激活的dom就不执行
+            return;
+        };
+        var TagLis = $api.domAll('#Tag li');
+        index = 0;
+        for (var i = 0; i < TagLis.length; i++) {
+            if (tag == TagLis[i]) {
+                index = i;
+            } else {
+                $api.removeCls(TagLis[i], 'addColor');
+            }
+        };
+        $api.addCls(TagLis[index], 'addColor');
+
+        //设置 frame 组当前可见 frame
+        api.setFrameGroupIndex({
+            name: 'activityGroup',
+            index: index,
+        });
+
+    }
+
+</script>

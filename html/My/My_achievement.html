@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+		<meta charset="UTF-8">
+		<title>我的业绩</title>
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<link rel="stylesheet" href="../../css/api.css">
+		<link rel="stylesheet" href="../../css/common.css">
+		<link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
+		<link rel="stylesheet" href="../../css/7performance.css">
+		<script src="../../script/common.js"></script>
+		<script src="../../script/my.js"></script>
+</head>
+<body>
+	<div class="performance">
+		<header class="homePage-header" onclick="go_back()">
+			<h4>我的业绩</h4>
+			<i class="iconfont icon-fanhui icon-return"></i>
+		</header>
+		<div class="performance-con">
+			<div class="performance-top">
+				<img src="../../image/gold02.png" alt="" class="img-gold02">
+				<p>当前学分:480分</p>
+				<ul class="performance-ul hide">
+					<li>
+						<span class="golds">铜牌</span>
+						<p class="rate-con">
+							<span class="rate"></span>
+							<span class="circle"></span>
+						</p>
+					</li>
+					<li>
+						<span class="golds">银牌</span>
+						<p class="rate-con">
+							<span class="rate"></span>
+							<span class="circle"></span>
+						</p>
+					</li>
+					<li>
+						<span class="golds">金牌</span>
+						<p class="rate-con">
+							<span class="rate"></span>
+							<span class="circle"></span>
+						</p>
+					</li>
+					<li>
+						<span class="golds">砖石</span>
+						<p class="rate-con">
+							<span class="rate"></span>
+							<span class="circle"></span>
+						</p>
+					</li>
+					<li>
+						<span class="golds">股东</span>
+						<p class="rate-con">
+							<span class="circle lastCircle"></span>
+						</p>
+					</li>
+				</ul>
+				<p>差30学分升至白金会员</p>
+			</div>
+			<div class="performance-bottom">
+				<h6>业绩详单</h6>
+				<div class="detils-con hide" onclick="go_detail(1)">
+					<span class="fl products">产品销售</span>
+					<i class="iconfont icon-gengduo1 icon-more fr"></i>
+				</div>
+				<div class="detils-con hide" onclick="go_detail(2)">
+					<span class="fl products">粉丝业绩</span>
+					<i class="iconfont icon-gengduo1 icon-more fr"></i>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+		apiready = function(){
+
+		}
+
+		//打开window
+		function go_detail(index){
+				api.openWin({
+				    name: 'title',
+				    url: './7startAct_title.html',
+				    pageParam: {
+				        index: index
+				    }
+				});
+
+		}
+</script>
