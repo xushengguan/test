@@ -26,16 +26,15 @@
 </head>
 <body>
 <div id="wrap" class="flex-wrap flex-vertical">
-
     <div id="main" class="flex-con">
 
     </div>
     <div id="footer" class="border-t">
         <ul class="flex-wrap" >
-            <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con active" >个人中心</li>
-            <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con" >活动汇</li>
-            <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con" >学客圈</li>
-            <li tapmode="hover" onclick="randomSwitchBtn( this );" class="flex-con" >商城</li>
+            <li tapmode="hover" onclick="randomSwitchBtn(0);" class="flex-con active" >个人中心</li>
+            <li tapmode="hover" onclick="randomSwitchBtn(1);" class="flex-con" >活动汇</li>
+            <li tapmode="hover" onclick="randomSwitchBtn(2);" class="flex-con" >学客圈</li>
+            <li tapmode="hover" onclick="randomSwitchBtn(3);" class="flex-con" >商城</li>
         </ul>
     </div>
 </div>
@@ -54,117 +53,41 @@
             color: '#fcd058'
         });
 
-        funIniGroup();
-    }
-
-    function funIniGroup(){
-        var footerLis = $api.domAll('#footer li'),
-            footerHeight = $api.dom('#footer').offsetHeight,
-            frames = [];
-        if (api.pageParam.pageIndex == 1) {//联盟商家发起活动页面的传参
-            var indexTag = api.pageParam.pageIndex;
-            go_EventSink(indexTag);
-            for (var i = 0,len = footerLis.length; i < len; i++) {
-                frames.push({
-                    name: 'frame'+i,
-                    url: './html/frame'+i+'.html',
-                    bgColor : 'rgba(0,0,0,.2)',
-                    bounces:true,
-                    pageParam:{
-                        index:indexTag,
-                        footerHeight:footerHeight
-                    }
-                })
-            }
-
-            //打开 frame 组,frame 组打开后，当前页面加载完成后，页面会预加载后面指定个数页面
-            api.openFrameGroup({
-                name: 'group',
-                scrollEnabled: false,
-                rect: {
-                    x: 0,
-                    y: 'auto',
-                    w: api.winWidth,
-                    h: $api.dom('#main').offsetHeight
-                },
-                index: 1,
-                frames: frames
-            }, function (ret, err) {
-
-            });
-        }else{
-            for (var i = 0,len = footerLis.length; i < len; i++) {
-                frames.push({
-                    name: 'frame'+i,
-                    url: './html/frame'+i+'.html',
-                    bgColor : 'rgba(0,0,0,.2)',
-                    bounces:true,
-                    pageParam:{
-                        index:indexTag,
-                        footerHeight:footerHeight
-                    }
-                })
-            }
-
-            //打开 frame 组,frame 组打开后，当前页面加载完成后，页面会预加载后面指定个数页面
-            api.openFrameGroup({
-                name: 'group',
-                scrollEnabled: false,
-                rect: {
-                    x: 0,
-                    y: 0,
-                    w: api.winWidth,
-                    h: $api.dom('#main').offsetHeight
-                },
-                index: 0,
-                frames: frames
-            }, function (ret, err) {
-                console.log(JSON.stringify(ret))
-            });
-       }
+        footerHeight = $api.dom("#footer").offsetHeight;
+        randomSwitchBtn(0);//默认打开第一个组
     }
 
     // 随意切换按钮
-    function randomSwitchBtn( tag ) {
-        if( tag == $api.dom('#footer li.active') )return;
-        var eFootLis = $api.domAll('#footer li'),
-            index = 0;
-        for (var i = 0,len = eFootLis.length; i < len; i++) {
-            if( tag == eFootLis[i] ){
-                index = i;
-            }else{
-                $api.removeCls(eFootLis[i], 'active');
-            }
-        }
-        $api.addCls( eFootLis[index], 'active');
-
-        //设置 frame 组当前可见 frame
-        api.setFrameGroupIndex({
-            name: 'group',
-            index: index
-        });
-
-        // //将任意一个自定义事件广播出去，该事件可在任意页面通过 addEventListener 监听收到。
-        api.sendEvent({
-            name: 'myEvent',
-            extra: {
-                index: index
-            }
-        });
-    }
-
-    //走到相应的活动汇页面
-    function go_EventSink(indexTag){
-        if( indexTag == $api.dom('#footer li.active') )return;
+    function randomSwitchBtn(index) {
         var eFootLis = $api.domAll('#footer li');
         for (var i = 0,len = eFootLis.length; i < len; i++) {
-            $api.removeCls(eFootLis[i], 'active');
+            if( index == i ){
+                $api.addCls( eFootLis[i], 'active');
+                api.openFrame({
+                    name: 'frame'+i,
+                    url: './html/frame'+i+'.html',
+                    bounces: false,
+                    bgColor: '#f2f2f2',
+                    vScrollBarEnabled: false,
+                    hScrollBarEnabled: false,
+                    rect: {
+                        x: 0,
+                        y: 0,
+                        w: 'auto',
+                        h: api.frameHeight - footerHeight
+                   },
+                   reload:true
+               });
+            }else{
+                $api.removeCls(eFootLis[i], 'active');
+                api.setFrameAttr({
+                    name: 'frame'+i,
+                    hidden: true
+                });
+            }
+
         }
-        $api.addCls( eFootLis[indexTag], 'active');
-        //设置 frame 组当前可见 frame
-        api.setFrameGroupIndex({
-            name: 'group',
-            index: indexTag
-        });
+
     }
+
 </script>

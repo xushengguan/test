@@ -1,17 +1,419 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>文档</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
-    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <title>学分商城</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css" />
+    <script src="../script/My.js"></script>
     <style>
-        .empty{ text-align: center; padding: 120px 0; }
+        header {
+            position: relative;
+        }
+
+        .header {
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+            color: #212121;
+            background: #fcd058;
+            overflow: hidden;
+            font-weight: bold;
+        }
+
+        .header em {
+            display: block;
+            width: 18px;
+            height: 18px;
+            background: url(../image/service.png) no-repeat center;
+            background-size: contain;
+            float: right;
+        }
+        /*个人信息区*/
+
+        .personal_title {
+            background: #fff;
+            padding: 6px 25px;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            position: relative;
+            margin-bottom: 5px;
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+        }
+
+        .personal_title .per_id_pic {
+            width: 33px;
+            height: 33px;
+            border-radius: 100%;
+            -webkit-border-radius: 100%;
+            -moz-border-radius: 100%;
+            position: absolute;
+            top: 6px;
+            left: 25px;
+            overflow: hidden;
+        }
+
+        .personal_title .per_id_pic img {
+            width: 100%;
+        }
+
+        .personal_title .rt_msgbox {
+            padding-left: 40px;
+            width: 100%;
+        }
+
+        .rt_msgbox .name_vip {
+            line-height: 18px;
+        }
+
+        .rt_msgbox .name_vip .id_name {
+            color: #2196f3;
+            font-size: 12px;
+        }
+
+        .rt_msgbox .name_vip .cret_num {
+            float: right;
+            color: #5c5c5c;
+            font-size: 12px;
+        }
+
+        .rt_msgbox .name_vip .cret_num em {
+            font-size: 13px;
+            color: #ff5252;
+        }
+
+        .bt_msg {
+            font-size: 10px;
+            color: #999;
+            overflow: hidden;
+        }
+
+        .bt_msg span {
+            font-size: 10px;
+            color: #999;
+        }
+
+        .bt_msg .credit_date {
+            float: right;
+        }
+
+        .bt_msg .credit_date em {
+            font-size: 10px;
+            color: #999;
+        }
+        /*功能图标*/
+
+        .credit_icon {
+            background: #fff;
+            padding: 15px 0;
+            margin-bottom: 5px;
+        }
+
+        .credit_icon .credit_icon_btn {
+            display: block;
+            text-align: center;
+            color: #5c5c5c;
+            font-size: 10px;
+            float: left;
+            width: 25%;
+        }
+
+        .credit_icon .credit_icon_btn .icon1 {
+            display: block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 50%;
+            -webkit-border-radius: 50%;
+            background: #b7dc68;
+            margin: 0 auto;
+        }
+
+        .credit_icon .credit_icon_btn .icon1.icon2 {
+            background: #fd9f4b;
+        }
+
+        .credit_icon .credit_icon_btn .icon1.icon3 {
+            background: #547adb;
+        }
+
+        .credit_icon .credit_icon_btn .icon1.icon4 {
+            background: #face57;
+        }
+
+        .credit_icon .credit_icon_btn p {
+            color: #5c5c5c;
+            font-size: 10px;
+            padding-top: 6px;
+        }
+        /*热门商品区*/
+
+        .hot_goods {
+            margin-bottom: 5px;
+        }
+
+        .hot_goods .hot_title {
+            height: 28px;
+            line-height: 28px;
+            margin-bottom: 1px;
+            text-align: center;
+            color: #ff5252;
+            font-size: 12px;
+            background: #fff;
+        }
+
+        .hot_goods .hot_title.discount {
+            color: #2196f3;
+            font-size: 12PX;
+        }
+
+        .hot_goods .good_box {
+            background: #fff;
+            padding: 0 0 25px 0;
+        }
+
+        .good_box .goodLink {
+            display: block;
+            width: 33.33%;
+            height: 33.33%;
+            float: left;
+            padding-top: 12px;
+        }
+
+        .good_box .goodLink .good_img {
+            width: calc(100% - 50px);
+            height: calc(100% - 50px);
+            overflow: hidden;
+            margin: 0 25px;
+        }
+
+        .good_box .goodLink .good_img img {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .goodLink .mg_txt {
+            margin-left: 25px;
+            line-height: 16px;
+            width: calc(100% - 50px);
+        }
+
+        .goodLink .mg_txt .shop {
+            font-size: 9px;
+            color: #999;
+        }
+
+        .goodLink .mg_txt .good_name {
+            color: #5c5c5c;
+            font-size: 11px;
+        }
+
+        .goodLink .mg_txt .credit {
+            color: #ff5252;
+            font-size: 10px;
+        }
+
+        .pic {
+            width: 100%;
+            height: 150px;
+        }
+
+        .pic img {
+            display: block;
+            width: 100%;
+        }
     </style>
 </head>
-<body>
-    <div class="empty">文档</div>
+
+<body style="background:#f2f2f2;">
+    <div id="wrap" class="flex-wrap flex-vertical">
+        <header>
+            <div class="header">
+                学分商城
+                <em></em>
+            </div>
+        </header>
+        <div id="main" class="flex-con">
+            <div class="pic">
+                <img src="../image/pic10.jpg" alt="">
+            </div>
+            <!-- 功能图标区 -->
+            <div class="credit_icon clearfix">
+                <a href="javascript:;" class="credit_icon_btn">
+                    <span class="icon1">
+                <i class="icon iconfont icon-wodenongzuowu" style="color: #fff; font-size: 20px;"></i>
+              </span>
+                    <p>特色农产品</p>
+                </a>
+                <a href="javascript:;" class="credit_icon_btn">
+                    <span class="icon1 icon2">
+                <i class="icon iconfont icon-zixunwenzitubiao051" style="font-size: 20px; color: #fff"></i>
+              </span>
+                    <p>农作物认购</p>
+                </a>
+                <a href="javascript:;" class="credit_icon_btn">
+                    <span class="icon1 icon3"><i class="icon iconfont icon-baoji" style="font-size: 20px; color: #fff"></i></span>
+                    <p>教育培训</p>
+                </a>
+                <a href="javascript:;" class="credit_icon_btn">
+                    <span class="icon1 icon4"><i class="icon iconfont icon-qianbi" style="font-size: 20px; color: #fff"></i></span>
+                    <p>令币</p>
+                </a>
+            </div>
+            <!-- 热门商品区 -->
+            <div class="hot_goods">
+                <div class="hot_title">
+                    <i class="icon iconfont icon-remen" style="font-size: 15px; color: #ff5252"></i> 热门商品
+                </div>
+                <div class="good_box clearfix" id="hot_goods">
+                    <a href="javascript:;" class="goodLink" onclick="go_goodsDetail()">
+                        <div class="good_img">
+                            <img src="./images/img_show.jpg" alt="">
+                        </div>
+                        <div class="mg_txt">
+                            <div class="shop">
+                                新东方
+                            </div>
+                            <div class="good_name">中国第一鸡</div>
+                            <div class="credit">100学分</div>
+                        </div>
+                    </a>
+                    <a href="javascript:;" class="goodLink">
+                        <div class="good_img">
+                            <img src="./images/img_show.jpg" alt="">
+                        </div>
+                        <div class="mg_txt">
+                            <div class="shop">
+                                新东方
+                            </div>
+                            <div class="good_name">中国第一鸡</div>
+                            <div class="credit">100学分</div>
+                        </div>
+                    </a>
+                    <a href="javascript:;" class="goodLink">
+                        <div class="good_img">
+                            <img src="./images/img_show.jpg" alt="">
+                        </div>
+                        <div class="mg_txt">
+                            <div class="shop">
+                                新东方
+                            </div>
+                            <div class="good_name">中国第一鸡</div>
+                            <div class="credit">100学分</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 新品优惠 -->
+            <div class="hot_goods">
+                <div class="hot_title" style="color:#2196f3">
+                    <i class="icon iconfont icon-xinpin" style="font-size: 15px;"></i> 新品优惠
+                </div>
+                <div class="good_box clearfix">
+                    <a href="javascript:;" class="goodLink">
+                        <div class="good_img">
+                            <img src="./images/img_show.jpg" alt="">
+                        </div>
+                        <div class="mg_txt">
+                            <div class="shop">
+                                新东方
+                            </div>
+                            <div class="good_name">中国第一鸡</div>
+                            <div class="credit">100学分</div>
+                        </div>
+                    </a>
+                    <a href="javascript:;" class="goodLink">
+                        <div class="good_img">
+                            <img src="./images/img_show.jpg" alt="">
+                        </div>
+                        <div class="mg_txt">
+                            <div class="shop">
+                                新东方
+                            </div>
+                            <div class="good_name">中国第一鸡</div>
+                            <div class="credit">100学分</div>
+                        </div>
+                    </a>
+                    <a href="javascript:;" class="goodLink">
+                        <div class="good_img">
+                            <img src="./images/img_show.jpg" alt="">
+                        </div>
+                        <div class="mg_txt">
+                            <div class="shop">
+                                新东方
+                            </div>
+                            <div class="good_name">中国第一鸡</div>
+                            <div class="credit">100学分</div>
+                        </div>
+                    </a>
+
+                    <a href="javascript:;" class="goodLink">
+                        <div class="good_img">
+                            <img src="./images/img_show.jpg" alt="">
+                        </div>
+                        <div class="mg_txt">
+                            <div class="shop">
+                                新东方
+                            </div>
+                            <div class="good_name">中国第一鸡</div>
+                            <div class="credit">100学分</div>
+                        </div>
+                    </a>
+                    <a href="javascript:;" class="goodLink">
+                        <div class="good_img">
+                            <img src="./images/img_show.jpg" alt="">
+                        </div>
+                        <div class="mg_txt">
+                            <div class="shop">
+                                新东方
+                            </div>
+                            <div class="good_name">中国第一鸡</div>
+                            <div class="credit">100学分</div>
+                        </div>
+                    </a>
+                    <a href="javascript:;" class="goodLink">
+                        <div class="good_img">
+                            <img src="./images/img_show.jpg" alt="">
+                        </div>
+                        <div class="mg_txt">
+                            <div class="shop">
+                                新东方
+                            </div>
+                            <div class="good_name">中国第一鸡</div>
+                            <div class="credit">100学分</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+    apiready = function() {
+
+    };
+
+    //跳到商品详情
+    function go_goodsDetail(){
+        api.openWin({
+            name: 'credit_goodDetail',
+            url: './mall/credit_goodDetail.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+</script>
+
 </html>

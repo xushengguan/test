@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>确认订单</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/common.css">
+	<link rel="stylesheet" type="text/css" href="../../css/6address2.css" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css"/>
+	<script src="../../script/My.js"></script>
+	<style media="screen">
+		.edit_main {
+			background: #fff;
+		}
+
+		.edit_main li {
+			padding: 14px 20px;
+			border-bottom: 1px solid #f4f4f4;
+			position: relative;
+		}
+
+		.edit_main li label {
+			width: 15%;
+			color: #5c5c5c;
+			font-size: 13px;
+			vertical-align: top;
+		}
+
+		.edit_main li input {
+			width: 85%;
+			float: right;
+			color: #5c5c5c;
+			font-size: 13px;
+			padding: 2px 0;
+		}
+
+		.edit_main li span {
+			color: #5c5c5c;
+			font-size: 13px;
+			padding-left: 20px;
+		}
+
+		.empty {
+			width: 100%;
+			height: 70px;
+			position: relative;
+		}
+
+		.empty a {
+			display: block;
+			position: absolute;
+			right: 20px;
+			top: 24px;
+			font-size: 13px;
+			color: #fcd058;
+		}
+
+		.btn_save {
+			padding: 0 20px;
+		}
+
+		.btn_save a {
+			display: block;
+			width: 100%;
+			height: 45px;
+			line-height: 45px;
+			color: #fff;
+			text-align: center;
+			border-radius: 5px;
+			-webkit-border-radius: 5px;
+			-moz-border-radius: 5px;
+			background: #fcd058;
+		}
+	</style>
+</head>
+
+<body>
+	<header class="homePage-header">
+		<h4>编辑收货地址</h4>
+		<i class="iconfont icon-fanhui icon-return"></i>
+	</header>
+	<form>
+		<ul class="edit_main clearfix">
+			<li>
+				<label for="">收货人</label>
+				<input type="text" placeholder="请输入收货人姓名">
+			</li>
+			<li>
+				<label for="">电话</label>
+				<input type="text" placeholder="请输入您的联系方式">
+			</li>
+			<li>
+				<label for="">地址</label>
+				<input type="text" placeholder="请输入您的收货地址">
+			</li>
+			<li>
+				<i class="iconfont icon-square" style="color: #5c5c5c; font-size: 20px; position: absolute;
+    left: 10px; top:12px;"></i>
+				<i class="iconfont icon-fangxingxuanzetianchong" style="color: #fca958; font-size: 20px; position: absolute;
+		left: 15px; top:12px; display:none"></i>
+				<span>设为默认地址</span>
+			</li>
+		</ul>
+	</form>
+	<div class="empty">
+		<a href="javascript:;">删除地址</a>
+	</div>
+	<div class="btn_save">
+		<a href="javascript:;">保存并使用</a>
+	</div>
+
+</body>
+
+</html>

@@ -1,45 +1,45 @@
 .address-con{
 	width: 100%;
 	box-sizing: border-box;
-	margin-bottom:0.1rem;
+	margin-bottom:5px;
 }
 .address1-con{
 	width: 100%;
-	padding: 0 0.22rem;
+	padding: 0 10px;
 	background: white;
 }
 .address1-top{
 	width: 100%;
-	font-size: 0.26rem;
+	font-size: 13px;
 	color: #212121;
-	padding:0.4rem 0 0.23rem 0;
+	padding:20px 0 11px 0;
 }
 .adds{
-	font-size: 0.22rem;
+	font-size: 10px;
 	color:#a1a1a1;
-	line-height: 0.34rem;
-	padding-bottom: 0.06rem;
-	margin-bottom: 0.02rem;
+	line-height: 17px;
+	padding-bottom: 3px;
+	margin-bottom: 1px;
 }
 .adds label{
 	color:#fca958;
 }
 .edit-con{
-	font-size: 0.24rem;
-	color:#a1a1a1;
-	padding: 0.18rem 0;
-   	padding:0.18rem 0.22rem 0.18rem 0.22rem;
+		font-size: 12px;
+		color:#a1a1a1;
+		padding: 9px 0;
+   	padding:9px 10px 9px 10px;
    	background: white;
-   	margin-bottom:0.1rem;
+   	margin-bottom:5px;
 }
 .edit-left span{
-	position: relative;
-    bottom: 0.07rem;
+  	position: relative;
+    bottom: 3px;
 }
 .right-con{
 	display: inline;
 }
 .edit-right .icon-edit{
-	font-size: 0.45rem;
+	font-size: 22px;
 	color:#757575;
 }

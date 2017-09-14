@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>商品详情</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css" />
+	<script src="../../script/My.js"></script>
+</head>
+<style>
+	.img {
+		width: 100%;
+		position: relative;
+		overflow: hidden;
+		height: 150px;
+	}
+
+	.img img {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	.img .fix {
+		width: 100%;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		height: 34px;
+		line-height: 34px;
+		background: rgba(0, 0, 0, .5);
+		z-index: 99px;
+	}
+
+	.img .fix p {
+		margin-left: 25px;
+		margin-right: 10px;
+		color: #fff;
+		font-size: 12px;
+		float: left;
+	}
+
+	.img .fix p span {
+		padding: 0 5px;
+		color: #fff;
+		font-size: 12px;
+	}
+
+	.img .fix .goodsName {
+		float: right;
+		color: #fff;
+		font-size: 12px;
+		margin-right: 25px;
+		margin-left: 10px;
+	}
+
+	.act_content {
+		background: #fff;
+		padding: 14px 25px;
+		color: #5c5c5c;
+		margin-bottom: 5px;
+	}
+
+	.act_content .title {
+		font-size: 14px;
+		line-height: 14px;
+	}
+	/*==============边框===============*/
+
+	.act_content .title .before {
+		display: inline-block;
+		width: 8px;
+		height: 14px;
+		background: url(../../image/lines.png)no-repeat center;
+		background-size: 2px 10px;
+		vertical-align: middle;
+	}
+
+	/*==============边框===============*/
+
+	.act_content .box_main {
+		font-size: 12px;
+		color: #5c5c5c;
+		padding: 10px 10px 0 10px;
+	}
+
+	.act_content .role_box_main {
+		padding: 5px 10px 0 10px;
+		;
+	}
+	/*========================底部========================*/
+	/*学分不足*/
+
+	#nopay_footer {
+		width: 100%;
+		height: 55px;
+		line-height: 55px;
+		background: #fff;
+		overflow: hidden;
+		box-shadow: 0 -2px 5px rgba(0, 0, 0, .1);
+		-webkit-box-shadow: 0 -2px 5px rgba(0, 0, 0, .1);
+		-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
+		position: fixed;
+		bottom: 0;
+		left: 0;
+	}
+
+	#nopay_footer .fo_left {
+		float: left;
+		width: 70%;
+	}
+
+	#nopay_footer .fo_left .lf_txt {
+		font-size: 13px;
+		color: #999;
+		padding-left: 25px;
+		padding-right: 2%;
+	}
+
+	#nopay_footer .fo_left .lf_txt em {
+		font-size: 15px;
+		color: #fca958;
+	}
+
+	#nopay_footer .btn_pay {
+		float: right;
+		width: 30%;
+		height: 55px;
+		line-height: 55px;
+		text-align: center;
+		color: #fff;
+		font-size: 15px;
+		background: #ff5252;
+	}
+
+	#nopay_footer .btn_pay.submit {
+		background: #fca958;
+	}
+	/*======================底部==========================*/
+</style>
+
+<body style="background:#f2f2f2;">
+	<div id="wrap">
+		<div id="main" style="margin-bottom: 55px;">
+
+			<div class="img">
+				<img src="../../image/pic10.jpg" alt="">
+				<!-- <div class="fix">
+					<p>免费品尝南山十一鸡
+					</p>
+					<div class="goodsName">南山十一鸡</div>
+				</div> -->
+			</div>
+
+			<!-- 使用日期 -->
+			<div class="act_content">
+				<div class="title">
+					<span class="before"></span>
+					<span class="text">商品名称</span>
+				</div>
+				<div class="box_main">
+					<p class="introduce">
+						南山十一鸡
+					</p>
+				</div>
+			</div>
+
+			<!-- 使用规则 -->
+			<div class="act_content">
+				<div class="title">
+					<span class="before"></span>
+					<span class="text">商品介绍</span>
+					<div class="box_main">
+						<p class="introduce">
+							春，你可知有多少人苦苦把你追寻，有多少人跋山涉水只为寻找你停留过的痕迹，又有多少作家为你写下优美的句儿。因为你是光明，是美好，还是希望
+						</p>
+					</div>
+				</div>
+
+			</div>
+
+			<!-- 商品介绍 -->
+			<div class="act_content">
+				<div class="title">
+					<span class="before"></span>
+					<span class="text">商品详情</span>
+				</div>
+				<div class="box_main">
+					<p class="introduce">
+						春，你可知有多少人苦苦把你追寻，有多少人跋山涉水只为寻找你停留过的痕迹，又有多少作家为你写下优美的句儿。因为你是光明，是美好，还是希望
+					</p>
+				</div>
+			</div>
+
+
+		</div>
+
+
+		<!-- ========================底部========================== -->
+		<!-- 提交订单 -->
+		<div id="nopay_footer">
+			<div class="fo_left">
+				<span class="lf_txt">单价：<em>50学分</em></span>
+			</div>
+			<div class="btn_pay submit">提交订单</div>
+		</div>
+		<!-- ========================底部========================== -->
+
+
+	</div>
+</body>
+
+</html>

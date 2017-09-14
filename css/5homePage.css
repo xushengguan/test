@@ -3,101 +3,106 @@
 	box-sizing: border-box;
 }
 .header-msg{
-	background:url('../images/bg02.png') no-repeat;
+	background:url('../image/bg02.png') no-repeat;
 	background-size: 100% 100%;
 }
 .msg-con{
 	color:#212121;
-	font-size: 0.24rem;
-	padding: 0.1rem 0.22rem 0.4rem 0.32rem;
+	font-size: 12px;
+	padding: 5px 10px 20px 16px;
 	position: relative;
+	overflow: hidden;
 }
-.msg-pic{
-	width:1.2rem;
-	height: 1.2rem;
-	line-height: 1.2rem;
+	.msg-pic{
+	width:60px;
+	height: 60px;
+	line-height: 60px;
 	background:white;
 	border-radius: 50%;
+	float: left;
 }
 .msg-name{
-	padding: 0.2rem 0.3rem 0 0.3rem;
+	padding: 10px 10px 0 10px;
+	float:left;
 }
 .rank{
-	font-size: 0.28rem;
+	font-size: 14px;
 	display:block;
-    padding-bottom: 0.2rem;
+    padding-bottom: 10px;
 }
 .rank label{
-	font-size: 0.24rem;
-	padding-left: 0.1rem;
+	font-size: 12px;
+	padding-left: 5px;
 }
 .follower{
-	font-size: 0.24rem;
+	font-size: 12px;
 }
 .watchs{
-	width:1.1rem;
+	width:55px;
 	background:#3c3c3d;
 	color:white;
-	border-radius:0.04rem;
+	border-radius:2px;
 	position: absolute;
-	right: 0.22rem;
-	bottom: 0.4rem;
+	right: 10px;
+	bottom: 20px;
+	text-align: center;
 }
 .watchs span{
-	padding:0.14rem 0;
-	font-size: 0.26rem;
+		padding:7px 0;
+		font-size: 13px;
     position: relative;
-    right: 0.07rem;
+    right:3px;
 }
 .watchs .icon-add{
-	font-size: 0.4rem;
+	font-size: 20px;
 	color:white;
-    position: relative;
-    top: 0.05rem;
+  position: relative;
+  top: 2px;
 }
 .homePage-con{
 	width: 100%;
 }
 .publish-con{
-	width: 100%;
 	background: white;
-	padding: 0 0.22rem;
-	margin-bottom: 0.04rem;
+	height: 40px;
+	line-height: 40px;
+	margin-bottom: 2px;
+	padding:0 10px;
+	overflow: hidden;
 }
 .publish-con .icon-flane{
-	font-size: 0.5rem;
-	color:#212121;
-    position: relative;
-    top: 0.18rem;
+		font-size: 25px;
+		color:#212121;
+		float: left;
 }
 .publish-con h5{
-	font-size: 0.26rem;
+	font-size: 13px;
 	color:#212121;
-	padding: 0.26rem 0;
+	float: left;
+	padding-left: 10px;
 }
 .publish-contents{
-	width: 100%;
 	background: white;
-	margin-bottom: 0.04rem;
-	padding:0.16rem 0.22rem;
+	margin-bottom: 2px;
+	padding:8px 10px;
 }
 .publish-contents h6{
-	font-size: 0.24rem;
+	font-size: 12px;
 	color:#bdbdbd;
-	padding-bottom:0.2rem;
+	padding-bottom:10px;
 }
 .publish-contents p{
-	font-size: 0.26rem;
+	font-size: 13px;
 	color:#212121;
-	line-height:0.36rem;
+	line-height:18px;
 }
 .publish-ul{
-	padding: 0.2rem 1.2rem 0 0;
+	padding: 10px 60px 0 0;
 }
 .publish-ul>li{
 	float: left;
-	width:1.1rem;
-	height:1.1rem;
+	width:55px;
+	height:55px;
 	background:#02a685;
-	margin: 0 0.05rem 0.05rem 0;
+	margin: 0 2px 2px 0;
 }

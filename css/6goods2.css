@@ -1,25 +1,25 @@
 .goods2-con{
-	padding-bottom:2.54rem;
+	padding-bottom:5px;
 }
 .addAdress-con{
 	width: 100%;
 	background: white;
 	box-sizing: border-box;
-	padding: 0.44rem 0.22rem 0.56rem 0.22rem; 
+	padding: 22px 11px 28px 11px;
 }
 .addAdress-top{
 	width: 100%;
-	padding:0 0.56rem 0.25rem 0.56rem;
+	padding:0 28px 12px 28px;
 }
 .addAdress-top span{
-	font-size: 0.28rem;
+	font-size: 14px;
 	color: #212121;
 }
 .addres-msg{
 	position: relative;
 }
 .addres-msg .icon-location{
-	font-size: 0.5rem;
+	font-size: 25px;
 	color:#999999;
 	position: absolute;
 	left: 0;
@@ -27,101 +27,100 @@
 }
 .goods-addres{
 	color:#656565;
-	font-size: 0.26rem;
-	line-height: 0.4rem;
-	padding:0 0.48rem 0 0.56rem;
+	font-size: 13px;
+	line-height: 20px;
+	padding:0 24px 0 28px;
 }
 .addres-msg .icon-more{
-	font-size: 0.35rem;
+	font-size: 17px;
 	color:#999999;
 	position: absolute;
 	right: 0;
-	top: 0.15rem;
+	top: 7px;
 }
 .goods2-con img{
 	display: block;
 	width:100%;
-	box-shadow: 0 0.02rem 0.04rem rgba(0,0,0,0.1);
 }
 .free-con{
 	width: 100%;
-	font-size: 0.28rem;
-	padding:0.38rem 0.22rem 0.42rem 0.22rem;
+	font-size: 14px;
+	padding:19px 11px 21px 11px;
 }
 .circle{
-	width: 1.5rem;
-	height: 1.5rem;
+	width: 75px;
+	height: 75px;
 	background:#c3c3c3;
-	border-radius: 0.04rem;
+	border-radius: 2px;
 }
 .free-right{
-	padding-left: 0.2rem;
+	padding-left: 10px;
 }
 .free-right h6{
-	font-size: 0.28rem;
-	padding: 0.01rem 0 0.23rem 0;
+	font-size: 14px;
+	padding: 1px 0 11px 0;
 }
 .chicken{
 	color:#b1b1b1;
 	display:block;
-	padding-bottom: 0.1rem;
+	padding-bottom: 5px;
 }
 .free-right .credit{
 	color:#626262;
-	font-size: 0.26rem;
+	font-size: 13px;
 }
 .credit label{
 	color:#fca958;
 }
 .num-con{
-	padding: 0.13rem 0.22rem 0.13rem 0.24rem;
+	padding: 6px 11px 6px 12px;
 	background:white;
-	margin-bottom: 0.02rem;
+	margin-bottom: 1px;
 }
 .num-con span{
-	font-size: 0.26rem;
+	font-size: 13px;
 }
 .num-ul{
-	font-size: 0.28rem;
+	font-size: 14px;
 	text-align: center;
 }
 .num-ul>li{
 	float: left;
-	width:0.66rem;
-	height: 0.5rem;
-	border:0.02rem solid #eeeeee;
-	line-height:0.5rem;
+	width:33px;
+	height: 25px;
+	border:1px solid #eeeeee;
+	line-height:25px;
 }
 .one{
 	color:#cccccc;
-	border-radius:0.1rem 0 0 0.1rem;
+	border-radius:5px 0 0 5px;
 }
 .num-ul .two{
-	width: 0.86rem;
+	width: 43px;
 }
 .three{
 	color:#212121;
-	border-radius:0 0.1rem 0.1rem 0;
+	border-radius:0 5px 5px 0;
 }
 .way-con{
-	padding:0.28rem 0.22rem;
-	font-size: 0.26rem;
+	padding:14px 11px;
+	font-size: 13px;
 	background:white;
 	width:100%;
-	margin-bottom:0.02rem;
+	margin-bottom:1px;
 }
 .way-con .express{
-	font-size: 0.24rem;
+	font-size: 12px;
 }
 .way-con .icon-more{
-	font-size: 0.24rem;
+	font-size: 12px;
 }
 .leaveMsg-con{
 	width:100%;
 	background:white;
-	margin-bottom:0.12rem;
-	font-size: 0.26rem;
-	padding:0.28rem 0.22rem 0.8rem 0.22rem;
+	margin-bottom:6px;
+	font-size: 13px;
+	padding:14px 11px 40px 11px;
 }
 .leaveMsg-con span{
 	color:#212121;
@@ -131,48 +130,48 @@
 	text-decoration: line-through;
 }
 .wechat-con{
-	padding:0.22rem 0.22rem;
-	font-size: 0.26rem;
+	padding:11px 11px;
+	font-size: 13px;
 	background:white;
 	width:100%;
-	margin-bottom:0.02rem;
+	margin-bottom:1px;
 }
 .wechat-pay2{
 	position: relative;
-    right: 0.2rem;
+    right: 10px;
 }
 .wechat-pay span{
 	color:#212121;
     position: relative;
-    bottom: 0.08rem;
-    right: 0.1rem;
+    bottom: 4px;
+    right: 5px;
 }
 .wechat-pay .icon-wechat{
-	font-size: 0.5rem;
+	font-size: 25px;
 	color:#58b64b;
 }
 .money span{
 	color:#58b64b;
     position: relative;
-    bottom: 0.05rem;
-    right: 0.05rem;
+    bottom: 2px;
+    right: 2px;
 }
-.money .icon-check{
-	font-size: 0.4rem;
-	color:#58b64b;
+.money .icon-xuanzhongon{
+	font-size: 20px;
+	color:#ccc;
 }
 .wechat-pay .icon-learn{
-	font-size: 0.65rem;
-	color:#fca958;
+		font-size: 32px;
+		color:#fca958;
     position: relative;
-    right: 0.1rem;
+    right: 5px;
 }
 .learn-pay span:nth-of-type(1){
-	font-size: 0.26rem;
+	font-size: 13px;
 	display:block;
 }
 .learn-pay span:nth-of-type(2){
-	font-size: 0.22rem;
+	font-size: 11px;
 	color:#757575;
 }
 .learn-pay label{
@@ -184,40 +183,40 @@
 	bottom: 0;
 	left: 0;
 	z-index: 3;
-	font-size: 0.26rem;
+	font-size: 13px;
 	background:white;
 	width: 100%;
 }
 .fu-delivery h6{
-	font-size: 0.26rem;
+	font-size: 13px;
 	color:#fca958;
-	padding: 0.22rem;
+	padding: 11px;
 }
 .code-con{
 	width:100%;
-	padding:0.25rem 0.22rem 0.22rem 0.22rem;
-	font-size: 0.26rem;
-	border-bottom: 0.01rem solid #d2d3d5;
+	padding:12px 11px 11px 11px;
+	font-size: 13px;
+	border-bottom: 1px solid #d2d3d5;
 }
 .code-con span{
 	color:#212121;
 }
 .code-con .icon-check{
 	color:#fca958;
-	font-size: 0.5rem;
+	font-size: 25px;
 }
 .sure-btn{
-	padding: 3rem 0.22rem 0.26rem 0.22rem;
+	padding: 150px 11px 13px 11px;
 }
 .sure-btn button{
 	background:#fca958;
 	color:white;
 	text-align:center;
-	border: 0.01rem solid #e98e36;
-	box-shadow:0 0.04rem 0.06rem rgba(0,0,0,0.1);
-	padding:0.26rem 0;
+	border: 1px solid #e98e36;
+	box-shadow:0 2px 3px rgba(0,0,0,0.1);
+	padding:13px 0;
 	width: 100%;
-	border-radius:0.06rem;
+	border-radius:3px;
 }
 /* 兑换成功 */
 .goodSuccess-con{
@@ -226,46 +225,46 @@
 	width: 100%;
 }
 .convert-con{
-	padding:0 0.3rem;
+	padding:0 0.150px;
 	text-align:center;
 }
 .convert-con span{
-	padding-top: 0.9rem;
+	padding-top: 45px;
 }
 .convert-con .icon-checktop{
-	padding-top: 0.9rem;
+	padding-top: 45px;
 	color:#fcd058;
-	font-size: 1.2rem;
+	font-size: 60px;
 }
 .convert-con h3{
-	padding-bottom: 0.3rem;
-	font-size: 0.36rem;
+	padding-bottom: 0.150px;
+	font-size: 18px;
 }
 .convert-con h6{
-	padding-bottom: 0.2rem;
-	font-size: 0.24rem;
+	padding-bottom: 10px;
+	font-size: 12px;
 	color:#cfcfcf;
 }
 .convert-con .times{
-	padding-bottom: 1.6rem;
-	font-size: 0.24rem;
+	padding-bottom: 80px;
+	font-size: 12px;
 	color:#cfcfcf;
 }
 .check-btns{
-	padding:0 0.3rem;
-	font-size: 0.36rem;
+	padding:0 0.150px;
+	font-size: 18px;
 }
 .check-btns button{
-	padding:0.26rem 0;
+	padding:13px 0;
 	width: 100%;
 	color:white;
 	text-align:center;
-	border-radius:0.08rem;
-	box-shadow:0 0.04rem 0.06rem rgba(0,0,0,0.1);
+	border-radius:4px;
+	box-shadow:0 2px 3px rgba(0,0,0,0.1);
 }
 .check-btns button:nth-of-type(1){
 	background:#fcd058;
-	margin-bottom:0.32rem;
+	margin-bottom:16px;
 }
 .check-btns button:nth-of-type(2){
 	background:#fca958;

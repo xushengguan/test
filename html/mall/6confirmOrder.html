@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>确认订单</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/common.css">
+	<link rel="stylesheet" type="text/css" href="../../css/6goods2.css" />
+	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css" />
+	<script src="../../script/My.js"></script>
+	<style media="screen">
+	    footer{
+	    		position: relative;
+					background: #fff;
+					box-shadow: 0 -2px 5px rgba(0,0,0,.1)
+	    }
+			footer li{
+					float: left;
+					padding: 17px 0;
+			}
+			footer .price-li{
+				width: 65%;
+		    padding-left: 25px;
+		    color: #bdbdbd;
+		    font-size: 13px;
+			}
+			.credit {
+			    color: #fcb676;
+			    font-size: 15px;
+			}
+			.submit-btn {
+			    color: white;
+			    font-size: 15px;
+			    background: #fca958;
+			    text-align: center;
+			}
+
+			.learn-pay{float: left;}
+
+			.money .icon-xuanzhongon.weChat{
+				font-size: 20px;
+				color:#58b64b
+			}
+
+			.money .icon-xuanzhongon.credit{
+				font-size: 20px;
+				color:#fcb068
+			}
+
+			.Recharge{
+				float: right;
+				color: #757575;
+				font-size: 13px;
+				overflow: hidden;
+			}
+
+			.Recharge button{
+					width: 57px;
+					height: 27px;
+					border-radius: 3px;
+					background: #fca958;
+					color: #fff;
+			}
+	</style>
+</head>
+
+<body>
+
+	<!-- 确认兑换 -->
+	<div id="wrap" class="flex-wrap flex-vertical">
+		<header class="homePage-header">
+			<h4>确认订单</h4>
+			<i class="iconfont icon-fanhui icon-return" onclick="go_back()"></i>
+		</header>
+		<div id="main" class="flex-con">
+				<div class="goods2-con">
+			<div class="addAdress-con">
+				<p class="addAdress-top hide">
+					<span class="fl">收货人:王先生</span>
+					<span class="fr">1584765238</span>
+				</p>
+				<div class="addres-msg">
+					<i class="iconfont icon-dingwei icon-location"></i>
+					<p class="goods-addres">收货地址:广东省广东省广东省广东省广东省广东省广东省广东省广东省广东省</p>
+					<i class="iconfont icon-gengduo1 icon-more"></i>
+				</div>
+			</div>
+			<img src="../../image/line01.png" alt="">
+			<div class="free-con hide">
+				<span class="fl circle"></span>
+				<div class="fl free-right">
+					<h6>免费品尝南山十一鸡</h6>
+					<span class="chicken">南山十一鸡</span>
+					<span class="credit"><label>100</label>学分</span>
+				</div>
+			</div>
+			<div class="num-con hide">
+				<span class="fl">兑换数量</span>
+				<ul class="fr num-ul hide">
+					<li class="one">&#45;</li>
+					<li class="two">1</li>
+					<li class="three">&#43;</li>
+				</ul>
+			</div>
+			<div class="way-con hide">
+				<span class="fl">配送方式</span>
+				<p class="fr express">
+					<span>快递&nbsp;免邮</span>
+					<i class="iconfont icon-gengduo1 icon-more"></i>
+				</p>
+			</div>
+			<div class="leaveMsg-con hide">
+				<span class="fl">买家留言:&nbsp;&nbsp;</span>
+				<p class="fl">选填:对本次交易的说明</p>
+			</div>
+			<div class="wechat-con hide">
+				<p class="fl wechat-pay wechat-pay2">
+					<i class="iconfont icon-weixinzhifu1 icon-wechat"></i>
+					<span>微信支付</span>
+				</p>
+				<p class="fr money" onclick="sel_wechat_pay()">
+					<span>¥10</span>
+					<i class="iconfont icon-xuanzhongon" id="weChat"></i>
+				</p>
+			</div>
+			<div class="wechat-con hide">
+				<p class="fl wechat-pay">
+					<i class="iconfont icon-xue icon-learn"></i>
+					<p class="learn-pay">
+						<span>学分支付</span>
+						<span>账户余额:<label>10</label>学分</span>
+					</p>
+				</p>
+
+				<!-- 学分充足 -->
+				<p class="fr money" onclick="sel_credit_Pay()">
+					<span style="color:#fcb068;">20学分</span>
+					<i class="iconfont icon-xuanzhongon credit" id="credit"></i>
+				</p>
+				<!-- 学分不足 -->
+				<div class="Recharge" style="display:none">
+						学分不足
+						<button onclick="Recharge()">充值</button>
+				</div>
+			</div>
+		</div>
+		</div>
+		<footer>
+			<ul class="hide">
+				<li class="price-li">总价:<label class="credit">50学分</label></li>
+				<!-- 分别有确认兑换、确认支付状态 -->
+				<li class="submit-btn" style="width:35%">确认兑换</li>
+		</ul>
+		</footer>
+	</div>
+	<!-- fu-body配送方式 -->
+	<div class="fu-body" style="display:none">
+		<div class="fu-delivery">
+			<h6>配送方式</h6>
+			<p class="hide code-con">
+				<span class="fl">快递&nbsp;&nbsp;8学分</span>
+				<i class="iconfont icon-xuanzhongon icon-check fr"></i>
+			</p>
+			<p class="hide code-con">
+				<span class="fl">自提</span>
+				<i class="iconfont icon-weixuanzhongxianxing icon-check fr"></i>
+			</p>
+			<p class="sure-btn"><button onclick="confirm()">确认</button></p>
+		</div>
+	</div>
+
+	<!-- 兑换成功 -->
+	<div class="goodSuccess-con" style="display:none">
+		<header class="homePage-header">
+			<h4>兑换成功</h4>
+			<i class="iconfont icon-fanhui icon-return"></i>
+		</header>
+		<div class="convert-con">
+			<span><i class="iconfont icon-weixuanzhongxianxing icon-checktop"></i></span>
+			<h3>恭喜您&nbsp;成功兑换</h3>
+			<h6>免费品尝南山十一鸡</h6>
+			<p class="times">2017年6月1日</p>
+			<p class="check-btns">
+				<button>查看商品</button>
+				<button>返回首页</button>
+			</p>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript">
+	  apiready = function(){
+
+		}
+
+		//选择配送方式确认
+		function confirm(){
+				$api.css($api.dom('.fu-body'),'display:none');
+		}
+
+		//选择微信支付
+		function sel_wechat_pay(){
+				$api.removeCls($api.dom('#credit'), 'credit');
+        $api.addCls($api.dom('#weChat'), 'weChat');
+		}
+
+		//选择学分支付
+		function sel_credit_Pay(){
+			$api.removeCls($api.dom('#weChat'), 'weChat');
+			$api.addCls($api.dom('#credit'), 'credit');
+		}
+
+		//学分充值
+		function Recharge(){
+				api.openWin({
+				    name: '7credit_Recharge',
+				    url: '../My/7credit_Recharge.html',
+				    pageParam: {
+				        name: 'test'
+				    }
+				});
+
+		}
+</script>
