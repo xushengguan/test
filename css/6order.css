@@ -19,7 +19,7 @@
 	width: 100%;
 	background:white;
 	font-size: 14px;
-	padding: 14px11px;
+	padding: 14px 10px;
 	border-bottom: 1px solid #dadada;
 }
 .sign-con label{
@@ -39,7 +39,7 @@
 	color:#212121;
 	font-size: 12px;
 	position: relative;
-	padding:10px 11px;
+	padding:10px;
 	background:white;
 }
 .purchase-top .adds{
