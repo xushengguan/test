@@ -5,26 +5,26 @@
 .performance-bottom{
 	width: 100%;
 	box-sizing: border-box;
-	font-size: 0.3rem;
+	font-size: 15px;
 	color: #212121;
 	background:white;
 }
 .performance-bottom h6{
 	width: 100%;
-	font-size: 0.26rem;
+	font-size: 13px;
 	color: #757575;
-	padding: 0.2rem 0.22rem;
+	padding: 10px 11px;
 }
 .detils-con{
 	width: 100%;
 	box-sizing: border-box;
-	font-size: 0.3rem;
+	font-size: 15px;
 	color: #212121;
 	background:white;
-	padding: 0.32rem 0.22rem;
-	border-bottom:0.01rem solid #999999;
+	padding: 16px 11px;
+	border-bottom:1px solid #999999;
 }
 .detils-con .icon-more{
-	font-size: 0.3rem;
+	font-size: 15px;
 	color: #999999;
 }

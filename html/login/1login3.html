@@ -3,22 +3,23 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <link rel="stylesheet" href="../../css/api.css">
     <link rel="stylesheet" href="../../css/common.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
     <link rel="stylesheet" href="../../css/1login3.css">
-    <script src="../../script/common.js"></script>
 </head>
 <style media="screen">
     .tel {
-        border-bottom: 0.01rem solid #e3e3e3;
-        padding: 0.3rem;
+        border-bottom: 1px solid #e3e3e3;
+        padding: 15px;
     }
 </style>
 
 <body>
     <!-- 合作商 -->
-    <div class="login2 login login3" id="co_operative" style="display:none">
+    <div class="login2 login login3" id="co_operative">
         <header class="login2-header hide">
             <!-- <i class="iconfont icon-fanhui icon-back"></i> -->
             <p class="header-left fl">
@@ -61,7 +62,7 @@
             </div>
             <div class="wrong-con">
                 <i class="iconfont icon-jingshi icon-warn"></i>
-                <span class="wrong-num" style="font-size:0.26rem;">两次密码输入不一致</span>
+                <span class="wrong-num" style="font-size:13px;">两次密码输入不一致</span>
             </div>
             <button class="login-btn login3-btn" onclick="registerGo()">注册</button>
             <p class="agreement">
@@ -113,7 +114,7 @@
                     <span class="name02"><input type="password" value="再次输入密码"></span>
                 </p>
             </div>
-            <button class="login-btn login3-btn" style="margin-top:0.88rem;background:#7a530e;" onclick="registerGo()">注册</button>
+            <button class="login-btn login3-btn" style="margin-top:44px;background:#7a530e;" onclick="registerGo()">注册</button>
             <p class="agreement">
                 <i class="iconfont icon-xuanzhongon icon-agree"></i>
                 <span class="me-agree">我已认真阅读并同意该<a href="#" style="color:#2f2d26;">用户协议</a></span>
@@ -163,10 +164,10 @@
                     <span class="name02"><input type="password" value="再次输入密码"></span>
                 </p>
             </div>
-            <button class="login-btn login3-btn" style="margin-top:0.88rem;background:#7a530e;" onclick="registerGo()">注册</button>
+            <button class="login-btn login3-btn" style="margin-top:44px;background:#7a530e;" onclick="registerGo()">注册</button>
             <p class="agreement">
                 <i class="iconfont icon-gouxuan1 icon-agreeNO"></i>
-                <span class="me-agree" style="right: 0.18rem;bottom: 0.1rem;">我已认真阅读并同意该<a href="#" style="color:#2f2d26;">用户协议</a></span>
+                <span class="me-agree" style="right: 9px;bottom: 5px;">我已认真阅读并同意该<a href="#" style="color:#2f2d26;">用户协议</a></span>
             </p>
             <p class="have-user">已有帐号<a href="#" class="return-login" onclick="goBack()">返回登录</a></p>
         </div>
@@ -178,7 +179,7 @@
 <script type="text/javascript">
     apiready = function() {
         var index = api.pageParam.index;//获取上个页面的传参
-      
+
         switch (index) {
             case 1:
                 $api.css($api.dom('#studentParent'), 'display:block');

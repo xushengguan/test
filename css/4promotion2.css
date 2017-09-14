@@ -6,15 +6,15 @@
 
 .icon-fanhui {
 	color: #000000;
-	font-size: 0.6rem;
+	font-size: 30px;
 	position: absolute;
-	left: 0.2rem;
-	bottom: 0.15rem;
+	left: 10px;
+	bottom: 7px;
 }
 
 .header-word {
-	padding: 0.7rem 0 0.28rem 0;
-	font-size: 0.32rem;
+	padding: 35px 0 14px 0;
+	font-size: 16px;
 }
 
 #footer {
@@ -23,11 +23,11 @@
 
 .footer {
 	width: 100%;
-	font-size: 0.32rem;
+	font-size: 16px;
 	background: white;
-	height: 1.05rem;
-	border-top: 0.01rem solid #eaeaea;
-	box-shadow: 0 -0.02rem 0.04rem rgba(0, 0, 0, 0.1);
+	height: 52px;
+	border-top: 1px solid #eaeaea;
+	box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .footer>li {
@@ -35,7 +35,7 @@
 }
 
 .footer .date {
-	padding: 0.21rem 0 0 0.22rem;
+	padding: 10px 0 0 10px;
 }
 
 .footer button {
@@ -43,7 +43,7 @@
 	background: #fca958;
 	text-align: center;
 	width: 100%;
-	height: 1.05rem;
+	height: 52px;
 }
 
 .promotion2-con {
@@ -53,50 +53,50 @@
 .input-con {
 	width: 100%;
 	background: #efeff4;
-	font-size: 0.26rem;
-	padding: 0 0.14rem;
+	font-size: 13px;
+	padding: 0 7px;
 	position: relative;
 	text-align: center;
 }
 
 .input-con input {
-	margin: 0.15rem 0;
-	padding: 0.16rem 0;
+	margin: 7px 0;
+	padding: 8px 0;
 	background: white;
 	color: #c7c7c7;
 	text-align: center;
-	border: 0.01rem solid #eaeaef;
+	border: 1px solid #eaeaef;
 	width: 100%;
-	border-radius: 0.1rem;
+	border-radius: 5px;
 	outline: none;
 }
 
 .input-con .icon-search {
-	font-size: 0.32rem;
+	font-size: 16px;
 	color: #b2b2b2;
 	position: absolute;
-	top: 0.32rem;
-	left: 2.3rem;
+	top: 16px;
+	left: 115px;
 }
 
 .ranking-con {
 	width: 100%;
-	border-top: 0.01rem solid #d6d6db;
+	border-top: 1px solid #d6d6db;
 }
 
 .ranking-top {
-	padding: 0.38rem 0.22rem 0.48rem 0.22rem;
+	padding: 19px 10px 24px 10px;
 }
 
 .ranking-num1 {
-	font-size: 0.3rem;
-	padding-bottom: 0.3rem;
+	font-size: 15px;
+	padding-bottom: 15px;
 	color: #212121;
 	font-weight: bold;
 }
 
 .ranking-num2 {
-	font-size: 0.26rem;
+	font-size: 13px;
 	color: #303030;
 }
 
@@ -105,51 +105,51 @@
 }
 
 .ranking-bottom h4 {
-	font-size: 0.28rem;
+	font-size: 14px;
 	color: #757575;
 	font-weight: normal;
-	padding-bottom: 0.19rem;
-	padding-left: 0.22rem;
+	padding-bottom: 10px;
+	padding-left: 10px;
 }
 
 .ranking-list {
 	width: 100%;
-	padding: 0.17rem 0.22rem;
-	border-bottom: 0.01rem solid #e5e5e5;
+	padding: 8px 10px;
+	border-bottom: 1px solid #e5e5e5;
 }
 
 .img-head02 {
-	width: 0.98rem;
-	height: 0.98rem;
-	line-height: 0.98rem;
+	width: 49px;
+	height: 49px;
+	line-height: 49px;
 	overflow: hidden;
-	border: 0.01rem solid #b4b4b4;
-	border-radius: 0.06rem;
-	margin-right: 0.19rem;
+	border: 1px solid #b4b4b4;
+	border-radius: 3px;
+	margin-right: 10px;
 	text-align: center;
 }
 
 .list-left p:nth-of-type(1) {
-	font-size: 0.34rem;
+	font-size: 17px;
 	color: #212121;
 }
 
 .list-left p:nth-of-type(2) {
-	font-size: 0.28rem;
+	font-size: 14px;
 	color: #d2d2d2;
 }
 
 .list-right {
-	font-size: 0.3rem;
+	font-size: 15px;
 	color: #fca958;
-	padding-top: 0.3rem;
+	padding-top: 15px;
 }
 /* 活动房间 */
 
 .drop-out {
-	border-top: 0.01rem solid #e4e4e4;
-	font-size: 0.32rem;
-	padding: 0.34rem 0.22rem;
+	border-top: 1px solid #e4e4e4;
+	font-size: 16px;
+	padding: 17px 10px;
 	width: 100%;
 	z-index: 2;
 	background: white;
@@ -169,54 +169,54 @@
 /* 活动排名-选择完成 */
 
 .ranking-con .icon-right {
-	font-size: 0.22rem;
+	font-size: 10px;
 	color: #1cc01a;
 	position: relative;
-	top: 0.3rem;
+	top: 15px;
 }
 /* 活动排名-选择排名 fu-body */
 
 .search-con {
-	border-top: 0.01rem solid #d6d6db;
+	border-top: 1px solid #d6d6db;
 	background: white;
 	width: 100%;
-	font-size: 0.28rem;
+	font-size: 14px;
 }
 
 .fu-body input {
-	font-size: 0.26rem;
+	font-size: 13px;
 }
 
 .search-name {
-	border-bottom: 0.01rem solid #d6d6db;
-	padding: 0.31rem 0 0.31rem 0.3rem;
+	border-bottom: 1px solid #d6d6db;
+	padding: 15px 0 15px 15px;
 }
 
 .search-name span {
-	padding-left: 0.38rem;
+	padding-left: 19px;
 	color: #c6c6c6;
 }
 
 .fu-body .fu-input {
-	padding: 0 0.2rem 0 0.14rem;
+	padding: 0 10px 0 7px;
 }
 
 .fu-cancel {
 	display: inline;
 	color: #fca958;
-	font-size: 0.32rem;
+	font-size: 16px;
 	width: 10%;
 	text-align: right;
 	position: relative;
-	top: 0.2rem;
+	top: 10px;
 }
 
 .fu-body .fu-input .icon-search {
-	left: 0.33rem;
+	left: 16px;
 }
 
 .fu-body input {
-	padding-left: 0.58rem;
+	padding-left: 29px;
 	color: #212121;
 }
 
@@ -226,9 +226,9 @@
 
 .fixed-body{
 	width: 100%;
-	height: calc(100% - 2.35rem);
+	height: calc(100% - 167px);
 	position: absolute;
-	top: 2.35rem;
+	top: 167px;
 	left: 0;
 	z-index: 30;
 	background: rgba(0,0,0,0.4);

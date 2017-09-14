@@ -1,5 +1,5 @@
 .enter{
-	padding-bottom:1.2rem;
+	padding-bottom:60px;
 }
 .enter-header{
 	width: 100%;
@@ -7,8 +7,8 @@
 	background: #fcd058;
 }
 .enter-header h5{
-	padding: 0.69rem 0 0.29rem 0;
-	font-size: 0.32rem;
+	padding: 34px 0 24px 0;
+	font-size: 16px;
 }
 .enter-con{
 	width: 100%;
@@ -16,18 +16,18 @@
 .enter-ul{
 	width: 100%;
 	text-align:center;
-	font-size: 0.28rem;
+	font-size: 14px;
 	background:white;
-	margin-bottom:0.01rem;
+	margin-bottom:1px;
 }
 .enter-ul>li{
 	float: left;
 	width:50%;
-	padding:0.28rem 0 0.26rem 0;
+	padding:14px 0;
 }
 .addColor{
 	color: #fca958;
-	border-bottom: 0.02rem solid #fca958;
+	border-bottom: 2px solid #fca958;
 }
 .slide-pic1{
 	width:100%;
@@ -37,17 +37,17 @@
 .enter-news{
 	width: 100%;
 	background:white;
-	margin-bottom: 0.02rem;
+	margin-bottom: 2px;
 }
 .news-con{
 	width: 100%;
-	padding:0.26rem 0.22rem;
+	padding:13px 11px;
 	position: relative;
 }
 .img-pic08{
-	width:1.1rem;
-	height:1.1rem;
-	border-radius: 0.04rem;
+	width:55px;
+	height:55px;
+	border-radius: 2px;
 	background:#bbbaba;
 }
 .img-pic08 img{
@@ -55,19 +55,19 @@
 	width: 100%;
 }
 .content {
-	padding: 0 0.2rem;
+	padding: 0 10px;
 }
 .content h6{
 	color:#212121;
-	font-size: 0.28rem;
-	padding-bottom: 0.1rem;
+	font-size: 14px;
+	padding-bottom: 5px;
 }
 .sites{
-	font-size: 0.24rem;
+	font-size: 12px;
 	color:#cfcfcf;
 }
 .peoples{
 	position: absolute;
-	bottom: 0.26rem;
-	right: 0.22rem;
+	bottom: 13px;
+	right: 11px;
 }

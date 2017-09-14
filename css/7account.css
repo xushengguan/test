@@ -1,32 +1,32 @@
 .account-con{
 	width: 100%;
 	box-sizing: border-box;
-	font-size: 0.3rem;
+	font-size: 15px;
 }
 .account-top{
 	width: 100%;
-	padding: 0.15rem 0.22rem;
-	border-bottom: 0.01rem solid #d2d3d5;
+	padding: 7px 11px;
+	border-bottom: 1px solid #d2d3d5;
 	color:#757575;
 	background:white;
 }
 .circle{
-	width: 1.2rem;
-	height: 1.2rem;
+	width: 60px;
+	height: 60px;
 	background: #d2d3d5;
 	border-radius: 50%;
 }
 .account-con .icon-more{
-	font-size: 0.4rem;
+	font-size: 20px;
 	color: #999999;
 }
 .choice{
-	padding-top: 0.38rem;
+	padding-top: 19px;
 }
 .msg-con{
 	width: 100%;
-	padding: 0.46rem 0.22rem;
-	border-bottom: 0.01rem solid #d2d3d5;
+	padding: 23px 11px;
+	border-bottom: 1px solid #d2d3d5;
 	color:#212121;
 	background:white;
 }

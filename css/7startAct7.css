@@ -1,31 +1,31 @@
 .salves-num1{
 	background:white;
-	padding:0.3rem 0.22rem;
-	border-bottom: 0.01rem solid #d2d3d5;
+	padding:15px 11px;
+	border-bottom: 1px solid #d2d3d5;
 }
 .one{
-	font-size: 0.28rem;
-	padding-bottom:0.2rem;
+	font-size: 14px;
+	padding-bottom:10px;
 }
 .times{
-	font-size: 0.24rem;
+	font-size: 12px;
 	color: #757575;
 }
 .num1-right{
-	font-size: 0.22rem;
-	padding-top:0.2rem;
+	font-size: 11px;
+	padding-top:10px;
 }
 .num1-right span{
 	color: #757575;
 	display: inline;
 }
 .num1-right label{
-	font-size: 0.28rem;
+	font-size: 14px;
 	color:#fca958;
-	padding-right: 0.1rem;
+	padding-right: 5px;
 }
 .num1-right .icon-more{
-	font-size: 0.3rem;
+	font-size: 15px;
 	color:#cccccc;
 	display: inline;
 }
@@ -37,29 +37,29 @@
 .flowers-cons{
 	width: 100%;
 	background:white;
-	margin-bottom: 0.2rem;
+	margin-bottom: 10px;
 }
 .startAct7-con .haveflows{
-	font-size: 0.28rem;
+	font-size: 14px;
 	color:#212121;
 	text-align: center;
-	padding: 0.46rem 0 0.2rem 0;
+	padding: 23px 0 10px 0;
 }
 .startAct7-con .haveflows span{
-	font-size: 0.22rem;
+	font-size: 11px;
 	color:#818181;
 }
 .flowers{
-	font-size: 0.36rem;
+	font-size: 18px;
 	color:#fca958;
 	text-align: center;
-	padding-bottom: 0.4rem;
+	padding-bottom: 20px;
 }
 .flowers-ul{
 	width: 100%;
-	padding:0 0.7rem; 
+	padding:0 35px;
 	text-align: center;
-	font-size: 0.26rem;
+	font-size: 13px;
 }
 .flowers-ul>li{
 	float: left;
@@ -67,60 +67,60 @@
 	text-align: center;
 }
 .peoples{
-	font-size: 0.22rem;
+	font-size: 11px;
 	color:#bdbdbd;
-	padding-top: 0.16rem;
+	padding-top: 8px;
 }
 .peoples span{
-	font-size: 0.28rem;
+	font-size: 14px;
 	color:#fca958;
 }
 .flower-btn{
-	padding:0.33rem 0.64rem 0.75rem 0.64rem;
+	padding:16px 32px 37px 32px;
 }
 .flower-btn button{
 	width: 100%;
-	padding:0.19rem 0; 
+	padding:10px 0;
 	text-align: center;
-	font-size: 0.3rem;
+	font-size: 15px;
 	color: #fca958;
-	border: 0.01rem solid #fca958;
-	border-radius: 0.06rem;
+	border: 1px solid #fca958;
+	border-radius: 3px;
 }
 .listHead{
-	font-size: 0.28rem;
+	font-size: 14px;
 	color:#3c3c3c;
-	padding: 0.22rem;
+	padding: 11px;
 	background:white;
 	width: 100%;
 }
 .flower-list{
-	font-size: 0.28rem;
+	font-size: 14px;
 	color:#3c3c3c;
 	background:white;
 	width: 100%;
-	padding: 0.17rem 0.22rem;
-	border-bottom:0.01rem solid #dbdee5;
-	border-top:0.01rem solid #dbdee5;
+	padding: 8px 11px;
+	border-bottom:1px solid #dbdee5;
+	border-top:1px solid #dbdee5;
 }
 .circles{
-	width: 0.86rem;
-	height: 0.86rem;
+	width: 43px;
+	height: 43px;
 	background: #bcbcbc;
 	border-radius:50%;
 }
 .name{
-	padding:0.2rem 0 0 0.2rem;
+	padding:10px 0 0 10px;
 }
 .care{
-	padding:0.15rem 0; 
-	width:1.16rem;
+	padding:7px 0;
+	width:58px;
 	text-align: center;
 	color: white;
 	background:#fca958;
-	border: 0.01rem solid #fca958;
-	border-radius: 0.06rem;
-	box-shadow: 0 0.04rem 0.06rem rgba(0,0,0,0.1);
+	border: 1px solid #fca958;
+	border-radius: 3px;
+	box-shadow: 0 2px 3px rgba(0,0,0,0.1);
 }
 .flower-list .bg-care{
 	background:#fcd058;

@@ -2,25 +2,25 @@
 	width: 100%;
 	box-sizing: border-box;
 	background: white;
-	font-size: 0.32rem;
-	padding: 0.3rem 0.22rem 0.5rem 0.2rem;
-	margin-bottom: 0.1rem;
+	font-size: 16px;
+	padding: 15px 11px 25px 10px;
+	margin-bottom: 5px;
 }
 .salves-left h4{
-	color: #212121;
-	display: inline;
-	font-size: 0.32rem;
+		color: #212121;
+		display: inline;
+		font-size: 16px;
     position: relative;
-    bottom: 0.08rem;
+    bottom: 4px;
 }
 .two{
 	color:#fca958;
 	position: relative;
-	top:0.08rem;
+	top:4px;
 }
 .salves-num1{
-	padding: 0.2rem 0.22rem 0.2rem 0.22rem; 
-	border-bottom: 0.01rem solid #d2d3d5;
+	padding: 10px 11px 10px 11px;
+	border-bottom: 1px solid #d2d3d5;
 	background:white;
 }
 .num1-left{
@@ -31,18 +31,18 @@
 }
 .salves-left .icon-sale{
 	color: #cccccc;
-	font-size: 0.6rem;
+	font-size: 30px;
 }
 .num1-left .one1{
 	text-align: left;
 	color:#212121;
 }
 .one{
-	font-size: 0.26rem;
-	padding-bottom: 0.25rem;
+	font-size: 13px;
+	padding-bottom: 12px;
 	text-align: right;
 }
 .times{
-	font-size: 0.24rem;
+	font-size: 12px;
 	color:#b4b4b4;
 }

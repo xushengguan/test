@@ -3,24 +3,25 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <link rel="stylesheet" href="../../css/api.css">
     <link rel="stylesheet" href="../../css/common.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
     <link rel="stylesheet" href="../../css/1login4.css">
-    <script src="../../script/common.js"></script>
 </head>
 
 <body>
     <!-- 找回密码 -->
     <div class="login4 login2" id="find">
         <header class="login4-header">
-            <!-- <i class="iconfont icon-fanhui icon-back"></i> -->
+            <i class="iconfont icon-fanhui icon-back"></i>
             <span class="pwd01">Retrieve Password</span>
             <span class="pwd02">找回密码</span>
         </header>
         <div class="login-con">
             <div class="table-con">
-                <div class="phone-num" style="border-bottom:0.01rem solid #e3e3e3">
+                <div class="phone-num" style="border-bottom:1px solid #e3e3e3">
                     <span>电话</span>
                     <span><input type="text" value="123456"></span>
                 </div>
@@ -40,21 +41,21 @@
         </div>
     </div>
     <!--  设置密码 -->
-    <div class="login4 login2" style="display:none" id="setting">
+    <div class="login4 login2" id="setting" style="display:none">
         <header class="login4-header">
-            <!-- <i class="iconfont icon-fanhui icon-back"></i> -->
+            <i class="iconfont icon-fanhui icon-back"></i>
             <span class="pwd01">Set Password</span>
             <span class="pwd02">设置密码</span>
         </header>
         <div class="login-con">
             <div class="table-con">
-                <div class="phone-num" style="border-bottom:0.01rem solid #e3e3e3">
-                    <span style="width:25%;padding-right:0;">新密码</span>
-                        <span style="width:60%; "><input type="password " value="123456"></span>
+                <div class="phone-num" style="border-bottom:1px solid #e3e3e3">
+                    <span style="width:35%;padding-right:0;">新密码</span>
+                    <span style="width:60%; "><input type="password " value="123456"></span>
                 </div>
-                <div class="phone-code ">
-                    <span style="width:25%;padding-right:0; ">确认密码</span>
-                    <span style="width:56%; "><input type="password " value="123456"></span>
+                <div class="phone-num">
+                    <span style="width:35%;padding-right:0;">确认密码</span>
+                    <span style="width:60%; "><input type="password " value="123456"></span>
                 </div>
             </div>
             <p class="wrong-con ">
@@ -65,10 +66,11 @@
                 <button class="login-btn" onclick="set_sure()">确定</button>
             </div>
         </div>
-      </div>
-  </body>
+    </div>
+</body>
+
 </html>
-<script type="text/javascript " src="../../script/api.js "></script>
+<!-- <script type="text/javascript " src="../../script/api.js "></script>
 <script type="text/javascript ">
      apiready = function(){
 
@@ -91,4 +93,4 @@
         });
 
      }
-</script>
+</script> -->

@@ -5,27 +5,27 @@
 .earnings-top{
 	width: 100%;
 	box-sizing: border-box;
-	margin-bottom: 0.2rem;
+	margin-bottom: 10px;
 }
 .credit-con{
 	width: 100%;
 	background: white;
-	border-bottom: 0.01rem solid #757575;
-	padding: 0.28rem 0.22rem;
-	font-size: 0.28rem;
+	border-bottom: 1px solid #757575;
+	padding: 14px 11px;
+	font-size: 14px;
 	color: #757575;
 	position: relative;
 }
 .credit-con .icon-up{
-	font-size: 0.45rem;
-	color: #757575;
+	  font-size: 22px;
+	  color: #757575;
     position: relative;
-    right: 0.24rem;
+    right: 12px;
 }
 .credit-con1 span{
     position: relative;
-    bottom: 0.05rem;
-    right: 0.4rem;
+    bottom: 2px;
+    right: 20px;
 }
 .credit-two{
 	color:#fca958;
@@ -35,99 +35,99 @@
 }
 .cashs{
 	position: absolute;
-	right: 0.22rem;
-	bottom:0.17rem;
-	font-size: 0.3rem;
+	right: 11px;
+	bottom:8px;
+	font-size: 15px;
 	color:white;
 	background:#fca958;
-	padding:0.15rem 0;
-	width: 1.4rem;
+	padding:7px 0;
+	width: 70px;
 	text-align: center;
-	border-radius: 0.08rem;
+	border-radius: 4px;
 }
 .earn-con{
 	width: 100%;
 	box-sizing: border-box;
 	background:white;
 	color:#8c8c8c;
-	font-size: 0.24rem;	
+	font-size: 12px;
 }
 .earn-con h6{
-	font-size: 0.24rem;	
-	padding:0.2rem 0.24rem;
+	font-size: 12px;
+	padding:10px 12px;
 }
 .credit-week{
 	width: 100%;
 	box-sizing: border-box;
 	text-align:center;
-	padding:0.46rem 0 0.58rem 0;
+	padding:23px 0 29px 0;
 	position: relative;
 }
 .fives{
 	color:#fca958;
-	font-size: 0.32rem;
+	font-size: 16px;
 }
 .fives label{
-	font-size: 0.43rem;
+	font-size: 21px;
 }
 .tens{
 	color:#4c5be5;
-	font-size: 0.32rem;
+	font-size: 16px;
 }
 .tens label{
-	font-size: 0.43rem;
+	font-size: 21px;
 }
 .credit-week .dates{
-	padding-top: 0.3rem;
+	padding-top: 15px;
 }
 .credit-week .backs{
-	height: 0.44rem;
-	width: 0.44rem;
+	height: 22px;
+	width: 22px;
 	background:#fca958;
 	border-radius:50%;
 	text-align:center;
 	color:white;
 	position: absolute;
-	left: 0.82rem;
-	bottom:1rem;
+	left: 41px;
+	bottom:50px;
 }
 .credit-week .icon-return1{
-	font-size: 0.35rem;
+	font-size: 17px;
 	position:relative;
-	top:0.02rem;
-	right:0.01rem;
+	top:1px;
+	right:1px;
 }
 .earn-con .credit-week .backs2{
-	right: 0.82rem;
-	bottom:1rem;
+	right: 41px;
+	bottom:50px;
 }
 .credit-week .backs2{
-	height: 0.44rem;
-	width: 0.44rem;
+	height: 22px;
+	width: 22px;
 	background:#fca958;
 	border-radius:50%;
 	text-align:center;
 	color:white;
 	position: absolute;
-	right: 0.82rem;
-	bottom:1rem;
+	right: 41px;
+	bottom:50px;
 }
 .earnings-bottom{
 	width: 100%;
 	box-sizing: border-box;
-	font-size: 0.26rem;
+	font-size: 13px;
 }
 .earnings-bottom h6{
-	font-size: 0.28rem;
-	padding: 0.24rem 0.22rem;
+	font-size: 14px;
+	padding: 12px 11px;
 	color:#b1b1b1;
 }
 .flower-con{
 	width: 100%;
 	color:#a1a1a1;
 	box-sizing: border-box;
-	padding:0.2rem 0.22rem 0.22rem 0.22rem;
-	border-bottom:0.01rem solid #d2d3d5;
+	padding:10px 11px 11px 11px;
+	border-bottom:1px solid #d2d3d5;
 	background:white;
 }
 .flower-con span{
@@ -135,11 +135,11 @@
 }
 .flow-earn{
 	color:#212121;
-	padding-bottom: 0.2rem;
+	padding-bottom: 10px;
 	text-align:right;
 }
 .last-money{
-	font-size: 0.24rem;
+	font-size: 12px;
 }
 .flower-con .flow-earn1{
 	text-align:left;

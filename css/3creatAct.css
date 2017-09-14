@@ -1,109 +1,109 @@
 .creatAct-con{
-	padding:0.46rem 0.5rem 0.52rem 0.36rem;
+	padding:23px 25px 26px 18px;
 }
 .creatAct-title{
-	font-size:0.28rem;
-	padding-bottom:0.7rem;
+	font-size:14px;
+	padding-bottom:35px;
 }
 .creatAct-title span:nth-of-type(2){
 	color:#212121;
 }
 .create-head{
-	font-size:0.24rem;
+	font-size:12px;
 	color:#7e7e7e;
-	padding: 0.1rem 0 0.2rem 0.14rem;
+	padding: 5px 0 10px 7px;
 }
 .competition{
-	padding-left:0.1rem;
+	padding-left:5px;
 	color:#212121;
-	font-size:0.32rem;
-	border-bottom: 0.01rem solid #d2d3d5;
-	padding-bottom: 0.1rem;
+	font-size:16px;
+	border-bottom: 1px solid #d2d3d5;
+	padding-bottom: 5px;
 }
 .creatAct-con .icon-right{
-	font-size: 0.22rem;
+	font-size: 11px;
 	color:#1cc01a;
 	position: relative;
-	top:0.15rem;
+	top:7px;
 }
 .creatAct-class{
-	font-size:0.28rem;
-	padding-bottom:0.8rem;
+	font-size:14px;
+	padding-bottom:40px;
 }
 .creatAct-class label{
-	border-bottom: 0.01rem solid #d2d3d5;
-	padding-bottom:0.1rem;
-	width:0.9rem;
+	border-bottom: 1px solid #d2d3d5;
+	padding-bottom:5px;
+	width:45px;
 	text-align:center;
-	margin: 0 0.14rem;
+	margin: 0 7px;
 }
 .creatAct-section{
-	font-size:0.28rem;
-	padding-bottom:0.9rem;
+	font-size:14px;
+	padding-bottom:45px;
 	color:#212121;
 	width:100%;
 }
 .section-right{
-	padding-top: 0.1rem;
+	padding-top: 5px;
 }
 .section-right span:nth-of-type(1){
     position: relative;
-    bottom: 0.1rem;
+    bottom: 5px;
 }
 .section-right .icon-gengduo{
 	color:#fcd058;
-	font-size:0.6rem;
+	font-size:30px;
 }
 .creatAct-section .icon-guanyu{
 	color:#fca958;
-	font-size:0.35rem;
+	font-size:17px;
 }
 .img-plane02{
-	width:1.2rem;
-	height:1.2rem;
-	line-height:1rem;
+	width:60px;
+	height:60px;
+	line-height:50px;
 	border-radius:50%;
 	background:#face56;
 	text-align:center;
 	overflow:hidden;
 	z-index: 3;
 	position: fixed;
-	bottom:0.8rem;
+	bottom:40px;
 	left: 50%;
-	margin-left: -0.6rem;
+	margin-left: -30px;
 }
 /* fu-body */
 .fu-bottom{
-	width:2.4rem;
-	height:2.4rem;
+	width:120px;
+	height:120px;
 	text-align:center;
 	background: rgba(0,0,0,0.65);
-	border-radius:0.1rem;
+	border-radius:5px;
 	position: absolute;
 	left:50%;
-	margin-left:-1.2rem;
+	margin-left:-60px;
 	top:50%;
-	margin-top:-1.2rem;
+	margin-top:-60px;
 }
 .fu-bottom .icon-right{
-	font-size:0.6rem;
+	font-size:30px;
 	color:white;
 	position: relative;
-	top:0.2rem;
+	top:10px;
 }
 .create-success{
-	font-size:0.26rem;
+	font-size:13px;
 	color:#f3f3f3;
 	display:block;
-	padding-top:0.3rem;
+	padding-top:15px;
 }
 /* 学生家长-有输入 */
 .competition .commond{
-	font-size:0.26rem;
+	font-size:13px;
 	color:#f43530;
 }
 .competition .icon-jingshi{
-	font-size:0.35rem;
+	font-size:17px;
 	color:#f43530;
 }
 /* 选择章节 */
@@ -111,26 +111,26 @@
 	background: rgba(0,0,0,0.5);
 }
 .fu-section{
-	font-size:0.32rem;
+	font-size:16px;
 	color:#303030;
 	z-index:3;
-	width:5rem;
+	width:250px;
 	background:white;
 	overflow:hidden;
 	text-align:center;
-	border-radius:0.1rem;
+	border-radius:5px;
 	position: absolute;
 	top:50%;
-	margin-top:-2.4rem;
+	margin-top:-120px;
 	left:50%;
-	margin-left:-2.5rem;
+	margin-left:-125px;
 }
 .fu-section1>span{
 	display:block;
-	border-bottom:0.01rem solid #d2d3d5;
+	border-bottom:1px solid #d2d3d5;
 }
 .fu-section span{
-	padding:0.3rem 0;
+	padding:15px 0;
 }
 .fu-section>span:nth-of-type(1){
 	font-weight:bold;
@@ -140,27 +140,27 @@
 /* 选择科目 */
 .section-all{
 	width:100%;
-	padding: 0 0.3rem;
-	border-bottom:0.01rem solid #d2d3d5;
+	padding: 0 15px;
+	border-bottom:1px solid #d2d3d5;
 }
 .section-all .icon-more{
-	padding-top:0.3rem;
+	padding-top:15px;
 }
 /* 活动口令 */
 .fu-command{
 	text-align:center;
 }
 .command-top{
-	padding: 0.5rem 0.4rem 0 0.4rem;
-	border-bottom:0.01rem solid #d2d3d5;
+	padding: 25px 20px 0 20px;
+	border-bottom:1px solid #d2d3d5;
 }
 .fu-command p:nth-of-type(2){
 	color:#999999;
-	font-size:0.28rem;
-	padding:0.2rem 0;
+	font-size:14px;
+	padding:10px 0;
 }
 .fu-command button{
-	padding:0.34rem 0;
+	padding:17px 0;
 	color:#fcaf63;
 	width:100%;
 }

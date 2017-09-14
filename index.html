@@ -60,12 +60,11 @@
 
     function funIniGroup(){
         var footerLis = $api.domAll('#footer li'),
+            footerHeight = $api.dom('#footer').offsetHeight,
             frames = [];
-
         if (api.pageParam.pageIndex == 1) {//联盟商家发起活动页面的传参
             var indexTag = api.pageParam.pageIndex;
             go_EventSink(indexTag);
-
             for (var i = 0,len = footerLis.length; i < len; i++) {
                 frames.push({
                     name: 'frame'+i,
@@ -73,7 +72,8 @@
                     bgColor : 'rgba(0,0,0,.2)',
                     bounces:true,
                     pageParam:{
-                        index:indexTag
+                        index:indexTag,
+                        footerHeight:footerHeight
                     }
                 })
             }
@@ -99,7 +99,11 @@
                     name: 'frame'+i,
                     url: './html/frame'+i+'.html',
                     bgColor : 'rgba(0,0,0,.2)',
-                    bounces:true
+                    bounces:true,
+                    pageParam:{
+                        index:indexTag,
+                        footerHeight:footerHeight
+                    }
                 })
             }
 
@@ -109,7 +113,7 @@
                 scrollEnabled: false,
                 rect: {
                     x: 0,
-                    y: 'auto',
+                    y: 0,
                     w: api.winWidth,
                     h: $api.dom('#main').offsetHeight
                 },

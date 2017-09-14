@@ -3,20 +3,20 @@
 	height: 100%;
 	color: #212121;
 	background: #f8f8f8;
-	font-size: 0.3rem;
+	font-size: 15px;
 }
 .login-con{
 	width:100%;
 	background:white;
 }
 .login-content{
-	padding: 0.6rem 0.22rem 0.46rem 0.46rem;
-	border-bottom: 0.01rem solid #d2d3d5;
+	padding: 30px 11px 23px 23px;
+	border-bottom: 1px solid #d2d3d5;
 }
 .login2 .icon-back{
 	color:#020201;
-	font-size:0.6rem;
+	font-size:30px;
 	display:block;
-    position: relative;
-    right: 0.1rem;
+  position: relative;
+  right: 5px;
 }

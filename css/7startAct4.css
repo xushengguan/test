@@ -9,61 +9,61 @@ body{
 	z-index: 3;
 }
 .startAct4-con{
-	width: 100%;
-	box-sizing: border-box;
-    margin-top: 2.99rem;
+	  width: 100%;
+	  box-sizing: border-box;
+    margin-top: 150px;
 }
 .credit-con{
-	padding:0.32rem 0.22rem 0.24rem 0.22rem;
+	padding:16px 11px 12px 11px;
 	position: fixed;
 	left: 0;
-    top: 1.44rem;
+  top: 72px;
 	width:100%;
 	z-index: 3;
 	background:white;
 }
 .credit-left p{
-	font-size: 0.28rem;
+	font-size: 14px;
 	color: #212121;
-	padding-bottom: 0.1rem;
+	padding-bottom: 5px;
 }
 .credit-left label{
 	color: #fca958;
 }
 .credit-left .golds{
-	font-size: 0.26rem;
+	font-size: 13px;
 	color: #212121;
 }
 .exchange{
 	width:15%;
-	padding:0.12rem 0;
-	border:0.01rem solid #dc8835;
+	padding:6px 0;
+	border:1px solid #dc8835;
 	background: #fca958;
 	color:white;
-	font-size: 0.32rem;
+	font-size: 16px;
 	text-align: center;
-	border-radius: 0.06rem;
+	border-radius: 3px;
 }
 .share-con{
 	width: 100%;
 	box-sizing:border-box;
 	background:white;
-	padding:0.2rem 0.22rem;
-	border-bottom: 0.01rem solid #d2d3d5;
+	padding:10px 11px;
+	border-bottom: 1px solid #d2d3d5;
 }
 .share{
-	font-size: 0.26rem;
+	font-size: 13px;
 	color:#525252;
-	padding-bottom:0.26rem;
+	padding-bottom:13px;
 }
 .times{
-	font-size: 0.24rem;
+	font-size: 12px;
 	color:#cfcfcf;
 }
 .share-right p:nth-of-type(1){
-	font-size: 0.26rem;
+	font-size: 13px;
 	color:#fca958;
-	padding-bottom:0.26rem;
+	padding-bottom:13px;
 	text-align:right;
 }
 .share-right p.on{

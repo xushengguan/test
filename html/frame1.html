@@ -4,16 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
-    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <meta name="format-detection" `content`="telephone=no,email=no,date=no,address=no">
     <title>活动汇</title>
     <link rel="stylesheet" href="../css/api.css">
     <link rel="stylesheet" type="text/css" href="../css/style.css"/>
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
     <link rel="stylesheet" href="../css/5enter.css">
-    <script src="../script/common.js"></script>
     <style media="screen">
-        #act_header{height: 118px;}
+
     </style>
 </head>
 
@@ -28,10 +27,6 @@
             <li onclick="btn_list(this)">已报名</li>
         </ul>
     </div>
-
-    <div id="content" class=""></div>
-
-
 
 </body>
 
@@ -59,6 +54,7 @@
     }
 
     function activtiyGroup(){
+
         var TagLis = $api.domAll("#Tag li");
         frames = [];
         var top = $api.dom("#act_header").offsetHeight;
@@ -79,7 +75,7 @@
                  x: 0,
                  y: top,
                  w: api.winWidth,
-                 h: api.winHeight - 179
+                 h: api.winHeight - $api.dom("#act_header").offsetHeight - api.pageParam.footerHeight
             },
             index: 0,
             frames: frames

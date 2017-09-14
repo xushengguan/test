@@ -9,7 +9,6 @@
 		<link rel="stylesheet" href="../../css/common.css">
 		<link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
 		<link rel="stylesheet" href="../../css/7account2.css">
-		<script src="../../script/common.js"></script>
 		<script src="../../script/my.js"></script>
 </head>
 <body>
@@ -24,14 +23,13 @@
 <script type="text/javascript">
 		apiready = function (){
 				var index = 3;
-				var hRemVal = 0.67 + 0.3;//给定头部高度
 				if (index == 1) {
 						api.openFrame({
 						    name: '7account_Pstudy',
 						    url: './7account_Pstudy.html',
 						    rect: {
 						        x: 0,
-						        y: rem_fontSize(hRemVal),
+						        y: $api.dom('header').offsetHeight,
 						        w: api.winWidth,
 						        h: 'auto'
 						    },
@@ -50,7 +48,7 @@
 						    url: './7account_business.html',
 						    rect: {
 						        x: 0,
-						        y: rem_fontSize(hRemVal),
+						        y: $api.dom('header').offsetHeight,
 						        w: api.winWidth,
 						        h: 'auto'
 						    },
@@ -69,7 +67,7 @@
 					    url: './7account_Headmaster.html',
 					    rect: {
 					        x: 0,
-					        y: rem_fontSize(hRemVal),
+					        y: $api.dom('header').offsetHeight,
 					        w: api.winWidth,
 					        h: 'auto'
 					    },

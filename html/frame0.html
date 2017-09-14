@@ -9,7 +9,10 @@
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
     <link rel="stylesheet" href="../css/2activity.css">
-    <script src="../script/common.js"></script>
+    <style media="screen">
+        .con-ul{padding-top: 16px;}
+        .con-ul .img{width: 30px; height: 30px;}
+    </style>
 </head>
 
 <body>
@@ -44,52 +47,52 @@
 
             <!-- 联盟商家（升级）添加 -->
             <p class="upgrade hide" style="display:none">
-                <span class="fl" style="position: relative;top: 0.1rem;">您可以升级为银牌商家</span>
+                <span class="fl" style="position: relative;top: 5px;">您可以升级为银牌商家</span>
                 <span class="fr grade-num" onclick="upgrade()">立即升级</span>
             </p>
 
             <!-- 家长学生升级 -->
             <p class="upgrade hide" style="display:none">
-                <span class="fl" style="position: relative;top: 0.1rem;">您可以升级为银牌用户</span>
+                <span class="fl" style="position: relative;top: 5px;">您可以升级为银牌用户</span>
                 <span class="fr grade-num">立即升级</span>
             </p>
 
             <!-- 联盟商家（完善资料）添加 -->
             <p class="upgrade hide">
-                <span class="fl" style="position: relative;top: 0.1rem;">完善账号资料可以获得学分</span>
+                <span class="fl" style="position: relative;top: 5px;">完善账号资料可以获得学分</span>
                 <span class="fr grade-num" onclick="go_perfect()">前去完善</span>
             </p>
 
             <ul class="con-ul hide">
                 <li onclick="go_activity()">
-                    <span><img src="../image/pic01.png" alt="" class="img-size"></span>
+                    <span class="img"><img src="../image/pic01.png" alt="" class="img-size"></span>
                     <span class="orders">我发起的活动</span>
                 </li>
                 <li onclick="go_order()">
-                    <span><img src="../image/pic02.png" alt="" class="img-size"></span>
+                    <span class="img"><img src="../image/pic02.png" alt="" class="img-size"></span>
                     <span class="orders">我的订单</span>
                 </li>
                 <li onclick="credit_rating()">
-                    <span><img src="../image/pic03.png" alt="" class="img-size"></span>
+                    <span class="img"><img src="../image/pic03.png" alt="" class="img-size"></span>
                     <span class="orders">信用评级</span>
                 </li>
                 <li onclick="achievement()">
-                    <span><img src="../image/pic04.png" alt="" class="img-size"></span>
+                    <span class="img"><img src="../image/pic04.png" alt="" class="img-size"></span>
                     <span class="orders">我的业绩</span>
                 </li>
                 <li onclick="Profit()">
-                    <span><img src="../image/pic05.png" alt="" class="img-size"></span>
+                    <span class="img"><img src="../image/pic05.png" alt="" class="img-size"></span>
                     <span class="orders">我的收益</span>
                 </li>
 
                 <!-- 若为家长学生添加 -->
                 <li onclick="Growth_record()">
-                    <span><img src="../image/pic06.png" alt="" class="img-size"></span>
+                    <span class="img"><img src="../image/pic06.png" alt="" class="img-size"></span>
                     <span class="orders">成长记录</span>
                 </li>
 
                 <li onclick="help()">
-                    <span><img src="../image/pic07.png" alt="" class="img-size"></span>
+                    <span class="img"><img src="../image/pic07.png" alt="" class="img-size"></span>
                     <span class="orders">规则与帮助</span>
                 </li>
             </ul>
@@ -97,7 +100,7 @@
         </div>
 
         <ul class="act-btns hide">
-            <li style="background:#3c3c3d;margin-right:0.06rem;" onclick="launchAct()">发起活动</li>
+            <li style="background:#3c3c3d;margin-right:3px;" onclick="launchAct()">发起活动</li>
             <li style="background:#fcd058;" onclick="joinAct()">参与活动</li>
         </ul>
 

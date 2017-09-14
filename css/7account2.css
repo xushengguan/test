@@ -5,78 +5,78 @@
 }
 .office-con{
 	width: 100%;
-	padding: 0.3rem 0.22rem;
+	padding: 15px 11px;
 	color: #212121;
-	font-size: 0.3rem;
-	border-bottom: 0.01rem solid #eaeaea;
+	font-size: 15px;
+	border-bottom: 1px solid #eaeaea;
 }
 .office-con input{
 	color: #dadada;
-	padding-left: 0.5rem;
+	padding-left: 25px;
 }
 .license-con{
-	padding:0.3rem 0.22rem;
+	padding:15px 11px;
 	color: #212121;
-	font-size: 0.3rem;
-	border-bottom: 0.01rem solid #eaeaea;
+	font-size: 15px;
+	border-bottom: 1px solid #eaeaea;
 }
 .license-con .icon-license{
-	font-size: 1.2rem;
+	font-size: 60px;
 	color:#cccccc;
 }
 .license-con span{
     position: relative;
-    bottom: 0.4rem;
+    bottom: 20px;
 }
 @media (max-width:640px){
 .account2 .read-con{
-	position: absolute;
-    bottom: 1rem;
+	  position: absolute;
+    bottom: 50px;
 }
 }
 @media (max-width:640px){
 body .account2 .read-con3{
     position: static;
-    margin: 0.6rem 0 0.6rem 0;
+    margin: 30px 0 30px 0;
 }
 }
 .read-con{
 	width: 100%;
-	padding:0 0.3rem 0 0.3rem;
+	padding:0 15px 0 15px;
 	color: #b0b0b0;
-	font-size: 0.26rem;
-  margin-top: 0.65rem;
+	font-size: 13px;
+  margin-top: 32px;
 }
 .read-con .icon-square{
-	font-size: 0.4rem;
-    padding-left: 0.1rem;
+	  font-size: 20px;
+    padding-left: 5px;
 }
 .read-top{
 	position: relative;
 }
 .read-top .icon-right{
-	position: absolute;
+   	position: absolute;
     color: red;
-    font-size: 0.1rem;
-	left: 0.37rem;
-    top: 0.14rem;
+    font-size: 50px;
+	  left: 18px;
+    top:7px;
 }
 .agree{
     position: relative;
-    right: 0.1rem;
-    top: 0.01rem;
+    right: 5px;
+    top: 1px;
 }
 .save-btn{
-	padding:0 0.3rem;
-	font-size: 0.36rem;
-	margin-top: 0.1rem;
+	padding:0 15px;
+	font-size: 18px;
+	margin-top: 5px;
 }
 .save-btn button{
-	padding: 0.26rem 0;
+	padding: 13px 0;
 	color:white;
 	background: #fca958;
-	border-radius: 0.1rem;
-	border: 0.01rem solid #e8923f;
+	border-radius: 5px;
+	border: 1px solid #e8923f;
 	text-align: center;
 	width: 100%;
 }
@@ -84,41 +84,41 @@ body .account2 .read-con3{
 .parent-con{
 	width:100%;
 	box-sizing:border-box;
-	font-size: 0.3rem;
+	font-size: 15px;
 	color:#212121;
-	padding: 0 0.22rem;
+	padding: 0 11px;
 	background:white;
-	border-bottom:0.01rem solid #e7e7e7;
+	border-bottom:1px solid #e7e7e7;
 }
 .parent-con h6{
-	font-size: 0.28rem;
+	font-size: 14px;
 	color:#aaaaaa;
-	padding:0.16rem 0;
+	padding:8px 0;
 }
 .sex-con{
-	padding:0.2rem 0.22rem;
-	font-size: 0.3rem;
+	padding:10px 11px;
+	font-size: 15px;
 	color:#212121;
 	background:white;
 }
 .circle{
-	width: 0.46rem;
-	height: 0.46rem;
+	width: 23px;
+	height: 23px;
 	border-radius:50%;
 	background:#e1e1e1;
-	border: 0.01rem solid #cdcdcd;
+	border: 1px solid #cdcdcd;
 }
 .circle2{
     position: relative;
-    bottom: 0.05rem;
+    bottom: 2px;
 }
 .girls{
     position: relative;
-    bottom: 0.15rem;
+    bottom: 7px;
 }
 .sex-con .icon-right{
     position: relative;
-    left: 0.1rem;
+    left: 5px;
     color:white;
 }
 .add-bgColor{

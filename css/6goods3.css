@@ -12,94 +12,94 @@
 	top: 0;
 	left: 0;
 	z-index: 3;
-    margin-top: 1.4rem;
+  margin-top: 70px;
 }
 .delivery-con{
 	width: 100%;
 	box-sizing: border-box;
-	font-size: 0.24rem;
+	font-size: 12px;
 	background:#fcd058;
-	padding: 0.16rem 0.26rem 0.26rem 0.26rem;
+	padding: 8px 13px 13px 13px;
 }
 .car{
-	width: 1.03rem;
-	height: 1.03rem;
+	width: 51px;
+	height: 51px;
 	border-radius: 50%;
 	background: #212121;
-	border: 0.02rem solid #fee5a2;
+	border: 1px solid #fee5a2;
 }
 .odd-nums{
 	color: #212121;
-	padding: 0.18rem 0 0 0.18rem;
+	padding: 9px 0 0 9px;
 }
 .odd-nums span{
 	display: block;
 }
 .odd-nums span:nth-of-type(1){
-	font-size: 0.28rem;
-    padding-bottom: 0.1rem;
+	font-size: 14px;
+  padding-bottom: 5px;
 }
 .delivery-con .icon-car{
-	color:white;
-    font-size: 0.7rem;
+	  color:white;
+    font-size: 35px;
     position: relative;
-    left: 0.1rem;
-    top: 0.08rem;
+    left: 5px;
+    top: 4px;
 }
 .logistics-con{
 	width: 100%;
 	box-sizing:border-box;
-	margin-bottom: 0.02rem;
+	margin-bottom: 1px;
 	background:white;
-	font-size: 0.24rem;
+	font-size: 12px;
 }
 .delivery-top h6{
 	width: 100%;
 	box-sizing:border-box;
 	background:white;
-	font-size: 0.24rem;
-	padding:0.2rem 0.24rem;
+	font-size: 12px;
+	padding:10px 12px;
 	position: relative;
-    bottom: 0.04rem;
+  bottom: 2px;
 }
 .delivery-bottom{
 	width: 100%;
 	box-sizing: border-box;
-	font-size: 0.24rem;
+	font-size: 12px;
 	background:white;
-    margin-top: 3.64rem;
+  margin-top: 182px;
 }
 .details-con{
 	width: 100%;
 	box-sizing: border-box;
-	padding:0 0.43rem 0 0.22rem;
+	padding:0 21px 0 11px;
 }
 .delivery-left{
-	padding-right: 0.2rem;
+	padding-right: 10px;
 	height:100%;
 	position: relative;
 }
 .dots{
-	height: 0.2rem;
-	width: 0.2rem;
+	height: 10px;
+	width: 10px;
 	background:#cccccc;
 	border-radius:50%;
 	z-index:3;
 }
 .rates{
-	width: 0.02rem;
-	height: 1.52rem;
+	width: 1px;
+	height: 76px;
 	background:#cccccc;
 	position: absolute;
-	top:0.2rem;
-	left:0.1rem;
+	top:10px;
+	left:5px;
 }
 .delivery-right{
     width: 90%;
-    padding-bottom:0.55rem;
+    padding-bottom:27px;
 }
 .delivery-right .adds{
-    padding-bottom:0.06rem;
+    padding-bottom:3px;
 }
 .details-con .add-fontColor{
 	color:#fca958;
