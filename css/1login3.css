@@ -49,7 +49,7 @@ input{
 }
 .login-table .codes{
 	display:inline;
-	padding-right:10px;
+	padding-right: 0;
 }
 .input-phone{
 	background:red;
