@@ -134,10 +134,10 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/my.js"></script>
 <script type="text/javascript">
-     var header = $api.dom('header');
-     fixStatusBar_API(header);
+    //  var header = $api.dom('header');
+    //  fixStatusBar_API(header);
      apiready = function(){
-
+           $api.fixStatusBar( $api.dom('header') );
      }
 
      //跳到账户设置
