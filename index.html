@@ -45,13 +45,13 @@
     //此事件是在api对象准备完毕后产生，在每个Window或Frame的HTML代码中都需要监听此事件，以确定APICloud扩展对象已经准备完毕，可以调用了。
     apiready = function () {
         //适配iOS7+、Android4.4+系统状态栏，为传入的DOM元素增加适当的上内边距，避免header与状态栏重叠
-        $api.fixStatusBar( $api.dom('#main') );
+        // $api.fixStatusBar( $api.dom('#main') );
 
         //设置状态栏样式为白色（适用于深色背景）或黑色（适用于浅色背景），以及设置状态栏背景颜色
-        api.setStatusBarStyle({
-            style: 'dark',
-            color: '#fcd058'
-        });
+        // api.setStatusBarStyle({
+        //     style: 'dark',
+        //     color: '#fcd058'
+        // });
 
         footerHeight = $api.dom("#footer").offsetHeight;
         randomSwitchBtn(0);//默认打开第一个组
