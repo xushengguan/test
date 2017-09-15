@@ -18,7 +18,7 @@
 <body>
 
     <div class="activity">
-        <header class="activity-top hide" id="header">
+        <header class="activity-top hide">
             <span class="img-plane fr"><img src="../image/plane01.png" alt="" class="img-size"></span>
         </header>
         <div class="activity-con">
@@ -134,7 +134,7 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/my.js"></script>
 <script type="text/javascript">
-     var header = $api.byId('header');
+     var header = $api.dom('header');
      fixStatusBar_API(header);
      apiready = function(){
 
