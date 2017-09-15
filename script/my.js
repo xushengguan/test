@@ -40,6 +40,7 @@ function fixStatusBar_API(el){
         var ver = $api.getStorage('SYSTEMVERSION');
         ver = parseFloat(ver);
         if(ver >= 4.4){
+            alert('android')
             el.style.paddingTop = '25px';
         }
     }
