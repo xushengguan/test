@@ -289,7 +289,7 @@ input{
 	text-align: center;
 	font-size: 16px;
 	color: #212121;
-	padding: 34px 0 15px 0;
+	padding: 15px 0;
 }
 .homePage-header .icon-return{
 	font-size: 29px;
@@ -297,7 +297,7 @@ input{
 	display: block;
 	position: absolute;
 	left: 11px;
-	top:30px;
+	top:10px;
 }
 /* godds */
 .goods-bottom{
@@ -380,17 +380,18 @@ input{
 	font-size: 11px;
 	color: #c6c6c6;
 	background:white;
-	padding-bottom:15px;
+	margin-bottom:10px;
 }
 .img-gold02{
 	margin: 0 auto;
 	display: block;
 	padding:23px 0 10px 0;
+	width: 110px;
 }
 .performance-top p{
 	text-align: center;
 }
-.performance-ul{
+/*.performance-ul{
 	width: 100%;
 	box-sizing: border-box;
 	color: #212121;
@@ -408,8 +409,8 @@ input{
 .golds{
 	position: relative;
 	right: 2px;
-}
-.rate-con{
+}*/
+/*.rate-con{
 	position: relative;
 	width:100%;
 	left:4px;
@@ -427,11 +428,11 @@ input{
 	position: absolute;
 	left:0;
   bottom: -3px;
-}
-.performance-ul .lastCircle{
+}*/
+/*.performance-ul .lastCircle{
 	top:0;
 	right:0;
-}
+}*/
 /* 7earnings2 */
 .cash-btn{
 	padding: 0 15px;

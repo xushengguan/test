@@ -3,62 +3,75 @@
 
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
 	<title>账户设置</title>
 	<link rel="stylesheet" href="../../css/api.css">
 	<link rel="stylesheet" href="../../css/common.css">
-	<link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
+	<link rel="stylesheet" href="../../icon/iconfonts/iconfont.css">
 	<link rel="stylesheet" href="../../css/7account.css">
-	<script src="../../script/my.js"></script>
 	<style media="screen">
-	.invite-con{
-		width: 290px;
-		background:white;
-		font-size: 14px;
-		color:#212121;
-		text-align:center;
-		border-radius:5px;
-		position: absolute;
-		left:50%;
-		margin-left: -145px;
-		top: 50%;
-		margin-top:-185px;
-	}
-	.img-tip01{
-		display: block;
-		margin: 0 auto;
-		padding: 20px 0 10px 0;
-	}
-	.touch{
-		font-size: 13px;
-		color:#b4b4b4;
-			padding: 20px 0 10px 0;
-	}
-	.input-box{
-		padding:0 25px;
-		width: 100%;
-	}
-	.input-box input{
-		border: 1px solid #e5e5e5;
-		padding:13px;
-		width: 100%;
-		border-radius:3px;
-	}
-	.invite-btn{
-		padding:0 25px;
-		font-size: 16px;
-		margin: 11px 0 21px 0;
-	}
-	.invite-btn button{
-		padding:13px 10px;
-		width: 100%;
-		border-radius:3px;
-		color:white;
-		background:#fca958;
-		text-align:center;
-	}
+		.invite-con {
+			width: 290px;
+			background: white;
+			font-size: 14px;
+			color: #212121;
+			text-align: center;
+			border-radius: 5px;
+			position: absolute;
+			left: 50%;
+			margin-left: -145px;
+			top: 50%;
+			margin-top: -185px;
+		}
 
+		.img-tip01 {
+			display: block;
+			width: 150px;
+			margin: 0 auto;
+			padding: 20px 0 10px 0;
+		}
+
+		.touch {
+			font-size: 13px;
+			color: #b4b4b4;
+			padding: 20px 0 10px 0;
+		}
+
+		.input-box {
+			padding: 0 25px;
+			width: 100%;
+		}
+
+		.input-box input {
+			border: 1px solid #e5e5e5;
+			padding: 13px;
+			width: 100%;
+			border-radius: 3px;
+		}
+
+		.invite-btn {
+			padding: 0 25px;
+			font-size: 16px;
+			margin: 11px 0 21px 0;
+		}
+
+		.invite-btn button {
+			padding: 13px 10px;
+			width: 100%;
+			border-radius: 3px;
+			color: white;
+			background: #fca958;
+			text-align: center;
+		}
+
+		.icon-guanbi {
+			font-size: 30px;
+			position: absolute;
+			right: 10px;
+			top: 8px;
+			color: #ccc;
+		}
 	</style>
 </head>
 
@@ -70,8 +83,8 @@
 		</header>
 		<div class="account-con">
 			<div class="account-top hide">
-				<img class="circle fl">
-				<p class="fr choice">
+				<img class="circle fl" src="../../image/head01.png" id="img">
+				<p class="fr choice" onclick="sel_pic()">
 					<span>选择头像</span>
 					<i class="iconfont icon-gengduo1 icon-more"></i>
 				</p>
@@ -83,50 +96,304 @@
 					<i class="iconfont icon-gengduo1 icon-more"></i>
 				</p>
 			</div>
-			<div class="msg-con hide">
+			<div class="msg-con hide" onclick="changePassword()">
 				<span class="fl">更改密码</span>
 				<i class="iconfont icon-gengduo1 icon-more fr"></i>
 			</div>
 			<p class="msg-con" onclick="invite_regist()"><span>邀请注册</span></p>
-			<p class="msg-con"><span style="color:#757575;">退出登录</span></p>
+			<p class="msg-con" onclick="exitLogin()"><span style="color:#757575;">退出登录</span></p>
 		</div>
 	</div>
 
 	<!-- 邀请注册 -->
 	<div class="fu-body" style="display:none">
 		<div class="invite-con hide">
+			<i class="iconfont icon-guanbi" onclick="closeInv()"></i>
 			<img src="../../image/tip01.png" alt="" class="img-tip01">
 			<p>邀请好友注册成为会员</p>
 			<p>赢取<span style="color:#fca958;">100</span>学分</p>
 			<p class="touch">请填写您邀请的好友联系方式</p>
-			<span class="input-box"><input type="text" value="手机号"></span>
-			<p class="invite-btn"><button>确认邀请</button></p>
+			<span class="input-box"><input type="text" placeholder="手机号" id="tel"></span>
+			<p class="invite-btn"><button onclick="Invitation()">确认邀请</button></p>
 		</div>
 	</div>
 </body>
 
 </html>
 <script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
 <script type="text/javascript">
- 		apiready = function(){
+	var id, role, imgUrl;
+	apiready = function() {
+		role = api.pageParam.role; //角色代号 1：学生家长，2：班主任，3：联盟商
+		id = api.pageParam.id; //用户ID
+		var headimgurl = api.pageParam.headimgurl; //用户头像
+		if (headimgurl !== '') {
+			$api.attr($api.dom('#img'), 'src', headimgurl);
+		};
 
-		}
+		InvitationToReg(15207596240);
 
-		//账户信息
-		function account_info(){
-				api.openWin({
-				    name: '7account2_title',
-				    url: './7account2_title.html',
-				    pageParam: {
+	}
 
-				    }
+	//选择头像
+	function sel_pic() {
+		api.getPicture({
+			sourceType: 'album',
+			encodingType: 'jpg',
+			mediaValue: 'pic',
+			destinationType: 'url',
+			allowEdit: true,
+			quality: 50,
+			targetWidth: 100,
+			targetHeight: 100,
+			saveToPhotoAlbum: false
+		}, function(ret, err) {
+			if (ret) {
+				imgUrl = ret.data;
+				uploader();
+			} else {
+				api.toast({
+					msg: '网络错误',
+					duration: 2000,
+					location: 'middle'
 				});
+			}
+		});
+	}
 
+	//账户信息
+	function account_info() {
+		api.openWin({
+			name: '7account2_title',
+			url: './7account2_title.html',
+			pageParam: {
+				role: role,
+				id: id
+			}
+		});
+
+	}
+
+	//邀请注册
+	function invite_regist() {
+		$api.css($api.dom('.fu-body'), 'display:block'); //设置所传入的DOM元素的样式，可传入多条样式
+	}
+
+	//更改密码
+	function changePassword() {
+		api.openWin({
+			name: '1login4',
+			url: '../login/1login4.html',
+			pageParam: {
+				name: 'test'
+			}
+		});
+	}
+
+	//退出登录
+	function exitLogin() {
+		api.ajax({
+		    url: serverurl,
+		    method: 'get',
+		    data: {
+		        values: {
+							  type:'10039',
+		            uid: id
+		        },
+		    }
+		},function(ret, err){
+		    if (ret) {
+		        if (ret.status == '1') {
+							$api.clearStorage();//清除localStorage的所有数据，慎用
+							api.openWin({
+								name: '1login',
+								url: '../login/1login.html',
+							});
+		        }
+		    } else {
+		        api.toast({
+		            msg: '网络错误',
+		            duration: 2000,
+		            location: 'bottom'
+		        });
+		    }
+		});
+	}
+
+	//获取阿里云签名
+	function uploader() {
+		$api.css($api.dom('#loading'), 'display:block');
+		api.ajax({
+			url: serverurl,
+			method: 'post',
+			data: {
+				values: {
+					type: '10033',
+				},
+
+			}
+		}, function(ret, err) {
+
+			if (ret) {
+				var host = ret.host;
+				var policy = ret.policy;
+				var signature = ret.signature;
+				var accessid = ret.accessid;
+				var dir = ret.dir;
+				var expire = ret.expire;
+				ALIcloud(host, policy, signature, accessid, dir, expire);
+
+			} else {
+
+				api.toast({
+					msg: '网络错误',
+					duration: 2000,
+					location: 'middle'
+				});
+			}
+		});
+	}
+
+	function ALIcloud(host, policy, signature, accessid, dir, expire) {
+		//将图片上传给阿里云服务器
+		api.ajax({ //完善班主任信息
+			url: host,
+			method: 'post',
+			dataType: 'xml',
+			data: {
+				values: {
+					OSSAccessKeyId: accessid,
+					policy: policy,
+					Signature: signature,
+					key: dir,
+					success_action_status: 201
+				},
+				files: {
+					file: imgUrl
+				}
+			}
+		}, function(ret, err) {
+			if (ret) {
+
+				// 在你回调函数里面调用
+				var dom = parseXML(ret);
+				// location 标签的内容使用DOM选择器进行查找
+				var url = dom.querySelector('Location').innerHTML;
+
+        ModifyAvatar(url);
+
+			} else {
+				api.toast({
+					msg: '网络错误',
+					duration: 2000,
+					location: 'middle'
+				});
+			}
+		});
+	}
+
+	//修改头像
+  function ModifyAvatar(headimgurl){
+			api.ajax({
+			    url: serverurl,
+			    method: 'get',
+			    data: {
+			        values: {
+								  type:'10036',
+			            uid	: id,
+									headimgurl:headimgurl
+			        }
+			    }
+			},function(ret, err){
+				  $api.css($api.dom('#loading'), 'display:none');
+			    if (ret) {
+			        if (ret.status == '1') {
+									$api.attr($api.dom('#img'), 'src', headimgurl);
+			        }
+			    } else {
+						api.toast({
+							msg: '网络错误',
+							duration: 2000,
+							location: 'middle'
+						});
+			    }
+			});
+
+	}
+
+	//关闭邀请注册
+	function closeInv() {
+		$api.css($api.dom('.fu-body'), 'display:none');
+	}
+
+	//邀请
+	function Invitation() {
+		var myreg = /^1[0-9]{10}$/; //判断是否为手机号码,/^1[34578]\d{9}$/
+		var tel = $api.val($api.dom('#tel'));
+		if (tel == '') {
+				api.toast({
+				    msg: '请输入手机号',
+				    duration: 2000,
+				    location: 'middle'
+				});
+				return false;
 		}
-
-		//邀请注册
-		function invite_regist(){
-				$api.css($api.dom('.fu-body'),'display:block');//设置所传入的DOM元素的样式，可传入多条样式
-
+		if (!myreg.test(tel)) {
+			api.toast({
+					msg: '请输入正确的手机号码',
+					duration: 2000,
+					location: 'middle'
+			});
+			return false;
 		}
+		api.sms({
+				numbers: [tel],
+				text: '我最近在使用学令牌APP,好用又好玩,这里的人长得好看，说话又好听，我超喜欢这里的，点这里http://www.baidu.com赶紧加入和我一起玩吧。'
+		}, function(ret, err) {
+				if (ret && ret.status) {
+						//已发送
+						InvitationToReg(tel);
+				} else {
+						//发送失败
+				}
+		});
+	}
+
+	function InvitationToReg(tel){
+		  var time = Math.round(new Date().getTime()/1000);//当前时间
+			api.ajax({
+			    url: serverurl,
+			    method: 'post',
+			    data: {
+			        values: {
+			            type: '10037',
+									phone:tel,
+									time:time,
+									uid:id
+			        },
+			    }
+			},function(ret, err){
+			    if (ret) {
+			        if (ret.status == '1') {
+								  $api.css($api.dom('.fu-body'), 'display:none');
+									api.toast({
+									    msg: '邀请成功',
+									    duration: 2000,
+									    location: 'middle'
+									});
+
+			        }
+			    } else {
+			        api.toast({
+			            msg: '网络错误',
+			            duration: 2000,
+			            location: 'bottom'
+			        });
+
+			    }
+			});
+
+	}
+
 </script>

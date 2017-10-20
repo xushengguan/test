@@ -7,7 +7,7 @@
 		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
 		<link rel="stylesheet" href="../../css/api.css">
 		<link rel="stylesheet" href="../../css/common.css">
-		<link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
+		<link rel="stylesheet" href="../../icon/iconfonts/iconfont.css">
 		<link rel="stylesheet" href="../../css/7startAct6.css">
 		<script src="../../script/my.js"></script>
 </head>
@@ -25,6 +25,8 @@
 <script type="text/javascript">
 		apiready =  function(){
 				var index = api.pageParam.index;
+				var id = api.pageParam.id;
+			
 				if (index == 1) {
 					  //选择首个匹配的DOM元素
 					  $api.text($api.dom('.homePage-header h4'),'产品销售');
@@ -39,7 +41,7 @@
 						        h: 'auto'
 						    },
 						    pageParam: {
-
+										id:id
 						    },
 						    bounces: true,
 						    bgColor: 'rgba(0,0,0,0)',
@@ -60,7 +62,7 @@
 										h: 'auto'
 								},
 								pageParam: {
-
+										id:id
 								},
 								bounces: true,
 								bgColor: 'rgba(0,0,0,0)',

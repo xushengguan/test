@@ -42,6 +42,7 @@
 
 </html>
 <script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
 <script type="text/javascript">
     apiready = function() {
 
@@ -50,8 +51,8 @@
     //跳到相应身份注册页
     function go_ParentStudent(index) {
         api.openWin({
-            name: 'goRegister',
-            url: './1login3.html',
+            name: 'register',
+            url: './register.html',
             pageParam: {//传参到跳转的页面
                 index: index
             }

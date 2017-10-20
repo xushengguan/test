@@ -7,9 +7,68 @@
 		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
 		<link rel="stylesheet" href="../../css/api.css">
 		<link rel="stylesheet" href="../../css/common.css">
-		<link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
+		<link rel="stylesheet" href="../../icon/iconfonts/iconfont.css">
 		<link rel="stylesheet" href="../../css/7performance.css">
-		<script src="../../script/my.js"></script>
+		<style media="screen">
+		.progress {
+			width: 100%;
+			margin: 12px 0;
+		}
+
+		.progress .pro_txt {
+			width: 292px;
+			height: 16px;
+			overflow: hidden;
+			margin: 0 auto;
+		}
+
+		.progress .txt {
+			font-size: 11px;
+			color: #212121;
+			margin-right: 32px;
+			display: block;
+			float: left;
+		}
+
+		.progress .txt:last-child {
+			margin-right: 0;
+		}
+
+		.img_box {
+			position: relative;
+			width: 285px;
+			height: 11px;
+			margin: 0 auto;
+		}
+
+		.imgline {
+			width: 100%;
+			height: 11px;
+			position: absolute;
+			top: 0;
+			left: 0;
+			background: url(../../image/pro2.png) no-repeat;
+		}
+
+		.imgline.on {
+			background: url(../../image/pro3.png) no-repeat;
+			width: 23%;
+			min-width: 4%;
+			max-width: 100%;
+		}
+
+		.pro_title{
+			height: 40px;
+		}
+
+		.prompt{
+				padding-bottom: 20px;
+		}
+
+		.performance-top{
+			 margin-bottom:0;
+		}
+		</style>
 </head>
 <body>
 	<div class="performance">
@@ -21,43 +80,22 @@
 			<div class="performance-top">
 				<img src="../../image/gold02.png" alt="" class="img-gold02">
 				<p>当前学分:480分</p>
-				<ul class="performance-ul hide">
-					<li>
-						<span class="golds">铜牌</span>
-						<p class="rate-con">
-							<span class="rate"></span>
-							<span class="circle"></span>
-						</p>
-					</li>
-					<li>
-						<span class="golds">银牌</span>
-						<p class="rate-con">
-							<span class="rate"></span>
-							<span class="circle"></span>
-						</p>
-					</li>
-					<li>
-						<span class="golds">金牌</span>
-						<p class="rate-con">
-							<span class="rate"></span>
-							<span class="circle"></span>
-						</p>
-					</li>
-					<li>
-						<span class="golds">砖石</span>
-						<p class="rate-con">
-							<span class="rate"></span>
-							<span class="circle"></span>
-						</p>
-					</li>
-					<li>
-						<span class="golds">股东</span>
-						<p class="rate-con">
-							<span class="circle lastCircle"></span>
-						</p>
-					</li>
-				</ul>
-				<p>差30学分升至白金会员</p>
+				<div class="progress">
+					<div class="pro_txt">
+						<span class="txt">会员</span>
+						<span class="txt">铜牌</span>
+						<span class="txt">银牌</span>
+						<span class="txt">金牌</span>
+						<span class="txt">钻石</span>
+						<span class="txt">股东</span>
+					</div>
+
+					<div class="img_box">
+						<div class="imgline"></div>
+						<div class="imgline on"></div>
+					</div>
+				</div>
+				<p class="prompt">还需30学分升至白金会员</p>
 			</div>
 			<div class="performance-bottom">
 				<h6>业绩详单</h6>
@@ -75,9 +113,11 @@
 </body>
 </html>
 <script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
 <script type="text/javascript">
+    var id;
 		apiready = function(){
-
+				id = api.pageParam.id
 		}
 
 		//打开window
@@ -86,7 +126,8 @@
 				    name: 'title',
 				    url: './7startAct_title.html',
 				    pageParam: {
-				        index: index
+				        id: id,
+								index:index
 				    }
 				});
 

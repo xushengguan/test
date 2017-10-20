@@ -8,6 +8,10 @@
 	margin-bottom: 5px;
 	background: white;
 }
+.plan-con:last-child{
+	margin-bottom: 0;	
+}
+
 .plan-con img{
 	width: 100%;
 	display: block;

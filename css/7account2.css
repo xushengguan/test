@@ -86,41 +86,46 @@ body .account2 .read-con3{
 	box-sizing:border-box;
 	font-size: 15px;
 	color:#212121;
-	padding: 0 11px;
 	background:white;
-	border-bottom:1px solid #e7e7e7;
+
 }
 .parent-con h6{
 	font-size: 14px;
 	color:#aaaaaa;
-	padding:8px 0;
+	padding:10px;
+	border-bottom: 1px solid #eaeaea;
+	background: #f8f8f8;
 }
 .sex-con{
-	padding:10px 11px;
+	padding:10px;
 	font-size: 15px;
 	color:#212121;
 	background:white;
+	border-bottom: 1px solid #eaeaea;
 }
 .circle{
 	width: 23px;
 	height: 23px;
+	display: block;
 	border-radius:50%;
 	background:#e1e1e1;
-	border: 1px solid #cdcdcd;
+	border-bottom: 1px solid #eaeaea;
+	float: left;
 }
 .circle2{
     position: relative;
-    bottom: 2px;
+		background:#fca958;
 }
 .girls{
-    position: relative;
-    bottom: 7px;
+		display: inline-block;
+		padding-top: 2px;
+		padding-left: 4px;
 }
 .sex-con .icon-right{
+	  display: block;
     position: relative;
-    left: 5px;
     color:white;
-}
-.add-bgColor{
-	background:#fca958;
+		margin-top: 5px;
+		text-align: center;
+		font-size: 10px;
 }

@@ -93,6 +93,7 @@
 	padding: 11px;
 	background:white;
 	width: 100%;
+	border-bottom:1px solid #dbdee5;
 }
 .flower-list{
 	font-size: 14px;
@@ -101,7 +102,8 @@
 	width: 100%;
 	padding: 8px 11px;
 	border-bottom:1px solid #dbdee5;
-	border-top:1px solid #dbdee5;
+	position: relative;
+
 }
 .circles{
 	width: 43px;
@@ -121,6 +123,10 @@
 	border: 1px solid #fca958;
 	border-radius: 3px;
 	box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+	position: absolute;
+	top: 50%;
+	right: 11px;
+	margin-top: -18px;
 }
 .flower-list .bg-care{
 	background:#fcd058;

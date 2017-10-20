@@ -418,7 +418,7 @@
     <!-- 添加评论 -->
     <div class="add_comment" style="display:none">
         <div class="info">
-            <textarea name="name" rows="8" cols="80" placeholder="添加评论···"></textarea>
+            <textarea name="name" rows="8" cols="80" placeholder="添加评论···" id="input"></textarea>
             <button>发送</button>
         </div>
     </div>
@@ -437,7 +437,8 @@
     //回复
     function reply(){
         $api.css($api.dom('.add_comment'),'display:block');
-        $api.attr($api.dom('.info textarea'),'placeholder','回复 王先生');
+        $api.attr($api.dom('#input'),'placeholder','回复 王先生');
+        document.getElementById("input").focus();
     }
 
     //发表

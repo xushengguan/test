@@ -8,7 +8,7 @@
     <title>学客圈</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css" />
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
+    <link rel="stylesheet" href="../icon/iconfonts/iconfont.css">
     <style>
         header {
             position: relative;
@@ -35,11 +35,11 @@
 
         .search {
             position: relative;
-            width: calc(100% - 30px);
             padding: 4px 15px;
             background: #fff;
             border-bottom: 1px solid #f2f2f2;
             z-index: 99;
+            box-sizing: border-box;
         }
 
         .search input {
@@ -255,11 +255,11 @@
 
         .flexed {
             width: 100%;
-            height: calc(100% - 96px);
+            height: calc(100% - 106px);
             background: rgba(0, 0, 0, .6);
             z-index: 999;
             position: absolute;
-            top: 96px;
+            top: 106px;
             left: 0;
             overflow: auto;
         }
@@ -267,6 +267,8 @@
         .searchLis{background: #fff;}
         .searchLis li{height: 40px; line-height: 40px; padding:0 15px; border-bottom: 1px solid #f2f2f2; color: #212121; font-size: 13px;}
         .searchLis li:last-child{border-bottom: 0;}
+
+        .search em{width: 40px; text-align: center; font-size: 16px; color: #666; display: none;}
     </style>
 </head>
 
@@ -274,9 +276,11 @@
     <div id="wrap" class="flex-wrap flex-vertical">
         <header>
             <div class="header">学客圈<em onclick="goPublish()"></em></div>
+
             <div class="search">
                 <input type="text" placeholder="输入您想要搜索的用户名/手机号" onfocus="search()">
                 <i class="iconfont icon-search"></i>
+                <em onclick="calce()">取消</em>
             </div>
         </header>
 
@@ -454,7 +458,17 @@
     //搜索匹配
     function search() {
         $api.css($api.dom('.flexed'),'display:block');
+        $api.css($api.dom('.search input'),'width:calc(100% - 90px)');
+        $api.css($api.dom('.search i'),'right:55px');
+        $api.css($api.dom('.search em'),'display:inline-block');
+    }
 
+    //取消
+    function calce(){
+        $api.css($api.dom('.flexed'),'display:none');
+        $api.css($api.dom('.search input'),'width:calc(100% - 40px)');
+        $api.css($api.dom('.search i'),'right:15px');
+        $api.css($api.dom('.search em'),'display:none');
     }
 
     //跳到详情

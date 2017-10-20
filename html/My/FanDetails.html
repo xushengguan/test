@@ -7,18 +7,11 @@
 		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
 		<link rel="stylesheet" href="../../css/api.css">
 		<link rel="stylesheet" href="../../css/common.css">
-		<link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
+		<link rel="stylesheet" href="../../icon/iconfonts/iconfont.css">
 		<link rel="stylesheet" href="../../css/7startAct7.css">
 		<script src="../../script/my.js"></script>
 </head>
 <body>
-
-	<!-- 粉丝明细 -->
-	<div class="startAct7">
-		<header class="homePage-header" onclick="go_back()">
-			<h4>粉丝明细</h4>
-			<i class="iconfont icon-fanhui icon-return"></i>
-		</header>
 		<div class="startAct6-con">
 			<div class="salves-num1 hide" onclick="FansList()">
 				<div class="num1-left fl">
@@ -26,14 +19,11 @@
 					<p class="times">共50人</p>
 				</div>
 				<div class="num1-right fr">
-					<span><label>+10</label>学分</span>
+					<span><label>+10</label>人</span>
 					<i class="iconfont icon-gengduo1 icon-more"></i>
 				</div>
 			</div>
-
 		</div>
-	</div>
-
 </body>
 </html>
 <script type="text/javascript" src="../../script/api.js"></script>
@@ -45,8 +35,8 @@
 		//打开我的粉丝窗口
 		function FansList(){
 				api.openWin({
-				    name: 'FansList',
-				    url: './FansList.html',
+				    name: 'FansList_title',
+				    url: './FansList_title.html',
 				    pageParam: {
 
 				    }

@@ -61,6 +61,40 @@
 
         footerHeight = $api.dom("#footer").offsetHeight;
         randomSwitchBtn(0);//默认打开第一个组
+
+        var tel = $api.getStorage('tel');
+        //检查用户登陆状态
+        api.ajax({
+            url: serverurl,
+            method: 'get',
+            data: {
+                values: {
+                    type:'10022',
+                    tel: tel
+                }
+            }
+        },function(ret, err){
+            if (ret) {
+                if (ret.status !== '1') {//1已经登录
+                    api.openWin({
+                        name: '1login',
+                        url: './html/login/1login.html',
+                        pageParam: {
+
+                        }
+                    });
+
+                }
+            } else {
+                api.toast({
+                    msg: '网络错误',
+                    duration: 2000,
+                    location: 'bottom'
+                });
+
+            }
+        });
+
     }
 
     // 随意切换按钮
@@ -81,6 +115,9 @@
                         y: 0,
                         w: 'auto',
                         h: api.frameHeight - footerHeight
+                   },
+                   pageParam: {
+                        id: api.pageParam.id//获取上一页登录后返回的信息
                    },
                    reload:true
                });

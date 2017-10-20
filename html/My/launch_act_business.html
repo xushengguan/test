@@ -4,43 +4,130 @@
 <head>
 	<meta charset="UTF-8">
 	<title>我发起的活动</title>
-	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
 	<link rel="stylesheet" href="../../css/api.css">
 	<link rel="stylesheet" href="../../css/common.css">
+	<link rel="stylesheet" type="text/css" href="../../css/aui.css" />
 	<link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
 	<link rel="stylesheet" href="../../css/7startAct2.css">
 </head>
 
 <body>
 
-		<div class="startAct2-con hide">
-			<div class="plan-con">
-				<img src="../../image/picbg2.png" alt="">
-				<h6>森林小镇蓝鹰计划</h6>
-				<div class="publish-con hide">
-					<span class="fl">发布日期:2017-08-13</span>
-					<span class="fr">人数:400人</span>
-				</div>
-			</div>
-			<div class="plan-con">
-				<img src="../../image/picbg2.png" alt="">
-				<h6>森林小镇蓝鹰计划</h6>
-				<div class="publish-con hide">
-					<span class="fl">发布日期:2017-08-13</span>
-					<span class="fr">人数:400人</span>
-				</div>
-			</div>
-			<div class="plan-con">
-				<img src="../../image/picbg2.png" alt="">
-				<h6>森林小镇蓝鹰计划</h6>
-				<div class="publish-con hide">
-					<span class="fl">发布日期:2017-08-13</span>
-					<span class="fr">人数:400人</span>
-				</div>
+	<div class="startAct2-con hide" id="app">
+		<div class="plan-con">
+			<img src="../../image/picbg2.png" alt="">
+			<h6>森林小镇蓝鹰计划</h6>
+			<div class="publish-con hide">
+				<span class="fl">发布日期:2017-08-13</span>
+				<span class="fr">人数:400人</span>
 			</div>
 		</div>
+		<div class="plan-con">
+			<img src="../../image/picbg2.png" alt="">
+			<h6>森林小镇蓝鹰计划</h6>
+			<div class="publish-con hide">
+				<span class="fl">发布日期:2017-08-13</span>
+				<span class="fr">人数:400人</span>
+			</div>
+		</div>
+		<div class="plan-con">
+			<img src="../../image/picbg2.png" alt="">
+			<h6>森林小镇蓝鹰计划</h6>
+			<div class="publish-con hide">
+				<span class="fl">发布日期:2017-08-13</span>
+				<span class="fr">人数:400人</span>
+			</div>
+		</div>
+	</div>
 
 </body>
 
 </html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
+<script type="text/javascript" src="../../script/aui-toast.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript" src="../../script/date.js"></script>
+<script type="text/javascript">
+	var vm = new Vue({
+		el: '#app',
+		data: {
+			id: '',
+			data: [],
+		},
+		filters: {
+			formatDate(time) {
+				var date = new Date(time * 1000);
+				return formatDate(date, 'yyyy-MM-dd');
+			}
+		},
+		methods: {
+			get_userAct() { //获取用户发表的活动
+				api.ajax({
+					url: serverurl,
+					method: 'get',
+					dataType: 'json',
+					data: {
+						values: {
+							type: '10017',
+							uid: vm.id
+						}
+					}
+				}, function(ret, err) {
+					if (ret) {
+						if (ret.status == '1') {
+							vm.data = ret.data;
+						} else {
+							api.toast({
+								msg: '网络错误',
+								duration: 2000,
+								location: 'middle'
+							});
+
+						}
+					} else {
+						api.alert({
+							msg: JSON.stringify(err)
+						});
+					}
+				});
+			}
+		},
+
+	})
+
+	apiready = function() {
+		vm.id = api.pageParam.id;
+		var toast = new auiToast();
+		toast.loading({
+			title: "加载中",
+			duration: 2000
+		}, function(ret) {
+			vm.get_userAct();
+			toast.hide();
+		});
+
+		//刷新
+		api.setRefreshHeaderInfo({
+			loadingImg: 'widget://image/refresh.png',
+			bgColor: '#444',
+			textColor: '#fff',
+			textUp: '释放立即刷新...',
+			textLoading: '加载中···',
+			showTime: false
+		}, function(ret, err) {
+			//在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+			toast.loading({
+				title: "加载中",
+				duration: 2000
+			}, function(ret) {
+				vm.get_userAct();
+				toast.hide();
+			});
+			api.refreshHeaderLoadDone();
+		});
+
+	}
+</script>

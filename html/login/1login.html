@@ -1,128 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-        <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-        <link rel="stylesheet" href="../../css/api.css">
-        <link rel="stylesheet" href="../../css/common.css">
-        <link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
-        <link rel="stylesheet" href="../../css/1login.css">
-    </head>
-    <body>
-        <div class="login">
-            <header class="login-header hide">
-                <p class="fl">
-                    <span class="login01">Login</span>
-                    <span class="login02">登录</span>
-                </p>
-                <p class="fr img-triangle01"><img src="../../image/triangle01.png" alt="" class="img-size"></p>
-            </header>
-            <div class="login-con">
-                <table>
-                    <tr>
-                        <td colspan="2" class="hide">
-                            <span class="fl">选择您的角色</span>
-                            <i class="iconfont icon-gengduo2 icon-check fr"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span>电话</span>
-                            <span class="input-num"><input type="text" value="19843832942"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span>密码</span>
-                            <span class="input-num"><input type="password" value="19843832942"></span>
-                        </td>
-                    </tr>
-                </table>
-                <div class="register-con">
-                    <span class="register" onclick="register()">注册帐号</span>
-                    <span class="line">|</span>
-                    <span onclick="forgot()">忘记密码</span>
-                </div>
-                <div class="wrong-con">
-                    <i class="iconfont icon-jingshi icon-warn"></i>
-                    <span class="wrong-num">帐号密码有误</span>
-                </div>
-                <p class="login-btns">
-                    <button class="login-btn">登录</button>
-                </p>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" href="../../css/api.css">
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../icon/iconfonts/iconfont.css">
+    <link rel="stylesheet" href="../../css/1login.css">
+</head>
+
+<body>
+    <div class="login" id="app">
+        <header class="login-header hide">
+            <p class="fl">
+                <span class="login01">Login</span>
+                <span class="login02">登录</span>
+            </p>
+            <p class="fr img-triangle01"><img src="../../image/triangle01.png" alt="" class="img-size"></p>
+        </header>
+        <div class="login-con">
+            <!-- 登录 -->
+            <table id="selRole">
+                <!-- <tr>
+                    <td class="hide" onclick="selRole()">
+                        <span class="fl" v-html="job"></span>
+                        <i class="iconfont icon-gengduo2 icon-check fr"></i>
+                    </td>
+                </tr> -->
+                <tr>
+                    <td>
+                        <span>电话</span>
+                        <span class="input-num"><input type="text" placeholder="请输入您的手机号码" id="tel"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>密码</span>
+                        <span class="input-num"><input type="password" placeholder="请输入您的密码" id="password"></span>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- 选择角色 -->
+            <!-- <table class="table-role" style="display:none" id="Role">
+                <tr>
+                    <td class="hide" onclick="closeRole()">
+                        <span class="fl">选择您的角色</span>
+                        <i class="iconfont icon-gengduo2 icon-check fr"></i>
+                    </td>
+                </tr>
+                <tr style="text-align:center;color:#303030;" v-for="v in tableData" @click="selJob($event,v.jobname,v.value)">
+                    <td>{{v.jobname}}</td>
+                </tr>
+            </table> -->
+
+            <div class="register-con">
+                <span class="register" onclick="register()">注册帐号</span>
+                <span class="line">|</span>
+                <span onclick="forgot()">忘记密码</span>
             </div>
-        </div>
-        <!-- role -->
-        <div class="login" style="display:none">
-            <header class="login-header hide">
-                <p class="fl">
-                    <span class="login01">Login</span>
-                    <span class="login02">登录</span>
-                </p>
-                <p class="fr img-triangle01"><img src="../../image/triangle01.png" alt="" class="img-size"></p>
-            </header>
-            <div class="login-con">
-                <table class="table-role">
-                    <tr>
-                        <td colspan="2" class="hide">
-                            <span class="fl">选择您的角色</span>
-                            <i class="iconfont icon-gengduo2 icon-check fr"></i>
-                        </td>
-                    </tr>
-                    <tr style="text-align:center;color:#303030;">
-                        <td>学生或家长</td>
-                    </tr>
-                    <tr style="text-align:center;color:#303030;" class="add-bgColor">
-                        <td>班主任</td>
-                    </tr>
-                    <tr style="text-align:center;color:#303030;">
-                        <td>联盟商家</td>
-                    </tr>
-                </table>
-                <div class="register-con">
-                    <span class="register">注册帐号</span>
-                    <span class="line">|</span>
-                    <span>忘记密码</span>
-                </div>
-                <div class="wrong-con">
-                    <i class="iconfont icon-jingshi icon-warn"></i>
-                    <span class="wrong-num">帐号密码有误</span>
-                </div>
-                <p class="login-btns">
-                    <button class="login-btn login01-btn">登录</button>
-                </p>
+            <div class="wrong-con" style="display:none">
+                <i class="iconfont icon-jingshi icon-warn"></i>
+                <span class="wrong-num">帐号密码有误</span>
             </div>
+            <p class="login-btns">
+                <button class="login-btn" @click="login()">登录</button>
+            </p>
         </div>
-    </body>
+    </div>
+</body>
+
 </html>
 <script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
 <script type="text/javascript">
-    apiready = function(){
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            // tableData: [
+            //   {jobname:'学生或家长',value:'1'},
+            //   {jobname:'班主任',value:'2'},
+            //   {jobname:'联盟商家',value:'3'}
+            // ],
+            // job:'选择您的角色',
+            // value:''
+        },
+        methods: {
+            // selJob(event,jobname,value){
+            //     vm.job = jobname;
+            //     vm.value = value;
+            //     $api.css($api.dom('#selRole'), 'display:block');
+            //     $api.css($api.dom('#Role'), 'display:none');
+            // },
+            login() { //登录
+                var myreg = /^1[0-9]{10}$/; //判断是否为手机号码,/^1[34578]\d{9}$/
+                var tel = $api.val($api.byId('tel'));
+                var password = $api.val($api.byId('password'));
+                if (!myreg.test(tel)) {
+                    Tips('.wrong-con', '.wrong-num', '请输入有效的手机号码！');
+                    return false;
+                } else if (password == '') {
+                    Tips('.wrong-con', '.wrong-num', '请输入密码！');
+                    return false;
+                };
+
+                api.ajax({
+                    url: serverurl,
+                    method: 'post',
+                    data: {
+                        values: {
+                            type: '10003',
+                            tel: tel,
+                            pwd: password
+                        }
+                    }
+                }, function(ret, err) {
+                    
+                    if (ret) {
+                        let status = ret.status;
+                        switch (status) {
+                            case '1':
+                                api.toast({
+                                    msg: '登录成功',
+                                    duration: 2000,
+                                    location: 'middle'
+                                });
+                                $api.setStorage('tel', tel);//设置localStorage数据,存储手机号
+                                $api.setStorage('token', ret.token);//存储token
+                                api.openWin({
+                                    name: 'index',
+                                    url: '../../index.html',
+                                    pageParam: {
+                                        id: ret.data.id
+                                    }
+                                });
+                                break;
+                            case '0':
+                                Tips('.wrong-con', '.wrong-num', '密码错误！');
+                                break;
+                            case '2':
+                                Tips('.wrong-con', '.wrong-num', '账号未注册！');
+                                break;
+                            default:
+
+                        }
+                    } else {
+                        api.toast({
+                            msg: '网络错误',
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                        console.log(JSON.stringify(err));
+                    };
+
+                });
+            }
+        }
+    })
+    apiready = function() {
 
     }
 
     //跳到注册页
-    function register(){
-       api.openWin({
-           name: 'register',
-           url: './1login2.html',
-           pageParam: {
+    function register() {
+        api.openWin({
+            name: 'register',
+            url: './1login2.html',
+            pageParam: {
 
-           }
-       });
+            }
+        });
 
     }
 
     //忘记密码
-    function forgot(){
-       api.openWin({
-           name: 'forgot',
-           url: './1login4.html',
-           pageParam: {
+    function forgot() {
+        api.openWin({
+            name: 'forgot',
+            url: './1login4.html',
+            pageParam: {
 
-           }
-       });
+            }
+        });
 
+    }
+
+    // //选择角色
+    // function selRole() {
+    //     $api.css($api.dom('#selRole'), 'display:none');
+    //     $api.css($api.dom('#Role'), 'display:block');
+    // }
+    //
+    // //关闭选择角色
+    // function closeRole(){
+    //     $api.css($api.dom('#selRole'), 'display:block');
+    //     $api.css($api.dom('#Role'), 'display:none');
+    // }
+
+    //错误提示
+    function Tips(el, eltxt, txt) {
+        $api.css($api.dom(el), 'display:block');
+        $api.text($api.dom(eltxt), txt);
+        setTimeout(function() {
+            $api.css($api.dom(el), 'display:none');
+        }, 1000);
     }
 </script>

@@ -1,49 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-		<meta charset="UTF-8">
-		<title>家长信息</title>
-		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-		<link rel="stylesheet" href="../../css/api.css">
-		<link rel="stylesheet" href="../../css/common.css">
-		<link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
-		<link rel="stylesheet" href="../../css/7account2.css">
-		<script src="../../script/my.js"></script>
+	<meta charset="UTF-8">
+	<title>家长信息</title>
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<link rel="stylesheet" href="../../css/api.css">
+	<link rel="stylesheet" href="../../css/common.css">
+	<link rel="stylesheet" href="../../icon/iconfonts/iconfont.css">
+	<link rel="stylesheet" href="../../css/7account2.css">
+	<script src="../../script/my.js"></script>
 </head>
+
 <body>
-		<div class="account2-con">
+	<div class="account2-con">
 		<p class="office-con">
 			<span>年级</span>
-			<input type="text" placeholder="您所教的年级" style="padding-left: 56px;">
+			<input type="text" placeholder="您所教的年级" style="padding-left: 56px;" id="class">
 		</p>
 		<p class="office-con">
 			<span>所售荣誉</span>
-			<input type="text" placeholder="您所获得过的荣誉">
+			<input type="text" placeholder="您所获得过的荣誉" id="honour">
 		</p>
 		<p class="office-con">
 			<span>我的教龄</span>
-			<input type="text" placeholder="您的教龄">
+			<input type="text" placeholder="您的教龄" id="seniority">
 		</p>
+	</div>
+	<div class="read-con">
+		<div class="hide read-top">
+			<i class="iconfont icon-square fl"></i>
+			<i class="iconfont icon-right" style="font-size:7px;"></i>
+			<p class="fl agree">已阅读并同意<span style="color:#4c5be5;">《xxx认证协议》</span></p>
 		</div>
-		<div class="read-con">
-			<div class="hide read-top">
-				<i class="iconfont icon-square fl"></i>
-				<i class="iconfont icon-right" style="font-size:7px;"></i>
-				<p class="fl agree">已阅读并同意<span style="color:#4c5be5;">《xxx认证协议》</span></p>
-			</div>
-			<p class="save-btn"><button onclick="save()">保存</button></p>
-		</div>
+		<p class="save-btn"><button onclick="save()">保存</button></p>
+	</div>
 </body>
+
 </html>
 <script type="text/javascript" src="../../script/api.js"></script>
 <script type="text/javascript">
-		apiready = function(){
+  var id;
+	apiready = function() {
+    id = api.pageParam.id; //用户ID
+	}
 
-		}
+	//保存
+	function save() {
+    var cls = $api.val($api.dom("#class"));
+		var honour = $api.val($api.dom("#honour"));
+		var seniority = $api.val($api.dom("#seniority"));
 
-		//保存
-		function save(){
-				go_back();
-		}
+		api.ajax({//完善班主任信息
+			url: serverurl,
+			method: 'get',
+			dataType: 'json',
+			data: {
+				values: {
+					type: '10009',
+					uid: id,
+					class:cls,
+					honour:honour,
+					seniority:seniority
+				}
+			}
+		}, function(ret, err) {
+			if (ret) {
+				if (ret.status == '1') { //1成功
+						api.toast({
+						    msg: '保存成功',
+						    duration: 2000,
+						    location: 'middle'
+						});
+            go_back();
+				}else{
+					api.toast({
+							msg: '操作失败',
+							duration: 2000,
+							location: 'middle'
+					});
+				}
+			} else {
+				api.alert({
+					msg: JSON.stringify(err)
+				});
+			}
+		});
+
+	}
 </script>

@@ -3,73 +3,138 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <link rel="stylesheet" href="../css/api.css">
     <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <link rel="stylesheet" href="../icon/iconfonts/iconfont.css">
     <link rel="stylesheet" href="../css/2activity.css">
     <style media="screen">
-        .con-ul{padding-top: 16px;}
-        .con-ul .img{width: 30px; height: 30px;}
+        .con-ul {
+            padding-top: 16px;
+            color: #757575;
+            background: #fff;
+        }
+
+        .con-ul .img {
+            width: 25px;
+            height: 25px;
+        }
+
+        .con-ul .img img {
+            display: block;
+            width: 100%;
+        }
     </style>
 </head>
 
 <body>
 
-    <div class="activity">
+    <div class="activity" id="app">
         <header class="activity-top hide">
             <span class="img-plane fr"><img src="../image/plane01.png" alt="" class="img-size"></span>
         </header>
         <div class="activity-con">
-            <span class="img-head01"><img src="../image/head01.png" alt="" class="img-size"></span>
+            <span class="img-head01">
+              <img :src="Myinfo.headimgurl" alt="" class="img-size" v-if="Myinfo.headimgurl">
+              <img src="../image/head01.png" alt="" class="img-size" v-else>
+            </span>
             <div class="setting-top hide">
-                <span class="setting-account" onclick="mineInfo()">帐户设置</span>
-                <p class="setting-name">王同学</p>
-                <div class="setting-brone">
-                    <span class="img-brone"><img src="../image/brone01.png" alt="" class="img-size"></span>
+                <span class="setting-account" onclick="mineInfo()">
+                  帐户设置
+                  <i class="iconfont icon-fanhui-copy" style="font-size:17px;color:#f49603; font-weight:bold; position:absolute; top:1px; right:3px;"></i>
+                </span>
+                <p class="setting-name">{{Myinfo.user_name}}</p>
+                <div class="setting-brone" onclick="Promotion_rules()">
+                    <span class="img-brone">
+                      <!-- 铜牌等级 -->
+                      <img src="../image/brone01.png" alt="" class="img-size" v-if="Myinfo.level == '1'">
+                      <!-- 银牌等级 -->
+                      <img src="../image/brone02.png" alt="" class="img-size" v-else-if="Myinfo.level == '2'">
+                      <!-- 金牌等级 -->
+                      <img src="../image/brone03.png" alt="" class="img-size" v-else-if="Myinfo.level == '3'">
+                      <!-- 钻石等级 -->
+                      <img src="../image/brone04.png" alt="" class="img-size" v-else-if="Myinfo.level == '4'">
+                      <!-- 股东 -->
+                      <img src="../image/brone05.png" alt="" class="img-size" v-else-if="Myinfo.level == '5'">
+                      <!-- 默认会员 -->
+                      <img src="../image/brone06.png" alt="" class="img-size" v-else>
+                    </span>
                     <p class="rolls">
-                        <span class="setting-num">124/120</span>
+                        <!-- 铜牌等级 -->
+                        <span class="setting-num" v-if="Myinfo.level == '1'">{{2000 - Myinfo.winmoney}}/{{Myinfo.winmoney}}</span>
+                        <!-- 银牌等级 -->
+                        <span class="setting-num" v-else-if="Myinfo.level == '2'">{{5000 - Myinfo.winmoney}}/{{Myinfo.winmoney}}</span>
+                        <!-- 金牌等级 -->
+                        <span class="setting-num" v-else-if="Myinfo.level == '3'">{{8000 - Myinfo.winmoney}}/{{Myinfo.winmoney}}</span>
+                        <!-- 钻石等级 -->
+                        <span class="setting-num" v-else-if="Myinfo.level == '4'">{{10000 - Myinfo.winmoney}}/{{Myinfo.winmoney}}</span>
+                        <!-- 股东 -->
+                        <span class="setting-num" v-else-if="Myinfo.level == '5'">{{Myinfo.winmoney}}</span>
+                        <!-- 默认会员 -->
+                        <span class="setting-num" v-else>{{1000 - Myinfo.winmoney}}/{{Myinfo.winmoney}}</span>
                         <span class="setting-num2"></span>
                     </p>
                 </div>
                 <ul class="setting-ul hide">
                     <li onclick="crdeitDetail()">
-                        <span class="two">200</span>
+                        <span class="two">{{Myinfo.winmoney}}</span>
                         <span class="credit">学分</span>
                     </li>
-                    <li style="border-right:0;" onclick="MyFans()">
-                        <span class="two">40</span>
+                    <li style="border-right:0;" onclick="goFans()">
+                        <span class="two">{{num}}</span>
                         <span class="credit">粉丝</span>
                     </li>
                 </ul>
             </div>
 
             <!-- 联盟商家（升级）添加 -->
-            <p class="upgrade hide" style="display:none">
-                <span class="fl" style="position: relative;top: 5px;">您可以升级为银牌商家</span>
+            <!-- <p class="upgrade hide">
+                <span class="fl" style="position: relative;top: 5px;" id="upgrade_tips">您可以升级为银牌商家</span>
+                <span class="fr grade-num" onclick="upgrade()">立即升级</span>
+            </p> -->
+
+            <!-- 家长学生升级 -->
+            <!-- 升级状态 0:不可以升级 1：可以升级 -->
+            <p class="upgrade hide" v-if="Myinfo.level == '0' && Myinfo.update_status == '1'">
+                <span class="fl" style="position: relative;top: 5px;">您可以升级为铜牌用户</span>
                 <span class="fr grade-num" onclick="upgrade()">立即升级</span>
             </p>
 
-            <!-- 家长学生升级 -->
-            <p class="upgrade hide" style="display:none">
+            <p class="upgrade hide" v-if="Myinfo.level == '1' && Myinfo.update_status == '1'">
                 <span class="fl" style="position: relative;top: 5px;">您可以升级为银牌用户</span>
-                <span class="fr grade-num">立即升级</span>
+                <span class="fr grade-num" onclick="upgrade()">立即升级</span>
+            </p>
+
+            <p class="upgrade hide" v-if="Myinfo.level == '2' && Myinfo.update_status == '1'">
+                <span class="fl" style="position: relative;top: 5px;">您可以升级为金牌用户</span>
+                <span class="fr grade-num" onclick="upgrade()">立即升级</span>
+            </p>
+
+            <p class="upgrade hide" v-if="Myinfo.level == '3' && Myinfo.update_status == '1'">
+                <span class="fl" style="position: relative;top: 5px;">您可以升级为钻石用户</span>
+                <span class="fr grade-num" onclick="upgrade()">立即升级</span>
+            </p>
+
+            <p class="upgrade hide" v-if="Myinfo.level == '4' && Myinfo.update_status == '1'">
+                <span class="fl" style="position: relative;top: 5px;">您可以升级为股东用户</span>
+                <span class="fr grade-num" onclick="upgrade()">立即升级</span>
             </p>
 
             <!-- 联盟商家（完善资料）添加 -->
-            <p class="upgrade hide">
+            <!-- <p class="upgrade hide">
                 <span class="fl" style="position: relative;top: 5px;">完善账号资料可以获得学分</span>
                 <span class="fr grade-num" onclick="go_perfect()">前去完善</span>
-            </p>
+            </p> -->
 
             <ul class="con-ul hide">
                 <li onclick="go_activity()">
                     <span class="img"><img src="../image/pic01.png" alt="" class="img-size"></span>
-                    <span class="orders">我发起的活动</span>
+                    <span class="orders">发起的活动</span>
                 </li>
                 <li onclick="go_order()">
-                    <span class="img"><img src="../image/pic02.png" alt="" class="img-size"></span>
+                    <span class="img" style="width:28px;"><img src="../image/pic02.png" alt="" class="img-size"></span>
                     <span class="orders">我的订单</span>
                 </li>
                 <li onclick="credit_rating()">
@@ -85,10 +150,15 @@
                     <span class="orders">我的收益</span>
                 </li>
 
-                <!-- 若为家长学生添加 -->
-                <li onclick="Growth_record()">
+                <!-- 若为家长学生添加 role角色代号 1：学生家长，2：班主任，3：联盟商-->
+                <li onclick="Growth_record()" v-if="Myinfo.role == '1'">
                     <span class="img"><img src="../image/pic06.png" alt="" class="img-size"></span>
                     <span class="orders">成长记录</span>
+                </li>
+
+                <li onclick="">
+                    <span class="img"><img src="../image/my_post.png" alt="" class="img-size"></span>
+                    <span class="orders">我的学客圈</span>
                 </li>
 
                 <li onclick="help()">
@@ -105,233 +175,457 @@
         </ul>
 
         <!-- 回到房间 -->
-        <button class="login-btn room-btn"  style="display:none" onclick="goRoom()">回到房间</button>
+        <button class="login-btn room-btn" style="display:none" onclick="goRoom()">回到房间</button>
 
 
-    </div>
-
-    <!-- fu-body-确认升级  -->
-    <div class="fu-body" style="display:none" id="upgrade">
-        <div class="fu-bottom">
-            <p>确认升级</p>
-            <p>此次升级会消耗您<span style="color:#e64340;">1000</span>学分</p>
-            <ul class="hide fu-ul">
-                <li id="cancel">取消</li>
-                <li id="decision" style="border-right:0;color:#fca958;">确认</li>
-            </ul>
-        </div>
     </div>
 
     <!-- fu-body-获得奖牌 -->
-    <div class="fu-body" id="Medal" style="display: none;">
+    <div class="fu-body" id="Medal" style="background:none; display:none">
         <div class="fu-bottom02">
             <i class="iconfont icon-guanbi" onclick="closeMedal()"></i>
             <span class="img-gold"><img src="../image/gold01.png" alt="" class="img-size"></span>
         </div>
     </div>
 </body>
+
 </html>
 <script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/aui-toast.js"></script>
 <script type="text/javascript" src="../script/my.js"></script>
+<script type="text/javascript" src="../script/vue.js"></script>
 <script type="text/javascript">
-     var header = $api.dom('header');
-     fixStatusBar_API(header);
-     apiready = function(){
-        
-     }
+    var header = $api.dom('header');
+    fixStatusBar_API(header);
+    var token = $api.getStorage('token');
+    var role,id,headimgurl,total;
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            nickname: '',
+            id: id,
+            num: '',
+            Myinfo:[]
+        },
+        methods: {
+            MyFans() { //查询粉丝数量
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    dataType: 'json',
+                    data: {
+                        values: {
+                            type: '10022',
+                            uid: this.id
+                        }
+                    }
+                }, function(ret, err) {
+                    if (ret) {
+                        if (ret.status == '1') { //1成功
+                            vm.num = ret.num;
+                        }
+                    } else {
+                        api.toast({
+                            msg: '网络错误',
+                            duration: 2000,
+                            location: 'middle'
+                        });
 
-     //跳到账户设置
-     function mineInfo(){
-          api.openWin({
-              name: 'mineInfo',
-              url: './My/7account.html',
-              pageParam: {
-                  name: 'test'
-              }
-          });
+                    }
+                });
+            },
 
-     }
+            get_userMsg() { //获取用户基本信息
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    dataType: 'json',
+                    data: {
+                        values: {
+                            type: '10035',
+                            uid: this.id,
+                            token:token
+                        }
+                    }
+                }, function(ret, err) {
+                    
+                    if (ret) {
+                        if (ret.status == '1') { //1成功
+                           vm.Myinfo = ret.data;
+                           role = ret.data.role; //角色代号 1：学生家长，2：班主任，3：联盟商
+                           id = ret.data.id; //用户id
+                           headimgurl = ret.data.headimgurl;//用户头像
 
-     //我发起的活动
-     function go_activity(){
+                           if (ret.data.level == '0') {
+                               total = 1000;
+                           }else if (ret.data.level == '1') {
+                               total = 2000;
+                           }else if(ret.data.level == '2'){
+                               total = 5000;
+                           }else if (ret.data.level == '3') {
+                               total = 8000;
+                           }else if (ret.data.level == '4') {
+                               total = 10000;
+                           };
+
+                           // 完善状态 0:要完善资料 1;已经完善资料
+                           if (ret.data.complete_info == 0) {
+                                PerfectData();
+                           }
+
+
+                        }
+                    } else {
+                        api.toast({
+                            msg: '网络错误',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+
+                    }
+                });
+            }
+
+        }
+    })
+
+    apiready = function() {
+
+        vm.id = api.pageParam.id;
+        var toast = new auiToast();
+        toast.loading({
+            title: "加载中",
+            duration: 2000
+        }, function(ret) {
+            vm.MyFans();
+            vm.get_userMsg();
+
+            toast.hide();
+        });
+
+        //刷新
+    		api.setRefreshHeaderInfo({
+    			loadingImg: 'widget://image/refresh.png',
+    			bgColor: '#444',
+    			textColor: '#fff',
+    			textUp: '释放立即刷新...',
+    			textLoading: '加载中···',
+    			showTime: false
+    		}, function(ret, err) {
+    			//在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+    			toast.loading({
+    				title: "加载中",
+    				duration: 2000
+    			}, function(ret) {
+    				// window.location.reload();//刷新当前页面
+            vm.MyFans();
+            vm.get_userMsg();
+    				toast.hide();
+    			});
+    			api.refreshHeaderLoadDone();
+    		});
+
+    }
+
+    // 判断资料是否完善
+    function PerfectData(){
+        var dialogBox = api.require('dialogBox');
+        dialogBox.alert({
+            texts: {
+                title: '资料完善',
+                content: '您的资料还没完善，快去完善吧',
+                leftBtnTitle: '残忍拒绝',
+                rightBtnTitle: '前去完善'
+            },
+            styles: {
+                bg: '#fff',
+                w: 300,
+                title: {
+                    marginT: 20,
+                    icon: 'widget://res/gou.png',
+                    iconSize: 40,
+                    titleSize: 16,
+                    titleColor: '#000'
+                },
+                content: {
+                    color: '#000',
+                    size: 16
+                },
+                left: {
+                    marginB: 10,
+                    marginL: 13,
+                    w: 130,
+                    h: 35,
+                    corner: 20,
+                    bg: '#ccc',
+                    size: 14,
+                    color:'#fff'
+                },
+                right: {
+                    marginB: 10,
+                    marginL: 13,
+                    w: 130,
+                    h: 35,
+                    corner: 20,
+                    bg: '#fcd058',
+                    size: 14,
+                    color:'#fff'
+                }
+            }
+        }, function(ret) {
+            if (ret.eventType == 'right') {
+                api.openWin({
+                    name: '7account2_title',
+                    url: './My/7account2_title.html',
+                    pageParam: {
+                        role: role,
+                        id: id
+                    }
+                });
+            }else{
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    data: {
+                        values: {
+                            type: '10040',
+                            uid:id,
+                            complete_info:'1'// 完善状态 0:要完善资料 1;已经完善资料
+                        },
+                    }
+                },function(ret, err){
+
+                });
+
+            }
+            var dialogBox = api.require('dialogBox');
+            dialogBox.close({
+                dialogName: 'alert'
+            });
+        });
+    }
+
+    //跳到账户设置
+    function mineInfo() {
+        api.openWin({
+            name: 'mineInfo',
+            url: './My/7account.html',
+            pageParam: {
+              role: role,
+              id: id,
+              headimgurl:headimgurl
+            }
+        });
+
+    }
+
+    //我发起的活动
+    function go_activity() {
+        api.openWin({
+            name: 'activity',
+            url: './My/7startAct2.html',
+            pageParam: {
+                role: role,
+                id: id
+            }
+        });
+
+    }
+
+    //我的订单
+    function go_order() {
+        api.openWin({
+            name: 'order',
+            url: './mall/order_title.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+
+    }
+
+    //信用评级
+    function credit_rating() {
+        api.openWin({
+            name: 'credit_rating_title',
+            url: '../html/My/credit_rating_title.html',
+            pageParam: {
+
+            }
+        });
+
+    }
+
+    //我的业绩
+    function achievement() {
+        api.openWin({
+            name: 'My_achievement',
+            url: '../html/My/My_achievement.html',
+            pageParam: {
+                id: id
+            }
+        });
+
+    }
+
+    //我的收益
+    function Profit() {
+        api.openWin({
+            name: '7earnings',
+            url: '../html/My/7earnings.html',
+            pageParam: {
+
+            }
+        });
+
+    }
+
+    //成长记录
+    function Growth_record() {
+        api.openWin({
+            name: '7study_title',
+            url: './My/7study_title.html',
+            pageParam: {
+
+            }
+        });
+    }
+
+    //发起活动
+    function launchAct() {
          api.openWin({
-             name: 'activity',
-             url: './My/7startAct2.html',
+             name: 'creatAct_title',
+             url: './My/creatAct_title.html',
              pageParam: {
-                 name: 'test'
+                 role:role,
+                 headimgurl:headimgurl
              }
          });
 
-     }
+    }
 
-     //我的订单
-     function go_order(){
-         api.openWin({
-             name: 'order',
-             url: './mall/order_title.html',
-             pageParam: {
-                 name: 'test'
-             }
-         });
+    //参与活动
+    function joinAct() {
+        api.openWin({
+            name: '3creatAct_join',
+            url: './My/3creatAct_join.html',
+            pageParam: {
+                id:id,
+                headimgurl:headimgurl
+            }
+        });
 
-     }
+    }
 
-     //信用评级
-     function credit_rating(){
-         api.openWin({
-             name: 'credit_rating_title',
-             url: '../html/My/credit_rating_title.html',
-             pageParam: {
+    //立即升级
+    function upgrade() {
 
-             }
-         });
+        api.confirm({
+            title: '确认升级',
+            msg: '此次升级将会消耗您'+total+'学分',
+            buttons: ['确定', '取消']
+        }, function(ret, err) {
+            var index = ret.buttonIndex;
+            if(index == 1){
+                api.ajax({//用户升级
+                    url: serverurl,
+                    method: 'get',
+                    data: {
+                        values: {
+                            	type: '10014',
+                              uid: id
+                        },
+                    }
+                },function(ret, err){
 
-     }
+                    if (ret) {
+                        if (ret.status == '1') {
+                            $api.css($api.dom("#Medal"), 'display:block');
+                            vm.get_userMsg();
+                        }
+                    } else {
+                        api.toast({
+                            msg: '网络错误',
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                    }
+                });
+            }
+        });
+    }
 
-     //我的业绩
-     function achievement(){
-         api.openWin({
-             name: 'My_achievement',
-             url: '../html/My/My_achievement.html',
-             pageParam: {
+    //关闭金牌弹出层
+    function closeMedal() {
+        $api.css($api.dom("#Medal"), 'display:none');
+    }
 
-             }
-         });
+    //跳到学分明细
+    function crdeitDetail() {
+        api.openWin({
+            name: '7startAct4_title',
+            url: './My/7startAct4_title.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
 
-     }
+    }
 
-     //我的收益
-     function Profit(){
-         api.openWin({
-             name: '7earnings',
-             url: '../html/My/7earnings.html',
-             pageParam: {
+    //跳到我的粉丝
+    function goFans() {
+        api.openWin({
+            name: 'MyFans_title',
+            url: './My/MyFans_title.html',
+            pageParam: {
+                id:id
+            }
+        });
+    }
 
-             }
-         });
+    //前去完善
+    function go_perfect() {
+        api.openWin({
+            name: '7account2_title',
+            url: './My/7account2_title.html',
+            pageParam: {
+                role: role,
+                id: id
+            }
+        });
 
-     }
+    }
 
-     //成长记录
-     function Growth_record(){
-         api.openWin({
-             name: '7study_title',
-             url: './My/7study_title.html',
-             pageParam: {
+    //回到房间
+    function goRoom() {
+        api.openWin({
+            name: '4promotion_clickRank',
+            url: './My/4promotion_clickRank.html',
+            pageParam: {
+                name: 'test'
+            }
+        });
+    }
 
-             }
-         });
-     }
+    //规则与帮助
+    function help() {
+        api.toast({
+            msg: '暂未开发',
+            duration: 2000,
+            location: 'middle'
+        });
+    }
 
-     //发起活动
-     function launchAct(){
-         var index = 1;
-         //班主任身份则打开creatAct_headmaster.html,学生家长身份打开creatAct_Pstudy.html，商家身份打开creatAct_business.html
-         if (index == 1) {
-           api.openWin({
-               name: 'creatAct_headmaster',
-               url: './My/creatAct_headmaster.html',
-               pageParam: {
+    //晋级说明
+    function Promotion_rules(){
+        api.openWin({
+            name: '2promotion',
+            url: './My/2promotion.html',
+            pageParam: {
+                winmoney: vm.Myinfo.winmoney,
+                level: vm.Myinfo.level,
+            }
+        });
 
-               }
-           });
-         }else if(index == 2){
-           api.openWin({
-               name: 'creatAct_Pstudy',
-               url: './creatAct_Pstudy.html',
-               pageParam: {
-
-               }
-           });
-         }else if (index == 3) {
-           api.openWin({
-               name: 'creatAct_business',
-               url: './My/creatAct_business.html',
-               pageParam: {
-
-               }
-           });
-         }
-     }
-
-     //参与活动
-     function joinAct(){
-         api.openWin({
-             name: '3creatAct_join',
-             url: './My/3creatAct_join.html',
-             pageParam: {
-                 name: 'test'
-             }
-         });
-
-     }
-
-     //立即升级
-     function upgrade(){
-        $api.css($api.dom("#upgrade"),'display:block');
-        //取消
-        $api.dom("#cancel").addEventListener('click',function(){
-            $api.css($api.dom("#upgrade"),'display:none');
-        })
-        //确认
-        $api.dom("#decision").addEventListener('click',function(){
-
-            $api.css($api.dom("#upgrade"),'display:none');
-            $api.css($api.dom("#Medal"),'display:block');
-
-        })
-     }
-
-     //关闭金牌弹出层
-     function closeMedal(){
-         $api.css($api.dom("#Medal"),'display:none');
-     }
-
-     //跳到学分明细
-     function crdeitDetail(){
-
-     }
-
-     //跳到我的粉丝
-     function MyFans(){
-         api.openWin({
-             name: 'MyFans',
-             url: './My/MyFans.html',
-             pageParam: {
-                 name: 'test'
-             }
-         });
-     }
-
-     //前去完善
-     function go_perfect(){
-         api.openWin({
-             name: '7account2_title',
-             url: './My/7account2_title.html',
-             pageParam: {
-                 name: 'test'
-             }
-         });
-
-     }
-
-     //回到房间
-     function goRoom(){
-         api.openWin({
-             name: '4promotion_clickRank',
-             url: './My/4promotion_clickRank.html',
-             pageParam: {
-                 name: 'test'
-             }
-         });
-     }
-
-     //规则与帮助
-     function help(){
-         api.toast({
-             msg: '暂未开发',
-             duration: 2000,
-             location: 'middle'
-         });
-     }
+    }
 </script>

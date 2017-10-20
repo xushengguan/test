@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<link rel="stylesheet" href="../../css/api.css">
+	<link rel="stylesheet" href="../../css/common.css">
+	<link rel="stylesheet" href="../../icon/iconfonts/iconfont.css">
+	<link rel="stylesheet" href="../../css/3creatAct3.css">
+</head>
+
+<body>
+	<header class="creatAct-header login2">
+		<i class="iconfont icon-fanhui icon-back" onclick="go_back()"></i>
+		<div class="headerAct-con hide">
+			<div class="headerAct-left fl">
+				<span>创建活动</span>
+				<span>Participate in the Activity</span>
+			</div>
+			<span class="img-head01 fr"><img src="../../image/head01.png" alt="" class="img-size"></span>
+		</div>
+	</header>
+</body>
+
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
+<script type="text/javascript">
+	apiready = function() {
+		var role = api.pageParam.role;
+		var headimgurl = api.pageParam.headimgurl;
+		if (headimgurl !== '' && headimgurl !== null) {
+				$api.attr($api.dom('.img-head01 img'), 'src', headimgurl);
+		}
+		//角色代号 1：学生家长，2：班主任，3：联盟商
+		//班主任身份则打开creatAct_headmaster.html,学生家长身份打开creatAct_Pstudy.html，商家身份打开creatAct_business.html
+		if (role == 2) {
+			api.openFrame({
+			    name: 'creatAct_headmaster',
+			    url: '../My/creatAct_headmaster.html',
+			    rect: {
+			        x: 0,
+			        y: $api.dom('header').offsetHeight,
+			        w: api.width,
+			        h: 'auto'
+			    },
+			    pageParam: {
+			        headimgurl: headimgurl
+			    },
+			    bounces: true,
+			    bgColor: 'rgba(0,0,0,0)',
+			    vScrollBarEnabled: true,
+			    hScrollBarEnabled: true
+			});
+		} else if (role == 1) {
+
+			api.openFrame({
+			    name: 'creatAct_Pstudy',
+			    url: '../My/creatAct_Pstudy.html',
+			    rect: {
+			        x: 0,
+			        y: $api.dom('header').offsetHeight,
+			        w: api.width,
+			        h: 'auto'
+			    },
+			    pageParam: {
+			        headimgurl: headimgurl
+			    },
+			    bounces: true,
+			    bgColor: 'rgba(0,0,0,0)',
+			    vScrollBarEnabled: true,
+			    hScrollBarEnabled: true
+			});
+
+		} else if (role == 3) {
+
+			api.openFrame({
+			    name: 'creatAct_business',
+			    url: '../My/creatAct_business.html',
+			    rect: {
+			        x: 0,
+			        y: $api.dom('header').offsetHeight,
+			        w: api.width,
+			        h: 'auto'
+			    },
+			    pageParam: {
+			        headimgurl: headimgurl
+			    },
+			    bounces: true,
+			    bgColor: 'rgba(0,0,0,0)',
+			    vScrollBarEnabled: true,
+			    hScrollBarEnabled: true
+			});
+
+		}
+	}
+</script>

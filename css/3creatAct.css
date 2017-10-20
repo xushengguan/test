@@ -30,21 +30,15 @@
 	font-size:14px;
 	padding-bottom:40px;
 }
-.creatAct-class label{
-	border-bottom: 1px solid #d2d3d5;
-	padding-bottom:5px;
-	width:45px;
-	text-align:center;
-	margin: 0 7px;
-}
+
 .creatAct-section{
 	font-size:14px;
-	padding-bottom:45px;
+	padding-bottom:20px;
 	color:#212121;
 	width:100%;
 }
 .section-right{
-	padding-top: 5px;
+	padding-top: 11px;
 }
 .section-right span:nth-of-type(1){
     position: relative;
@@ -67,10 +61,8 @@
 	text-align:center;
 	overflow:hidden;
 	z-index: 3;
-	position: fixed;
-	bottom:40px;
-	left: 50%;
-	margin-left: -30px;
+	margin:0 auto;
+
 }
 /* fu-body */
 .fu-bottom{
@@ -105,10 +97,12 @@
 .competition .icon-jingshi{
 	font-size:17px;
 	color:#f43530;
+	
 }
 /* 选择章节 */
 .fu-bodySec{
 	background: rgba(0,0,0,0.5);
+
 }
 .fu-section{
 	font-size:16px;
@@ -119,11 +113,7 @@
 	overflow:hidden;
 	text-align:center;
 	border-radius:5px;
-	position: absolute;
-	top:50%;
-	margin-top:-120px;
-	left:50%;
-	margin-left:-125px;
+  margin: auto;
 }
 .fu-section1>span{
 	display:block;
@@ -158,6 +148,7 @@
 	color:#999999;
 	font-size:14px;
 	padding:10px 0;
+	line-height: 20px;
 }
 .fu-command button{
 	padding:17px 0;

@@ -8,10 +8,16 @@
 	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
 	<link rel="stylesheet" href="../../css/api.css">
 	<link rel="stylesheet" href="../../css/common.css">
-	<link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
+	<link rel="stylesheet" href="../../icon/iconfonts/iconfont.css">
 	<link rel="stylesheet" href="../../css/3creatAct.css">
-	<script src="../../script/my.js"></script>
-	<script src="../../script/3creatAct_title.js"></script>
+	<style media="screen">
+      .competition .title,.pwd{width: calc(100% - 25px);}
+			.icon-jingshi{font-size: 15px; color: #f43530; display: none;}
+			.img-plane02 img{width: 42px; display: inline-block; text-align: center; vertical-align: middle;}
+			.cls,.team,.student_num{width: 45px; border-bottom: 1px solid #d2d3d5; text-align: center;	}
+			.box{width: 100%; height: 100%; display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;}
+			.fu-command{position: absolute; left: 50%; top: 50%; margin-top: -75px; margin-left: -125px;}
+	</style>
 </head>
 
 <body>
@@ -25,17 +31,18 @@
 				</p>
 				<p class="create-head">为您的活动创建一个标题</p>
 				<p class="competition hide">
-					<span class="fl">学令赢一年级大比拼</span>
-					<i class="iconfont icon-right fr"></i>
+					<input type="text" class="title">
+					<i class="iconfont icon-jingshi fr" id="error1"></i>
 				</p>
 			</div>
 			<div class="creatAct-class">
 				<p style="width:100%;">
 					<span class="title-line"></span>
-					<span class="grade">所在班级<label>1</label>年级<label>2</label>班</span>
+					<span class="grade">所在班级<input type="text" class="cls">年级<input type="text" class="team">班</span>
+					<i class="iconfont icon-jingshi" id="error2"></i>
 				</p>
 			</div>
-			<div class="creatAct-section hide">
+			<div class="creatAct-section hide" onclick="subject()">
 				<div class="section-left fl">
 					<p>
 						<span class="title-line"></span>
@@ -44,15 +51,15 @@
 					<p class="create-head">选择活动内容的章节</p>
 				</div>
 				<div class="section-right fr">
-					<span>一年级语文第一章</span>
+					<span id="txt"></span>
 					<i class="iconfont icon-gengduo"></i>
 				</div>
 			</div>
 			<div class="creatAct-class" style="padding-bottom:37px;">
 				<p style="width:100%;">
 					<span class="title-line"></span>
-					<span class="grade">学生人数<label>8</label>人</span>
-					<i class="iconfont icon-right" style="top: -1px;left: 5px;"></i>
+					<span class="grade">学生人数<input type="text" class="student_num">人</span>
+					<i class="iconfont icon-jingshi" style="top: -1px;left: 5px;" id="error3"></i>
 				</p>
 			</div>
 			<div class="creatAct-section">
@@ -64,124 +71,145 @@
 						</p>
 						<p class="create-head">玩家需要通过口令参加比赛</p>
 					</div>
-					<i class="iconfont icon-guanyu fr"></i>
+					<i class="iconfont icon-guanyu fr" onclick="prompt()"></i>
 				</div>
 				<p class="competition hide">
-					<span class="fl">验证口令</span>
-					<i class="iconfont icon-right fr"></i>
+					<input type="text" class="pwd">
+					<i class="iconfont icon-jingshi fr" id="error4"></i>
 				</p>
 			</div>
-			<div class="creatAct-section">
-				<div class="creatAct-top hide">
-					<div class="section-left fl">
-						<p>
-							<span class="title-line"></span>
-							<span>活动口令</span>
-						</p>
-						<p class="create-head">玩家需要通过口令参加比赛</p>
-					</div>
-					<i class="iconfont icon-guanyu fr"></i>
-				</div>
-				<p class="competition hide">
-					<span class="fl">验证口令</span>
-					<i class="iconfont icon-right fr"></i>
-				</p>
-			</div>
+
 			<p class="img-plane02" onclick="creatAct()"><img src="../../image/plane02.png" alt=""></p>
 		</div>
 
-		<!-- 选择章节 -->
-		<div class="fu-body fu-bodySec" style="display:none;">
-			<div class="fu-section fu-section1">
-				<span>选择章节</span>
-				<span>第1章</span>
-				<span>第2章</span>
-				<span>第3章</span>
-				<span style="border-bottom:0;">第4章</span>
-			</div>
-		</div>
-
 		<!-- 选择科目 -->
-		<div class="fu-body fu-bodySec" style="display:none">
-			<div class="fu-section" style="margin-top:-126px;">
+		<div class="fu-body fu-bodySec" style="display:none" id="subject">
+			<div class="box">
+			<div class="fu-section">
 				<span>选择科目</span>
-				<div class="section-all login2 hide">
+				<div class="section-all login2 hide" onclick="sel_cls(this)">
 					<span class="fl">数学</span>
 					<i class="iconfont icon-gengduo1 icon-more fr"></i>
 				</div>
-				<div class="section-all login2 hide">
-					<span class="fl">英语</span>
-					<i class="iconfont icon-gengduo1 icon-more fr"></i>
-				</div>
-				<div class="section-all login2 hide">
-					<span class="fl">物理</span>
-					<i class="iconfont icon-gengduo1 icon-more fr"></i>
-				</div>
-				<div class="section-all login2 hide" style="border-bottom:0;">
-					<span class="fl">化学</span>
-					<i class="iconfont icon-gengduo1 icon-more fr"></i>
-				</div>
+			</div>
 			</div>
 		</div>
 
 		<!-- 选择年级 -->
-		<div class="fu-body fu-bodySec" style="display:none">
-			<div class="fu-section" style="margin-top:-176px;">
+		<div class="fu-body fu-bodySec" style="display:none" id="sel_cls">
+			<div class="box">
+			<div class="fu-section">
 				<span>选择年级</span>
-				<div class="section-all login2 hide">
+				<div class="section-all login2 hide" onclick="chapter(this)">
 					<span class="fl">一年级</span>
 					<i class="iconfont icon-gengduo1 icon-more fr"></i>
 				</div>
-				<div class="section-all login2 hide">
-					<span class="fl">二年级</span>
-					<i class="iconfont icon-gengduo1 icon-more fr"></i>
-				</div>
-				<div class="section-all login2 hide">
-					<span class="fl">三年级</span>
-					<i class="iconfont icon-gengduo1 icon-more fr"></i>
-				</div>
-				<div class="section-all login2 hide">
-					<span class="fl">四年级</span>
-					<i class="iconfont icon-gengduo1 icon-more fr"></i>
-				</div>
-				<div class="section-all login2 hide">
-					<span class="fl">五年级</span>
-					<i class="iconfont icon-gengduo1 icon-more fr"></i>
-				</div>
-				<div class="section-all login2 hide">
-					<span class="fl">六年级</span>
-					<i class="iconfont icon-gengduo1 icon-more fr"></i>
-				</div>
+			</div>
+			</div>
+		</div>
+
+		<!-- 选择章节 -->
+		<div class="fu-body fu-bodySec" style="display:none;" id="chapter">
+			<div class="box">
+			<div class="fu-section fu-section1">
+				<span>选择章节</span>
+				<span onclick="sel_finsh(this)">第1章</span>
+			</div>
 			</div>
 		</div>
 
 		<!-- 活动口令 -->
-		<div class="fu-body fu-bodySec" style="display:none">
-			<div class="fu-section fu-command" style="margin-top:-76px;">
+		<div class="fu-body fu-bodySec" style="display:none" id="prompt">
+			<div class="fu-section fu-command">
 				<div class="command-top">
 					<p style="color:black;">活动口令</p>
 					<p>创建活动口令后,玩家即可通过输入此口令参加比赛</p>
 				</div>
-				<p style="padding: 0 20px;"><button>确定</button></p>
+				<p style="padding: 0 20px;" onclick="confirm()"><button>确定</button></p>
 			</div>
 		</div>
 </body>
 </html>
-<script type="text/javascript" src="../../api.js"></script>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
 <script type="text/javascript">
 		apiready = function(){
 
 		}
-
+    var obj1,obj2,obj3;
 		//创建活动成功
 		function creatAct(){
-			  api.toast({
-			      msg: '创建成功',
-			      duration: 2000,
-			      location: 'center'
-			  });
+			  var reg =  /^\+?[1-9][0-9]*$/;//判断正整数
+			  var title = $api.val($api.dom('.title'));
+        var cls = $api.val($api.dom('.cls')) + '年级' + $api.val($api.dom('.team')) + '班';
+				var section = $api.text($api.dom('#txt'));
+        var student_num = $api.val($api.dom('.student_num'));
+				var pwd = $api.val($api.dom('.pwd'));
+				var time =  Math.round(new Date().getTime()/1000);
+				if (title == '') {
+					 Tips('#error1');
+					 return false;
+				}else if ($api.val($api.dom('.cls')) == '' || $api.val($api.dom('.team')) == '') {
+					Tips('#error2');
+					return false;
+				}else if (section == '') {
+					 api.toast({
+					     msg: '请选择活动内容章节',
+					     duration: 2000,
+					     location: 'middle'
+					 });
+           return false;
+				}else if (student_num == '' || !reg.test(student_num)) {
+					Tips('#error3');
+					return false;
+				}else if (pwd == '') {
+					Tips('#error4');
+					return false;
+				}
 
-       setTimeout(openRank,500);
+				api.ajax({//班主任发表活动
+				    url: serverurl,
+				    method: 'post',
+				    data: {
+				        values: {
+				            type: '10015',
+										title:title,
+										num:student_num,
+										class:cls,
+										section:section,
+										command:pwd,
+										time:time
+				        }
+				    }
+				},function(ret, err){
+				    if (ret) {
+								if (ret.status == '1') {
+									  api.toast({
+									      msg: '创建成功',
+									      duration: 2000,
+									      location: 'middle'
+									  });
+
+									 setTimeout(openRank,500);
+								}else{
+										api.toast({
+										    msg: '创建失败',
+										    duration: 2000,
+										    location: 'middle'
+										});
+
+								}
+				    } else {
+				        api.toast({
+				            msg: '网络错误',
+				            duration: 2000,
+				            location: 'middle'
+				        });
+
+				    }
+				});
+
+
 		}
 
 
@@ -193,5 +221,52 @@
 								name: 'test'
 						}
 				});
+		}
+
+		//提示
+    function prompt(){
+				$api.css($api.dom('#prompt'), 'display:block');
+
+		}
+
+		function confirm(e){
+				$api.css($api.dom('#prompt'), 'display:none');
+		}
+
+
+		function subject(){
+				$api.css($api.dom('#subject'), 'display:block');
+		}
+
+		//选择科目
+		function sel_cls(e){
+				$api.css($api.dom('#sel_cls'), 'display:block');
+				$api.css($api.dom('#subject'), 'display:none');
+				obj1 = $api.text(e);
+
+		}
+
+		//选择年级
+		function chapter(e){
+			$api.css($api.dom('#chapter'), 'display:block');
+			$api.css($api.dom('#sel_cls'), 'display:none');
+			obj2 = $api.text(e);
+
+		}
+
+		//选择章节
+		function sel_finsh(e){
+			obj3 = $api.text(e);
+			$api.css($api.dom('#chapter'), 'display:none');
+			$api.text($api.dom('#txt'), obj2 + obj1 + obj3);
+
+		}
+
+		//错误提示
+		function Tips(el){
+			$api.css($api.dom(el), 'display:inline-block');
+			setTimeout(function(){
+				$api.css($api.dom(el), 'display:none');
+			},1000);
 		}
 </script>

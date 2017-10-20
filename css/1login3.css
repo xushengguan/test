@@ -42,7 +42,7 @@ input{
 }
 .name{
 	color:#7a530e;
-	padding-right: 15px;
+	padding-right: 3%;
 }
 .name02{
 	width:60%;
@@ -64,7 +64,7 @@ input{
 }
 .login3-btn{
 	box-shadow: 0 2px 3px rgba(222,188,96,1);
-	background: #ab8b51;
+	background: #7a530e;
 }
 .agreement{
 	width:100%;
