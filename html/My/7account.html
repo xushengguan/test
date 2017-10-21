@@ -113,7 +113,7 @@
 			<p>邀请好友注册成为会员</p>
 			<p>赢取<span style="color:#fca958;">100</span>学分</p>
 			<p class="touch">请填写您邀请的好友联系方式</p>
-			<span class="input-box"><input type="text" placeholder="手机号" id="tel"></span>
+			<span class="input-box"><input type="text" placeholder="请输入邀请的好友手机号码" id="tel"></span>
 			<p class="invite-btn"><button onclick="Invitation()">确认邀请</button></p>
 		</div>
 	</div>
@@ -131,8 +131,6 @@
 		if (headimgurl !== '') {
 			$api.attr($api.dom('#img'), 'src', headimgurl);
 		};
-
-		InvitationToReg(15207596240);
 
 	}
 
@@ -351,11 +349,17 @@
 				numbers: [tel],
 				text: '我最近在使用学令牌APP,好用又好玩,这里的人长得好看，说话又好听，我超喜欢这里的，点这里http://www.baidu.com赶紧加入和我一起玩吧。'
 		}, function(ret, err) {
+			  alert(JSON.stringify(ret))
 				if (ret && ret.status) {
 						//已发送
 						InvitationToReg(tel);
 				} else {
 						//发送失败
+						api.toast({
+						    msg: '发送失败',
+						    duration: 2000,
+						    location: 'bottom'
+						});
 				}
 		});
 	}
