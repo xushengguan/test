@@ -33,34 +33,6 @@
             float: right;
         }
 
-        .search {
-            position: relative;
-            padding: 4px 15px;
-            background: #fff;
-            border-bottom: 1px solid #f2f2f2;
-            z-index: 99;
-            box-sizing: border-box;
-        }
-
-        .search input {
-            width: calc(100% - 45px);
-            padding: 10px 40px 10px 5px;
-            background: #efefef;
-            border-radius: 5px;
-            font-size: 13px;
-            color: #212121;
-        }
-
-        .search i {
-            width: 40px;
-            text-align: center;
-            font-size: 17px;
-            color: #ccc;
-            position: absolute;
-            top: 10px;
-            right: 15px;
-        }
-
         #main {
             background: #f2f2f2;
         }
@@ -255,194 +227,217 @@
 
         .flexed {
             width: 100%;
-            height: calc(100% - 106px);
+            height: calc(100% - 40px);
             background: rgba(0, 0, 0, .6);
             z-index: 999;
-            position: absolute;
-            top: 106px;
+            position: fixed;
+            top: 40px;
             left: 0;
             overflow: auto;
         }
+
+        .search {
+            position: relative;
+            padding: 4px 15px;
+            background: #fff;
+            border-bottom: 1px solid #efefef;
+            z-index: 99;
+            box-sizing: border-box;
+        }
+
+        .search input {
+            width: calc(100% - 45px);
+            padding: 0 40px 0 5px;
+            background: #efefef;
+            border-radius: 5px;
+            font-size: 13px;
+            color: #212121;
+            height: 30px;
+        }
+
+        .search i {
+            width: 40px;
+            text-align: center;
+            font-size: 17px;
+            color: #ccc;
+            position: absolute;
+            top: 10px;
+            right: 15px;
+        }
+
+        .search em{width: 40px; text-align: center; font-size: 16px; color: #666; display: none;}
+
 
         .searchLis{background: #fff;}
         .searchLis li{height: 40px; line-height: 40px; padding:0 15px; border-bottom: 1px solid #f2f2f2; color: #212121; font-size: 13px;}
         .searchLis li:last-child{border-bottom: 0;}
 
-        .search em{width: 40px; text-align: center; font-size: 16px; color: #666; display: none;}
+
     </style>
 </head>
 
 <body style="background:#f2f2f2;">
-    <div id="wrap" class="flex-wrap flex-vertical">
-        <header>
-            <div class="header">学客圈<em onclick="goPublish()"></em></div>
+      <div class="search">
+          <input type="text" placeholder="输入您想要搜索的用户名/手机号" onfocus="search()">
+          <i class="iconfont icon-search"></i>
+          <em onclick="calce()">取消</em>
+      </div>
+      <div id="main" class="flex-con fixed">
+          <div class="cirlce_box">
+              <div class="school_container">
+                  <div class="title">
+                      <div class="personal_img" onclick="goIndex()">
+                          <img src="../image/person.png" alt="">
+                      </div>
+                      <div class="rt_msg">
+                          <div class="nickname">王先生</div>
+                          <div class="date">2017年6月1日&nbsp;21:00</div>
+                      </div>
+                  </div>
+                  <p class="article clickOpen" onclick="goDetail()">
+                      百度文库是百度发布的供网友在线分享文档的平台。百度文库的文档由百度用户上传，需要经过百度的审核才能成为者争夺
+                  </p>
 
-            <div class="search">
-                <input type="text" placeholder="输入您想要搜索的用户名/手机号" onfocus="search()">
-                <i class="iconfont icon-search"></i>
-                <em onclick="calce()">取消</em>
-            </div>
-        </header>
+                  <!-- ======九宫格图片====== -->
+                  <div class="flex-container clearfix">
+                      <div class="flex-item">
+                          <img src="./../image/img_show.jpg" alt="">
+                      </div>
+                      <div class="flex-item">
+                          <img src="./../image/img_show.jpg" alt="">
+                      </div>
+                      <div class="flex-item">
+                          <img src="./../image/img_show.jpg" alt="">
+                      </div>
+                      <div class="flex-item">
+                          <img src="./../image/img_show.jpg" alt="">
+                      </div>
+                      <div class="flex-item">
+                          <img src="./../image/img_show.jpg" alt="">
+                      </div>
+                      <div class="flex-item">
+                          <img src="./../image/img_show.jpg" alt="">
+                      </div>
+                      <div class="flex-item">
+                          <img src="./../image/img_show.jpg" alt="">
+                      </div>
+                      <div class="flex-item">
+                          <img src="./../image/img_show.jpg" alt="">
+                      </div>
+                      <div class="flex-item">
+                          <img src="./../image/img_show.jpg" alt="">
+                      </div>
+                  </div>
+              </div>
+              <div class="comment">
+                  <div class="btn_function btn-share">
+                      <span class="forward">转发</span>
+                      <span class="num">12</span>
+                  </div>
+                  <div class="btn_function">
+                      <span class="forward comment_btn">评论</span>
+                      <span class="num">12</span>
+                  </div>
+                  <div class="btn_function">
+                      <span class="love">喜欢</span>
+                      <span class="num">12</span>
+                  </div>
+              </div>
+          </div>
 
-        <div id="main" class="flex-con fixed">
-            <div class="cirlce_box">
-                <div class="school_container">
-                    <div class="title">
-                        <div class="personal_img" onclick="goIndex()">
-                            <img src="../image/person.png" alt="">
-                        </div>
-                        <div class="rt_msg">
-                            <div class="nickname">王先生</div>
-                            <div class="date">2017年6月1日&nbsp;21:00</div>
-                        </div>
-                    </div>
-                    <p class="article clickOpen" onclick="goDetail()">
-                        百度文库是百度发布的供网友在线分享文档的平台。百度文库的文档由百度用户上传，需要经过百度的审核才能成为者争夺
-                    </p>
+          <div class="cirlce_box">
+              <div class="school_container">
+                  <div class="title">
+                      <div class="personal_img">
+                          <img src="../image/person.png" alt="">
+                      </div>
+                      <div class="rt_msg">
+                          <div class="nickname">王先生</div>
+                          <div class="date">2017年6月1日&nbsp;21:00</div>
+                      </div>
+                  </div>
+                  <p class="article clickOpen" onclick="goDetail()">
+                      百度文库是百度发布的供网友在线分享文档的平台。百度文库的文档由百度用户上传，需要经过百度的审核才能成为者争夺
+                  </p>
 
-                    <!-- ======九宫格图片====== -->
-                    <div class="flex-container clearfix">
-                        <div class="flex-item">
-                            <img src="./../image/img_show.jpg" alt="">
-                        </div>
-                        <div class="flex-item">
-                            <img src="./../image/img_show.jpg" alt="">
-                        </div>
-                        <div class="flex-item">
-                            <img src="./../image/img_show.jpg" alt="">
-                        </div>
-                        <div class="flex-item">
-                            <img src="./../image/img_show.jpg" alt="">
-                        </div>
-                        <div class="flex-item">
-                            <img src="./../image/img_show.jpg" alt="">
-                        </div>
-                        <div class="flex-item">
-                            <img src="./../image/img_show.jpg" alt="">
-                        </div>
-                        <div class="flex-item">
-                            <img src="./../image/img_show.jpg" alt="">
-                        </div>
-                        <div class="flex-item">
-                            <img src="./../image/img_show.jpg" alt="">
-                        </div>
-                        <div class="flex-item">
-                            <img src="./../image/img_show.jpg" alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="comment">
-                    <div class="btn_function btn-share">
-                        <span class="forward">转发</span>
-                        <span class="num">12</span>
-                    </div>
-                    <div class="btn_function">
-                        <span class="forward comment_btn">评论</span>
-                        <span class="num">12</span>
-                    </div>
-                    <div class="btn_function">
-                        <span class="love">喜欢</span>
-                        <span class="num">12</span>
-                    </div>
-                </div>
-            </div>
+                  <!-- ======一张图片====== -->
+                  <div class="flex-container clearfix">
+                      <div class="flex-item on">
+                          <img src="./../image/img_show.jpg" alt="">
+                      </div>
 
-            <div class="cirlce_box">
-                <div class="school_container">
-                    <div class="title">
-                        <div class="personal_img">
-                            <img src="../image/person.png" alt="">
-                        </div>
-                        <div class="rt_msg">
-                            <div class="nickname">王先生</div>
-                            <div class="date">2017年6月1日&nbsp;21:00</div>
-                        </div>
-                    </div>
-                    <p class="article clickOpen" onclick="goDetail()">
-                        百度文库是百度发布的供网友在线分享文档的平台。百度文库的文档由百度用户上传，需要经过百度的审核才能成为者争夺
-                    </p>
+                  </div>
+              </div>
+              <div class="comment">
+                  <div class="btn_function btn-share">
+                      <span class="forward">转发</span>
+                      <span class="num">12</span>
+                  </div>
+                  <div class="btn_function">
+                      <span class="forward comment_btn">评论</span>
+                      <span class="num">12</span>
+                  </div>
+                  <div class="btn_function">
+                      <span class="love">喜欢</span>
+                      <span class="num">12</span>
+                  </div>
+              </div>
+          </div>
 
-                    <!-- ======一张图片====== -->
-                    <div class="flex-container clearfix">
-                        <div class="flex-item on">
-                            <img src="./../image/img_show.jpg" alt="">
-                        </div>
+          <div class="cirlce_box">
+              <div class="school_container">
+                  <div class="title">
+                      <div class="personal_img">
+                          <img src="../image/person.png" alt="">
+                      </div>
+                      <div class="rt_msg">
+                          <div class="nickname">王先生</div>
+                          <div class="date">2017年6月1日&nbsp;21:00</div>
+                      </div>
+                  </div>
+                  <p class="article clickOpen" onclick="goDetail()">
+                      百度文库是百度发布的供网友在线分享文档的平台。百度文库的文档由百度用户上传，需要经过百度的审核才能成为者争夺
+                  </p>
 
-                    </div>
-                </div>
-                <div class="comment">
-                    <div class="btn_function btn-share">
-                        <span class="forward">转发</span>
-                        <span class="num">12</span>
-                    </div>
-                    <div class="btn_function">
-                        <span class="forward comment_btn">评论</span>
-                        <span class="num">12</span>
-                    </div>
-                    <div class="btn_function">
-                        <span class="love">喜欢</span>
-                        <span class="num">12</span>
-                    </div>
-                </div>
-            </div>
+                  <!-- ======四宫格图片====== -->
+                  <div class="fourth-container clearfix">
+                      <div class="flex-item">
+                          <img src="./../image/img_show.jpg" alt="">
+                      </div>
+                      <div class="flex-item">
+                          <img src="./../image/img_show.jpg" alt="">
+                      </div>
+                      <div class="flex-item">
+                          <img src="./../image/img_show.jpg" alt="">
+                      </div>
+                      <div class="flex-item">
+                          <img src="./../image/img_show.jpg" alt="">
+                      </div>
+                  </div>
 
-            <div class="cirlce_box">
-                <div class="school_container">
-                    <div class="title">
-                        <div class="personal_img">
-                            <img src="../image/person.png" alt="">
-                        </div>
-                        <div class="rt_msg">
-                            <div class="nickname">王先生</div>
-                            <div class="date">2017年6月1日&nbsp;21:00</div>
-                        </div>
-                    </div>
-                    <p class="article clickOpen" onclick="goDetail()">
-                        百度文库是百度发布的供网友在线分享文档的平台。百度文库的文档由百度用户上传，需要经过百度的审核才能成为者争夺
-                    </p>
-
-                    <!-- ======四宫格图片====== -->
-                    <div class="fourth-container clearfix">
-                        <div class="flex-item">
-                            <img src="./../image/img_show.jpg" alt="">
-                        </div>
-                        <div class="flex-item">
-                            <img src="./../image/img_show.jpg" alt="">
-                        </div>
-                        <div class="flex-item">
-                            <img src="./../image/img_show.jpg" alt="">
-                        </div>
-                        <div class="flex-item">
-                            <img src="./../image/img_show.jpg" alt="">
-                        </div>
-                    </div>
-
-                </div>
-                <div class="comment">
-                    <div class="btn_function">
-                        <span class="forward">转发</span>
-                        <span class="num">12</span>
-                    </div>
-                    <div class="btn_function">
-                        <span class="forward comment_btn">评论</span>
-                        <span class="num">12</span>
-                    </div>
-                    <div class="btn_function">
-                        <span class="forward love">喜欢</span>
-                        <span class="num">12</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <div class="flexed" style="display:none">
-            <ul class="searchLis">
-               <li>王先生</li>
-               <li>王先生</li>
-            </ul>
-        </div>
-    </div>
-
+              </div>
+              <div class="comment">
+                  <div class="btn_function">
+                      <span class="forward">转发</span>
+                      <span class="num">12</span>
+                  </div>
+                  <div class="btn_function">
+                      <span class="forward comment_btn">评论</span>
+                      <span class="num">12</span>
+                  </div>
+                  <div class="btn_function">
+                      <span class="forward love">喜欢</span>
+                      <span class="num">12</span>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="flexed" style="display:none">
+          <ul class="searchLis">
+             <li>王先生</li>
+             <li>王先生</li>
+          </ul>
+      </div>
 </body>
 
 </html>
@@ -453,22 +448,6 @@
     fixStatusBar_API(header);
     apiready = function() {
 
-    }
-
-    //搜索匹配
-    function search() {
-        $api.css($api.dom('.flexed'),'display:block');
-        $api.css($api.dom('.search input'),'width:calc(100% - 90px)');
-        $api.css($api.dom('.search i'),'right:55px');
-        $api.css($api.dom('.search em'),'display:inline-block');
-    }
-
-    //取消
-    function calce(){
-        $api.css($api.dom('.flexed'),'display:none');
-        $api.css($api.dom('.search input'),'width:calc(100% - 40px)');
-        $api.css($api.dom('.search i'),'right:15px');
-        $api.css($api.dom('.search em'),'display:none');
     }
 
     //跳到详情
@@ -504,4 +483,21 @@
       });
 
     }
+
+    //搜索匹配
+    function search() {
+        $api.css($api.dom('.flexed'),'display:block');
+        $api.css($api.dom('.search input'),'width:calc(100% - 90px)');
+        $api.css($api.dom('.search i'),'right:55px');
+        $api.css($api.dom('.search em'),'display:inline-block');
+    }
+
+    //取消
+    function calce(){
+        $api.css($api.dom('.flexed'),'display:none');
+        $api.css($api.dom('.search input'),'width:calc(100% - 40px)');
+        $api.css($api.dom('.search i'),'right:15px');
+        $api.css($api.dom('.search em'),'display:none');
+    }
+
 </script>

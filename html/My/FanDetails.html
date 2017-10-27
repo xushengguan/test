@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-		<meta charset="UTF-8">
-		<title>粉丝明细</title>
-		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-		<link rel="stylesheet" href="../../css/api.css">
-		<link rel="stylesheet" href="../../css/common.css">
-		<link rel="stylesheet" href="../../icon/iconfonts/iconfont.css">
-		<link rel="stylesheet" href="../../css/7startAct7.css">
-		<script src="../../script/my.js"></script>
+	<meta charset="UTF-8">
+	<title>粉丝明细</title>
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<link rel="stylesheet" href="../../css/api.css">
+	<link rel="stylesheet" href="../../css/common.css">
+	<link rel="stylesheet" href="../../css/loading.css">
+	<link rel="stylesheet" href="../../icon/iconfonts/iconfont.css">
+	<link rel="stylesheet" href="../../css/7startAct7.css">
 </head>
+
 <body>
-		<div class="startAct6-con">
-			<div class="salves-num1 hide" onclick="FansList()">
+	<div class="startAct6-con" id="app">
+		<div v-if="status == '1'" v-for="v in data">
+			<div class="salves-num1 hide" @click="go_MyFans(v.time)">
 				<div class="num1-left fl">
-					<p class="one" style="color:#212121;">2017/06/23</p>
-					<p class="times">共50人</p>
+					<p class="one" style="color:#212121;">{{v.time}}</p>
+					<p class="times">共{{v.count}}人</p>
 				</div>
 				<div class="num1-right fr">
 					<span><label>+10</label>人</span>
@@ -24,23 +27,88 @@
 				</div>
 			</div>
 		</div>
+		<div class="tips" v-if="status == '0'">暂无粉丝业绩！</div>
+	</div>
 </body>
+
 </html>
 <script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
 <script type="text/javascript">
-		apiready = function(){
+	var id, token;
+	apiready = function() {
+		id = $api.getStorage('id');
+		token = $api.getStorage('token');
 
-		}
+		loading();
+		vm.FansPerfor();
 
-		//打开我的粉丝窗口
-		function FansList(){
-				api.openWin({
-				    name: 'FansList_title',
-				    url: './FansList_title.html',
-				    pageParam: {
+		//刷新
+		api.setRefreshHeaderInfo({
+			loadingImg: 'widget://image/refresh.png',
+			bgColor: '#444',
+			textColor: '#fff',
+			textUp: '释放立即刷新...',
+			textLoading: '加载中···',
+			showTime: false
+		}, function(ret, err) {
+			vm.FansPerfor();
+			api.refreshHeaderLoadDone();
+		});
 
-				    }
+	}
+
+
+	var vm = new Vue({
+		el: '#app',
+		data: {
+			data: [],
+			status: ''
+		},
+		methods: {
+			FansPerfor() { //粉丝业绩
+				$api.css($api.dom('#loading'), 'display:block');
+				api.ajax({
+					url: serverurl,
+					method: 'get',
+					dataType: 'json',
+					data: {
+						values: {
+							type: '10027',
+							user_id: id,
+							token: token
+						}
+					}
+				}, function(ret, err) {
+        
+					$api.css($api.dom('#loading'), 'display:none');
+					if (ret) {
+						vm.status = ret.status;
+						if (ret.status == '1') { //1成功
+							vm.data = ret.data;
+						}
+					} else {
+						api.toast({
+							msg: '网络错误',
+							duration: 2000,
+							location: 'middle'
+						});
+					}
 				});
+			},
 
+			go_MyFans(time) { //打开我的粉丝窗口
+				api.openWin({
+					name: 'FansList_title.html',
+					url: './FansList_title.html',
+					pageParam: {
+						time: time,
+						id: id
+					}
+				});
+			}
 		}
+	})
+
 </script>

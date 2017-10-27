@@ -166,7 +166,6 @@ apiready = function(){
 	  vm.winmoney = api.pageParam.winmoney;
 		vm.level = api.pageParam.level;
 		var progressWidth = vm.winmoney / 10000;
-		alert(toPercent(progressWidth))
 		$api.css($api.dom('.imgline.on'), 'width:'+toPercent(progressWidth));
 
 }

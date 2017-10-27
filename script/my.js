@@ -137,7 +137,7 @@ function SendCode(obj, tel, wait) {
         switch (ret.status) {
             case '1':
                 api.toast({
-                    msg: '发送成功',
+                    msg: '验证码已发送，请留意短信',
                     duration: 2000,
                     location: 'bottom'
                 });
@@ -185,4 +185,46 @@ function toPercent(point){
     var str=Number(point*100);
     str+="%";
     return str;
+}
+
+//轮播模块
+function swiper(x,y,h,paths) {
+    var UIScrollPicture = api.require('UIScrollPicture');
+    UIScrollPicture.open({
+        rect: {
+            x: x,
+            y: y,
+            w: api.winWidth,
+            h: h
+        },
+        data: {
+            paths: paths
+        },
+        styles: {
+
+            indicator: {        //（可选项）JSON对象；指示器样式；不传则不显示指示器
+                  //  dot:{        // （可选项）JSON对象；指示器小圆点样式；不传则使用系统默认小圆点样式
+                  //        w:5,  //（必选项）数字类型；小圆点宽度
+                  //        h:5, //（必选项）数字类型；小圆点高度
+                  //        r:5,  //（必选项）数字类型；小圆点圆角半径
+                  //        margin:10  //（必选项）数字类型；小圆点间距
+                  //      },
+                  align: 'center',                //（可选项）字符串类型；指示器位置；默认：center //取值范围： //center（居中） //left（靠左） //right（靠右）
+                  color: '#000',               //（可选项）指示器颜色 ，支持 rgb、rgba、#；默认：'#FFFFFF'
+                  activeColor: '#007aff'          //（可选项）当前指示器颜色，支持 rgb、rgba、#；默认：'#DA70D6'
+            }
+        },
+        placeholderImg: 'widget://image/pic10.jpg',
+        contentMode: 'scaleToFill',
+        interval: 5,
+        fixedOn: api.frameName,
+        loop: true,
+        fixed: false
+    }, function(ret, err) {
+        if (ret) {
+            console.log(JSON.stringify(ret));
+        } else {
+            console.log(JSON.stringify(err));
+        }
+    });
 }

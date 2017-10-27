@@ -8,21 +8,22 @@
 	<title>商品详情</title>
 	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
 	<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/loading.css" />
 	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css" />
-	<script src="../../script/My.js"></script>
+
 </head>
 <style>
 	.img {
 		width: 100%;
 		position: relative;
 		overflow: hidden;
-		height: 150px;
+		height: 200px;
 	}
 
 	.img img {
 		display: block;
 		width: 100%;
-		height: 100%;
+		/*height: 100%;*/
 	}
 
 	.img .fix {
@@ -141,22 +142,17 @@
 		background: #fca958;
 	}
 	/*======================底部==========================*/
+	#app{height: 100%;}
 </style>
 
 <body style="background:#f2f2f2;">
-	<div id="wrap">
+	<div id="app">
 		<div id="main" style="margin-bottom: 55px;">
 
 			<div class="img">
-				<img src="../../image/pic10.jpg" alt="">
-				<!-- <div class="fix">
-					<p>免费品尝南山十一鸡
-					</p>
-					<div class="goodsName">南山十一鸡</div>
-				</div> -->
+				<!-- <img src="../../image/pic10.jpg" alt=""> -->
 			</div>
 
-			<!-- 使用日期 -->
 			<div class="act_content">
 				<div class="title">
 					<span class="before"></span>
@@ -164,19 +160,18 @@
 				</div>
 				<div class="box_main">
 					<p class="introduce">
-						南山十一鸡
+						{{goodsInfo.goods_name}}
 					</p>
 				</div>
 			</div>
 
-			<!-- 使用规则 -->
 			<div class="act_content">
 				<div class="title">
 					<span class="before"></span>
 					<span class="text">商品介绍</span>
 					<div class="box_main">
 						<p class="introduce">
-							春，你可知有多少人苦苦把你追寻，有多少人跋山涉水只为寻找你停留过的痕迹，又有多少作家为你写下优美的句儿。因为你是光明，是美好，还是希望
+							{{goodsInfo.abs}}
 						</p>
 					</div>
 				</div>
@@ -191,27 +186,75 @@
 				</div>
 				<div class="box_main">
 					<p class="introduce">
-						春，你可知有多少人苦苦把你追寻，有多少人跋山涉水只为寻找你停留过的痕迹，又有多少作家为你写下优美的句儿。因为你是光明，是美好，还是希望
+						{{content.content}}
 					</p>
 				</div>
 			</div>
 
-
 		</div>
-
-
-		<!-- ========================底部========================== -->
-		<!-- 提交订单 -->
+    <!-- 底部 -->
 		<div id="nopay_footer">
 			<div class="fo_left">
-				<span class="lf_txt">单价：<em>50学分</em></span>
+				<span class="lf_txt">单价：<em>{{goodsInfo.total}}学分</em></span>
 			</div>
 			<div class="btn_pay submit">提交订单</div>
 		</div>
-		<!-- ========================底部========================== -->
-
 
 	</div>
 </body>
-
 </html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript">
+    var goodsid;
+		apiready = function(){
+			  loading();
+				goodsid = api.pageParam.goods_id;
+				$api.css($api.dom('#loading'), 'display:block');
+        vm.getGoodsInfo();
+				$api.css($api.dom('#loading'), 'display:none');
+		}
+
+		var vm = new Vue({
+        el: '#app',
+        data: {
+            goodsInfo:[],
+						content:[],
+        },
+        methods: {
+						getGoodsInfo(){
+							api.ajax({
+							    url: serverurl,
+							    method: 'get',
+									dataType:'json',
+							    data: {
+							        values: {
+							          	type: '10032',
+													goodsid:goodsid
+							        },
+							    }
+							},function(ret, err){
+
+							    if (ret) {
+							        vm.goodsInfo = ret.data.info;
+											vm.content = ret.data.content;
+											var x = 0;
+											var y = 0;
+											var h = $api.dom('.img').offsetHeight;
+											var paths = ret.data.img;
+											swiper(x,y,h,paths);
+							    } else {
+							        api.toast({
+							            msg: '网络错误',
+							            duration: 2000,
+							            location: 'bottom'
+							        });
+
+							    }
+							});
+
+						}
+        }
+    })
+</script>

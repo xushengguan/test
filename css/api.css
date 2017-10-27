@@ -80,3 +80,19 @@ td,th {
 .loading_more:after {
 	content: '加载更多';
 }
+
+/*单行文本溢出显示省略号*/
+.single{ overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
+/*多行文本溢出显示省略号*/
+.more{ display: -webkit-box; -webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;}
+
+/*去掉滚动条*/
+::-webkit-scrollbar {
+    width: 0px;
+    height: 1px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.2);
+} 

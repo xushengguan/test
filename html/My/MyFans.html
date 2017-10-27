@@ -11,14 +11,16 @@
 	<link rel="stylesheet" href="../../icon/iconfonts/iconfont.css">
 	<link rel="stylesheet" href="../../css/7startAct7.css">
 	<link rel="stylesheet" href="../../css/loading.css">
-
+	<style media="screen">
+			.NoAct{padding: 20px 10px; color: #333; font-size: 16px;}
+	</style>
 </head>
 
 <body>
 	<div class="startAct7-con" id="app">
 		<div class="flowers-cons">
 			<h6 class="haveflows">拥有粉丝数<span>(人)</span></h6>
-			<h6 class="flowers">13</h6>
+			<h6 class="flowers">{{}}</h6>
 			<ul class="flowers-ul hide">
 				<li>
 					<p>日最高增长</p>
@@ -29,7 +31,7 @@
 				</li>
 				<li>
 					<p>粉丝收益</p>
-					<p class="peoples"><span>4</span>学分</p>
+					<p class="peoples"><span>{{}}</span>学分</p>
 				</li>
 				<li>
 					<p>本周增加粉丝</p>
@@ -40,16 +42,19 @@
 		</div>
 
 		<h6 class="listHead">粉丝列表</h6>
-		<div class="flower-list hide" v-for="v in data">
+		<div v-if="status == '1'">
+				<div class="flower-list hide" v-for="v in data">
 			<img class="fl circles" :src="v.headimgurl" v-if="v.headimgurl">
 			<img class="fl circles" src="../../image/head01.png" v-else>
-			<span class="fl name" v-if="v.user_name !== null">{{v.user_name}}</span>
+			<span class="fl name" v-if="v.user_name !== null">{{v.nickname}}</span>
 
 			<!-- 	relation_type 1是显示关注 0是互相关注 -->
 			<span class="fr care" @click="follow(v.user_id)" v-if="v.relation_type == 1">+关注</span>
 			<span class="fr care bg-care" @click="cancel_follow(v.user_id)" v-if="v.relation_type == 0">已关注</span>
 		</div>
-
+    </div>
+		<!-- 没有粉丝 -->
+		<div class="NoAct" v-if="status == '0'">抱歉，您暂时还没有粉丝！</div>
 	</div>
 
 
@@ -60,12 +65,13 @@
 <script type="text/javascript" src="../../script/my.js"></script>
 <script type="text/javascript" src="../../script/vue.js"></script>
 <script type="text/javascript">
-	var id;
+	var id,token;
 	var vm = new Vue({
 		el: '#app',
 		data: {
 			data: [],
-			data2:[]
+			data2:[],
+			status:''
 		},
 		methods: {
 			seeFans() { //查看用户粉丝
@@ -76,23 +82,24 @@
 					data: {
 						values: {
 							type: '100010',
-							uid: id
+							uid: id,
+							token:token
 						}
 					}
 				}, function(ret, err) {
-
+					alert(JSON.stringify(ret))
 					if (ret) {
-
+            vm.status = ret.status;
 						if (ret.status == '1') {
 							vm.data = ret.data;
 						}
 
 					} else {
-						api.toast({
-							msg: '网络错误',
-							duration: 2000,
-							location: 'middle'
-						});
+						 api.toast({
+						     msg: '网络错误',
+						     duration: 2000,
+						     location: 'bottom'
+						 });
 
 					}
 				});
@@ -106,7 +113,8 @@
 					data: {
 						values: {
 							type: '10024',
-							user_id: id
+							user_id: id,
+							token:token
 						}
 					}
 				}, function(ret, err) {
@@ -136,7 +144,8 @@
 						values: {
 							type: '10004',
 							uid: id,
-							follower_id:follower_id
+							follower_id:follower_id,
+							token:token
 						}
 					}
 				}, function(ret, err) {
@@ -168,7 +177,7 @@
 				});
 			},
 
-			cancel_follow(follower_id) {//用户关注/粉丝
+			cancel_follow(follower_id) {//取消关注
 				api.ajax({
 					url: serverurl,
 					method: 'get',
@@ -177,7 +186,8 @@
 						values: {
 							type: '100011',
 							uid: id,
-							follower_id:follower_id
+							follower_id:follower_id,
+							token:token
 						}
 					}
 				}, function(ret, err) {
@@ -214,6 +224,8 @@
 
 	apiready = function() {
 		id = api.pageParam.id;
+		token = $api.getStorage('token');
+
 		loading();
 		$api.css($api.dom('#loading'), 'display:block');
 		vm.seeFans();

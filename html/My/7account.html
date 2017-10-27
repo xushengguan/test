@@ -123,10 +123,12 @@
 <script type="text/javascript" src="../../script/api.js"></script>
 <script type="text/javascript" src="../../script/my.js"></script>
 <script type="text/javascript">
-	var id, role, imgUrl;
+	var id, role, imgUrl,token;
 	apiready = function() {
 		role = api.pageParam.role; //角色代号 1：学生家长，2：班主任，3：联盟商
 		id = api.pageParam.id; //用户ID
+		token = $api.getStorage('token');
+
 		var headimgurl = api.pageParam.headimgurl; //用户头像
 		if (headimgurl !== '') {
 			$api.attr($api.dom('#img'), 'src', headimgurl);
@@ -299,8 +301,9 @@
 			    data: {
 			        values: {
 								  type:'10036',
-			            uid	: id,
-									headimgurl:headimgurl
+			            uid: id,
+									headimgurl:headimgurl,
+									token:token
 			        }
 			    }
 			},function(ret, err){
@@ -308,12 +311,18 @@
 			    if (ret) {
 			        if (ret.status == '1') {
 									$api.attr($api.dom('#img'), 'src', headimgurl);
+			        }else {
+			        	  api.toast({
+			        	      msg: '网络错误',
+			        	      duration: 2000,
+			        	      location: 'bottom'
+			        	  });
 			        }
 			    } else {
 						api.toast({
 							msg: '网络错误',
 							duration: 2000,
-							location: 'middle'
+							location: 'bottom'
 						});
 			    }
 			});
@@ -349,40 +358,43 @@
 				numbers: [tel],
 				text: '我最近在使用学令牌APP,好用又好玩,这里的人长得好看，说话又好听，我超喜欢这里的，点这里http://www.baidu.com赶紧加入和我一起玩吧。'
 		}, function(ret, err) {
-			  alert(JSON.stringify(ret))
-				if (ret && ret.status) {
-						//已发送
-						InvitationToReg(tel);
-				} else {
-						//发送失败
-						api.toast({
-						    msg: '发送失败',
-						    duration: 2000,
-						    location: 'bottom'
-						});
-				}
+				InvitationToReg(tel);
+			  // alert(JSON.stringify(ret))
+				// if (ret && ret.status) {
+				// 		//已发送
+				// 		InvitationToReg(tel);
+				// } else {
+				// 		//发送失败
+				// 		api.toast({
+				// 		    msg: '发送失败',
+				// 		    duration: 2000,
+				// 		    location: 'bottom'
+				// 		});
+				// }
 		});
 	}
 
-	function InvitationToReg(tel){
+	function InvitationToReg(tel){//用户邀请注册
 		  var time = Math.round(new Date().getTime()/1000);//当前时间
 			api.ajax({
 			    url: serverurl,
-			    method: 'post',
+			    method: 'get',
 			    data: {
 			        values: {
 			            type: '10037',
 									phone:tel,
 									time:time,
-									uid:id
+									uid:id,
+									token:token
 			        },
 			    }
 			},function(ret, err){
+
+				  $api.css($api.dom('.fu-body'), 'display:none');
 			    if (ret) {
 			        if (ret.status == '1') {
-								  $api.css($api.dom('.fu-body'), 'display:none');
 									api.toast({
-									    msg: '邀请成功',
+									    msg: '已发出邀请',
 									    duration: 2000,
 									    location: 'middle'
 									});

@@ -8,30 +8,10 @@
     <title>学分商城</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css" />
     <link rel="stylesheet" type="text/css" href="../css/style.css" />
-    <link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css" />
+    <link rel="stylesheet" type="text/css" href="../css/loading.css" />
+    <link rel="stylesheet" type="text/css" href="../icon/iconfonts/iconfont.css" />
     <style>
-        header {
-            position: relative;
-        }
 
-        .header {
-            padding: 15px;
-            text-align: center;
-            font-size: 16px;
-            color: #212121;
-            background: #fcd058;
-            overflow: hidden;
-            font-weight: bold;
-        }
-
-        .header em {
-            display: block;
-            width: 18px;
-            height: 18px;
-            background: url(../image/service.png) no-repeat center;
-            background-size: contain;
-            float: right;
-        }
         /*个人信息区*/
 
         .personal_title {
@@ -206,13 +186,13 @@
         }
 
         .goodLink .mg_txt .shop {
-            font-size: 9px;
+            font-size: 12px;
             color: #999;
         }
 
         .goodLink .mg_txt .good_name {
             color: #5c5c5c;
-            font-size: 11px;
+            font-size: 12px;
         }
 
         .goodLink .mg_txt .credit {
@@ -229,193 +209,213 @@
             display: block;
             width: 100%;
         }
+
+        #app{
+            height: 100%;
+        }
     </style>
 </head>
 
 <body style="background:#f2f2f2;">
-    <div id="wrap" class="flex-wrap flex-vertical">
-        <header>
-            <div class="header">
-                学分商城
-                <em></em>
-            </div>
-        </header>
-        <div id="main" class="flex-con">
-            <div class="pic">
-                <img src="../image/pic10.jpg" alt="">
-            </div>
-            <!-- 功能图标区 -->
-            <div class="credit_icon clearfix">
-                <a href="javascript:;" class="credit_icon_btn">
-                    <span class="icon1">
-                <i class="icon iconfont icon-wodenongzuowu" style="color: #fff; font-size: 20px;"></i>
-              </span>
-                    <p>特色农产品</p>
-                </a>
-                <a href="javascript:;" class="credit_icon_btn">
-                    <span class="icon1 icon2">
-                <i class="icon iconfont icon-zixunwenzitubiao051" style="font-size: 20px; color: #fff"></i>
-              </span>
-                    <p>农作物认购</p>
-                </a>
-                <a href="javascript:;" class="credit_icon_btn">
-                    <span class="icon1 icon3"><i class="icon iconfont icon-baoji" style="font-size: 20px; color: #fff"></i></span>
-                    <p>教育培训</p>
-                </a>
-                <a href="javascript:;" class="credit_icon_btn">
-                    <span class="icon1 icon4"><i class="icon iconfont icon-qianbi" style="font-size: 20px; color: #fff"></i></span>
-                    <p>令币</p>
-                </a>
-            </div>
-            <!-- 热门商品区 -->
-            <div class="hot_goods">
-                <div class="hot_title">
-                    <i class="icon iconfont icon-remen" style="font-size: 15px; color: #ff5252"></i> 热门商品
-                </div>
-                <div class="good_box clearfix" id="hot_goods">
-                    <a href="javascript:;" class="goodLink" onclick="go_goodsDetail()">
-                        <div class="good_img">
-                            <img src="./images/img_show.jpg" alt="">
-                        </div>
-                        <div class="mg_txt">
-                            <div class="shop">
-                                新东方
-                            </div>
-                            <div class="good_name">中国第一鸡</div>
-                            <div class="credit">100学分</div>
-                        </div>
-                    </a>
-                    <a href="javascript:;" class="goodLink">
-                        <div class="good_img">
-                            <img src="./images/img_show.jpg" alt="">
-                        </div>
-                        <div class="mg_txt">
-                            <div class="shop">
-                                新东方
-                            </div>
-                            <div class="good_name">中国第一鸡</div>
-                            <div class="credit">100学分</div>
-                        </div>
-                    </a>
-                    <a href="javascript:;" class="goodLink">
-                        <div class="good_img">
-                            <img src="./images/img_show.jpg" alt="">
-                        </div>
-                        <div class="mg_txt">
-                            <div class="shop">
-                                新东方
-                            </div>
-                            <div class="good_name">中国第一鸡</div>
-                            <div class="credit">100学分</div>
-                        </div>
-                    </a>
-                </div>
-            </div>
+  
+    <div id="app">
+        <div class="pic">
+            <!-- <img src="../image/pic10.jpg" alt=""> -->
+        </div>
+        <!-- 功能图标区 -->
+        <div class="credit_icon clearfix">
+            <a href="javascript:;" class="credit_icon_btn" v-for="v in ClassInfo">
+                <span class="icon1" v-bind:style="{background:v.color}">
+                  <i class="icon iconfont" v-bind:class="v.fonticon" style="font-size: 20px; color:#fff;"></i>
+                </span>
+                <p>{{v.tname}}</p>
+            </a>
+        </div>
 
-            <!-- 新品优惠 -->
-            <div class="hot_goods">
-                <div class="hot_title" style="color:#2196f3">
-                    <i class="icon iconfont icon-xinpin" style="font-size: 15px;"></i> 新品优惠
-                </div>
-                <div class="good_box clearfix">
-                    <a href="javascript:;" class="goodLink">
-                        <div class="good_img">
-                            <img src="./images/img_show.jpg" alt="">
+        <!-- 热门商品区 -->
+        <div class="hot_goods">
+            <div class="hot_title">
+                <i class="icon iconfont icon-remen" style="font-size: 15px; color: #ff5252"></i> 热门商品
+            </div>
+            <div class="good_box clearfix" id="hot_goods">
+                <a href="javascript:;" class="goodLink" v-for="v in hotInfo" @click="go_goodsDetail(v.id)">
+                    <div class="good_img">
+                        <img :src="v.imgurl" alt="">
+                    </div>
+                    <div class="mg_txt">
+                        <div class="shop single">
+                            {{v.goods_name}}
                         </div>
-                        <div class="mg_txt">
-                            <div class="shop">
-                                新东方
-                            </div>
-                            <div class="good_name">中国第一鸡</div>
-                            <div class="credit">100学分</div>
-                        </div>
-                    </a>
-                    <a href="javascript:;" class="goodLink">
-                        <div class="good_img">
-                            <img src="./images/img_show.jpg" alt="">
-                        </div>
-                        <div class="mg_txt">
-                            <div class="shop">
-                                新东方
-                            </div>
-                            <div class="good_name">中国第一鸡</div>
-                            <div class="credit">100学分</div>
-                        </div>
-                    </a>
-                    <a href="javascript:;" class="goodLink">
-                        <div class="good_img">
-                            <img src="./images/img_show.jpg" alt="">
-                        </div>
-                        <div class="mg_txt">
-                            <div class="shop">
-                                新东方
-                            </div>
-                            <div class="good_name">中国第一鸡</div>
-                            <div class="credit">100学分</div>
-                        </div>
-                    </a>
+                        <div class="good_name single">{{v.abs}}</div>
+                        <div class="credit">{{v.total}}学分</div>
+                    </div>
+                </a>
+            </div>
+        </div>
 
-                    <a href="javascript:;" class="goodLink">
-                        <div class="good_img">
-                            <img src="./images/img_show.jpg" alt="">
+        <!-- 新品优惠 -->
+        <div class="hot_goods">
+            <div class="hot_title" style="color:#2196f3">
+                <i class="icon iconfont icon-xinpin" style="font-size: 15px;"></i> 新品优惠
+            </div>
+            <div class="good_box clearfix">
+                <a href="javascript:;" class="goodLink" v-for="v in hotInfo" @click="go_goodsDetail(v.id)">
+                    <div class="good_img">
+                        <img :src="v.imgurl" alt="">
+                    </div>
+                    <div class="mg_txt">
+                        <div class="shop single">
+                            {{v.goods_name}}
                         </div>
-                        <div class="mg_txt">
-                            <div class="shop">
-                                新东方
-                            </div>
-                            <div class="good_name">中国第一鸡</div>
-                            <div class="credit">100学分</div>
-                        </div>
-                    </a>
-                    <a href="javascript:;" class="goodLink">
-                        <div class="good_img">
-                            <img src="./images/img_show.jpg" alt="">
-                        </div>
-                        <div class="mg_txt">
-                            <div class="shop">
-                                新东方
-                            </div>
-                            <div class="good_name">中国第一鸡</div>
-                            <div class="credit">100学分</div>
-                        </div>
-                    </a>
-                    <a href="javascript:;" class="goodLink">
-                        <div class="good_img">
-                            <img src="./images/img_show.jpg" alt="">
-                        </div>
-                        <div class="mg_txt">
-                            <div class="shop">
-                                新东方
-                            </div>
-                            <div class="good_name">中国第一鸡</div>
-                            <div class="credit">100学分</div>
-                        </div>
-                    </a>
-                </div>
+                        <div class="good_name single">{{v.abs}}</div>
+                        <div class="credit">{{v.total}}学分</div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
+
 </body>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/my.js"></script>
+<script type="text/javascript" src="../script/vue.js"></script>
 <script type="text/javascript">
     var header = $api.dom('.header');
     fixStatusBar_API(header);
     apiready = function() {
+        loading();
+        //轮播
+        var x = 0;
+        var y = 0;
+        var h = $api.dom('.pic').offsetHeight;
+        var paths = ['widget://image/pic10.jpg','widget://image/pic10.jpg'];
+        swiper(x,y,h,paths);
+        $api.css($api.dom('#loading'), 'display:block');
+        vm.getClass();
+        vm.get_hotgoods();
+        vm.get_Newsgoods();
+        $api.css($api.dom('#loading'), 'display:none');
+
+        //刷新
+        api.setRefreshHeaderInfo({
+            loadingImg: 'widget://image/refresh.png',
+            bgColor: '#444',
+            textColor: '#fff',
+            textUp: '释放立即刷新...',
+            textLoading: '加载中···',
+            showTime: false
+        }, function(ret, err) {
+            //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+            window.location.reload();
+            api.refreshHeaderLoadDone();
+        });
 
     };
 
-    //跳到商品详情
-    function go_goodsDetail(){
-        api.openWin({
-            name: 'credit_goodDetail',
-            url: './mall/credit_goodDetail.html',
-            pageParam: {
-                name: 'test'
-            }
-        });
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            ClassInfo: [],
+            hotInfo: [],
+            newInfo: []
+        },
+        methods: {
+            getClass() { //读取商品分类
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    dataType: 'json',
+                    data: {
+                        values: {
+                            type: '10030',
+                        }
+                    }
+                }, function(ret, err) {
 
-    }
+                    if (ret) {
+                        vm.ClassInfo = ret;
+
+                    } else {
+                        api.toast({
+                            msg: '网络错误',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+
+                    }
+                });
+            },
+
+            get_hotgoods() { //读取热门商品
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    dataType: 'json',
+                    data: {
+                        values: {
+                            type: '10031',
+                            gtype: 'hot',
+                            num: '3'
+                        }
+                    }
+                }, function(ret, err) {
+
+                    if (ret) {
+                        vm.hotInfo = ret;
+
+                    } else {
+                        api.toast({
+                            msg: '网络错误',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+
+                    }
+                });
+            },
+
+            get_Newsgoods() { //读取新品商品
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    dataType: 'json',
+                    data: {
+                        values: {
+                            type: '10031',
+                            gtype: 'new',
+                            num: '6'
+                        }
+                    }
+                }, function(ret, err) {
+
+                    if (ret) {
+                        vm.newInfo = ret;
+
+                    } else {
+                        api.toast({
+                            msg: '网络错误',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+
+                    }
+                });
+            },
+
+            go_goodsDetail(goods_id){
+              api.openWin({
+                  name: 'credit_goodDetail',
+                  url: './mall/credit_goodDetail.html',
+                  pageParam: {
+                      goods_id: goods_id
+                  }
+              });
+            }
+        }
+    })
+
+
+
 </script>
 
 </html>

@@ -100,6 +100,7 @@
              Tips('#FindError','#FindError .wrong-num','请输入有效的手机号码！');
              return false;
          }else{
+             alert("走了")
              SendCode(obj,tel,wait);//获取手机验证码
         };
      }
@@ -154,7 +155,7 @@
                  }
              }
          }, function(ret, err) {
-  
+
              if (ret) {
                  if (ret.status == '1') {//成功
                     api.toast({

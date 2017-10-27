@@ -1,7 +1,7 @@
 .actMsg-con{
 	width: 100%;
 	box-sizing: border-box;
-	padding-bottom:67px;
+	margin-bottom:60px;
 }
 .actMsg-top{
 	width: 100%;
@@ -16,6 +16,7 @@
 }
 .img-con img{
 	width: 100%;
+	height: 170px;
 	display: block;
 }
 .font-hiden{
@@ -32,13 +33,17 @@
 	font-size: 13px;
 	padding:12px 11px;
 	border: 1px solid #d2d3d5;
+	display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
 }
-.company-con img{
-	display: block;
-	position: relative;
-	bottom:5px;
-	padding-right: 10px;
-}
+
 .infors span{
 	display:block;
 	color: #212121;
@@ -56,8 +61,8 @@
 	padding: 4px 0;
 	border: 1px solid #cf8033;
 	border-radius: 10px;
-	position: relative;
-	top:3px;
+	position: absolute;
+	right: 11px;
 }
 .actMsg-bottom{
 	width: 100%;

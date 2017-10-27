@@ -2,74 +2,212 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
-    <meta name="format-detection" `content`="telephone=no,email=no,date=no,address=no">
-    <title>活动汇</title>
-    <link rel="stylesheet" href="../css/api.css">
-    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
-    <link rel="stylesheet" href="../css/common.css">
-    <link rel="stylesheet" href="../icon/iconfonts/iconfont.css">
-    <link rel="stylesheet" href="../css/5enter.css">
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>全部活动</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/loading.css">
+    <link rel="stylesheet" type="text/css" href="../icon/iconfonts/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="../css/5enter.css">
     <style media="screen">
+        .ActLis {
+            width: 100%;
+            background: #fff;
+            overflow: hidden;
+            background: #fff;
+            z-index: 99;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .ActLis li {
+            width: 50%;
+            text-align: center;
+            height: 48px;
+            line-height: 48px;
+            border-bottom: 2px solid #efefef;
+            font-size: 14px;
+            color: #212121;
+            float: left;
+        }
+
+        .ActLis li.addColor {
+            color: #fca958;
+            border-bottom: 2px solid #fca958;
+        }
+
+        .NoAct {
+            padding: 30px 20px;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .box {
+            margin-top: 50px;
+        }
 
     </style>
 </head>
 
 <body>
-    <!-- 活动汇-全部报名 -->
-    <div id="act_header">
-        <header class="enter-header">
-            <h5>活动汇</h5>
-        </header>
-        <ul class="hide enter-ul" id="Tag">
-            <li class="addColor" onclick="btn_list(0)">全部活动</li>
-            <li onclick="btn_list(1)">已报名</li>
+    <div id="app">
+        <ul class="ActLis">
+            <li class="Lis0 addColor" @click="btn_list(0)">全部活动</li>
+            <li class="Lis1" @click="btn_list(1)">已报名</li>
         </ul>
+        <div class="box">
+            <div v-if="status == '1'">
+                <div v-for="v in ActInfo">
+                    <div class="enter-news" @click="goDatail(v.id)">
+                        <div class="news-con hide">
+                            <span class="fl img-pic08"><img :src="v.actimgurl" alt=""></span>
+                            <div class="content fl">
+                                <h6 class="single">{{v.title}}</h6>
+                                <p class="sites">{{v.address}}</p>
+                                <p class="sites">活动时间:{{v.actstarttime | formatDate}}</p>
+                            </div>
+                            <span class="peoples sites">{{v.userlimit}}人</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="NoAct" v-if="status == '0'">抱歉，您暂时还没有报名的活动！</div>
+        </div>
     </div>
-
 </body>
-
-</html>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/my.js"></script>
+<script type="text/javascript" src="../script/vue.js"></script>
+<script type="text/javascript" src="../script/date.js"></script>
 <script type="text/javascript">
-    var header = $api.dom('header');
-    fixStatusBar_API(header);
-    apiready = function() {
-        btn_list(0);
-    }
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            ActInfo: [],
+            Lisindex: '',
+            status: ''
+        },
+        filters: {
+            formatDate(time) {
+                var date = new Date(time * 1000);
+                return formatDate(date, 'yyyy-MM-dd');
+            }
+        },
+        methods: {
+            get_ActLis() { //获取活动列表
+                $api.css($api.dom('#loading'), 'display:block');
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    dataType: 'json',
+                    data: {
+                        values: {
+                            type: '10029',
+                        }
+                    }
+                }, function(ret, err) {
+                    $api.css($api.dom('#loading'), 'display:none');
+                    vm.status = ret.status;
+                    if (ret) {
+                        if (ret.status == '1') {
+                            vm.ActInfo = ret.data;
+                        }
+                    } else {
+                        api.toast({
+                            msg: '网络错误',
+                            duration: 2000,
+                            location: 'middle'
+                        });
 
-    // 随意切换按钮
-    function btn_list(index) {
-        var HeaderLis = $api.domAll('#Tag li');
-        for (var i = 0,len = HeaderLis.length; i < len; i++) {
-            if( index == i ){
-                $api.addCls( HeaderLis[i], 'addColor');
-                api.openFrame({
-                    name: 'activity'+i,
-                    url: './activity/activity'+i+'.html',
-                    bounces: false,
-                    bgColor: '#f2f2f2',
-                    vScrollBarEnabled: false,
-                    hScrollBarEnabled: false,
-                    rect: {
-                        x: 0,
-                        y: $api.dom('#act_header').offsetHeight,
-                        w: api.width,
-                        h: api.frameHeight - $api.dom("#act_header").offsetHeight
-                   }
-               });
-            }else{
-                $api.removeCls(HeaderLis[i], 'addColor');
-                api.setFrameAttr({
-                    name: 'activity'+i,
-                    hidden: true
+                    }
                 });
+            },
+
+            ActSignUpLis() { //获取用户报名活动列表
+                $api.css($api.dom('#loading'), 'display:block');
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    dataType: 'json',
+                    data: {
+                        values: {
+                            type: '10028',
+                            uid: id,
+                            token: token
+                        }
+                    }
+                }, function(ret, err) {
+
+                    $api.css($api.dom('#loading'), 'display:none');
+
+                    if (ret) {
+                        vm.status = ret.status;
+                        if (ret.status == '1') {
+                            vm.ActInfo = ret.data;
+                        }
+
+                    } else {
+                        api.toast({
+                            msg: '网络错误',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+
+                    }
+                });
+            },
+
+            goDatail(actid) { //跳到活动详情
+                api.openWin({
+                    name: '5actMsg',
+                    url: './activity/5actMsg.html',
+                    pageParam: {
+                        actid: actid
+                    }
+                });
+            },
+
+            btn_list(index) {
+                vm.Lisindex = index;
+                if (index == 1) {
+                    $api.removeCls($api.dom('.ActLis .Lis0'), 'addColor');
+                    $api.addCls($api.dom('.ActLis .Lis1'), 'addColor');
+                    vm.ActSignUpLis();
+                } else {
+                    $api.removeCls($api.dom('.ActLis .Lis1'), 'addColor');
+                    $api.addCls($api.dom('.ActLis .Lis0'), 'addColor');
+                    vm.get_ActLis();
+                }
+
             }
 
         }
+    })
+    var id, token;
+    apiready = function() {
+        loading();
+        vm.btn_list(0);
+        id = $api.getStorage('id');
+        token = $api.getStorage('token');
 
-    }
-
+        //刷新
+        api.setRefreshHeaderInfo({
+            loadingImg: 'widget://image/refresh.png',
+            bgColor: '#444',
+            textColor: '#fff',
+            textUp: '释放立即刷新...',
+            textLoading: '加载中···',
+            showTime: false
+        }, function(ret, err) {
+            //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+            vm.btn_list(vm.Lisindex);
+            api.refreshHeaderLoadDone();
+        });
+    };
 </script>
+
+</html>

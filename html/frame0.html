@@ -5,11 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <link rel="stylesheet" href="../css/api.css">
-    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" type="text/css" href="../css/api.css">
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
     <link rel="stylesheet" type="text/css" href="../css/aui.css" />
-    <link rel="stylesheet" href="../icon/iconfonts/iconfont.css">
-    <link rel="stylesheet" href="../css/2activity.css">
+    <link rel="stylesheet" type="text/css" href="../icon/iconfonts/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="../css/2activity.css">
     <style media="screen">
         .con-ul {
             padding-top: 16px;
@@ -216,13 +216,22 @@
                     data: {
                         values: {
                             type: '10022',
-                            uid: this.id
+                            uid: this.id,
+                            token:token
                         }
                     }
                 }, function(ret, err) {
+
                     if (ret) {
                         if (ret.status == '1') { //1成功
                             vm.num = ret.num;
+                        }else{
+                          api.toast({
+                              msg: '网络错误',
+                              duration: 2000,
+                              location: 'middle'
+                          });
+
                         }
                     } else {
                         api.toast({
@@ -248,7 +257,7 @@
                         }
                     }
                 }, function(ret, err) {
-                    
+
                     if (ret) {
                         if (ret.status == '1') { //1成功
                            vm.Myinfo = ret.data;
@@ -272,7 +281,6 @@
                            if (ret.data.complete_info == 0) {
                                 PerfectData();
                            }
-
 
                         }
                     } else {
@@ -462,7 +470,8 @@
             name: 'My_achievement',
             url: '../html/My/My_achievement.html',
             pageParam: {
-                id: id
+              winmoney: vm.Myinfo.winmoney,
+              level: vm.Myinfo.level,
             }
         });
 
@@ -533,11 +542,12 @@
                     data: {
                         values: {
                             	type: '10014',
-                              uid: id
+                              uid: id,
+                              token:token
                         },
                     }
                 },function(ret, err){
-
+                    
                     if (ret) {
                         if (ret.status == '1') {
                             $api.css($api.dom("#Medal"), 'display:block');

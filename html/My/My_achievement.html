@@ -71,15 +71,21 @@
 		</style>
 </head>
 <body>
-	<div class="performance">
+	<div class="performance" id="app">
 		<header class="homePage-header" onclick="go_back()">
 			<h4>我的业绩</h4>
 			<i class="iconfont icon-fanhui icon-return"></i>
 		</header>
 		<div class="performance-con">
 			<div class="performance-top">
-				<img src="../../image/gold02.png" alt="" class="img-gold02">
-				<p>当前学分:480分</p>
+				<!-- (level 1:铜牌 2:银牌 3:金牌 4:钻石 5:股东)/学员/教师/商家 -->
+				<img src="../../image/gold03.png" alt="" class="img-gold02" v-if="level == '1'">
+				<img src="../../image/gold04.png" alt="" class="img-gold02" v-else-if="level == '2'">
+				<img src="../../image/gold05.png" alt="" class="img-gold02" v-else-if="level == '3'">
+				<img src="../../image/gold06.png" alt="" class="img-gold02" v-else-if="level == '4'">
+				<img src="../../image/gold07.png" alt="" class="img-gold02" v-else-if="level == '5'">
+				<img src="../../image/gold02.png" alt="" class="img-gold02" v-else>
+				<p>当前学分:{{winmoney}}分</p>
 				<div class="progress">
 					<div class="pro_txt">
 						<span class="txt">会员</span>
@@ -95,7 +101,11 @@
 						<div class="imgline on"></div>
 					</div>
 				</div>
-				<p class="prompt">还需30学分升至白金会员</p>
+				<p class="prompt" v-if="level == '0'">还需{{1000 - winmoney}}学分升至铜牌</p>
+				<p class="prompt" v-else-if="level == '1'">还需{{2000 - winmoney}}学分升至银牌</p>
+				<p class="prompt" v-else-if="level == '2'">还需{{5000 - winmoney}}学分升至金牌</p>
+				<p class="prompt" v-else-if="level == '3'">还需{{8000 - winmoney}}学分升至钻石</p>
+				<p class="prompt" v-else-if="level == '4'">还需{{10000 - winmoney}}学分升至股东</p>
 			</div>
 			<div class="performance-bottom">
 				<h6>业绩详单</h6>
@@ -114,12 +124,26 @@
 </html>
 <script type="text/javascript" src="../../script/api.js"></script>
 <script type="text/javascript" src="../../script/my.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
 <script type="text/javascript">
     var id;
 		apiready = function(){
-				id = api.pageParam.id
+				id = $api.getStorage('id');
+				vm.winmoney = api.pageParam.winmoney;
+				vm.level = api.pageParam.level;
+				var progressWidth = vm.winmoney / 10000;
+				$api.css($api.dom('.imgline.on'), 'width:'+toPercent(progressWidth));
 		}
+		var vm = new Vue({
+				el: '#app',
+				data: {
+						winmoney:'',
+						level:''
+				},
+				methods: {
 
+				}
+		})
 		//打开window
 		function go_detail(index){
 				api.openWin({

@@ -42,9 +42,10 @@
 <script type="text/javascript" src="../../script/vue.js"></script>
 <script type="text/javascript" src="../../script/my.js"></script>
 <script type="text/javascript">
-	var id;
+	var id,token;
 	apiready = function() {
 		id = api.pageParam.id;
+    token = $api.getStorage('token');
 
 		loading();
 		vm.FansPerfor();
@@ -80,7 +81,8 @@
 					data: {
 						values: {
 							type: '10027',
-							user_id: id
+							user_id: id,
+							token:token
 						}
 					}
 				}, function(ret, err) {
@@ -97,7 +99,6 @@
 							duration: 2000,
 							location: 'middle'
 						});
-
 					}
 				});
 			},

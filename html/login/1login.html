@@ -118,7 +118,7 @@
                         }
                     }
                 }, function(ret, err) {
-                    
+
                     if (ret) {
                         let status = ret.status;
                         switch (status) {
@@ -130,6 +130,7 @@
                                 });
                                 $api.setStorage('tel', tel);//设置localStorage数据,存储手机号
                                 $api.setStorage('token', ret.token);//存储token
+                                $api.setStorage('id', ret.data.id);//存储ID
                                 api.openWin({
                                     name: 'index',
                                     url: '../../index.html',
