@@ -289,16 +289,10 @@ function exitLogin() {
        },function(ret, err){
            if (ret) {
                if (ret.status == '1') {
-                 $api.clearStorage();//清除localStorage的所有数据，慎用
-                
-                 setTimeout(function(){
-                   api.openWin({
-                     name: 'login',
-                     url: './login/login0.html',
-                     reload:true,
-               			allowEdit:true
+                   $api.clearStorage();//清除localStorage的所有数据，慎用
+                   api.closeToWin({
+                       name: 'root'
                    });
-                 },800);
                }
            } else {
                api.toast({

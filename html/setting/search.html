@@ -7,6 +7,7 @@
       <title>搜索</title>
       <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
       <link rel="stylesheet" type="text/css" href="../../css/loading.css"/>
+      <link rel="stylesheet" type="text/css" href="../../css/swiper.min.css">
       <style>
           header{background: #ffb300;}
           .input_box {
@@ -113,6 +114,14 @@
           .ActLis li .time{color: #999; font-size: 13px; line-height: 25px;}
 
           .noMsg{font-size: 16px; text-align: center; padding: 20px;}
+
+          /*swiper begin*/
+    			/*.swiper-container {width: 100%; padding: 15px 0;}
+    	    .swiper-slide {text-align: center; font-size: 18px;}
+    			.swiper-slide .pic{height: 65px; position: relative;}
+    	    .swiper-slide .pic img{width: 63px; height: 63px;  border-radius: 50%; border:2px solid #fff;}
+    	    .swiper-slide .name{font-size: 14px; color: #212121; display: block; padding-top: 8px;}*/
+          /*swiper end*/
       </style>
   </head>
   <body>
@@ -151,6 +160,7 @@
                     </section>
                     <!-- swipe end -->
                   </div>
+
                   <div class="activity" v-if="act">
                       <div class="title">相关活动</div>
                       <ul class="ActLis">
@@ -167,12 +177,38 @@
               </div>
           </div>
       </div>
+
+      <!-- Swiper -->
+      <div class="contentMsg">
+        <div class="user">
+            <div class="title">相关用户</div>
+            <div class="swiper-container">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="pic">
+                        <em></em>
+                        <img src="../../image/pic3.png" alt="">
+                    </div>
+                    <span class="name">很多减肥很久</span>
+                </div>
+                <div class="swiper-slide">
+                    <div class="pic">
+                        <em></em>
+                        <img src="../../image/more1.png" alt="">
+                    </div>
+                    <span class="name">更多</span>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <!-- Swiper -->
   </body>
   <script type="text/javascript" src="../../script/api.js"></script>
   <script type="text/javascript" src="../../script/my.js"></script>
+  <script type="text/javascript" src="../../script/swipe.js"></script>
   <script type="text/javascript" src="../../script/vue.js"></script>
   <script type="text/javascript" src="../../script/date.js"></script>
-  <script type="text/javascript" src="../../script/swipe.js"></script>
   <script type="text/javascript">
   fnInitSwipe();
   var header = $api.dom('header');
@@ -192,6 +228,17 @@
           new Swipe(swipe, {
               callback: function(index) {}
           });
+
+          // var swiper = new Swiper('.swiper-container', {
+    			// 	slidesPerView: 5,
+    			// 	spaceBetween: 9,
+    			// 	centeredSlides: true,
+    			// 	observer:true, //修改swiper自己或子元素时，自动初始化swiper
+        	// 	observeParents:true,//修改swiper的父元素时，自动初始化swiper
+          //
+    			// });
+
+
       };
 
       var vm = new Vue({

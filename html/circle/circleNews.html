@@ -115,7 +115,8 @@
                   },function(ret, err){
 
                       $api.css($api.byId('loading'), 'display:none');
-
+                      console.log(JSON.stringify(ret));
+                      console.log(JSON.stringify(err));
                       if (ret) {
                           $api.css($api.byId('main'), 'display:block');
                           vm.rew = ret.rew;
@@ -162,7 +163,7 @@
               }
           },function(ret, err){
               $api.css($api.byId('loading'), 'display:none');
-              
+
               if (ret) {
 
                   if (ret.status == '1') {
