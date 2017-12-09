@@ -2,502 +2,472 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>学客圈</title>
+    <title>学分商城</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css" />
-    <link rel="stylesheet" type="text/css" href="../css/style.css" />
-    <link rel="stylesheet" href="../icon/iconfonts/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="../css/loading.css" />
+    <link rel="stylesheet" type="text/css" href="../icon/iconfonts/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="../css/swiper.min.css">
     <style>
-        header {
-            position: relative;
-        }
 
-        .header {
-            padding: 15px;
-            text-align: center;
-            font-size: 16px;
-            color: #212121;
-            background: #fcd058;
-            overflow: hidden;
-            font-weight: bold;
-        }
+        /*个人信息区*/
 
-        .header em {
-            display: block;
-            width: 18px;
-            height: 18px;
-            background: url(../image/add.png) no-repeat center;
-            background-size: contain;
-            float: right;
-        }
-
-        #main {
-            background: #f2f2f2;
-        }
-
-        #main .cirlce_box {
-            margin-bottom: 1px;
-        }
-
-        .school_container {
+        .personal_title {
             background: #fff;
-            padding: 0 25px;
-            margin-bottom: 1px;
-        }
-
-        .school_container .title {
+            padding: 6px 25px;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
             position: relative;
-            padding-top: 17px;
+            margin-bottom: 5px;
+            min-height: 45px;
+            display: flex;
+            align-items: center;
         }
 
-        .school_container .title .personal_img {
-            width: 45px;
-            height: 45px;
+        .personal_title .per_id_pic {
+            width: 33px;
+            height: 33px;
             border-radius: 100%;
             -webkit-border-radius: 100%;
             -moz-border-radius: 100%;
             position: absolute;
-            top: 17px;
-            left: 0;
+            top: 6px;
+            left: 25px;
             overflow: hidden;
         }
 
-        .school_container .title .rt_msg {
-            padding-left: 60px;
-        }
-
-        .title .personal_img img {
+        .personal_title .per_id_pic img {
             width: 100%;
-            height: 100%;
         }
 
-        .title .rt_msg .nickname {
-            color: #5c5c5c;
-            font-size: 13px;
-            line-height: 20px;
+        .personal_title .rt_msgbox {
+            padding-left: 40px;
+            width: 100%;
         }
 
-        .title .rt_msg .date {
-            color: #999;
-            font-size: 11px;
-            line-height: 22px;
+        .rt_msgbox .name_vip {
+            line-height: 18px;
         }
 
-        .article {
-            padding-top: 10px;
+        .rt_msgbox .name_vip .id_name {
+            color: #2196f3;
+            font-size: 12px;
+        }
+
+        .rt_msgbox .name_vip .cret_num {
+            float: right;
             color: #5c5c5c;
             font-size: 12px;
-            line-height: 17px;
-            position: relative;
         }
-        /*九宫格图片*/
 
-        .flex-container {
-            width: 100%;
+        .rt_msgbox .name_vip .cret_num em {
+            font-size: 13px;
+            color: #ff5252;
+        }
+
+        .bt_msg {
+            font-size: 10px;
+            color: #999;
             overflow: hidden;
-            padding-bottom: 10px;
         }
 
-        .flex-container .flex-item {
-            width: 31%;
-            margin-top: 2.3%;
-            float: left;
-            margin-right: 2.3%;
-            position: relative;
+        .bt_msg span {
+            font-size: 10px;
+            color: #999;
         }
 
-        .flex-container .flex-item:before {
-            content: "";
-            display: inline-block;
-            padding-bottom: 100%;
-            width: 0.1px;
-            vertical-align: middle;
+        .bt_msg .credit_date {
+            float: right;
         }
 
-        .flex-container img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
+        .bt_msg .credit_date em {
+            font-size: 10px;
+            color: #999;
         }
-        /*四宫格图片*/
+        /*功能图标*/
 
-        .fourth-container {
-            width: 206px;
-            overflow: hidden;
-            padding-top: 5px;
-            padding-bottom: 10px;
+        .credit_icon {
+            background: #fff;
+            padding: 15px 0;
+            margin-bottom: 5px;
         }
 
-        .fourth-container .flex-item {
-            width: 46%;
-            height: 46%;
-            margin-top: 3.3%;
-            float: left;
-            margin-right: 3.3%;
-            position: relative;
-        }
-
-        .fourth-container .flex-item:before {
-            content: "";
-            display: inline-block;
-            padding-bottom: 100%;
-            width: 0.1px;
-            vertical-align: middle;
-        }
-
-        .fourth-container .flex-item img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-        /*一张图片*/
-
-        .flex-container .flex-item.on {
-            width: 175px;
-            height: 175px;
-        }
-
-        .comment {
-            overflow: hidden;
+        .credit_icon .credit_icon_btn {
+            display: block;
             text-align: center;
-            background: #fff;
-            padding: 8px 0;
-        }
-
-        .comment .btn_function {
-            width: 32%;
-            line-height: 19px;
-            border-right: 1px solid #f2f2f2;
+            color: #5c5c5c;
+            font-size: 10px;
             float: left;
+            width: 25%;
         }
 
-        .comment .btn_function:last-child {
-            border-right: 0;
-        }
-
-        .comment .btn_function .forward {
-            display: inline-block;
-            width: 43px;
-            background: url(../image/forward.png) no-repeat left center;
-            background-size: 11px;
-            color: #5c5c5c;
-            font-size: 12px;
-            text-align: right;
-        }
-
-        .comment .btn_function .forward.comment_btn {
-            background: url(../image/comment.png) no-repeat left center;
-            background-size: 13px;
-        }
-
-        .comment .btn_function .love {
-            display: inline-block;
-            width: 43px;
-            background: url(../image/love.png) no-repeat left center;
-            background-size: 13px;
-            color: #5c5c5c;
-            font-size: 12px;
-            text-align: right;
-        }
-
-        .comment .btn_function .love.on {
-            background: url(../image/love1.png) no-repeat left center;
-            background-size: 13px;
-        }
-
-        .comment .btn_function .num {
-            font-size: 11px;
-            color: #999;
-        }
-
-        .clickOpen {
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 6;
-            overflow: hidden;
-        }
-
-        .flexed {
-            width: 100%;
-            height: calc(100% - 40px);
-            background: rgba(0, 0, 0, .6);
-            z-index: 999;
-            position: fixed;
-            top: 40px;
-            left: 0;
-            overflow: auto;
-        }
-
-        .search {
-            position: relative;
-            padding: 4px 15px;
-            background: #fff;
-            border-bottom: 1px solid #efefef;
-            z-index: 99;
-            box-sizing: border-box;
-        }
-
-        .search input {
-            width: calc(100% - 45px);
-            padding: 0 40px 0 5px;
-            background: #efefef;
-            border-radius: 5px;
-            font-size: 13px;
-            color: #212121;
+        .credit_icon .credit_icon_btn .icon1 {
+            display: block;
+            width: 30px;
             height: 30px;
+            line-height: 30px;
+            border-radius: 50%;
+            -webkit-border-radius: 50%;
+            background: #b7dc68;
+            margin: 0 auto;
         }
 
-        .search i {
-            width: 40px;
+        .credit_icon .credit_icon_btn .icon1.icon2 {
+            background: #fd9f4b;
+        }
+
+        .credit_icon .credit_icon_btn .icon1.icon3 {
+            background: #547adb;
+        }
+
+        .credit_icon .credit_icon_btn .icon1.icon4 {
+            background: #face57;
+        }
+
+        .credit_icon .credit_icon_btn p {
+            color: #5c5c5c;
+            font-size: 10px;
+            padding-top: 6px;
+        }
+        /*热门商品区*/
+
+        .hot_goods {
+            margin-bottom: 5px;
+        }
+
+        .hot_goods .hot_title {
+            height: 28px;
+            line-height: 28px;
+            margin-bottom: 1px;
             text-align: center;
-            font-size: 17px;
-            color: #ccc;
-            position: absolute;
-            top: 10px;
-            right: 15px;
+            color: #ff5252;
+            font-size: 12px;
+            background: #fff;
         }
 
-        .search em{width: 40px; text-align: center; font-size: 16px; color: #666; display: none;}
+        .hot_goods .hot_title.discount {
+            color: #2196f3;
+            font-size: 12PX;
+        }
 
+        .hot_goods .good_box {
+            background: #fff;
+            padding: 0 0 25px 0;
+        }
 
-        .searchLis{background: #fff;}
-        .searchLis li{height: 40px; line-height: 40px; padding:0 15px; border-bottom: 1px solid #f2f2f2; color: #212121; font-size: 13px;}
-        .searchLis li:last-child{border-bottom: 0;}
+        .good_box .goodLink {
+            display: block;
+            width: 33.33%;
+            height: 33.33%;
+            float: left;
+            padding-top: 12px;
+        }
 
+        .good_box .goodLink .good_img {
+            width: 80px;
+            height: 80px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
 
+        .good_box .goodLink .good_img img {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .goodLink .mg_txt {
+            margin: 0 auto;
+            line-height: 16px;
+            width: 80px;
+        }
+
+        .goodLink .mg_txt .shop {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .goodLink .mg_txt .good_name {
+            color: #5c5c5c;
+            font-size: 12px;
+        }
+
+        .goodLink .mg_txt .credit {
+            color: #ff5252;
+            font-size: 10px;
+        }
+
+        /*.pic {
+            width: 100%;
+            height: 150px;
+        }
+
+        .pic img {
+            display: block;
+            width: 100%;
+        }
+
+        #app{
+            height: 100%;
+        }*/
+
+        .swiper-container {
+           width: 100%;
+           height: 150px;
+         }
+         .swiper-slide {
+           text-align: center;
+           font-size: 18px;
+           background: #fff;
+
+           /* Center slide text vertically */
+           display: -webkit-box;
+           display: -ms-flexbox;
+           display: -webkit-flex;
+           display: flex;
+           -webkit-box-pack: center;
+           -ms-flex-pack: center;
+           -webkit-justify-content: center;
+           justify-content: center;
+           -webkit-box-align: center;
+           -ms-flex-align: center;
+           -webkit-align-items: center;
+           align-items: center;
+         }
+
+         .swiper-slide img{width: 100%; height: 100%; display: block;}
     </style>
 </head>
 
-<body style="background:#f2f2f2;">
-      <div class="search">
-          <input type="text" placeholder="输入您想要搜索的用户名/手机号" onfocus="search()">
-          <i class="iconfont icon-search"></i>
-          <em onclick="calce()">取消</em>
-      </div>
-      <div id="main" class="flex-con fixed">
-          <div class="cirlce_box">
-              <div class="school_container">
-                  <div class="title">
-                      <div class="personal_img" onclick="goIndex()">
-                          <img src="../image/person.png" alt="">
-                      </div>
-                      <div class="rt_msg">
-                          <div class="nickname">王先生</div>
-                          <div class="date">2017年6月1日&nbsp;21:00</div>
-                      </div>
-                  </div>
-                  <p class="article clickOpen" onclick="goDetail()">
-                      百度文库是百度发布的供网友在线分享文档的平台。百度文库的文档由百度用户上传，需要经过百度的审核才能成为者争夺
-                  </p>
+<body>
 
-                  <!-- ======九宫格图片====== -->
-                  <div class="flex-container clearfix">
-                      <div class="flex-item">
-                          <img src="./../image/img_show.jpg" alt="">
-                      </div>
-                      <div class="flex-item">
-                          <img src="./../image/img_show.jpg" alt="">
-                      </div>
-                      <div class="flex-item">
-                          <img src="./../image/img_show.jpg" alt="">
-                      </div>
-                      <div class="flex-item">
-                          <img src="./../image/img_show.jpg" alt="">
-                      </div>
-                      <div class="flex-item">
-                          <img src="./../image/img_show.jpg" alt="">
-                      </div>
-                      <div class="flex-item">
-                          <img src="./../image/img_show.jpg" alt="">
-                      </div>
-                      <div class="flex-item">
-                          <img src="./../image/img_show.jpg" alt="">
-                      </div>
-                      <div class="flex-item">
-                          <img src="./../image/img_show.jpg" alt="">
-                      </div>
-                      <div class="flex-item">
-                          <img src="./../image/img_show.jpg" alt="">
-                      </div>
-                  </div>
-              </div>
-              <div class="comment">
-                  <div class="btn_function btn-share">
-                      <span class="forward">转发</span>
-                      <span class="num">12</span>
-                  </div>
-                  <div class="btn_function">
-                      <span class="forward comment_btn">评论</span>
-                      <span class="num">12</span>
-                  </div>
-                  <div class="btn_function">
-                      <span class="love">喜欢</span>
-                      <span class="num">12</span>
-                  </div>
-              </div>
+    <div id="app" v-cloak>
+        <!-- <div class="pic">
+            <img src="../image/pic10.jpg" alt="">
+        </div> -->
+        <!-- Swiper -->
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="../image/pic10.jpg" alt="">
+            </div>
+            <div class="swiper-slide">
+                <img src="../image/pic10.jpg" alt="">
+            </div>
           </div>
+          <!-- Add Pagination -->
+          <div class="swiper-pagination"></div>
+        </div>
+        <!-- 功能图标区 -->
+        <div class="credit_icon clearfix">
+            <a href="javascript:;" class="credit_icon_btn" v-for="v in ClassInfo" @click="go_clsLis(v.id,v.tname)">
+                <span class="icon1" v-bind:style="{background:v.color}">
+                  <i class="icon iconfont" v-bind:class="v.fonticon" style="font-size: 20px; color:#fff;"></i>
+                </span>
+                <p>{{v.tname}}</p>
+            </a>
+        </div>
 
-          <div class="cirlce_box">
-              <div class="school_container">
-                  <div class="title">
-                      <div class="personal_img">
-                          <img src="../image/person.png" alt="">
-                      </div>
-                      <div class="rt_msg">
-                          <div class="nickname">王先生</div>
-                          <div class="date">2017年6月1日&nbsp;21:00</div>
-                      </div>
-                  </div>
-                  <p class="article clickOpen" onclick="goDetail()">
-                      百度文库是百度发布的供网友在线分享文档的平台。百度文库的文档由百度用户上传，需要经过百度的审核才能成为者争夺
-                  </p>
+        <!-- 热门商品区 -->
+        <div class="hot_goods">
+            <div class="hot_title">
+                <i class="icon iconfont icon-remen" style="font-size: 15px; color: #ff5252"></i> 热门商品
+            </div>
+            <div class="good_box clearfix" id="hot_goods">
+                <a href="javascript:;" class="goodLink" v-for="v in hotInfo" @click="go_goodsDetail(v.id)">
+                    <div class="good_img">
+                        <img :src="v.imgurl" alt="">
+                    </div>
+                    <div class="mg_txt">
+                        <div class="shop single">
+                            {{v.goods_name}}
+                        </div>
+                        <div class="good_name single">{{v.abs}}</div>
+                        <div class="credit" v-if="role == '2'">¥{{v.total * 0.25}}</div>
+                        <div class="credit" v-else>{{v.total}}学分</div>
+                    </div>
+                </a>
+            </div>
+        </div>
 
-                  <!-- ======一张图片====== -->
-                  <div class="flex-container clearfix">
-                      <div class="flex-item on">
-                          <img src="./../image/img_show.jpg" alt="">
-                      </div>
+        <!-- 新品优惠 -->
+        <div class="hot_goods">
+            <div class="hot_title" style="color:#2196f3">
+                <i class="icon iconfont icon-xinpin" style="font-size: 15px;"></i> 新品优惠
+            </div>
+            <div class="good_box clearfix">
+                <a href="javascript:;" class="goodLink" v-for="v in hotInfo" @click="go_goodsDetail(v.id)">
+                    <div class="good_img">
+                        <img :src="v.imgurl" alt="">
+                    </div>
+                    <div class="mg_txt">
+                        <div class="shop single">
+                            {{v.goods_name}}
+                        </div>
+                        <div class="good_name single">{{v.abs}}</div>
+                        <div class="credit" v-if="role == '2'">¥{{v.total * 0.25}}</div>
+                        <div class="credit" v-else>{{v.total}}学分</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
 
-                  </div>
-              </div>
-              <div class="comment">
-                  <div class="btn_function btn-share">
-                      <span class="forward">转发</span>
-                      <span class="num">12</span>
-                  </div>
-                  <div class="btn_function">
-                      <span class="forward comment_btn">评论</span>
-                      <span class="num">12</span>
-                  </div>
-                  <div class="btn_function">
-                      <span class="love">喜欢</span>
-                      <span class="num">12</span>
-                  </div>
-              </div>
-          </div>
-
-          <div class="cirlce_box">
-              <div class="school_container">
-                  <div class="title">
-                      <div class="personal_img">
-                          <img src="../image/person.png" alt="">
-                      </div>
-                      <div class="rt_msg">
-                          <div class="nickname">王先生</div>
-                          <div class="date">2017年6月1日&nbsp;21:00</div>
-                      </div>
-                  </div>
-                  <p class="article clickOpen" onclick="goDetail()">
-                      百度文库是百度发布的供网友在线分享文档的平台。百度文库的文档由百度用户上传，需要经过百度的审核才能成为者争夺
-                  </p>
-
-                  <!-- ======四宫格图片====== -->
-                  <div class="fourth-container clearfix">
-                      <div class="flex-item">
-                          <img src="./../image/img_show.jpg" alt="">
-                      </div>
-                      <div class="flex-item">
-                          <img src="./../image/img_show.jpg" alt="">
-                      </div>
-                      <div class="flex-item">
-                          <img src="./../image/img_show.jpg" alt="">
-                      </div>
-                      <div class="flex-item">
-                          <img src="./../image/img_show.jpg" alt="">
-                      </div>
-                  </div>
-
-              </div>
-              <div class="comment">
-                  <div class="btn_function">
-                      <span class="forward">转发</span>
-                      <span class="num">12</span>
-                  </div>
-                  <div class="btn_function">
-                      <span class="forward comment_btn">评论</span>
-                      <span class="num">12</span>
-                  </div>
-                  <div class="btn_function">
-                      <span class="forward love">喜欢</span>
-                      <span class="num">12</span>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div class="flexed" style="display:none">
-          <ul class="searchLis">
-             <li>王先生</li>
-             <li>王先生</li>
-          </ul>
-      </div>
 </body>
-
-</html>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/my.js"></script>
+<script type="text/javascript" src="../script/vue.js"></script>
+<script type="text/javascript" src="../script/swiper.min.js"></script>
 <script type="text/javascript">
-    var header = $api.dom('.header');
-    fixStatusBar_API(header);
+
     apiready = function() {
+        loading();
 
-    }
+        fnInitSwipe();
+        $api.css($api.dom('#loading'), 'display:block');
+        vm.getClass();
+        vm.get_hotgoods();
+        vm.get_Newsgoods();
+        $api.css($api.dom('#loading'), 'display:none');
 
-    //跳到详情
-    function goDetail(){
-        api.openWin({
-            name: 'schoolDetail',
-            url: './SchoolCircle/schoolDetail.html',
-            pageParam: {
-                name: 'test'
+
+
+    };
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            ClassInfo: [],
+            hotInfo: [],
+            newInfo: [],
+            role:''
+        },
+        methods: {
+            getClass() { //读取商品分类
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    dataType: 'json',
+                    data: {
+                        values: {
+                            type: '10030',
+                        }
+                    }
+                }, function(ret, err) {
+
+                    if (ret) {
+                        vm.ClassInfo = ret;
+
+                    } else {
+                        api.toast({
+                            msg: '网络错误',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+
+                    }
+                });
+            },
+
+            get_hotgoods() { //读取热门商品
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    dataType: 'json',
+                    data: {
+                        values: {
+                            type: '10031',
+                            gtype: 'hot',
+                            num: '3'
+                        }
+                    }
+                }, function(ret, err) {
+
+                    if (ret) {
+                        vm.hotInfo = ret;
+                        vm.role = $api.getStorage('role');
+
+                    } else {
+                        api.toast({
+                            msg: '网络错误',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+
+                    }
+                });
+            },
+
+            get_Newsgoods() { //读取新品商品
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    dataType: 'json',
+                    data: {
+                        values: {
+                            type: '10031',
+                            gtype: 'new',
+                            num: '6'
+                        }
+                    }
+                }, function(ret, err) {
+
+                    if (ret) {
+                        vm.newInfo = ret;
+
+                    } else {
+                        api.toast({
+                            msg: '网络错误',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+
+                    }
+                });
+            },
+
+            go_goodsDetail(goods_id){
+              api.openWin({
+                  name: 'credit_goodDetail',
+                  url: './mall/credit_goodDetail.html',
+                  pageParam: {
+                      goods_id: goods_id
+                  }
+              });
+            },
+
+            go_clsLis(clsid,tname){
+              api.openWin({
+                  name: 'ClassifiedGoods_title',
+                  url: './mall/ClassifiedGoods_title.html',
+                  pageParam: {
+                      clsid: clsid,
+                      tname:tname
+                  }
+              });
             }
-        });
-    }
+        }
+    })
 
-    //发表
-    function goPublish(){
-        api.openWin({
-            name: 'schoolPublish',
-            url: './SchoolCircle/schoolPublish.html',
-            pageParam: {
-                name: 'test'
-            }
-        });
-    }
 
-    //跳到他人学客圈的首页
-    function goIndex(){
-      api.openWin({
-          name: 'schoolIndex',
-          url: './SchoolCircle/schoolIndex.html',
-          pageParam: {
-              name: 'test'
-          }
+    // swiper
+    function fnInitSwipe(){
+      var swiper = new Swiper('.swiper-container', {
+        pagination: {
+          el: '.swiper-pagination',
+        },
+        centeredSlides: true,
+        observer:true, //修改swiper自己或子元素时，自动初始化swiper
+        observeParents:true,//修改swiper的父元素时，自动初始化swiper
+        autoplay: {
+          delay: 2500,
+          disableOnInteraction: false,
+        },
       });
-
     }
-
-    //搜索匹配
-    function search() {
-        $api.css($api.dom('.flexed'),'display:block');
-        $api.css($api.dom('.search input'),'width:calc(100% - 90px)');
-        $api.css($api.dom('.search i'),'right:55px');
-        $api.css($api.dom('.search em'),'display:inline-block');
-    }
-
-    //取消
-    function calce(){
-        $api.css($api.dom('.flexed'),'display:none');
-        $api.css($api.dom('.search input'),'width:calc(100% - 40px)');
-        $api.css($api.dom('.search i'),'right:15px');
-        $api.css($api.dom('.search em'),'display:none');
-    }
-
 </script>
+
+</html>

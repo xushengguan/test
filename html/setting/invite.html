@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title>邀请注册</title>
+      <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+      <link rel="stylesheet" type="text/css" href="../../css/loading.css"/>
+      <style>
+          header {
+              height: 50px;
+              line-height: 50px;
+              background: #ffb300;
+              color: #fff;
+              font-size: 18px;
+              position: relative;
+          }
+
+          header em {
+              width: 50px;
+              height: 50px;
+              background: url(../../image/back.png) no-repeat center;
+              background-size: 20px;
+              float: left;
+          }
+
+          .cardBox{margin: 25px 32px 41px 32px; background: #fff; padding-top: 18px; border-radius: 30px; overflow: hidden;
+            box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.15);}
+          .line{width: 120px; height: 15px; margin: 0 auto; background: #f2f2f2; box-shadow: 0 0 5px rgba(0,0,0,0.1) inset;
+          z-index: 99; border-radius: 50px;}
+          .cardBox .headImg{display: block; width: 54px; height: 54px; border-radius: 50%; margin: 20px auto 8px auto; }
+          .nickname{font-weight: bold; font-size: 24px; color: #262626; text-align: center;}
+          .prompt{font-size: 14px; color: #999; text-align: center; padding: 10px;}
+          .code{display: block; width: 180px; height: 180px; margin: 0 auto;}
+          .remark{width: 155px; height: 26px; line-height: 26px; background-color: #ffb300; border-radius: 3px; margin: 24px auto 37px auto;
+          text-align: center; font-size: 15px; color: #fff;}
+          .bg{width: 100%; height: 28px; background-color: #ebebeb;}
+      </style>
+  </head>
+  <body>
+    <div id="wrap">
+        <header>
+            <em onclick="go_back()"></em> 邀请注册
+        </header>
+        <div id="main">
+            <div class="cardBox">
+                <div class="line"></div>
+                <img class="headImg" src="../../image/pic3.png" alt="">
+                <div class="nickname"></div>
+                <p class="prompt">请扫描下面的二维码</p>
+                <img class="code" src="" alt="">
+                <p class="remark">产品推广码</p>
+                <div class="bg"></div>
+            </div>
+        </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/my.js"></script>
+
+  <script type="text/javascript">
+      var header = $api.dom('header');
+      fixStatusBar_API(header);
+      apiready = function(){
+          var uid = $api.getStorage('id');
+          var token = $api.getStorage('token');
+          loading();
+          getUser(uid,token);
+
+          var img = 'http://www.gbtags.com/gb/qrcode?t=https://123win.com.cn/xlp/reg/'+uid;
+        
+          $api.attr($api.dom('.code'), 'src', img);
+
+      };
+
+      function getUser(uid,token){
+          $api.css($api.byId('main'), 'display:none');
+          $api.css($api.byId('loading'), 'display:block');
+          api.ajax({//获取用户基本信息
+              url: serverurl,
+              method: 'get',
+              data: {
+                  values: {
+                      type: '10035',
+                       uid: uid,
+                     token: token
+                  },
+              }
+          },function(ret, err){
+              $api.css($api.byId('loading'), 'display:none');
+
+              if (ret.status == '1') {
+                $api.attr($api.dom('.headImg'), 'src', ret.data.headimgurl);
+                $api.text($api.dom('.nickname'), ret.data.nickname);
+
+                $api.css($api.byId('main'), 'display:block');
+              }else {
+                  api.toast({
+                      msg: '网络错误',
+                      duration: 2000,
+                      location: 'bottom'
+                  });
+
+              }
+          });
+      }
+  </script>
+  </html>

@@ -7,11 +7,11 @@
 	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
 	<title>确认订单</title>
 	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
-	<link rel="stylesheet" type="text/css" href="../../css/style.css" />
 	<link rel="stylesheet" type="text/css" href="../../css/common.css">
+	<link rel="stylesheet" type="text/css" href="../../css/loading.css">
 	<link rel="stylesheet" type="text/css" href="../../css/6goods2.css" />
-	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css" />
-	<script src="../../script/My.js"></script>
+	<link rel="stylesheet" type="text/css" href="../../icon/iconfonts/iconfont.css" />
+
 	<style media="screen">
 	    footer{
 	    		position: relative;
@@ -23,7 +23,7 @@
 					padding: 17px 0;
 			}
 			footer .price-li{
-				width: 65%;
+				width: calc(65% - 25px);
 		    padding-left: 25px;
 		    color: #bdbdbd;
 		    font-size: 13px;
@@ -65,48 +65,59 @@
 					background: #fca958;
 					color: #fff;
 			}
+
+			header{height: 50px; line-height: 50px; background: #ffb300; color: #fff; font-size: 18px; position: relative;}
+			header em{width: 50px; height: 50px; background: url(../../image/back.png) no-repeat center;
+				background-size: 20px; float: left;}
+
+			.leaveMsg-con input{height: 45px; float: left; color: #757575;width: calc(100% - 64px);}
+			#num{width: 100%; height: 100%; text-align: center;}
+			.free-con .circle img{width: 100%;}
 	</style>
 </head>
 
 <body>
 
 	<!-- 确认兑换 -->
-	<div id="wrap" class="flex-wrap flex-vertical">
-		<header class="homePage-header">
-			<h4>确认订单</h4>
-			<i class="iconfont icon-fanhui icon-return" onclick="go_back()"></i>
+	<div id="wrap" v-cloak>
+		<header>
+				<em onclick="cancel()"></em>
+				确认订单
 		</header>
-		<div id="main" class="flex-con">
+		<div id="main">
 				<div class="goods2-con">
-			<div class="addAdress-con">
+			<div class="addAdress-con" @click="go_address()">
 				<p class="addAdress-top hide">
-					<span class="fl">收货人:王先生</span>
-					<span class="fr">1584765238</span>
+					<span class="fl">收货人:{{consignee}}</span>
+					<span class="fr" style="text-align:right">电话:{{tel}}</span>
 				</p>
 				<div class="addres-msg">
 					<i class="iconfont icon-dingwei icon-location"></i>
-					<p class="goods-addres">收货地址:广东省广东省广东省广东省广东省广东省广东省广东省广东省广东省</p>
+					<p class="goods-addres">收货地址:{{address}}</p>
 					<i class="iconfont icon-gengduo1 icon-more"></i>
 				</div>
 			</div>
 			<img src="../../image/line01.png" alt="">
-			<div class="free-con hide">
-				<span class="fl circle"></span>
+			<div class="free-con hide" @click="go_goodsDetail()">
+				<span class="fl circle"><img :src="imgurl" alt=""></span>
 				<div class="fl free-right">
-					<h6>免费品尝南山十一鸡</h6>
-					<span class="chicken">南山十一鸡</span>
-					<span class="credit"><label>100</label>学分</span>
+					<h6 class="single">{{goods_name}}</h6>
+					<span class="chicken more2">{{abs}}</span>
+					<span class="credit" v-if="role == 2"><label>{{total * 0.25}}</label>元</span>
+					<span class="credit" v-else><label>{{total}}</label>学分</span>
 				</div>
 			</div>
 			<div class="num-con hide">
 				<span class="fl">兑换数量</span>
 				<ul class="fr num-ul hide">
-					<li class="one">&#45;</li>
-					<li class="two">1</li>
-					<li class="three">&#43;</li>
+					<li class="one" onclick="minus()">&#45;</li>
+					<li class="two">
+							<input type="number" value="1" id="num" onkeyup="check()" oninput="changeNum()" onporpertychange="changeNum()">
+					</li>
+					<li class="three" onclick="add()">&#43;</li>
 				</ul>
 			</div>
-			<div class="way-con hide">
+			<div class="way-con hide" onclick="sel_delivery()">
 				<span class="fl">配送方式</span>
 				<p class="fr express">
 					<span>快递&nbsp;免邮</span>
@@ -115,7 +126,7 @@
 			</div>
 			<div class="leaveMsg-con hide">
 				<span class="fl">买家留言:&nbsp;&nbsp;</span>
-				<p class="fl">选填:对本次交易的说明</p>
+				<input type="text" placeholder="选填:对本次交易的说明" id="input-box">
 			</div>
 			<div class="wechat-con hide">
 				<p class="fl wechat-pay wechat-pay2">
@@ -123,24 +134,25 @@
 					<span>微信支付</span>
 				</p>
 				<p class="fr money" onclick="sel_wechat_pay()">
-					<span>¥10</span>
-					<i class="iconfont icon-xuanzhongon" id="weChat"></i>
+					<span id="money">¥{{total * 0.25}}</span>
+					<i class="iconfont icon-xuanzhongon weChat" id="weChat" v-if="role !== 2"></i>
 				</p>
 			</div>
-			<div class="wechat-con hide">
+			<div class="wechat-con hide" v-if="role !== 2">
 				<p class="fl wechat-pay">
 					<i class="iconfont icon-xue icon-learn"></i>
 					<p class="learn-pay">
 						<span>学分支付</span>
-						<span>账户余额:<label>10</label>学分</span>
+						<span>账户余额:<label>{{winmoney}}</label>学分</span>
 					</p>
 				</p>
 
 				<!-- 学分充足 -->
-				<p class="fr money" onclick="sel_credit_Pay()">
-					<span style="color:#fcb068;">20学分</span>
-					<i class="iconfont icon-xuanzhongon credit" id="credit"></i>
+				<p class="fr money" id="creditfull" onclick="sel_credit_Pay()">
+					<span style="color:#fcb068;" id="totalone">{{total}}学分</span>
+					<i class="iconfont icon-xuanzhongon" id="credit"></i>
 				</p>
+
 				<!-- 学分不足 -->
 				<div class="Recharge" style="display:none">
 						学分不足
@@ -149,11 +161,17 @@
 			</div>
 		</div>
 		</div>
-		<footer>
+		<footer id="footer">
 			<ul class="hide">
-				<li class="price-li">总价:<label class="credit">50学分</label></li>
+				<li class="price-li" v-if="role == 2">总价:
+					<label class="credit" id="money_total">¥{{total * 0.25}}</label>
+				</li>
+				<li class="price-li" v-else>总价:
+					<label class="credit" id="total">{{total}}学分</label>
+					<label class="credit" id="money_total" style="display:none;color:#58b64b">¥{{total * 0.25}}</label>
+				</li>
 				<!-- 分别有确认兑换、确认支付状态 -->
-				<li class="submit-btn" style="width:35%">确认兑换</li>
+				<li class="submit-btn" style="width:35%" onclick="ConExchange()">确认兑换</li>
 		</ul>
 		</footer>
 	</div>
@@ -161,42 +179,228 @@
 	<div class="fu-body" style="display:none">
 		<div class="fu-delivery">
 			<h6>配送方式</h6>
-			<p class="hide code-con">
-				<span class="fl">快递&nbsp;&nbsp;8学分</span>
-				<i class="iconfont icon-xuanzhongon icon-check fr"></i>
+			<p class="hide code-con" onclick="confirm()">
+				<span class="fl">快递&nbsp;&nbsp;免邮</span>
+				<i class="iconfont icon-xuanzhongon icon-check fr" id="icon1"></i>
 			</p>
-			<p class="hide code-con">
+
+			<!-- <p class="hide code-con" onclick="since()">
 				<span class="fl">自提</span>
-				<i class="iconfont icon-weixuanzhongxianxing icon-check fr"></i>
-			</p>
+				<i class="iconfont icon-weixuanzhongxianxing icon-check fr" id="icon2"></i>
+			</p> -->
+
 			<p class="sure-btn"><button onclick="confirm()">确认</button></p>
 		</div>
 	</div>
 
-	<!-- 兑换成功 -->
-	<div class="goodSuccess-con" style="display:none">
-		<header class="homePage-header">
-			<h4>兑换成功</h4>
-			<i class="iconfont icon-fanhui icon-return"></i>
-		</header>
-		<div class="convert-con">
-			<span><i class="iconfont icon-weixuanzhongxianxing icon-checktop"></i></span>
-			<h3>恭喜您&nbsp;成功兑换</h3>
-			<h6>免费品尝南山十一鸡</h6>
-			<p class="times">2017年6月1日</p>
-			<p class="check-btns">
-				<button>查看商品</button>
-				<button>返回首页</button>
-			</p>
-		</div>
-	</div>
 </body>
 </html>
 <script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
 <script type="text/javascript">
+		var header = $api.dom('header');
+		fixStatusBar_API(header);
+    var id,token,numMax,goods_id,add_time;
+		var numMin = 1;
 	  apiready = function(){
+			//解决键盘弹出底部导航被顶上来的bug
+			var h = document.body.scrollHeight;
+			focus_footer(h);
+      loading();
+			id = $api.getStorage('id');
+			var role = $api.getStorage('role');
+			if (role == '2') {
+				 vm.role = 2
+			}
+			token = $api.getStorage('token');
+			goods_id = api.pageParam.goods_id;
+			var address_id = api.pageParam.address_id;
+
+      $api.css($api.byId('loading'),'display:block');
+			if (address_id) {
+					vm.get_address(address_id);
+			}else{
+					vm.get_Defaddress();
+			}
+
+      vm.get_orderInfo();
+			vm.get_credit();
+			$api.css($api.byId('loading'),'display:none');
 
 		}
+
+		var vm = new Vue({
+				el:'#wrap',
+				data:{
+						consignee:'',
+						tel:'',
+						address:'',
+						imgurl:'',
+						goods_name:'',
+						abs:'',
+						total:'',
+						totalone:'',
+						money:'',
+						goods_number:'',
+						payMethod:1,
+						winmoney:'',
+						role:''
+				},
+				methods:{
+						get_Defaddress(){//读取收货地址列表
+								api.ajax({
+								    url: serverurl,
+								    method: 'get',
+										dataType:'json',
+								    data: {
+								        values: {
+								            type: '10113',
+														token:token,
+														uid:id,
+														is_default:'1'
+								        }
+								    }
+								},function(ret, err){
+
+									  if (ret) {
+												if (ret.status == '0') {
+
+														setTimeout(function(){
+																vm.go_address();
+														},500);
+
+												}else {
+														vm.consignee = ret[0].consignee;
+														vm.tel = ret[0].tel;
+														vm.address = ret[0].address;
+												}
+									  } else {
+								        api.toast({
+								            msg: '网络错误',
+								            duration: 2000,
+								            location: 'bottom'
+								        });
+								    }
+								});
+						},
+
+						get_address(address_id){//读取单条地址
+								api.ajax({
+								    url: serverurl,
+								    method: 'get',
+								    data: {
+								        values: {
+								            type: '10114',
+														token:token,
+														id:address_id
+								        }
+								    }
+								},function(ret, err){
+
+								    if (ret) {
+								        vm.consignee = ret.consignee;
+												vm.tel = ret.tel;
+												vm.address = ret.address;
+								    } else {
+								        api.toast({
+								            msg: '网络错误',
+								            duration: 2000,
+								            location: 'bottom'
+								        });
+
+								    }
+								});
+						},
+
+						get_orderInfo(){//读取商品详情
+								api.ajax({
+								    url: serverurl,
+								    method: 'get',
+										dataType:'json',
+								    data: {
+								        values: {
+								            type: '10032',
+														goodsid:goods_id
+								        }
+								    }
+								},function(ret, err){
+
+								    if (ret) {
+												vm.imgurl = ret.data.info.imgurl;
+												vm.goods_name = ret.data.info.goods_name;
+												vm.abs = ret.data.info.abs;
+												vm.total = ret.data.info.total;
+												vm.goods_number = ret.data.info.goods_number;
+
+								    } else {
+								        api.toast({
+								            msg: '网络错误',
+								            duration: 2000,
+								            location: 'bottom'
+								        });
+
+								    }
+								});
+						},
+
+						get_credit(){//查询用户学分
+								api.ajax({
+										url: serverurl,
+										method: 'get',
+										dataType:'json',
+										data: {
+												values: {
+														type: '10130',
+														token:token,
+														uid:id
+												}
+										}
+								},function(ret, err){
+
+										if (ret) {
+											  vm.winmoney = ret.winmoney;
+											  // if (parseInt(ret.winmoney) <= 0) {
+												// 		$api.css($api.dom('.Recharge'), 'display:block');
+                        //     $api.css($api.dom('#creditfull'), 'display:none');
+											  // }
+										} else {
+												api.toast({
+														msg: '网络错误',
+														duration: 2000,
+														location: 'bottom'
+												});
+
+										}
+								});
+						},
+
+						go_goodsDetail(){
+								api.openWin({
+								    name: 'credit_goodDetail_title',
+								    url: './credit_goodDetail_title.html',
+								    pageParam: {
+								        goods_id: goods_id
+								    }
+								});
+						},
+
+						//跳到地址页面
+						go_address(){
+
+							api.openWin({
+									name: '6address_title',
+									url: './6address_title.html',
+									pageParam: {
+											goods_id:goods_id
+									}
+							});
+						}
+
+				},
+
+
+		})
 
 		//选择配送方式确认
 		function confirm(){
@@ -207,23 +411,310 @@
 		function sel_wechat_pay(){
 				$api.removeCls($api.dom('#credit'), 'credit');
         $api.addCls($api.dom('#weChat'), 'weChat');
+				$api.css($api.byId('total'), 'display:none');
+        $api.css($api.byId('money_total'), 'display:inline-block');
+				vm.payMethod = 1;
 		}
 
 		//选择学分支付
 		function sel_credit_Pay(){
 			$api.removeCls($api.dom('#weChat'), 'weChat');
 			$api.addCls($api.dom('#credit'), 'credit');
+			$api.css($api.byId('total'), 'display:inline-block');
+			$api.css($api.byId('money_total'), 'display:none');
+			vm.payMethod = 2;
 		}
 
 		//学分充值
 		function Recharge(){
 				api.openWin({
 				    name: '7credit_Recharge',
-				    url: '../My/7credit_Recharge.html',
+				    url: './7credit_Recharge.html',
 				    pageParam: {
 				        name: 'test'
 				    }
 				});
+		}
+
+
+
+	 // 总价随着数量的改变而改变
+	function changeNum(){
+
+		numMax = parseInt(vm.goods_number);//最大值
+		var num = document.getElementById("num").value;
+		if (num == numMin || num < numMin) {
+
+				api.toast({
+						msg: '不能少于最小购买量',
+						duration: 2000,
+						location: 'middle'
+				});
+
+
+		}else if (num == numMax || num > numMax) {
+
+				api.toast({
+						msg: '已超过最大购买量',
+						duration: 2000,
+						location: 'middle'
+				});
 
 		}
+
+		vm.money = (num * vm.total) * 0.25;
+		var str1 = '¥' + vm.money;
+
+		if (vm.role !== 2) {
+			vm.totalone = num * vm.total;
+			var str = vm.totalone + '学分';
+
+			$api.text($api.byId('totalone'), str);
+			$api.text($api.byId('total'), str);
+		}
+
+
+
+		$api.text($api.byId('money_total'), str1);
+		$api.text($api.byId('money'), str1);
+
+
+
+	}
+
+	// 点击增加、减少，input框数字改变
+	function add(){
+      var num = document.getElementById("num").value;
+	    if(num == numMax || num > numMax){
+	        document.getElementById("num").value = numMax;
+					api.toast({
+					    msg: '已达到最大购买数量',
+					    duration: 2000,
+					    location: 'middle'
+					});
+          return false;
+	    }else{
+	        document.getElementById("num").value++;
+	    }
+			changeNum();
+	}
+
+	// 数字减少
+	function minus(){
+	    var num = document.getElementById("num").value;
+	    if(num == numMin || num < numMin){
+				document.getElementById("num").value = numMin;
+				api.toast({
+						msg: '当前已是最小购买数量',
+						duration: 2000,
+						location: 'middle'
+				});
+				return false;
+	    }else{
+	        document.getElementById("num").value--;
+	    }
+			changeNum();
+	}
+
+	// 改变数字
+	function check(){
+	    var num = document.getElementById("num");
+	    if (isNaN(num.value)){
+				  num.value=numMin;
+	    }
+			changeNum();
+	}
+
+	//选择配送方式
+	function sel_delivery(){
+			$api.css($api.dom('.fu-body'),'display:block');
+	}
+
+	// //选择快递
+	// function express(){
+	//
+	// 		distr('#icon2','#icon1');
+	// }
+	//
+	// //选择自提
+	// function since(){
+	//
+	// 	distr('#icon1','#icon2');
+	// }
+
+	// function distr(el1,el2){
+	// 		$api.removeCls($api.dom(el1), 'icon-xuanzhongon');
+	// 		$api.addCls($api.dom(el1), 'icon-weixuanzhongxianxing');
+	// 		$api.removeCls($api.dom(el2), 'icon-weixuanzhongxianxing');
+	// 		$api.addCls($api.dom(el2), 'icon-xuanzhongon');
+	// }
+
+
+	//确认兑换
+	function ConExchange(){
+		  if (!vm.address) {
+					api.toast({
+					    msg: '请选择收货地址',
+					    duration: 2000,
+					    location: 'bottom'
+					});
+          return false;
+		  }
+		  var buyNum = $api.val($api.byId('num'));//购买数量
+			if (buyNum > numMax) {
+					api.toast({
+					    msg: '抱歉，购买数量已超出商家库存,请重新选购',
+					    duration: 2000,
+					    location: 'bottom'
+					});
+					return false;
+			}
+      add_time = Math.round(new Date().getTime()/1000);
+      var message = $api.val($api.byId('input-box'));
+			var goods_amount,price;
+			var weiChatNum = $api.text($api.dom('#money_total'));
+
+			var creditNum = $api.text($api.dom('#total'));
+
+			if (vm.payMethod == 2) {//payMethod,1微信支付，2学分支付
+					var value2 = creditNum.replace(/[^0-9]/ig,"");//提取数字，学分支付
+
+					if (vm.total > parseInt(vm.winmoney) ) {
+							api.toast({
+									msg: '学分不足',
+									duration: 2000,
+									location: 'middle'
+							});
+							return false;
+					}
+					goods_amount = value2;
+					price = vm.total;
+
+
+			}else{
+
+					var value1 = weiChatNum.replace(/[^0-9]/ig,"");//提取数字，微信支付
+					goods_amount = value1;
+					price = vm.total * 0.25;
+			}
+      $api.css($api.byId('loading'), 'display:block');
+			api.ajax({
+					url: serverurl,
+					method: 'post',
+					data: {
+							values: {
+									type: '10107',
+									token:token,
+									uid:id,
+									order_status:'1',//订单状态
+									shipping_status:'0',
+									pay_status:'0',//支付状态
+									consignee:vm.consignee,//收货人姓名
+									tel:vm.tel,//收货人电话
+									address:vm.address,//收货人详细地址
+									goods_amount:goods_amount,//商品总金额
+									add_time:add_time,//订单生成时间
+									goods_id:goods_id,//商品id
+									goods_name:vm.goods_name,//商品名称
+									goods_number:buyNum,//商品数量
+									send_num:'0',//当不是实物时，是否已发货，0，否；1，是
+									is_real:'1',//是否是实物，0，否；1，是；取值goods
+									goods_price:price,//商品单价
+									message:message,//买家留言
+							},
+					}
+			},function(ret, err){
+				  console.log(JSON.stringify(ret));
+					console.log(JSON.stringify(err));
+					if (ret) {
+							if (ret.status == '1') {
+								$api.css($api.byId('loading'), 'display:none');
+								if (vm.payMethod == 1) {//payMethod,1微信支付，2学分支付
+									api.openWin({
+											name: 'success',
+											url: './success.html',
+											pageParam: {
+													time: add_time,
+													goods_name:vm.goods_name
+											}
+									});
+								}else{
+										UpdateOrder(goods_amount);
+								}
+
+							}
+					} else {
+						  $api.css($api.byId('loading'), 'display:none');
+							api.toast({
+									msg: '网络错误',
+									duration: 2000,
+									location: 'bottom'
+							});
+
+					}
+			});
+	}
+
+	//支付完成时更新订单(学分支付)
+	function UpdateOrder(goods_amount){
+
+			api.ajax({
+			    url: serverurl,
+			    method: 'get',
+			    data: {
+			        values: {
+			            	type: '10109',
+										token:token,
+										uid:id,
+										goods_name:vm.goods_name,
+										total:goods_amount,
+										winmoney:vm.winmoney,
+			        }
+			    }
+			},function(ret, err){
+				  $api.css($api.byId('loading'), 'display:none');
+				
+			    if (ret) {
+							if (ret.status == '1') {
+									api.openWin({
+											name: 'success',
+											url: './success.html',
+											pageParam: {
+													time: add_time,
+													goods_name:vm.goods_name
+											}
+									});
+
+							}else if (ret.status == '0') {
+									api.toast({
+									    msg: '学分不足',
+									    duration: 2000,
+									    location: 'bottom'
+									});
+							}
+			    } else {
+			        api.toast({
+			            msg: '网络错误',
+			            duration: 2000,
+			            location: 'bottom'
+			        });
+
+			    }
+			});
+
+	}
+
+	//返回
+	function cancel(){
+		api.confirm({
+			title: '放弃订单',
+			msg: '是否放弃当前订单',
+			buttons: ['确定', '取消']
+		}, function(ret, err) {
+			 var index = ret.buttonIndex;
+			 if (index === 1) {
+						go_back();
+			 }
+		});
+	}
 </script>

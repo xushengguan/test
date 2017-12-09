@@ -2,197 +2,461 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>全部活动</title>
+    <title>学客圈</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css" />
-    <link rel="stylesheet" type="text/css" href="../css/common.css">
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <link rel="stylesheet" type="text/css" href="../css/loading.css">
-    <link rel="stylesheet" type="text/css" href="../icon/iconfonts/iconfont.css">
-    <link rel="stylesheet" type="text/css" href="../css/5enter.css">
-    <style media="screen">
-        .ActLis {
-            width: 100%;
+    <link rel="stylesheet" type="text/css" href="../css/loading.css" />
+    <style>
+        header {
+            padding: 5px 0;
+            height: 35px;
+            line-height: 35px;
             background: #fff;
+            position: relative;
             overflow: hidden;
-            background: #fff;
-            z-index: 99;
-            position: fixed;
-            top: 0;
-            left: 0;
+            box-shadow: 0 3px 3px rgba(0, 0, 0, .1);
         }
 
-        .ActLis li {
-            width: 50%;
-            text-align: center;
-            height: 48px;
-            line-height: 48px;
-            border-bottom: 2px solid #efefef;
-            font-size: 14px;
-            color: #212121;
+        header .public {
+            width: calc(80% - 30px);
             float: left;
+            font-size: 15px;
+            color: #999;
+            height: 100%;
+            padding: 0 15px;
         }
 
-        .ActLis li.addColor {
-            color: #fca958;
-            border-bottom: 2px solid #fca958;
+        header .rt {
+            width: calc(20% - 1px);
+            border-left: 1px solid #d2d3d5;
+            float: left;
+            height: 100%;
         }
 
-        .NoAct {
-            padding: 30px 20px;
-            color: #333;
-            font-size: 16px;
+        header .rt span {
+            width: 20px;
+            height: 20px;
+            background: url(../image/pulic.png) no-repeat center;
+            display: block;
+            background-size: 20px;
+            position: relative;
+            top: 50%;
+            margin-top: -10px;
+            left: 50%;
+            margin-left: -10px;
+        }
+
+        header .rt em {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #df2a2a;
+            position: absolute;
+            right: -1px;
+            top: 0;
         }
 
         .box {
-            margin-top: 50px;
+            background: #fff;
+            margin-top: 5px;
+            padding: 15px;
+            box-shadow: 0 3px 3px rgba(0, 0, 0, .1);
         }
 
+        .box:last-child {
+            box-shadow: 0 3px 3px rgba(0, 0, 0, .1);
+            margin-bottom: 0;
+        }
+
+        .box .PerInfo {
+            padding-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .box .PerInfo img {
+            display: block;
+            float: left;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+        }
+
+        .box .PerInfo .info {
+            float: left;
+            margin-left: 15px;
+        }
+
+        .PerInfo .info p {
+            line-height: 22px;
+        }
+
+        .PerInfo .info p:first-child {
+            font-size: 15px;
+            color: #343d66;
+        }
+
+        .PerInfo .info p:nth-child(2) {
+            font-size: 12px;
+            color: #757575;
+        }
+
+        .box .msg {
+            font-size: 14px;
+            color: #212121;
+            margin-bottom: 5px;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+
+        .box .show {
+            font-size: 15px;
+            color: #343d66;
+            margin-bottom: 4px;
+        }
+
+        .box .cell {
+            width: 210px;
+            height: 210px;
+            overflow: hidden;
+
+        }
+
+        .box .cell img {
+            width: 100%;
+
+
+        }
+
+        .box .cell9 {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .box .cell9.cell4 {
+            width: 240px;
+        }
+
+        .cell9 .item {
+            width: 31%;
+            margin-bottom: 2.3%;
+            float: left;
+            margin-right: 2.3%;
+            position: relative;
+        }
+
+        .cell9.cell4 .item {
+            width: 48%;
+            margin-bottom: 2%;
+            margin-right: 2%;
+        }
+
+        .cell9 .item:before {
+            content: "";
+            display: inline-block;
+            padding-bottom: 100%;
+            width: 0.1px;
+            vertical-align: middle;
+        }
+
+        .cell9 .item img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .box .nav {
+            height: 30px;
+            line-height: 30px;
+            font-size: 13px;
+            color: #7e7e7e;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .box .nav .share {
+            height: 30px;
+            width: 30px;
+            background: url(../image/share.png) no-repeat left center;
+            background-size: 15px;
+            float: left;
+        }
+
+        .box .nav .comment,
+        .box .nav .love {
+            height: 30px;
+            float: right;
+            padding-left: 36px;
+        }
+
+        .box .nav .comment {
+            background: url(../image/comment.png) no-repeat center;
+            background-size: 15px 14px;
+        }
+
+        .box .nav .love {
+            background: url(../image/love1.png) no-repeat center 5px;
+            background-size: 15px;
+        }
+
+        .box .nav .love.on {
+            background: url(../image/love.png) no-repeat center 5px;
+            background-size: 15px;
+        }
+
+        .box .reply {
+            padding: 8px 10px 10px 10px;
+            background: #f2f2f2;
+            border-radius: 2px;
+            font-size: 14px;
+        }
+
+        .reply .lovePerson {
+            color: #343d66;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #e4e2e2;
+            margin-bottom: 6px;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        .reply .lovePerson em {
+            width: 14px;
+            height: 14px;
+            display: inline-block;
+            background: url(../image/love1.png) no-repeat center;
+            background-size: 14px;
+        }
+
+        .reply .lovePerson span {
+            margin-left: 2px;
+        }
+
+        .reply li {
+            margin-top: 6px;
+            overflow: hidden;
+            line-height: 14px;
+        }
+
+        .reply li .lf {
+            float: left;
+            margin-right: 2px;
+        }
+
+        .reply li .name {
+            color: #343d66;
+            font-size: 14px;
+        }
+
+
+
+        .reply .checkAll {
+            font-size: 14px;
+            color: #343d66;
+        }
+
+        footer {
+            background: #fff;
+            box-shadow: 0 -1px 3px rgba(0, 0, 0, .1);
+            height: 50px;
+        }
+
+        footer .footer {
+            overflow: hidden;
+            padding: 0 15px;
+            height: 50px;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        .footer textarea {
+            width: calc(100% - 55px);
+            height: 20px;
+            line-height: 20px;
+            font-size: 14px;
+            color: #666;
+            float: left;
+            resize: none;
+            margin: 10px 0;
+            padding: 5px 0;
+            border-bottom: 1px solid #FFD700;
+            margin-right: 5px;
+        }
+
+        .footer button {
+            display: block;
+            text-align: center;
+            width: 50px;
+            height: 30px;
+            line-height: 30px;
+            color: #fff;
+            background: #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+            float: right;
+        }
+
+        footer button.on {
+            background: #FFD700;
+        }
+
+        .del {
+            width: 80px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 3px;
+            background: #fff;
+            color: #222;
+            font-size: 16px;
+            padding: 10px 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+            z-index: 99;
+        }
+
+        /*.container {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .container.fold {
+            -webkit-line-clamp: 3;
+        }
+*/
+       .noCircle{padding-top: 30px; font-size: 16px; color: #333; text-align: center; width: 100%;}
     </style>
 </head>
 
 <body>
-    <div id="app">
-        <ul class="ActLis">
-            <li class="Lis0 addColor" @click="btn_list(0)">全部活动</li>
-            <li class="Lis1" @click="btn_list(1)">已报名</li>
-        </ul>
-        <div class="box">
-            <div v-if="status == '1'">
-                <div v-for="v in ActInfo">
-                    <div class="enter-news" @click="goDatail(v.id)">
-                        <div class="news-con hide">
-                            <span class="fl img-pic08"><img :src="v.actimgurl" alt=""></span>
-                            <div class="content fl">
-                                <h6 class="single">{{v.title}}</h6>
-                                <p class="sites">{{v.address}}</p>
-                                <p class="sites">活动时间:{{v.actstarttime | formatDate}}</p>
-                            </div>
-                            <span class="peoples sites">{{v.userlimit}}人</span>
+
+    <div id="wrap" v-cloak>
+        <header>
+            <div class="public" onclick="goPubilsh()">在这里分享您的动态</div>
+            <div class="rt" onclick="goNews()">
+                <span></span><!-- 加消息推送通知的红点则加<em></em>-->
+            </div>
+        </header>
+        <div id="main">
+            <div v-if="ret">
+                 <div class="box" v-for="v in data">
+                <div class="PerInfo">
+                    <img src="../image/pic.png" alt="" v-if="v.headimgurl == '' || v.headimgurl == null || v.headimgurl == undefined" @click="goCircel(v.uid)">
+                    <img :src="v.headimgurl" alt="" v-else @click="goCircel(v.uid)">
+                    <div class="info">
+                        <p>{{v.nickname}}</p>
+                        <p>{{v.last_reply_at | getInfoDate}}</p>
+                    </div>
+                </div>
+                <!-- css控制加 类名container，:class="{fold:v.fold}"-->
+                <div class="msg" v-if="v.content">
+                    {{v.fold ? maxSlice(v.content) : v.content}}
+                </div>
+                <div v-show="v.content.length > maxLength">
+                    <div class="show" @click='v.fold = false' v-show="v.fold">展开</div>
+                    <div class="show" @click='v.fold = true' v-show="!v.fold">收起</div>
+                </div>
+
+                <div v-if="v.thumb[0].url">
+                    <!-- 一张图片 -->
+                    <div class="cell" v-if="v.thumb.length == 1">
+                        <img :src="v.thumb[0].url+'?x-oss-process=image/resize,p_50'" alt="" @click="viewPicture(v.thumb)">
+                    </div>
+
+                    <!-- 九张图片，当为4张图片时加样式名cell4 -->
+                    <div class="cell9 cell4" v-else-if="v.thumb.length == 4">
+                        <div class="item" v-for="item in v.thumb">
+                            <img :src="item.url+'?x-oss-process=image/resize,p_50'" alt="" @click="viewPicture(v.thumb)">
+                        </div>
+                    </div>
+
+                    <!-- 九张图片，当为4张图片时加样式名cell4 -->
+                    <div class="cell9" v-else>
+                        <div class="item" v-for="item in v.thumb">
+                            <img :src="item.url+'?x-oss-process=image/resize,p_50'" alt="" @click="viewPicture(v.thumb)">
                         </div>
                     </div>
                 </div>
+
+                <div class="nav">
+                    <div class="share"></div>
+                    <div class="love" :class="{on:v.is_like == '1'}" @click="givePoint(v,v.id)">{{v.like}}</div>
+                    <div class="comment" @click="comment(v,v.id)">{{v.rew}}</div>
+                </div>
+
+                <div class="reply" v-if="v.like_member != '' || v.rewlist != ''">
+                    <div class="lovePerson" v-if="v.like_member">
+                        <em></em>
+                        <span>{{v.like_member}}</span>
+                    </div>
+                    <ul class="reply_box" v-if="v.rewlist">
+                        <li v-for="(vv, index) in v.rewlist" v-if="index < 5">
+                            <div v-if="vv.replier">
+                                <div class="lf">
+                                    <span class="name" @click="goCircel(vv.rew_id)">{{vv.replier.nickname}}</span> 回复
+                                    <span class="name" @click="goCircel(vv.uid)">{{vv.nickname}}:</span>
+                                </div>
+                                <div class="lf" style="max-width:80%;" @click="CircleReply(v,v.id,vv.rew_id,vv.uid,vv.replier.id,vv.replier.nickname)">{{vv.content}}</div>
+                            </div>
+                            <div v-else>
+                                <div class="lf">
+                                    <span class="name" @click="goCircel(vv.uid)">{{vv.nickname}}:</span>
+                                </div>
+                                <div class="lf" style="max-width:80%;" @click="CircleReply(v,v.id,vv.rew_id,vv.uid,vv.uid,vv.nickname)">{{vv.content}}</div>
+                            </div>
+
+                        </li>
+                    </ul>
+                    <div class="checkAll" v-if="v.rewlist.length > 5" @click="goDetail(v.id)">查看全部{{v.rewlist.length}}条留言</div>
+                </div>
+
             </div>
-            <div class="NoAct" v-if="status == '0'">抱歉，您暂时还没有报名的活动！</div>
+            </div>
+            <div class="noCircle" v-else>暂无动态~</div>
+
         </div>
+        <footer style="display:none">
+            <div class="footer">
+                <textarea name="name" rows="8" cols="80" placeholder="" id="reply_txt" onpropertychange="MaxMe()" oninput="MaxMe()"></textarea>
+                <button disabled="true" id="send">发送</button>
+            </div>
+        </footer>
     </div>
+    <div class="del" style="display:none">删除</div>
 </body>
+
+</html>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/my.js"></script>
 <script type="text/javascript" src="../script/vue.js"></script>
 <script type="text/javascript" src="../script/date.js"></script>
 <script type="text/javascript">
-    var vm = new Vue({
-        el: '#app',
-        data: {
-            ActInfo: [],
-            Lisindex: '',
-            status: ''
-        },
-        filters: {
-            formatDate(time) {
-                var date = new Date(time * 1000);
-                return formatDate(date, 'yyyy-MM-dd');
-            }
-        },
-        methods: {
-            get_ActLis() { //获取活动列表
-                $api.css($api.dom('#loading'), 'display:block');
-                api.ajax({
-                    url: serverurl,
-                    method: 'get',
-                    dataType: 'json',
-                    data: {
-                        values: {
-                            type: '10029',
-                        }
-                    }
-                }, function(ret, err) {
-                    $api.css($api.dom('#loading'), 'display:none');
-                    vm.status = ret.status;
-                    if (ret) {
-                        if (ret.status == '1') {
-                            vm.ActInfo = ret.data;
-                        }
-                    } else {
-                        api.toast({
-                            msg: '网络错误',
-                            duration: 2000,
-                            location: 'middle'
-                        });
 
-                    }
-                });
-            },
-
-            ActSignUpLis() { //获取用户报名活动列表
-                $api.css($api.dom('#loading'), 'display:block');
-                api.ajax({
-                    url: serverurl,
-                    method: 'get',
-                    dataType: 'json',
-                    data: {
-                        values: {
-                            type: '10028',
-                            uid: id,
-                            token: token
-                        }
-                    }
-                }, function(ret, err) {
-
-                    $api.css($api.dom('#loading'), 'display:none');
-
-                    if (ret) {
-                        vm.status = ret.status;
-                        if (ret.status == '1') {
-                            vm.ActInfo = ret.data;
-                        }
-
-                    } else {
-                        api.toast({
-                            msg: '网络错误',
-                            duration: 2000,
-                            location: 'middle'
-                        });
-
-                    }
-                });
-            },
-
-            goDatail(actid) { //跳到活动详情
-                api.openWin({
-                    name: '5actMsg',
-                    url: './activity/5actMsg.html',
-                    pageParam: {
-                        actid: actid
-                    }
-                });
-            },
-
-            btn_list(index) {
-                vm.Lisindex = index;
-                if (index == 1) {
-                    $api.removeCls($api.dom('.ActLis .Lis0'), 'addColor');
-                    $api.addCls($api.dom('.ActLis .Lis1'), 'addColor');
-                    vm.ActSignUpLis();
-                } else {
-                    $api.removeCls($api.dom('.ActLis .Lis1'), 'addColor');
-                    $api.addCls($api.dom('.ActLis .Lis0'), 'addColor');
-                    vm.get_ActLis();
-                }
-
-            }
-
-        }
-    })
-    var id, token;
+    var token, id;
     apiready = function() {
-        loading();
-        vm.btn_list(0);
-        id = $api.getStorage('id');
         token = $api.getStorage('token');
+        id = $api.getStorage('id');
+
+        loading();
+        vm.getCircle();
+
 
         //刷新
         api.setRefreshHeaderInfo({
@@ -204,10 +468,346 @@
             showTime: false
         }, function(ret, err) {
             //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
-            vm.btn_list(vm.Lisindex);
+            vm.getCircle();
             api.refreshHeaderLoadDone();
         });
-    };
-</script>
 
-</html>
+        api.addEventListener({//向上轻扫事件
+            name:'swipeup'
+        }, function(ret, err){
+             $api.css($api.dom('footer'),'display:none');
+        });
+
+        api.addEventListener({
+            name: 'Publish'
+        }, function(ret, err){
+            if( ret ){
+
+                 vm.getCircle();
+            }else{
+                 console.log( JSON.stringify( err ) );
+            }
+        });
+
+
+    }
+
+    var vm = new Vue({
+        el: '#wrap',
+        data: {
+            data: [],
+            maxLength:200,
+            ret:[]
+        },
+        filters:{
+            getInfoDate(time) {
+                return getDate(time);
+            }
+        },
+        methods: {
+
+            maxSlice(v){
+              return v.length > this.maxLength ? v.slice(0, this.maxLength) + '...' : v;
+            },
+
+            getCircle() { //读取学客圈列表
+                $api.css($api.dom('#wrap'), 'display:none');
+                $api.css($api.dom('#loading'), 'display:block');
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    dataType:'json',
+                    data: {
+                        values: {
+                            type: '10115',
+                            token: token
+                        },
+                    }
+                }, function(ret, err) {
+                    $api.css($api.dom('#loading'), 'display:none');
+
+                    if (ret) {
+                      for (var i in ret.data) {
+                        ret.data[i].fold = true;
+                      }
+                      vm.data = ret.data;
+                    }else {
+                      vm.ret = ret;
+                    }
+                    $api.css($api.dom('#wrap'), 'display:block');
+                });
+            },
+
+
+            givePoint(item, circle_id) { //点赞，取消点赞
+                $api.css($api.dom('#loading'), 'display:block');
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    data: {
+                        values: {
+                            type: '10119',
+                            uid: id,
+                            id: circle_id,
+                            token: token
+                        },
+                    }
+                }, function(ret, err) {
+                    $api.css($api.dom('#loading'), 'display:none');
+                    if (ret) {
+                        if (ret.state == '1') {
+
+                            if (item.like_member == '') {
+                                item.like_member += ret.like_member;
+                            } else {
+                                item.like_member += ',' + ret.like_member;
+                            }
+                            item.is_like = '1';
+                        } else {
+
+                            item.like_member = ret.like_member;
+                            item.is_like = '0';
+                        }
+                        item.like = ret.count;
+                    } else {
+
+                        api.toast({
+                            msg: '网络错误',
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+
+                    }
+                });
+            },
+
+            goDetail(circle_id) {
+                api.openWin({
+                    name: 'circleDetail',
+                    url: './circle/circleDetail.html',
+                    pageParam: {
+                        circle_id: circle_id
+                    }
+                });
+            },
+
+            comment(item,fid){//评论
+                  $api.css($api.dom('footer'),'display:block');
+                  document.getElementById('reply_txt').focus();
+                  send.onclick = function(){
+                      var content = $api.val($api.byId('reply_txt'));
+                      api.ajax({
+                          url: serverurl,
+                          method: 'get',
+                          data: {
+                              values: {
+                                  type: '10136',
+                                  uid:id,
+                                  id:fid,
+                                  content:content,
+                                  token:token
+                              }
+                          }
+                      },function(ret, err){
+
+                          item.rewlist = ret.data;
+                          item.rew = ret.count;
+                          $api.val($api.byId('reply_txt'),'');
+                          $api.attr($api.dom('.footer button'), 'disabled', 'true');
+                          $api.removeCls($api.dom('.footer button'), 'on');
+                          $api.css($api.dom('footer'), 'display:none');
+                      });
+                  }
+            },
+
+
+            CircleReply(item,fid,com_id,rew_id,replier_id,replier_nickname){//点击回复
+
+                if (replier_id == id || !replier_id) {
+                  showDel(item,com_id,fid);
+                }else{
+                  $api.css($api.dom('footer'),'display:block');
+                  document.getElementById('reply_txt').focus();
+                  $api.attr($api.dom('#reply_txt'), 'placeholder','回复:'+replier_nickname);
+
+                  goReply(item,fid,rew_id,replier_id);
+                }
+            },
+
+            goCircel(id){
+                api.openWin({
+                    name: 'CircleIndex',
+                    url: './circle/CircleIndex.html',
+                    pageParam: {
+                        id: id
+                    }
+                });
+            },
+
+            viewPicture(data){
+              var url = [];
+              data.forEach(function(ret){
+                  url.push(ret.url);
+              })
+              var imageBrowser = api.require('imageBrowser');
+              imageBrowser.openImages({
+                  imageUrls: url
+              });
+            },
+
+
+
+        },
+
+
+
+        mounted() {
+
+        }
+    })
+
+    //聚焦回复框
+    function MaxMe(){
+        if ($api.val($api.byId('reply_txt')) == '') {
+            $api.attr($api.dom('.footer button'), 'disabled', 'true');
+            $api.removeCls($api.dom('.footer button'), 'on');
+
+        }else{
+            $api.removeAttr($api.dom('.footer button'), 'disabled');
+            $api.addCls($api.dom('.footer button'), 'on');
+        }
+    }
+
+
+    //展示删除按钮删除评论
+    function showDel(item,com_id,fid){
+
+       event.stopPropagation();
+       $api.css($api.dom('.del'),'display:block');
+       $api.css($api.dom('footer'),'display:none');
+       var del = $api.dom('.del');
+       del.onclick = function(e){
+         event.stopPropagation();
+          api.ajax({
+                url: serverurl,
+                method: 'get',
+                data: {
+                    values: {
+                        type: '10137',
+                        token:token,
+                        rew_id:com_id,
+                        id:fid
+                    }
+                }
+            },function(ret, err){
+
+                if (ret) {
+                    $api.css($api.dom('.del'),'display:none');
+                    if (ret.status == '0') {
+                       api.toast({
+                           msg: '删除失败',
+                           duration: 2000,
+                           location: 'bottom'
+                       });
+
+                    }else {
+                      item.rewlist = ret.data;
+                      item.rew = ret.count;
+                    }
+
+                } else {
+
+                    api.toast({
+                        msg: '网络错误',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+
+                }
+            });
+       }
+
+       document.onclick = function(){
+         del.style.display = "none";
+       }
+    }
+
+    //回复
+   function goReply(item,fid,rew_id,replier_id){
+
+     var send = $api.byId('send');
+     send.onclick = function(){
+       var content = $api.val($api.byId('reply_txt'));
+       api.ajax({
+           url: serverurl,
+           method: 'get',
+           data: {
+               values: {
+                   type: '10079',
+                   id:fid,//学客圈
+                   uid:replier_id,//用户id
+                   replier:id,//回复者id
+                   content:content,//回复内容
+               },
+           }
+       },function(ret, err){
+
+           if (ret) {
+               item.rewlist = ret.data;
+               $api.val($api.byId('reply_txt'),'');
+               $api.attr($api.dom('.footer button'), 'disabled', 'true');
+               $api.removeCls($api.dom('.footer button'), 'on');
+               $api.attr($api.dom('#reply_txt'), 'placeholder', '');
+               $api.css($api.dom('footer'), 'display:none');
+           } else {
+               api.toast({
+                   msg: '网络错误',
+                   duration: 2000,
+                   location: 'bottom'
+               });
+
+           }
+       });
+     }
+   }
+
+  //  跳到消息列表
+  function goNews(){
+      api.openWin({
+          name: 'circleNews',
+          url: './circle/circleNews.html',
+          pageParam: {
+
+          }
+      });
+  }
+
+  // 跳到发表学客圈
+  function goPubilsh(){
+      api.openWin({
+          name: 'circlePublish',
+          url: './circle/circlePublish.html',
+          pageParam: {
+
+          },
+          reload:true
+      });
+
+  }
+
+  // 移动端双击不起作用。
+  // 可以用单击事件模拟
+  var touchTime = Date.now();
+  function handleClick(){
+      if( Date.now() - touchTime < 500 ){
+           window.scrollTo(0, 0);
+      }else{
+          //如果第二次点击在第一次点击0.5秒后，
+          //则第二次点击默认为下一次双击判断的第一次点击
+          touchTime = Date.now();
+      }
+  }
+  document.addEventListener('click', handleClick);
+
+
+</script>

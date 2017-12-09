@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>学生家长个人中心</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+    <style>
+        .top_bg{width: 100%; background: url(../image/top_bg.png) no-repeat top center; background-size: cover;
+          position: relative; padding-bottom: 9px;}
+        .nav{padding: 10px; font-size: 15px; overflow: hidden; color: #fff;}
+        .nav span:first-child{float: left;}
+        .nav span:last-child{float: right;}
+        .pic{width: 74px; height: 74px; margin:0 auto; position: relative; border-radius: 50%; border: 2px solid #fff;}
+        .pic img{width: 100%; height: 100%; border-radius: 50%;}
+        .pic span{width: 12px; height: 15px; position: absolute; bottom: 0; right: 0; padding: 2px 5px;
+          background: url(../image/ident.png) no-repeat center; background-size: contain;}
+        .nickname{text-align: center; color: #fff; font-size: 18px; font-weight: bold; padding: 5px 0;}
+
+        .total{font-size: 13px; color: #fff; text-align: center;}
+        .total span{display: inline-block; min-width: 100px; padding: 5px 20px; border-radius: 25px; background: #000; opacity: 0.5;}
+        .total em{font-size: 14px; font-weight: bold; margin-left: 7px;}
+
+
+        .main{padding: 0 10px;}
+        .main .title{padding: 8px; height: 30px; line-height: 30px; color:#333; font-size: 17px;}
+        .main .title span{display: block; float: right; width: 68px; height: 30px; line-height: 30px; border-radius: 3px; color: #fff;
+          text-align: center; font-size: 14px; background: #ffb300;}
+        .main .card{padding: 6px; border-radius: 4px; background: #fff; box-shadow: 0 2px 5px #d4d4d4; margin-top: 10px;}
+        .main .card img{width: 100%; height: 102px; display: block;}
+        .main .navMenu{background: #fff; box-shadow: 0 2px 5px #d4d4d4; border-radius: 3px;}
+        .main .navMenu li{height: 50px; line-height: 50px; border-bottom: 1px solid #d6d6d6; padding-right: 10px; padding-left: 38px;
+          background: url(../image/icon1.png) no-repeat 14px center; background-size: 15px 18px; font-size: 15px; color: #333;}
+        .main .navMenu li:last-child{border-bottom: none;}
+        .main .navMenu li:nth-child(2){background: url(../image/icon8.png) no-repeat 10px center; background-size: 18px;}
+        .main .navMenu li:nth-child(3){background: url(../image/icon7.png) no-repeat 10px center; background-size: 18px;}
+        .main .navMenu li:nth-child(4){background: url(../image/icon2.png) no-repeat 10px center; background-size: 18px;}
+        .main .navMenu li:nth-child(5){background: url(../image/icon5.png) no-repeat 10px center; background-size: 18px;}
+        .main .navMenu li:nth-child(6){background: url(../image/icon6.png) no-repeat 10px center; background-size: 18px;}
+        .main .help{padding-top: 15px; padding-bottom: 10px; text-align: right; color: #01579b; font-size: 15px;}
+    </style>
+</head>
+<body>
+    <div class="top_bg">
+        <div class="nav">
+            <span onclick="braceletMsg()">我的手环</span>
+            <span onclick="MyAccount()">我的设置</span>
+        </div>
+
+        <div class="pic">
+            <img src="../image/pic.png" alt="" id="img" onclick="viewPicture()">
+            <span></span>
+        </div>
+        <div class="nickname"></div>
+        <div class="total">
+            <span>学分 <em id="total"></em></span>
+        </div>
+    </div>
+
+    <div class="main">
+
+        <div class="card" onclick="goActadmin()">
+            <img src="../image/join.jpg" alt="">
+        </div>
+        <div class="title">
+            控制中心
+        </div>
+        <ul class="navMenu">
+            <li onclick="MyOrder()">我的订单</li>
+            <li onclick="goAddress()">收货地址</li>
+            <li onclick="MyNews()">系统消息</li>
+            <li onclick="MyCircle()">我的学客圈</li>
+            <li onclick="BillDetail()">收支明细</li>
+            <li onclick="Rating()">信用评级</li>
+        </ul>
+        <!-- <div class="help">
+            规则与帮助
+        </div> -->
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/my.js"></script>
+<script type="text/javascript">
+var header = $api.dom('.top_bg');
+fixStatusBar_API(header);
+var id,token;
+apiready = function(){
+    id = $api.getStorage('id');
+    token = $api.getStorage('token');
+    getUser();
+
+    //刷新
+    api.setRefreshHeaderInfo({
+        loadingImg: 'widget://image/refresh.png',
+        bgColor: '#444',
+        textColor: '#fff',
+        textUp: '释放立即刷新...',
+        textLoading: '加载中···',
+        showTime: false
+    }, function(ret, err) {
+        //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+        getUser();
+        api.refreshHeaderLoadDone();
+    });
+
+    // 监听用户信息修改
+    api.addEventListener({
+        name: 'ExInfo'
+    }, function(ret, err){
+        if( ret ){
+
+             getUser();
+        }else{
+             console.log( JSON.stringify( err ) );
+        }
+    });
+}
+// 我的学客圈
+function MyCircle(){
+    api.openWin({
+        name: 'CircleIndex',
+        url: './circle/CircleIndex.html',
+        pageParam: {
+            id: id
+        }
+    });
+
+}
+
+// 订单管理
+function MyOrder(){
+  api.openWin({
+      name: 'order_title',
+      url: './mall/order_title.html',
+      pageParam: {
+          name: 'test'
+      }
+  });
+}
+
+//  消息
+function MyNews() {
+    api.openWin({
+        name: 'MyNews_title',
+        url: './setting/MyNews_title.html',
+        pageParam: {
+            // name: 'test'
+        }
+    });
+}
+
+//账单明细
+function BillDetail(){
+    api.openWin({
+        name: 'BillDetail',
+        url: './setting/BillDetail_title.html',
+        pageParam: {
+            // name: 'test'
+        }
+    });
+}
+
+//信用评级
+function Rating(){
+    api.openWin({
+        name: 'Rating_title',
+        url: './setting/Rating_title.html',
+        pageParam: {
+            // name: 'test'
+        }
+    });
+}
+
+// 账户管理
+function MyAccount() {
+    api.openWin({
+        name: '7account',
+        url: './setting/7account.html',
+        pageParam: {
+            // name: 'test'
+        }
+    });
+}
+
+//我的活动
+function goActadmin(){
+  api.openWin({
+      name: 'Actadmin_title',
+      url: './activity/Actadmin_title.html',
+      pageParam: {
+          // name: 'test'
+      }
+  });
+}
+
+// 我的手环
+function braceletMsg(){
+			api.ajax({//活动中心显示手环信息
+					url: serverurl,
+					method: 'get',
+					data: {
+							values: {
+									type: '10180',
+									 uid: id,
+								 token: token
+							},
+					}
+			},function(ret, err){
+
+					if (ret.data) {
+            api.openWin({
+                name: 'braceletMsg',
+                url: './setting/braceletMsg.html',
+                pageParam: {
+                    // name: 'test'
+                },
+                reload:true,
+                allowEdit:true
+            });
+					}else {
+							api.toast({
+									msg: '暂无手环信息',
+									duration: 2000,
+									location: 'middle'
+							});
+
+					}
+			});
+}
+
+function getUser(){
+
+    api.ajax({//获取用户基本信息
+        url: serverurl,
+        method: 'get',
+        data: {
+            values: {
+                type: '10035',
+                 uid: id,
+               token: token
+            },
+        }
+    },function(ret, err){
+
+        if (ret) {
+            if (ret.status == '1') {
+              if (ret.data.headimgurl) {
+                  $api.attr($api.dom('.pic img'), 'src', ret.data.headimgurl);
+              }
+              $api.text($api.dom('.nickname'), ret.data.nickname);
+              $api.text($api.dom('#total'), ret.data.winmoney);
+            }else {
+              api.toast({
+                  msg: '网络错误',
+                  duration: 2000,
+                  location: 'bottom'
+              });
+            }
+        }else {
+            api.toast({
+                msg: '网络错误',
+                duration: 2000,
+                location: 'bottom'
+            });
+
+        }
+    });
+}
+
+// 查看头像放大
+function viewPicture(){
+  var pic = $api.attr($api.dom('#img'), 'src');
+  if (pic != '../image/pic.png') {
+      var url = [];
+      url.push(pic);
+      var imageBrowser = api.require('imageBrowser');
+      imageBrowser.openImages({
+          imageUrls: url
+      });
+  }
+
+}
+
+//收货地址
+function goAddress(){
+    api.openWin({
+        name: '6address_title',
+        url: './mall/6address_title.html',
+        pageParam: {
+            // name: 'test'
+        }
+    });
+}
+
+</script>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>分享状态</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/loading.css"/>
+    <style>
+        header{height: 50px; line-height: 50px; background: #ffb300; color: #fff; font-size: 18px; position: relative;}
+        header em{width: 50px; height: 50px; background: url(../../image/back.png) no-repeat center;
+          background-size: 20px; float: left;}
+
+        .content{padding: 14px; background: #fff;}
+        .content textarea{width: 100%; height: 170px; font-size: 14px; color: #ccc; margin-bottom: 15px; resize:none;
+        line-height: 20px;}
+
+        .img{overflow: hidden; padding: 12px;background: #fff; }
+        .img .item{width: calc(20% - 4px); margin-right: 2px; margin-left: 2px; position: relative; float: left;
+          margin-bottom: 5px;}
+        .img .item:before{content: ''; display: inline-block; padding-bottom: 100%; width: 0.1px; vertical-align: middle;}
+        .img .item img{position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block;}
+        .item span{width: 30px; height: 30px; display: block; text-align: center; font-size: 30px; color: #ffb300;
+          line-height: 30px; text-shadow: 0 1px 5px rgba(0,0,0,.2); -o-transform: rotate(45deg); -moz-transform: rotate(45deg);
+          -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); position: absolute; top: 0; right: 0; z-index: 99;}
+
+        .btn{margin:35px 20px;}
+        .btn button{width: 100%; height: 45px; line-height: 45px; background: #ffb300; border-radius: 3px; text-align: center;
+        color: #fff; font-size: 18px;}
+
+        .item.on{background: #eee;}
+        .item em{width: 28px; height: 28px; background: url(../../image/add.png) no-repeat center; background-size: 28px;
+        position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);}
+
+        .flexed{width: 100%; height: 100%; background: rgba(0,0,0,.6); position: fixed; top: 0; left: 0; z-index: 99;}
+        .flexed ul{width: 80%; background: #fff; border-radius: 4px; position: absolute; top: 50%; left: 50%;
+          transform: translate(-50%, -50%);}
+        .flexed ul li{ color: #212121; font-size: 14px; padding: 15px;  border-bottom: 1px solid #f2f2f2;}
+        .flexed ul li:last-child{border-bottom: none;}
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <header>
+            <em onclick="go_back()"></em>
+            活动分享
+        </header>
+        <div id="main">
+            <div class="content">
+                <textarea name="name" rows="8" cols="80" placeholder="分享您的精彩"></textarea>
+            </div>
+            <div class="img">
+                <div class="item on" onclick="sel_channel()" id="uploader">
+                    <em></em>
+                </div>
+                <!-- <div class="item">
+                    <span>+</span>
+                    <img src="../../image/pic10.jpg" alt="">
+                </div> -->
+            </div>
+
+            <div class="btn">
+                <button onclick="SendOut()">发送</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="flexed" style="display:none">
+        <ul>
+            <li onclick="camera()">拍照</li>
+            <li onclick="album()">从相册选择</li>
+        </ul>
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
+<script type="text/javascript">
+    var header = $api.dom('header');
+    fixStatusBar_API(header);
+    var uid,token;
+    apiready = function(){
+        loading();
+        uid = $api.getStorage('id');
+        token = $api.getStorage('token');
+    }
+
+    // 弹出选择框
+    function sel_channel(){
+        var picAll = $api.domAll('.pic');
+        if (picAll.length >= 9) {
+           api.toast({
+               msg: '最多只能上传9张图片',
+               duration: 2000,
+               location: 'middle'
+           });
+
+        }else {
+          var flexed = $api.dom('.flexed');
+          $api.css(flexed, 'display:block');
+          flexed.onclick = function(event){
+              if (event.target == this) {
+                  $api.css(flexed, 'display:none');
+              }
+          }
+        }
+
+    }
+
+    //拍照
+    var imgUrl = [];
+    var arr = [];
+    var arrSrc = '';
+    function camera(){
+      $api.css($api.dom('.flexed'), 'display:none');
+
+      getPicture('camera',function(ret){
+
+          if (ret.data) {
+            var str = '';
+            str += '<div class="item pic">'
+                +        '<span onclick="del(this)">+</span>'
+                +        '<img src="'+ret.data+'" alt="">'
+                +    '</div>'
+
+            $api.prepend($api.dom('.img'), str);//在DOM元素内部，首个子元素前插入HTML字符串
+            // imgUrl.push(ret);
+
+          }
+      })
+    }
+
+    // 从相册选择
+    function album(){
+      $api.css($api.dom('.flexed'), 'display:none');
+      var picAll = $api.domAll('.pic');
+      var max = 9 - picAll.length;
+      var UIMediaScanner = api.require('UIMediaScanner');
+      UIMediaScanner.open({
+          type: 'picture',
+          column: 3,
+          classify: true,
+          max: max,
+          sort: {
+              key: 'time',
+              order: 'desc'
+          },
+          texts: {
+              stateText: '已选择*项',
+              cancelText: '取消',
+              finishText: '完成'
+          },
+          styles: {
+              bg: '#fff',
+              mark: {
+                  icon: '',
+                  position: 'bottom_right',
+                  size: 30
+              },
+              nav: {
+                  bg: '#eee',
+                  stateColor: '#000',
+                  stateSize: 18,
+                  cancelBg: 'rgba(0,0,0,0)',
+                  cancelColor: '#000',
+                  cancelSize: 18,
+                  finishBg: 'rgba(0,0,0,0)',
+                  finishColor: '#000',
+                  finishSize: 18
+              }
+          },
+          exchange: true,
+          rotation: false,
+          showBrowser:true
+      }, function(ret) {
+          if (ret && ret.list) {
+            var str = '';
+
+            for (var i in ret.list) {
+              str += '<div class="item pic">'
+                  +        '<span onclick="del(this)">+</span>'
+                  +        '<img src="'+ret.list[i].path+'" alt="">'
+                  +  '</div>'
+
+            }
+
+            $api.prepend($api.dom('.img'), str);//在DOM元素内部，首个子元素前插入HTML字符串
+
+          }
+      });
+
+    }
+
+
+    function getPicture(type,callback){
+      api.getPicture({
+        sourceType: type,
+        encodingType: 'jpg',
+        mediaValue: 'pic',
+        destinationType: 'url',
+        allowEdit: true,
+        quality: 100,
+        // targetWidth: 100,
+        // targetHeight: 100,
+        saveToPhotoAlbum: false
+      }, function(ret, err) {
+        if (ret) {
+            callback(ret);
+        } else {
+
+            api.toast({
+                msg: err,
+                duration: 2000,
+                location: 'bottom'
+            });
+
+        }
+      });
+    }
+
+    //删除图片
+    function del(e){
+        $api.remove($api.closest(e,'.item'));
+    }
+
+    //发送
+    function SendOut(){
+        var content = $api.val($api.dom('.content textarea'));
+        arrSrc = $api.domAll('.pic img');
+
+        if (content == '' && arrSrc.length == 0) {
+            api.toast({
+                msg: '发表内容不能为空',
+                duration: 2000,
+                location: 'middle'
+            });
+            return false;
+        }else if(arrSrc.length == 0){
+
+            CirclePublish();
+        }else{
+
+            uploader();
+        }
+    }
+
+    //获取阿里云签名
+  	function uploader() {
+  		$api.css($api.dom('#loading'), 'display:block');
+  		api.ajax({
+  			url: serverurl,
+  			method: 'post',
+  			data: {
+  				values: {
+  					type: '10033',
+  				},
+
+  			}
+  		}, function(ret, err) {
+
+  			if (ret) {
+  				var host = ret.host;
+  				var policy = ret.policy;
+  				var signature = ret.signature;
+  				var accessid = ret.accessid;
+  				var dir = ret.dir;
+  				var expire = ret.expire;
+
+          ALIcloud(host, policy, signature, accessid, dir, expire);
+  			} else {
+
+  				api.toast({
+  					msg: '网络错误',
+  					duration: 2000,
+  					location: 'middle'
+  				});
+
+  			}
+  		});
+  	}
+
+  	function ALIcloud(host, policy, signature, accessid, dir, expire) {
+  		//将图片上传给阿里云服务器
+
+      for (var j = 0; j < arrSrc.length; j++) {
+          imgUrl.push(arrSrc[j].src);
+      		api.ajax({
+      			url: host,
+      			method: 'post',
+      			dataType: 'xml',
+      			data: {
+      				values: {
+      					OSSAccessKeyId: accessid,
+      					policy: policy,
+      					Signature: signature,
+      					key: dir,
+      					success_action_status: 201
+      				},
+      				files: {
+      					file: imgUrl[j]
+      				}
+      			}
+      		}, function(ret, err) {
+
+      			if (ret) {
+      				// 在回调函数里面调用
+      				var dom = parseXML(ret);
+      				// location 标签的内容使用DOM选择器进行查找
+      				var url = dom.querySelector('Location').innerHTML;
+
+              arr.push(url);
+
+              if (arr.length == imgUrl.length) {
+                  CirclePublish();
+              }
+
+      			} else {
+      				api.toast({
+      					msg: '网络错误',
+      					duration: 2000,
+      					location: 'middle'
+      				});
+      			}
+      		});
+      }
+  	}
+
+    //发表
+    function CirclePublish(){
+        var content = $api.val($api.dom('.content textarea'));
+        var str = arr.join(',');
+        api.ajax({
+            url: serverurl,
+            method: 'get',
+            data: {
+                values: {
+                    type: '10117',
+                    uid:uid,
+                    token:token,
+                    content:content,
+                    thumb:str,
+                },
+            }
+        },function(ret, err){
+            $api.css($api.dom('#loading'), 'display:none');
+
+            if (ret) {
+                if (ret.state == '1') {
+                    var role = $api.getStorage('role');
+                    api.sendEvent({
+                        name: 'Publish',
+                        extra: {
+                            key: 1,
+                        }
+                    });
+
+                    if (role == '2') {
+                        api.openWin({
+                            name: 'index',
+                            url: '../../index.html',
+                            pageParam: {
+                                index: 1
+                            },
+                            reload:true
+                        });
+                    }else {
+                        api.openWin({
+                            name: 'index',
+                            url: '../../index1.html',
+                            pageParam: {
+                                index: 0
+                            },
+                            reload:true
+                        });
+                    }
+                }
+            } else {
+
+                api.toast({
+                    msg: '网络错误',
+                    duration: 2000,
+                    location: 'bottom'
+                });
+
+            }
+        });
+
+    }
+</script>

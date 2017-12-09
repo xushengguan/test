@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>充值</title>
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<link rel="stylesheet" href="../../css/api.css">
+	<link rel="stylesheet" href="../../css/common.css">
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
+	<link rel="stylesheet" href="../../css/7startAct5.css">
+
+	<style media="screen">
+		.creditLis {
+			width: 100%;
+			overflow: hidden;
+		}
+
+		.creditLis li {
+			float: left;
+			width: calc(33.33% - 22px);
+			height: 50px;
+			background: #fff;
+			border: 1px solid #fff;
+			box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+			text-align: center;
+			margin: 0 10px 10px 10px;
+			border-radius: 3px;
+			position: relative;
+			display: flex;
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: -ms-flexbox;
+			align-items: center;
+			-webkit-box-align: center;
+			-webkit-align-items: center;
+			-ms-flex-align: center;
+		}
+
+		.creditLis li:nth-child(3n+0) {
+			margin-right: 0;
+		}
+    .creditLis li.on{
+    		border: 1px solid #fca958;
+    }
+		.creditLis li .icon-xuanzhongjiaobiao{
+				font-size:30px;
+				color:#fca958;
+				position:absolute;;
+				bottom:-6px;
+				right:-3px;
+				display: none;
+		}
+		.creditLis li.on .icon-xuanzhongjiaobiao{
+				display: block;
+		}
+		.creditLis .txt {
+			margin: 0 auto;
+		}
+
+		.creditLis .credit {
+			font-size: 13px;
+			color: #212121;
+		}
+
+		.creditLis .money {
+			font-size: 12px;
+			color: #757575;
+		}
+
+		header{height: 50px; line-height: 50px; background: #ffb300; color: #fff; font-size: 18px; position: relative;}
+		header em{width: 50px; height: 50px; background: url(../../image/back.png) no-repeat center;
+			background-size: 20px; float: left;}
+	</style>
+</head>
+
+<body>
+	<!-- 充值金额 -->
+	<div id="wrap" class="flex-wrap flex-vertical">
+		<header>
+				<em onclick="go_back()"></em>
+				充值
+		</header>
+		<div id="main" class="flex-con">
+			<p class="money-con">
+				<span>余额:<label>200学分</label></span>
+				<i class="iconfont icon-xue"></i>
+			</p>
+			<div class="exchange-con">
+				<h6 style="padding-top:30px;">充值金额</h6>
+				<ul class="creditLis">
+					<li class="on">
+						<div class="txt">
+							<div class="credit">100学分</div>
+							<div class="money">20元</div>
+						</div>
+						<i class="iconfont icon-xuanzhongjiaobiao"></i>
+					</li>
+					<li>
+						<div class="txt">
+							<div class="credit">100学分</div>
+							<div class="money">20元</div>
+						</div>
+					</li>
+					<li>
+						<div class="txt">
+							<div class="credit">100学分</div>
+							<div class="money">20元</div>
+						</div>
+					</li>
+					<li>
+						<div class="txt">
+							<div class="credit">100学分</div>
+							<div class="money">20元</div>
+						</div>
+					</li>
+					<li>
+						<div class="txt">
+							<div class="credit">100学分</div>
+							<div class="money">20元</div>
+						</div>
+					</li>
+					<li>
+						<div class="txt">
+							<div class="credit">100学分</div>
+							<div class="money">20元</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="exchange-con">
+				<h6 style="padding-top:5px;">充值方式</h6>
+				<ul class="creditLis">
+					<li class="on">
+						<div class="txt">
+							<div class="credit">微信支付</div>
+						</div>
+						<i class="iconfont icon-xuanzhongjiaobiao"></i>
+					</li>
+				</ul>
+			</div>
+			<div class="agreen-con">
+				<p class="pay-btn"><button onclick="Pay()">立即支付40元</button></p>
+				<p class="agreens">
+					<i class="iconfont icon-weixuanzhongxianxing icon-check"></i>
+					<span>同意并接受<label>支付条款</label></span>
+				</p>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
+<script type="text/javascript">
+	apiready = function() {
+
+	}
+
+	//跳到支付成功页面
+	function Pay() {
+		api.openWin({
+			name: 'credit_recharge_success',
+			url: './credit_recharge_success.html',
+			pageParam: { //带参
+				name: 'test'
+			}
+		});
+
+	}
+</script>

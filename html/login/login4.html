@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title>完善信息</title>
+      <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+      <link rel="stylesheet" type="text/css" href="../../css/loading.css"/>
+      <style>
+          .content{height: 100%; background: #fff; padding: 0 25px;}
+          header{padding: 70px 0 45px 0; text-align: center; position: relative; font-size: 25px; font-weight: bold; color: #212121;}
+          header em{position: absolute; left: 0; top: 30px; width: 12px; height: 22px; background:url(../../image/goback.png) no-repeat center;
+          background-size: 12px 22px;}
+          .line{width: 100%; position: relative; margin-bottom: 25px;}
+          .line input,.address{height: 35px; line-height: 35px; width: 100%; font-size: 16px; color: #c0c0c0; border-bottom: 1px solid #d8d8d8;}
+          .line input:focus{border-bottom: 1px solid #ffb300;}
+          .line input.password{width: calc(100% - 25px); padding-right: 25px;}
+          .line input.code{width: calc(100% - 30%);}
+          .line button{width: 25%; height: 35px; line-height: 35px; border-radius: 3px; border: 1px solid #ffb300; text-align: center;
+          font-size: 14px; color: #ffb300; float: right;}
+          .line em{width: 25px; height: 35px; position: absolute;  top: 0; right: 0; background: url(../../image/eye2.png) center no-repeat;
+          background-size: 22px 18px;}
+          .line em.on{background: url(../../image/eye1.png) center no-repeat; background-size: 22px 16px;}
+          .next{width: 100%; height: 43px; line-height: 43px; border-radius: 3px; background: #b1b1b1; text-align: center;
+          color: #fff; font-size: 18px; margin-top: 30px;}
+          .next.on{background: #ffb300;}
+
+          .bg{width: 185px; height: 157px; background: url(../../image/login_bg.png) no-repeat center; background-size: 185px 157px;
+          position: absolute; bottom: 0; right: 0;}
+
+          .RealName{margin-top: 8px; text-align: center; font-size: 16px; }
+          .RealName span{color: #09bb07; font-weight: bold;}
+
+          .address em{width: 8px; height: 15px; position: absolute; top: 10px; right: 0; background: url(../../image/rt.png) no-repeat center;
+          background-size: 8px 15px;}
+
+          .pic img{width: 75px; height: 75px; margin-right: 8px;}
+          .prompt{float:right; width: calc(100% - 170px);}
+          .prompt .title{font-size: 16px; color: #333;}
+          .prompt .care{font-size: 13px; color: #c0c0c0;}
+      </style>
+  </head>
+  <body>
+      <div class="content">
+          <header>
+              <em onclick="go_back()"></em>
+              完善信息
+              <div class="RealName"><span>实名认证</span>信息</div>
+          </header>
+
+          <div class="line">
+              <input class="tel name" type="text" placeholder="填写您的姓名">
+          </div>
+          <div class="line">
+              <input class="tel id" type="text" style="ime-mode:disabled" placeholder="身份证号码">
+          </div>
+          <div class="line address" onclick="sel_address()">
+              <em></em>
+              <span>选择当前住址</span>
+          </div>
+          <div class="pic">
+              <img id="pic1" src="../../image/pic1.png" alt="" onclick="getPicture(this)">
+              <img id="pic2" src="../../image/pic2.png" alt="" onclick="getPicture(this)">
+              <div class="prompt">
+                  <div class="title">上传照片</div>
+                  <div class="care">注意:请上传正面免冠照片一张请勿上传美图、面部不清晰的照片</div>
+              </div>
+          </div>
+          <button class="next on" onclick="uploader()">完成</button>
+
+    </div>
+
+  </body>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/my.js"></script>
+  <script type="text/javascript">
+      var id,role,update_status,address,name,
+      idCard,pic1,pic2,token;
+      var imgUrl = [];
+      var arr = [];
+      var header = $api.dom('header');
+  		fixStatusBar_API(header);
+      apiready = function(){
+          loading();
+          id = $api.getStorage('id');
+          token = $api.getStorage('token');
+          role = api.pageParam.role;//角色代号 1：学生家长，2：支教老师
+          update_status = api.pageParam.update_status;//是否激活学令牌 支教老师 0:不是 1：是
+
+
+      };
+
+      // 选择地址
+      function sel_address(){
+        address = '';
+        var addressView = api.require('addressView');
+        addressView.open({
+            file_addr: 'widget://res/district.txt', //数据源地址
+            selected_color: '#ff0000', //颜色
+            pro_id: 110000, //省id
+            city_id: 110100, //市id
+            dir_id: 110105 //区id
+        });
+
+        addressView.show({}, function(ret, err) {
+            if (ret.status) {
+                ret.data.forEach(function(e,index){
+                    address += ret.data[index].name;
+                })
+                $api.html($api.dom('.address span'),address);
+            }
+        });
+      }
+
+      // 通过系统相册或拍照获取图片和视频
+      function getPicture(e){
+        api.getPicture({
+          sourceType: 'album',
+          encodingType: 'jpg',
+          mediaValue: 'pic',
+          destinationType: 'url',
+          allowEdit: true,
+          quality: 100,
+          saveToPhotoAlbum: false
+        }, function(ret, err) {
+        
+          if (ret.data) {
+              $api.attr(e, 'src', ret.data);
+          }
+        });
+      }
+
+      //获取阿里云签名
+    	function uploader() {
+        name = $api.val($api.dom('.name'));
+        idCard = $api.val($api.dom('.id'));
+        pic1 = $api.attr($api.byId('pic1'), 'src');
+        pic2 = $api.attr($api.byId('pic2'), 'src');
+        var reg = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X|x)$/
+        //验证身份证正则表达式/^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/
+
+        if (!name) {
+            api.toast({
+                msg: '请填写您的姓名',
+                duration: 2000,
+                location: 'middle'
+            });
+            return false;
+        }else if (!reg.test(idCard)) {
+            api.toast({
+                msg: '请输入正确的身份证号码',
+                duration: 2000,
+                location: 'middle'
+            });
+            return false;
+        }else if (!address) {
+            api.toast({
+                msg: '请选择地址',
+                duration: 2000,
+                location: 'middle'
+            });
+            return false;
+        }else if (pic1 == '../../image/pic1.png') {
+            api.toast({
+                msg: '请上传正面免冠照',
+                duration: 2000,
+                location: 'middle'
+            });
+            return false;
+        }else if (pic2 == '../../image/pic2.png') {
+          api.toast({
+              msg: '请上传正面半身照',
+              duration: 2000,
+              location: 'middle'
+          });
+          return false;
+        }
+    		$api.css($api.dom('#loading'), 'display:block');
+    		api.ajax({
+    			url: serverurl,
+    			method: 'post',
+    			data: {
+    				values: {
+    					type: '10033',
+    				},
+
+    			}
+    		}, function(ret, err) {
+
+    			if (ret) {
+    				var host = ret.host;
+    				var policy = ret.policy;
+    				var signature = ret.signature;
+    				var accessid = ret.accessid;
+    				var dir = ret.dir;
+    				var expire = ret.expire;
+            ALIcloud(host, policy, signature, accessid, dir, expire);
+    			} else {
+
+    				api.toast({
+    					msg: '网络错误',
+    					duration: 2000,
+    					location: 'middle'
+    				});
+
+    			}
+    		});
+    	}
+
+    	function ALIcloud(host, policy, signature, accessid, dir, expire) {
+    		//将图片上传给阿里云服务器
+        var arrSrc = $api.domAll('.pic img');
+        for (var j = 0; j < arrSrc.length; j++) {
+            imgUrl.push(arrSrc[j].src);
+        		api.ajax({
+        			url: host,
+        			method: 'post',
+        			dataType: 'xml',
+        			data: {
+        				values: {
+        					OSSAccessKeyId: accessid,
+        					policy: policy,
+        					Signature: signature,
+        					key: dir,
+        					success_action_status: 201
+        				},
+        				files: {
+        					file: imgUrl[j]
+        				}
+        			}
+        		}, function(ret, err) {
+
+        			if (ret) {
+        				// 在回调函数里面调用
+        				var dom = parseXML(ret);
+        				// location 标签的内容使用DOM选择器进行查找
+        				var url = dom.querySelector('Location').innerHTML;
+
+                arr.push(url);
+
+                if (arr.length == imgUrl.length) {
+                    Finish();
+                }
+
+        			} else {
+        				api.toast({
+        					msg: '网络错误',
+        					duration: 2000,
+        					location: 'middle'
+        				});
+        			}
+        		});
+        }
+    	}
+
+      // 完成完善资料提交
+      function Finish(){
+
+          api.ajax({
+              url: serverurl,
+              method: 'get',
+              data: {
+                  values: {
+                      type:'10124',
+                    	uid: id,
+                      token:token,
+                      name:name,
+                      id_card:idCard,
+                      address:address,
+                      bareheaded_photo:arr[0],
+                      bust_shot:arr[1]
+                  },
+              }
+          },function(ret, err){
+              $api.css($api.dom('#loading'), 'display:none');
+
+              if (ret && ret.status == '1') {
+                  if (role == '2' && update_status == '0') {
+                      api.openWin({
+                          name: 'login5',
+                          url: './login5.html',
+                          pageParam: {
+                              // name: 'test'
+                          },
+                          reload:true,
+                    			allowEdit:true
+                      });
+                  }else{
+                      if (role == '2') {
+                        api.openWin({
+                            name: 'index',
+                            url: '../../index.html',
+                            pageParam: {
+                                // name: 'test'
+                            }
+                        });
+                      }else {
+                        api.openWin({
+                            name: 'index1',
+                            url: '../../index1.html',
+                            pageParam: {
+                                // name: 'test'
+                            }
+                        });
+                      }
+                  }
+              } else {
+
+                  api.toast({
+                      msg: '网络错误',
+                      duration: 2000,
+                      location: 'bottom'
+                  });
+
+              }
+          });
+
+      }
+  </script>
+  </html>

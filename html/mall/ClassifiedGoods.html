@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/loading.css"/>
+	<title>分类商品</title>
+</head>
+
+<style>
+	.pro_catalog{
+		background-color: #fff;
+		width: 100%;
+	}
+
+	.pro_catalog .pro_1{
+		width: 50%;
+		box-sizing:border-box;
+		-webkit-box-sizing:border-box;
+		border-right: 0.5px solid #eeeeee;
+		border-bottom: 0.5px solid #eeeeee;
+		overflow: hidden;
+		float: left;
+		background-color: #fff;
+		text-align: center;
+		padding: 20px 0;
+	}
+
+	.pro_catalog .pro_1:nth-child(even){
+		border-right:none;
+	}
+
+	.pro_pic{
+		width: 115px;
+		height: 115px;
+		margin: 0 auto;
+	}
+	.pro_pic img{
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+	.pro_con{
+		width: 115px;
+		margin: 0 auto;
+		text-align: left;
+	}
+	.pro_con .subtitle{
+    font-size: 14px;
+    color: #999999;
+    margin:2px 0px;
+	}
+	.pro_con .title{
+   	 	font-size: 14px;
+   	 	color: #5c5c5c;
+    	margin-bottom:7px;
+	}
+	.pro_con .pay{
+    	font-size: 14px;
+    	color: #5c5c5c;
+	}
+	.pay span{
+   		 color: #fd6767;
+	}
+
+	.NoAct {
+			width: 100%;
+			position: absolute;
+			top: 20%;
+			left: 0;
+			text-align: center;
+			color: #333;
+			font-size: 16px;
+	}
+</style>
+
+<body>
+
+	<div class="pro_catalog" id="app" v-cloak>
+		<div class="NoAct" v-if="info == '' || info == null">抱歉，该分类暂时还没有商品！</div>
+		<div v-else>
+			<div class="pro_1" v-for="v in info" @click="go_goodsDetail(v.id)">
+				<div class="pro_pic"><img :src="v.imgurl" alt=""></div>
+				<div class="pro_con">
+					<p class="subtitle single">{{v.goods_name}}</p>
+					<p class="title more2">{{v.abs}}</p>
+					<p class="pay" v-if="role == '2'">¥<span>{{v.total * 0.25}}</span></p>
+					<p class="pay" v-else><span>{{v.total}}</span>学分</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript">
+      apiready = function(){
+					var clsid = api.pageParam.clsid;
+					loading();
+					vm.getClass(clsid);
+
+					//刷新
+					api.setRefreshHeaderInfo({
+							loadingImg: 'widget://image/refresh.png',
+							bgColor: '#444',
+							textColor: '#fff',
+							textUp: '释放立即刷新...',
+							textLoading: '加载中···',
+							showTime: false
+					}, function(ret, err) {
+							//在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+							vm.getClass(clsid);
+							api.refreshHeaderLoadDone();
+					});
+      };
+			var vm = new Vue({
+	        el: '#app',
+	        data: {
+							info:[],
+							role:''
+	        },
+	        methods: {
+	            getClass(clsid) { //读取商品分类列表
+								  $api.css($api.byId('loading'),'display:block');
+	                api.ajax({
+	                    url: serverurl,
+	                    method: 'get',
+	                    dataType: 'json',
+	                    data: {
+	                        values: {
+	                            type: '10031',
+															gtypeid: clsid
+	                        }
+	                    }
+	                }, function(ret, err) {
+										  $api.css($api.byId('loading'),'display:none');
+											vm.role = $api.getStorage('role');
+
+	                    vm.info = ret;
+	                });
+	            },
+
+	            go_goodsDetail(goods_id){
+	              api.openWin({
+	                  name: 'credit_goodDetail',
+	                  url: './credit_goodDetail.html',
+	                  pageParam: {
+	                      goods_id: goods_id
+	                  }
+	              });
+	            },
+
+
+	        }
+	    })
+
+</script>

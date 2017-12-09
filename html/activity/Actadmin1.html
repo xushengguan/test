@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>活动管理</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/loading.css">
+    <link rel="stylesheet" type="text/css" href="../../icon/iconfonts/iconfont.css">
+    <style media="screen">
+
+        .NoAct {
+          
+            height:50px;
+            padding: 20% 15px;
+            text-align: center;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .enter{
+        	padding-bottom:60px;
+        }
+        .enter-header{
+        	width: 100%;
+        	text-align: center;
+        	background: #fcd058;
+        }
+        .enter-header h5{
+        	padding: 15px;
+        	font-size: 16px;
+        }
+        .enter-con{
+        	width: 100%;
+        }
+
+        .slide-pic1{
+        	width:100%;
+        	height: 100%;
+        	display: block;
+        }
+        .Lis{
+            margin: 10px;
+            box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.22);
+            border-radius: 4px;
+        }
+
+        .enter-news {
+            background: white;
+            margin-bottom: 1px;
+        }
+        .news-con{
+        	padding:15px;
+        	position: relative;
+          background: #fff;
+          height: 55px;
+        }
+        .img-pic08{
+        	width:55px;
+        	height:55px;
+        	border-radius: 2px;
+        	background:#bbbaba;
+          float: left;
+          display: block;
+        }
+        .img-pic08 img{
+          display: block;
+        	width: 100%;
+          height: 100%;
+        }
+        .content {
+        	padding: 0 10px;
+        	width: 65%;
+          display: block;
+          float: left;
+        }
+        .content h6{
+        	color:#212121;
+        	font-size: 14px;
+        	line-height: 18px;
+        }
+        .sites{
+        	font-size: 12px;
+        	color:#cfcfcf;
+        	line-height: 18px;
+        }
+        .peoples{
+        	position: absolute;
+        	bottom: 13px;
+        	right: 11px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+
+        <div class="box">
+            <div class="Lis" v-if="ActInfo.status !== '0'">
+                <div v-for="v in ActInfo">
+                    <div class="enter-news" @click="goDatail(v.id)">
+                        <div class="news-con hide">
+                            <span class="fl img-pic08"><img :src="v.actimgurl" alt=""></span>
+                            <div class="content fl">
+                                <h6 class="single">{{v.title}}</h6>
+                                <p class="sites">{{v.address}}</p>
+                                <p class="sites">活动时间:{{v.actstarttime | formatDate}}</p>
+                            </div>
+                            <span class="peoples sites">{{v.userlimit}}人</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="NoAct" v-else>抱歉，您暂时还没有待开始的活动！</div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript" src="../../script/date.js"></script>
+<script type="text/javascript">
+var id, token;
+apiready = function() {
+    loading();
+    id = $api.getStorage('id');
+    token = $api.getStorage('token');
+    vm.get_ActLis();
+    //刷新
+    api.setRefreshHeaderInfo({
+        loadingImg: 'widget://image/refresh.png',
+        bgColor: '#444',
+        textColor: '#fff',
+        textUp: '释放立即刷新...',
+        textLoading: '加载中···',
+        showTime: false
+    }, function(ret, err) {
+        //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+        vm.get_ActLis();
+        api.refreshHeaderLoadDone();
+    });
+};
+var vm = new Vue({
+    el: '#app',
+    data: {
+        ActInfo: [],
+    },
+    filters: {
+        formatDate(time) {
+            var date = new Date(time * 1000);
+            return formatDate(date, 'yyyy-MM-dd');
+        }
+    },
+    methods: {
+        get_ActLis() { //获取活动列表（支教老师）
+
+            $api.css($api.dom('#loading'), 'display:block');
+            var role = $api.getStorage('role');
+            if (role == '2') {
+                var type = '10151';//获取活动列表（支教老师）
+            }else {
+                var type = '10028';//获取用户报名活动列表（学生）
+            }
+            api.ajax({
+                url: serverurl,
+                method: 'get',
+                dataType: 'json',
+                data: {
+                    values: {
+                        type: type,
+                        uid: id,
+                        token: token,
+                        status: '2' //活动状态.0已结束，1活动进行中，2活动未开始
+                    }
+                }
+            }, function(ret, err) {
+                $api.css($api.dom('#loading'), 'display:none');
+                vm.ActInfo = ret;
+
+            });
+        },
+
+        goDatail(actid) { //跳到活动详情
+
+          api.openWin({
+              name: 'ActDetail',
+              url: './ActDetail.html',
+              pageParam: {
+                  actid: actid,
+              }
+          });
+        },
+
+
+    }
+})
+</script>
+
+</html>

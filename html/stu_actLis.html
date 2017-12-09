@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>活动汇</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../css/loading.css">
+    <link rel="stylesheet" type="text/css" href="../icon/iconfonts/iconfont.css">
+    <style media="screen">
+        .ActLis {
+            width: 100%;
+            background: #ffb300;
+            overflow: hidden;
+            z-index: 99;
+            /*position: fixed;
+            top: 0;
+            left: 0;*/
+        }
+
+        .ActLis li {
+            width: 50%;
+            text-align: center;
+            height: 48px;
+            line-height: 48px;
+            border-bottom: 2px solid #ffb300;
+            font-size: 14px;
+            color: #fff;
+            float: left;
+        }
+
+        .ActLis li.addColor {
+            color: #fff;
+            border-bottom: 2px solid #fff;
+        }
+
+        .NoAct {
+            width: 100%;
+            height:50px;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            margin-top: -25px;
+            text-align: center;
+            color: #333;
+            font-size: 16px;
+        }
+
+        /*.box {
+            margin-top: 50px;
+        }*/
+
+        .enter{
+        	padding-bottom:60px;
+        }
+        .enter-header{
+        	width: 100%;
+        	text-align: center;
+        	background: #fcd058;
+        }
+        .enter-header h5{
+        	padding: 15px;
+        	font-size: 16px;
+        }
+        .enter-con{
+        	width: 100%;
+        }
+
+        .slide-pic1{
+        	width:100%;
+        	height: 100%;
+        	display: block;
+        }
+        .enter-news{
+        	width: 100%;
+        	background:white;
+        	margin-bottom: 2px;
+        }
+        .news-con{
+        	padding:15px;
+        	position: relative;
+          background: #fff;
+          height: 55px;
+        }
+        .img-pic08{
+        	width:55px;
+        	height:55px;
+        	border-radius: 2px;
+        	background:#bbbaba;
+          float: left;
+          display: block;
+        }
+        .img-pic08 img{
+          display: block;
+        	width: 100%;
+          height: 100%;
+        }
+        .content {
+        	padding: 0 10px;
+        	width: 65%;
+          display: block;
+          float: left;
+        }
+        .content h6{
+        	color:#212121;
+        	font-size: 14px;
+        	line-height: 18px;
+        }
+        .sites{
+        	font-size: 12px;
+        	color:#cfcfcf;
+        	line-height: 18px;
+        }
+        .peoples{
+        	position: absolute;
+        	bottom: 13px;
+        	right: 11px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="wrap" v-cloak>
+          <ul class="ActLis">
+              <li class="Lis0 addColor" @click="btn_list(0)">全部活动</li>
+              <li class="Lis1" @click="btn_list(1)">附近活动</li>
+          </ul>
+        <div id="main">
+          <div class="box">
+              <div v-if="!ActInfo.status">
+                  <div v-for="v in ActInfo">
+                      <div class="enter-news" @click="goDatail(v.id)">
+                          <div class="news-con hide">
+                              <span class="fl img-pic08"><img :src="v.actimgurl" alt=""></span>
+                              <div class="content fl">
+                                  <h6 class="single">{{v.title}}</h6>
+                                  <p class="sites">{{v.address}}</p>
+                                  <p class="sites">活动时间:{{v.actstarttime | formatDate}}</p>
+                              </div>
+                              <span class="peoples sites">{{v.userlimit}}人</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="NoAct" v-else>抱歉，您暂时还没有报名的活动！</div>
+          </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/my.js"></script>
+<script type="text/javascript" src="../script/vue.js"></script>
+<script type="text/javascript" src="../script/date.js"></script>
+<script type="text/javascript">
+    var id, token;
+    apiready = function() {
+        loading();
+        vm.btn_list(0);
+        id = $api.getStorage('id');
+        token = $api.getStorage('token');
+
+        //刷新
+        api.setRefreshHeaderInfo({
+            loadingImg: 'widget://image/refresh.png',
+            bgColor: '#444',
+            textColor: '#fff',
+            textUp: '释放立即刷新...',
+            textLoading: '加载中···',
+            showTime: false
+        }, function(ret, err) {
+            //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+            vm.btn_list(vm.Lisindex);
+            api.refreshHeaderLoadDone();
+        });
+    };
+    var vm = new Vue({
+        el: '#wrap',
+        data: {
+            ActInfo: [],
+            Lisindex: '',
+        },
+        filters: {
+            formatDate(time) {
+                var date = new Date(time * 1000);
+                return formatDate(date, 'yyyy-MM-dd');
+            }
+        },
+        methods: {
+            get_ActLis() { //获取活动列表
+                $api.css($api.dom('#loading'), 'display:block');
+                $api.css($api.dom('.box'), 'display:none');
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    dataType: 'json',
+                    data: {
+                        values: {
+                            type: '10151',
+                            token:token,
+                           status:'',
+                              uid:''
+                        }
+                    }
+                }, function(ret, err) {
+                    $api.css($api.dom('#loading'), 'display:none');
+
+                    if (ret) {
+                        vm.ActInfo = ret;
+                        $api.css($api.dom('.box'), 'display:block');
+                    } else {
+                        api.toast({
+                            msg: '网络错误',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+
+                    }
+                });
+            },
+
+            ActSignUpLis() { //获取用户报名活动列表
+                $api.css($api.dom('#loading'), 'display:block');
+                $api.css($api.dom('.box'), 'display:none');
+                var bMap = api.require('bMap');
+                bMap.getLocation({
+                    accuracy: '100m',
+                    autoStop: true,
+                    filter: 1
+                }, function(ret, err) {
+                    if (ret.status) {
+
+                        var lon = ret.lon;//经度
+                        var lat = ret.lat;//纬度
+
+                        api.ajax({
+                            url: serverurl,
+                            method: 'get',
+                            dataType: 'json',
+                            data: {
+                                values: {
+                                    type: '10161',
+                                    token: token,
+                                  longitude:lon,
+                                   latitude:lat
+                                }
+                            }
+                        }, function(ret, err) {
+
+                            $api.css($api.dom('#loading'), 'display:none');
+
+                            if (ret) {
+                                vm.ActInfo = ret;
+                                $api.css($api.dom('.box'), 'display:block');
+                            } else {
+                                api.toast({
+                                    msg: '网络错误',
+                                    duration: 2000,
+                                    location: 'middle'
+                                });
+
+                            }
+                        });
+                    } else {
+                        $api.css($api.dom('#loading'), 'display:none');
+                        if (err.code) {
+                            api.toast({
+                                msg: '请授权获取定位权限',
+                                duration: 2000,
+                                location: 'middle'
+                            });
+
+                        }
+
+                    }
+                });
+
+
+            },
+
+            goDatail(actid) { //跳到活动详情
+                api.openWin({
+                    name: 'ActDetail',
+                    url: './activity/ActDetail.html',
+                    pageParam: {
+                        actid: actid,
+                    }
+                });
+            },
+
+            btn_list(index) {
+
+                vm.Lisindex = index;
+                if (index == 1) {
+                    $api.removeCls($api.dom('.ActLis .Lis0'), 'addColor');
+                    $api.addCls($api.dom('.ActLis .Lis1'), 'addColor');
+                    vm.ActSignUpLis();
+                } else {
+                    $api.removeCls($api.dom('.ActLis .Lis1'), 'addColor');
+                    $api.addCls($api.dom('.ActLis .Lis0'), 'addColor');
+                    vm.get_ActLis();
+                }
+
+            }
+
+        }
+    })
+
+</script>
+
+</html>

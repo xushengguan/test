@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>创建活动</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/loading.css">
+    <link rel="stylesheet" type="text/css" href="../../icon/iconfonts/iconfont.css">
+    <style>
+        .top {
+            background: #ffb300;
+        }
+
+        header {
+            height: 50px;
+            line-height: 50px;
+            color: #fff;
+            font-size: 18px;
+            position: relative;
+        }
+
+        header em {
+            width: 50px;
+            height: 50px;
+            background: url(../../image/back.png) no-repeat center;
+            background-size: 20px;
+            float: left;
+        }
+
+        .title {
+            padding: 20px 38px 38px 38px;
+            position: relative;
+        }
+
+        .title .ch_title {
+            font-size: 30px;
+            color: #fff;
+        }
+
+        .title .eg_title {
+            font-size: 12px;
+            color: #fff;
+            margin-left: 5px;
+            margin-top: 8px;
+        }
+
+        .title em {
+            width: 96px;
+            height: 92px;
+            background: url(../../image/creat1.png) no-repeat center;
+            background-size: contain;
+            position: absolute;
+            bottom: -45px;
+            right: 0;
+        }
+
+        .title em.on {
+            background: url(../../image/creat2.png) no-repeat center;
+            background-size: contain;
+        }
+
+        .ActLis li {
+            padding: 18px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .ActLis li .box {
+            height: 40px;
+            background: url(../../image/ActIcon1.png) no-repeat left center;
+            background-size: 25px 21px;
+            margin: 0 15px;
+            padding-left: 35px;
+        }
+
+        .ActLis li .box.box1 {
+            background: url(../../image/ActIcon2.png) no-repeat left center;
+            background-size: 25px 21px;
+        }
+
+        .ActLis li .box.box2 {
+            background: url(../../image/ActIcon3.png) no-repeat 8px center;
+            background-size: 11px 27px;
+        }
+
+        .ActLis li .box.box3 {
+            background: url(../../image/time.png) no-repeat left center;
+            background-size: 25px;
+        }
+
+        .ActLis li .box.box4 {
+            background: url(../../image/tel.png) no-repeat left center;
+            background-size: 25px;
+        }
+
+        .ActLis li .box.box5 {
+            background: url(../../image/map.png) no-repeat 2px center;
+            background-size: 16px 22px;
+        }
+
+        .ActLis li .box.box6 {
+            background: url(../../image/img.png) no-repeat 3px center;
+            background-size: 23px 19px;
+        }
+
+        .ActLis li .box.box7 {
+            background: url(../../image/ActIcon4.png) no-repeat 5px center;
+            background-size: 20px 19px;
+        }
+
+        .box .name {
+            height: 18px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .box input {
+            height: 22px;
+            color: #757575;
+            font-size: 16px;
+            width: 100%;
+            text-align: left;
+        }
+
+        /* 选择章节 */
+        .fu-body {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 30;
+            background: rgba(0,0,0,0.6);
+            overflow: auto;
+        }
+
+        .fixbox{width: 250px; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+        border-radius: 5px;}
+        .fixbox .title{padding: 15px 0; color: #212121; font-weight: bold; background: #fbce56; text-align: center;}
+        .fixbox .section{padding: 15px; background: #fff; text-align: center; border-bottom: 1px solid #f2f2f2;}
+        .fixbox .content{min-height: 47px; max-height: 300px; overflow: auto;}
+
+        .fu-body .main{position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+        border-radius: 5px; width: 80%; height: 80%; background: #fff; padding: 19px;}
+        .fu-body .main em{width: 20px; height: 19px; background: url(../../image/close.png) no-repeat center; background-size: contain;}
+        .main .txt{width: 100%; margin-top: 35px; height: calc(100% - 120px); resize: none; overflow-y: auto; font-size: 15px; color: #999;}
+        .main button{position: absolute; bottom: 20px; right: 20px; width: 60px; height: 35px; line-height: 35px; text-align: center; color: #fff;
+        font-size: 15px; border-radius: 3px; background: #4fae4e;}
+
+        .pic_box{height: calc(100% - 120px); overflow-y: auto;}
+        .img{width: 100%; height: 192px; overflow: hidden; margin-top: 20px; position: relative;}
+        .img img{width: 100%; height: 100%;}
+        .img .sel{display: block; width: 20px; height: 20px; background: url(../../image/round1.png) no-repeat center; background-size: contain;
+        position: absolute; top: 10px; right: 10px;}
+        .img .sel.on{background: url(../../image/round2.png) no-repeat center; background-size: contain;}
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <div class="top">
+            <header>
+                <em onclick="go_back()"></em>
+            </header>
+            <div class="title">
+                <div class="ch_title">创建活动</div>
+                <div class="eg_title">Post Activity</div>
+                <em class="on" onclick="creatAct()"></em>
+            </div>
+        </div>
+        <ul class="ActLis">
+            <li>
+                <div class="box">
+                    <div class="name">活动标题</div>
+                    <input type="text" placeholder="请输入活动标题" id="title">
+                </div>
+            </li>
+            <li>
+                <div class="box box1">
+                    <div class="name">学科</div>
+                    <input type="button" id="sub" value="请选择学科" onclick="subject()">
+                </div>
+            </li>
+            <li>
+                <div class="box box2">
+                    <div class="name">活动人数</div>
+                    <input type="number" placeholder="请输入活动人数" id="userlimit">
+                </div>
+            </li>
+            <li>
+                <div class="box box3">
+                    <div class="name">活动时间</div>
+                    <input type="button" value="点击选择活动时间" id="dateTime" onclick="sel_time()">
+                </div>
+            </li>
+            <li>
+                <div class="box box4">
+                    <div class="name">联系电话</div>
+                    <input type="tel" placeholder="请输入联系电话" id="tel">
+                </div>
+            </li>
+            <li>
+                <div class="box box5">
+                    <div class="name">活动地址</div>
+                    <input type="text" placeholder="请输入活动地址" id="address">
+                </div>
+            </li>
+            <li>
+                <div class="box box6">
+                    <div class="name">活动头图</div>
+                    <input type="button" id="img" value="选择活动顶部图片" onclick="selImg()">
+                </div>
+            </li>
+            <li>
+                <div class="box box7">
+                    <div class="name">活动详情</div>
+                    <input type="button" id="ActDetail" value="点击此处添加活动介绍" onclick="EditDetail()">
+                </div>
+            </li>
+        </ul>
+
+        <!-- 选择科目 -->
+        <div class="fu-body" id="subject" style="display:none">
+          <div class="fixbox">
+              <div v-if="data.status !== '0'">
+                  <div class="title">选择科目</div>
+                  <div class="content">
+                    <div class="section" onclick="sel_cls(this)" v-for="v in data">{{v.subject}}</div>
+                  </div>
+              </div>
+              <div class="section" v-else>暂无学科</div>
+          </div>
+        </div>
+
+        <!-- 编辑活动内容 -->
+        <div class="fu-body" id="content" style="display:none">
+            <div class="main">
+              <em onclick="closeFlexd(this)"></em>
+              <textarea name="name" rows="8" cols="80" class="txt" placeholder="在此编辑活动详情内容"></textarea>
+              <button id="EditSure">确定</button>
+            </div>
+        </div>
+
+        <!-- 选择图片 -->
+        <div class="fu-body" id="sel_pic" style="display:none">
+            <div class="main">
+                <em onclick="closeFlexd(this)"></em>
+                <div class="pic_box" v-if="dataImg.status !== '0'">
+                    <div class="img" v-for="v in dataImg">
+                        <span class="sel" onclick="selected(this)"></span>
+                        <img :src="v.imgurl" alt="">
+                    </div>
+                </div>
+                <div class="pic_box" v-else>抱歉，暂无图片</div>
+                <button id="isSure">确定</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript">
+    var header = $api.dom('.top');
+    fixStatusBar_API(header);
+    var id,token;
+    apiready = function() {
+        loading();
+        token = $api.getStorage('token');
+        id = $api.getStorage('id');
+        vm.getSubject();
+        vm.getImg();
+
+    };
+
+    var vm = new Vue({
+        el:'#app',
+        data:{
+            data:[],
+            dataImg:[]
+        },
+        methods:{
+            getSubject(){//活动学科
+
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    data: {
+                        values: {
+                            type: '10162',
+                            token:token
+                        },
+                    }
+                },function(ret, err){
+
+                    vm.data = ret;
+                });
+
+            },
+
+            getImg(){//活动图片
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    data: {
+                        values: {
+                            type: '10168',
+                            token:token
+                        },
+                    }
+                },function(ret, err){
+
+                    vm.dataImg = ret;
+                });
+
+            }
+        }
+    })
+    // 选择时间
+    function sel_time() {
+        var year,month,day,hour,minute;
+        api.openPicker({
+            type: 'date',
+            title: '选择时间'
+        }, function(ret, err) {
+            if (ret) {
+                year = ret.year;
+                month = ret.month;
+                day = ret.day;
+                api.openPicker({
+                    type: 'time',
+                    title: '选择时间',
+                }, function(ret, err) {
+                    if (ret) {
+                        hour = ret.hour;
+                        minute = ret.minute;
+                        $api.val($api.byId('dateTime'), year+'/'+month+'/'+day+' '+hour+':'+minute);
+
+                    } else {
+                        console.log(JSON.stringify(err));
+                    }
+                });
+            } else {
+                console.log(JSON.stringify(err));
+            }
+        });
+    }
+
+
+    function subject(){
+
+        $api.css($api.dom('#subject'), 'display:block');
+		}
+
+    //选择科目
+    function sel_cls(e){
+        $api.css($api.dom('#subject'), 'display:none');
+        $api.val($api.dom('#sub'), $api.text(e));
+    }
+
+    // 选择图片
+    function selected(e){
+
+        var selLis = $api.domAll('.sel');
+        for (var i in selLis) {
+            $api.removeCls(selLis[i],'on');
+        }
+        $api.addCls(e, 'on');
+        var imgUrl = $api.attr($api.next(e),'src');
+        var tid = document.getElementById("isSure");
+        tid.addEventListener('click',function(){
+            $api.val($api.byId('img'), imgUrl);
+            $api.css($api.dom('#sel_pic'), 'display:none');
+        });
+    }
+
+   //选择图片弹出层展示
+   function selImg(){
+       $api.css($api.dom('#sel_pic'), 'display:block');
+   }
+
+  //  编辑活动详情弹出层
+  function EditDetail(){
+      $api.css($api.dom('#content'), 'display:block');
+      var cid = document.getElementById("EditSure");
+      cid.addEventListener('click',function(){
+          var content = $api.val($api.dom('.txt'));
+          $api.val($api.dom('#ActDetail'),content);
+          $api.css($api.dom('#content'), 'display:none');
+      });
+  }
+
+   // 关闭弹出层
+   function closeFlexd(e){
+        $api.css($api.closest(e,'.fu-body'), 'display:none');
+   }
+
+  //  创建活动
+  function creatAct(){
+      var title = $api.val($api.byId('title'));//活动标题
+      var sub = $api.val($api.byId('sub'));//学科
+      var userlimit = $api.val($api.byId('userlimit'));//活动人数
+      var dateTime = $api.val($api.byId('dateTime'));//活动时间
+      var time = Math.round(new Date(dateTime).getTime()/1000);
+      var tel = $api.val($api.byId('tel'));//联系电话
+      var address = $api.val($api.byId('address'));//活动地址
+      var img = $api.val($api.byId('img'));//活动图片
+      var ActDetail = $api.val($api.byId('ActDetail'));//活动详情
+      var myreg = /^1[0-9]{10}$/;//判断是否为手机号码,/^1[34578]\d{9}$/
+      var myNum = /^\+?[1-9][0-9]*$///验证非零的正整数
+
+      if(!title){
+          api.toast({
+              msg: '请输入活动标题',
+              duration: 2000,
+              location: 'middle'
+          });
+          return false;
+      }else if (sub == '请选择学科') {
+        api.toast({
+            msg: '请选择学科',
+            duration: 2000,
+            location: 'middle'
+        });
+        return false;
+      }else if (!myNum.test(userlimit)) {
+
+        api.toast({
+            msg: '请输入非零的数字',
+            duration: 2000,
+            location: 'middle'
+        });
+        return false;
+      }else if (dateTime == '点击选择活动时间') {
+        api.toast({
+            msg: '请选择活动时间',
+            duration: 2000,
+            location: 'middle'
+        });
+        return false;
+      }else if (!myreg.test(tel)) {
+        api.toast({
+            msg: '请输入正确格式的手机号码',
+            duration: 2000,
+            location: 'middle'
+        });
+        return false;
+      }else if (!address) {
+        api.toast({
+            msg: '请输入活动地址',
+            duration: 2000,
+            location: 'middle'
+        });
+        return false;
+      }else if (img == '选择活动顶部图片') {
+        api.toast({
+            msg: '请选择图片',
+            duration: 2000,
+            location: 'middle'
+        });
+        return false;
+      }else if (ActDetail == '点击此处添加活动介绍') {
+        api.toast({
+            msg: '请编辑活动详情',
+            duration: 2000,
+            location: 'middle'
+        });
+        return false;
+      }
+
+      var map = api.require('bMap');
+      map.getCoordsFromName({//lon经度，lat纬度
+          city: address,
+          address: address
+      }, function(ret, err) {
+
+          if (ret.status) {
+              var lon = ret.lon;
+              var lat = ret.lat;
+              $api.css($api.byId('loading'),'display:block');
+              api.ajax({
+                  url: serverurl,
+                  method: 'post',
+                  data: {
+                      values: {
+                          type: '10015',
+                          token:token,
+                          uid:id,
+                          title:title,
+                          subject:sub,
+                          userlimit:userlimit,
+                          actstarttime:time,
+                          tel:tel,
+                          address:address,
+                          actimgurl:img,
+                          detail:ActDetail,
+                          longitude:lon,
+                          latitude:lat
+                      },
+                  }
+              },function(ret, err){
+
+                  $api.css($api.byId('loading'),'display:none');
+                  if (ret) {
+                      if (ret.status == '1') {
+                          api.toast({
+                              msg: '发布成功',
+                              duration: 2000,
+                              location: 'bottom'
+                          });
+                          go_back();
+                      }else{
+                          api.toast({
+                              msg: '发布失败',
+                              duration: 2000,
+                              location: 'bottom'
+                          });
+                      }
+                  } else {
+
+                      api.toast({
+                          msg: '网络错误',
+                          duration: 2000,
+                          location: 'bottom'
+                      });
+
+                  }
+              });
+          }else {
+              api.toast({
+                  msg: '获取地址错误',
+                  duration: 2000,
+                  location: 'middle'
+              });
+
+          }
+      });
+
+
+  }
+
+
+</script>
+
+</html>

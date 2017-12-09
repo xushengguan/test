@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title>提现</title>
+      <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+      <link rel="stylesheet" type="text/css" href="../../css/loading.css"/>
+      <style>
+          header {
+              height: 50px;
+              line-height: 50px;
+              background: #ffb300;
+              color: #fff;
+              font-size: 18px;
+              position: relative;
+          }
+
+          header em {
+              width: 50px;
+              height: 50px;
+              background: url(../../image/back.png) no-repeat center;
+              background-size: 20px;
+              float: left;
+          }
+
+          .top{padding: 0 15px; background: #fff;}
+          .money{padding: 25px 0; font-size: 18px; color: #333;}
+          .bind{width: 100%; height: 44px; line-height: 44px; border-radius: 6px; border: solid 1px #ffb300; font-size: 16px;
+          color: #ffb300; text-align: center; margin-bottom: 22px;}
+
+          .cardNum{font-size: 16px; color: #212121; background: url(../../image/bankCard.png) no-repeat left center;
+            background-size: 16px 13px; padding-left: 25px; line-height: 15px;}
+          .remove{font-size: 14px; color: #999; padding: 20px 0 10px 0; overflow: hidden;}
+          .remove span{float: right;}
+
+          .inputBox{background: #fff; margin-top: 15px;}
+          .inputBox li{padding: 15px 10px; border-bottom: 1px solid #f2f2f2; overflow: hidden; font-size: 15px; position: relative;}
+          .inputBox li .inputName{padding-right: 10px; color: #34302d; line-height: 20px;}
+          .inputBox li .moneyNum{width: calc(100% - 79px); height: 20px; }
+          .inputBox li .code{width: calc(100% - 183px); height: 20px; margin-right: 10px;}
+          .inputBox li .btn{width: 80px; height: 33px; background: #ffb300; border-radius: 3px; font-size: 13px; color: #fff;}
+          .prompt{margin: 10px; font-size: 13px;}
+          .confirm{width: 92%; height: 44px; background-color: #c5c5c5; border-radius: 5px; margin: 37px 4%; font-size: 18px;
+          color: #fff;}
+          .confirm.on{background: #ffb300;}
+      </style>
+  </head>
+  <body>
+      <div id="wrap" v-cloak>
+        <header>
+            <em onclick="go_back()"></em> 提现
+        </header>
+        <div id="main">
+
+            <!-- 未绑定银行卡 -->
+            <div class="top" v-if="!data">
+                <div class="money">可提现金额:<em>{{winmoney}}</em>元</div>
+                <button class="bind" onclick="BindBankCard()">绑定银行卡</button>
+            </div>
+
+            <!-- 已绑定银行卡 -->
+            <div class="top" v-else>
+                <div class="money">可提现金额:<em>{{winmoney}}</em>元</div>
+                <div class="cardNum">{{card_number}}</div>
+                <div class="remove">
+                    <span class="" onclick="RemoveBind()">解除当前绑定银行卡</span>
+                </div>
+            </div>
+
+
+            <ul class="inputBox">
+                <li>
+                  <span class="inputName">提现金额</span>
+                  <input class="moneyNum" type="number" name="" value="" placeholder="请输入提现金额" oninput="checkValue()" onpropertychange="checkValue()">
+                </li>
+                <li>
+                  <span class="inputName">短信验证码</span>
+                  <input class="code" type="number" name="" value="" placeholder="请输入验证码" oninput="checkValue()" onpropertychange="checkValue()">
+                  <input class="btn" type="button" name="" value="获取验证码" onclick="getCode(this)">
+                </li>
+            </ul>
+            <p class="prompt">
+              注意:提现每月10号，26号统一转账
+            </p>
+            <button class="confirm" disabled="disabled" onclick="confirm()">确认提现</button>
+
+        </div>
+      </div>
+  </body>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/my.js"></script>
+  <script type="text/javascript" src="../../script/vue.js"></script>
+  <script type="text/javascript">
+  var header = $api.dom('header');
+  fixStatusBar_API(header);
+      var uid,token,wait;
+      apiready = function(){
+           loading();
+           uid = $api.getStorage('id');
+           token = $api.getStorage('token');
+           vm.getWidthDraw();
+      };
+
+      var vm = new Vue({
+            el:'#wrap',
+            data:{
+                winmoney:'',
+                card_number:'',
+                data:[],
+                w_id: ''
+            },
+            methods:{
+                getWidthDraw(){//用户银行卡列表
+                    $api.css($api.byId('loading'), 'display:block');
+                    $api.css($api.byId('main'), 'display:none');
+                    api.ajax({
+                        url: serverurl,
+                        method: 'get',
+                        data: {
+                            values: {
+                                type: '10128',
+                               token:	token,
+                                 uid:uid
+                            },
+                        }
+                    },function(ret, err){
+                        $api.css($api.byId('loading'), 'display:none');
+
+                        vm.winmoney = ret.winmoney;
+                        vm.data = ret.data;
+                        if (ret.data) {
+                            vm.card_number = ret.data.card_number;
+                            vm.w_id = ret.data.id;
+                        }
+                        $api.css($api.byId('main'), 'display:block');
+                    });
+
+                }
+            }
+      })
+
+      //实时监测输入框输入事件
+      function checkValue(){
+          if (!vm.data) {
+              api.toast({
+                  msg: '请先绑定银行卡',
+                  duration: 2000,
+                  location: 'middle'
+              });
+              return false;
+          }else {
+              var moneyNum = $api.val($api.dom('.moneyNum'));
+              var code = $api.val($api.dom('.code'));
+              if (moneyNum && code) {
+                  $api.addCls($api.dom('.confirm'), 'on');
+                  $api.removeAttr($api.dom('.confirm'), 'disabled');
+              }else {
+                  $api.removeCls($api.dom('.confirm'), 'on');
+                  $api.attr($api.dom('.confirm'), 'disabled','disabled');
+              }
+          }
+      }
+
+      // 获取验证码
+      function getCode(obj){
+         wait = 60;
+         var tel = $api.getStorage('tel');
+         SendCode(obj,tel,wait);
+      };
+
+
+      // 确认提现
+      function confirm(){
+        var moneyNum = $api.val($api.dom('.moneyNum'));
+        var code = $api.val($api.dom('.code'));
+        console.log(vm.winmoney);
+        console.log(moneyNum);
+        if (!vm.data) {
+            api.toast({
+                msg: '请先绑定银行卡',
+                duration: 2000,
+                location: 'middle'
+            });
+            return false;
+        }else if (parseInt(vm.winmoney) <= parseInt(moneyNum)) {
+            api.toast({
+                msg: '抱歉，您的余额不足',
+                duration: 2000,
+                location: 'middle'
+            });
+            return false;
+        }
+        else if (!moneyNum) {
+            api.toast({
+                msg: '请输入提现金额',
+                duration: 2000,
+                location: 'middle'
+            });
+            return false;
+        }else if (!code) {
+          api.toast({
+              msg: '请输入验证码',
+              duration: 2000,
+              location: 'middle'
+          });
+          return false;
+        }else{
+            $api.css($api.byId('loading'), 'display:block');
+            api.ajax({//用户发起提现
+                url: serverurl,
+                method: 'get',
+                data: {
+                    values: {
+                        type: '10127',
+                      user_id:uid,
+                      token:token,
+                       money:moneyNum,
+                        w_id:vm.w_id,
+                         code:code
+                    },
+                }
+            },function(ret, err){
+                $api.css($api.byId('loading'), 'display:none');
+
+                if (ret) {
+
+                    if (ret.status == '1') {
+                        api.toast({
+                            msg: '提现成功',
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+
+                        api.openWin({
+                            name: 'success',
+                            url: './success.html',
+                            pageParam: {
+                                moneyNum: moneyNum
+                            }
+                        });
+
+                    }else if (ret.status == '3') {
+                        api.toast({
+                            msg: '验证码错误',
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+
+                    }else {
+                        api.toast({
+                            msg: '提现失败',
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+
+                    }
+                } else {
+
+                    api.toast({
+                        msg: '网络错误',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+
+                }
+            });
+
+        }
+      }
+
+      // 解除绑定
+      function RemoveBind(){
+
+          api.ajax({
+              url: serverurl,
+              method: 'get',
+              data: {
+                  values: {
+                      type: '10172',
+                      token:token,
+                       id:vm.w_id
+                  },
+              }
+          },function(ret, err){
+              if (ret) {
+
+                  if (ret.status == '1') {
+                      api.toast({
+                          msg: '操作成功',
+                          duration: 2000,
+                          location: 'middle'
+                      });
+                      api.sendEvent({
+                          name: 'isBind',
+                          extra: {
+                              key: '0',
+                          }
+                      });
+
+                      vm.getWidthDraw();
+                      $api.val($api.dom('.moneyNum'),'');
+                      $api.val($api.dom('.code'),'');
+                  }else{
+                      api.toast({
+                          msg: '操作失败',
+                          duration: 2000,
+                          location: 'middle'
+                      });
+
+                  }
+              } else {
+
+                  api.toast({
+                      msg: '网络错误',
+                      duration: 2000,
+                      location: 'bottom'
+                  });
+
+              }
+          });
+
+      }
+
+      // 跳到绑定银行卡页
+      function BindBankCard(){
+          api.openWin({
+              name: 'BindBankCard',
+              url: './BindBankCard.html',
+              pageParam: {
+                  // name: 'test'
+              },
+              reload:true,
+              allowEdit:true
+          });
+      }
+  </script>
+  </html>

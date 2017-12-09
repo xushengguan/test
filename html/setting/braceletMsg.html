@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>账户设置</title>
+	<link rel="stylesheet" href="../../css/api.css">
+	<link rel="stylesheet" href="../../css/common.css">
+	<link rel="stylesheet" href="../../icon/iconfonts/iconfont.css">
+	<link rel="stylesheet" href="../../css/7account.css">
+	<link rel="stylesheet" href="../../css/loading.css">
+	<style media="screen">
+		.invite-con {
+			width: 290px;
+			background: white;
+			font-size: 14px;
+			color: #212121;
+			text-align: center;
+			border-radius: 5px;
+			position: absolute;
+			left: 50%;
+			margin-left: -145px;
+			top: 50%;
+			margin-top: -185px;
+		}
+
+		.img-tip01 {
+			display: block;
+			width: 150px;
+			margin: 0 auto;
+			padding: 20px 0 10px 0;
+		}
+
+		.touch {
+			font-size: 13px;
+			color: #b4b4b4;
+			padding: 20px 0 10px 0;
+		}
+
+		.input-box {
+			padding: 0 25px;
+			width: 100%;
+		}
+
+		.input-box input {
+			border: 1px solid #e5e5e5;
+			padding: 13px;
+			width: 100%;
+			border-radius: 3px;
+		}
+
+		.invite-btn {
+			padding: 0 25px;
+			font-size: 16px;
+			margin: 11px 0 21px 0;
+		}
+
+		.invite-btn button {
+			padding: 13px 10px;
+			width: 100%;
+			border-radius: 3px;
+			color: white;
+			background: #fca958;
+			text-align: center;
+		}
+
+		.icon-guanbi {
+			font-size: 30px;
+			position: absolute;
+			right: 10px;
+			top: 8px;
+			color: #ccc;
+		}
+
+		header {
+				height: 50px;
+				line-height: 50px;
+				background: #ffb300;
+				color: #fff;
+				font-size: 18px;
+				position: relative;
+		}
+
+		header em {
+				width: 50px;
+				height: 50px;
+				background: url(../../image/back.png) no-repeat center;
+				background-size: 20px;
+				float: left;
+		}
+
+		.bracelet{ padding: 15px; background: #fff; box-shadow: 0 2px 3px rgba(0,0,0,.1); text-align: center;}
+		.bracelet img{width: 180px; height: 180px; display: block; margin: 15px auto;}
+		.bracelet .ID{line-height: 20px; font-size: 14px; color: #999;}
+	</style>
+</head>
+
+<body>
+	<div class="7account">
+		<header>
+        <em onclick="go_back()"></em> 账户设置
+    </header>
+		<div class="account-con">
+			<div class="account-top hide">
+				<img class="circle fl" src="../../image/pic.png" id="img">
+				<p class="fr choice" onclick="sel_pic()">
+					<span>选择头像</span>
+					<i class="iconfont icon-gengduo1 icon-more"></i>
+				</p>
+			</div>
+			<div class="msg-con hide" onclick="changeName()">
+				<span class="fl">学生姓名</span>
+				<p class="fr">
+					<span style="color:#fca958;" id="nickname"></span>
+					<i class="iconfont icon-gengduo1 icon-more"></i>
+				</p>
+			</div>
+      <div class="bracelet">
+					<img src="../../image/code1.jpg" alt="" id="codeImg">
+					<p>手环二维码</p>
+					<P class="ID">手环ID:<em></em></P>
+      </div>
+		</div>
+	</div>
+
+
+</body>
+
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
+<script type="text/javascript">
+	var header = $api.dom('header');
+	fixStatusBar_API(header);
+	var id,token;
+	apiready = function() {
+      id = $api.getStorage('id');
+      token = $api.getStorage('token');
+			loading();
+			getBracelet();
+	}
+
+	//活动中心显示手环信息
+	function getBracelet(){
+			api.ajax({
+					url: serverurl,
+					method: 'get',
+					data: {
+							values: {
+									type: '10180',
+									 uid: id,
+								 token: token
+							},
+					}
+			},function(ret, err){
+          console.log(JSON.stringify(ret));
+					console.log(JSON.stringify(err));
+					if (!ret.status) {
+						var img = 'http://www.gbtags.com/gb/qrcode?t=https://123win.com.cn/xlp/reg/'+ret.data.id;
+						$api.attr($api.dom('#img'), 'src', ret.data.stu_img);//学生头像
+						$api.attr($api.dom('#codeImg'), 'src', img);//二维码图片
+						$api.text($api.dom('#nickname'), ret.data.stu_name);
+						$api.text($api.dom('.ID em'), ret.data.id);
+					}else {
+							api.toast({
+									msg: '网络错误',
+									duration: 2000,
+									location: 'bottom'
+							});
+
+					}
+			});
+	}
+
+	//选择头像
+	function sel_pic() {
+		api.getPicture({
+			sourceType: 'album',
+			encodingType: 'jpg',
+			mediaValue: 'pic',
+			destinationType: 'url',
+			allowEdit: true,
+			quality: 50,
+			targetWidth: 100,
+			targetHeight: 100,
+			saveToPhotoAlbum: false
+		}, function(ret, err) {
+			if (ret) {
+				imgUrl = ret.data;
+
+				uploader();
+			} else {
+				api.toast({
+					msg: '网络错误',
+					duration: 2000,
+					location: 'middle'
+				});
+			}
+		});
+	}
+
+
+	//获取阿里云签名
+	function uploader() {
+		$api.css($api.dom('#loading'), 'display:block');
+		api.ajax({
+			url: serverurl,
+			method: 'post',
+			data: {
+				values: {
+					type: '10033',
+				},
+
+			}
+		}, function(ret, err) {
+
+			if (ret) {
+				var host = ret.host;
+				var policy = ret.policy;
+				var signature = ret.signature;
+				var accessid = ret.accessid;
+				var dir = ret.dir;
+				var expire = ret.expire;
+				ALIcloud(host, policy, signature, accessid, dir, expire);
+
+			} else {
+
+				api.toast({
+					msg: '网络错误',
+					duration: 2000,
+					location: 'middle'
+				});
+			}
+		});
+	}
+
+	function ALIcloud(host, policy, signature, accessid, dir, expire) {
+		//将图片上传给阿里云服务器
+		api.ajax({
+			url: host,
+			method: 'post',
+			dataType: 'xml',
+			data: {
+				values: {
+					OSSAccessKeyId: accessid,
+					policy: policy,
+					Signature: signature,
+					key: dir,
+					success_action_status: 201
+				},
+				files: {
+					file: imgUrl
+				}
+			}
+		}, function(ret, err) {
+			if (ret) {
+
+				// 在回调函数里面调用
+				var dom = parseXML(ret);
+				// location 标签的内容使用DOM选择器进行查找
+				var url = dom.querySelector('Location').innerHTML;
+
+        ResetBracelet('',url);
+
+			} else {
+				api.toast({
+					msg: '网络错误',
+					duration: 2000,
+					location: 'middle'
+				});
+			}
+		});
+	}
+
+
+ //修改用户名
+ function changeName(){
+	 var text = $api.text($api.dom('#nickname'));
+	 api.prompt({
+		    title:'修改学生姓名',
+				text:text,
+		    buttons: ['确定', '取消']
+		}, function(ret, err) {
+		    var index = ret.buttonIndex;
+
+		    var text = ret.text;
+				if (index == 1) {
+					  if (!text) {
+								api.toast({
+								    msg: '请输入您的用户名',
+								    duration: 2000,
+								    location: 'middle'
+								});
+					  }else {
+							  $api.css($api.dom('#loading'), 'display:block');
+					  		ResetBracelet(text,'');
+					  }
+
+				}
+		});
+
+ }
+
+// 修改手环信息
+function ResetBracelet(stu_name,stu_img){
+
+	var id = $api.text($api.dom('.ID em'));
+	api.ajax({
+		 url: serverurl,
+		 method: 'get',
+		 data: {
+				 values: {
+						 type:'10148',
+						 id: id,//手环id
+						 token:token,
+						 stu_name: stu_name,
+						  stu_img: stu_img
+				 }
+		 }
+ },function(ret, err){
+	   $api.css($api.dom('#loading'), 'display:none');
+
+		 if (ret) {
+				 if (ret.status == '1') {
+						 if (stu_name) {
+								$api.text($api.dom('#nickname'),stu_name);
+						 }else if (stu_img) {
+								$api.attr($api.dom('#img'), 'src', stu_img);//学生头像
+						 }
+				 }else {
+						 api.toast({
+								 msg: '修改失败',
+								 duration: 2000,
+								 location: 'bottom'
+						 });
+				 }
+		 } else {
+			 api.toast({
+				 msg: '网络错误',
+				 duration: 2000,
+				 location: 'bottom'
+			 });
+		 }
+ });
+}
+
+
+</script>

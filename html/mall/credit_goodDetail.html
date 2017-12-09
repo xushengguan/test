@@ -1,260 +1,284 @@
 <!DOCTYPE html>
-<html lang="en">
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title>商品详情</title>
+      <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+      <link href="../../css/swiper.min.css" rel="stylesheet">
+      <style>
+          header{height: 50px; line-height: 50px; background: #ffb300; color: #fff; font-size: 18px; position: relative;}
+          header em{width: 50px; height: 50px; background: url(../../image/back.png) no-repeat center;
+            background-size: 20px; float: left;}
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
-	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-	<title>商品详情</title>
-	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
-	<link rel="stylesheet" type="text/css" href="../../css/style.css" />
-	<link rel="stylesheet" type="text/css" href="../../css/loading.css" />
-	<link rel="stylesheet" type="text/css" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css" />
 
-</head>
-<style>
-	.img {
-		width: 100%;
-		position: relative;
-		overflow: hidden;
-		height: 200px;
-	}
 
-	.img img {
-		display: block;
-		width: 100%;
-		/*height: 100%;*/
-	}
+          	.act_content {
+          		background: #fff;
+          		padding: 14px 25px;
+          		color: #5c5c5c;
+          		margin-bottom: 5px;
+          	}
 
-	.img .fix {
-		width: 100%;
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		height: 34px;
-		line-height: 34px;
-		background: rgba(0, 0, 0, .5);
-		z-index: 99px;
-	}
+          	.act_content .title {
+          		font-size: 14px;
+          		line-height: 14px;
+          	}
+          	/*==============边框===============*/
 
-	.img .fix p {
-		margin-left: 25px;
-		margin-right: 10px;
-		color: #fff;
-		font-size: 12px;
-		float: left;
-	}
+          	.act_content .title .before {
+          		display: inline-block;
+          		width: 8px;
+          		height: 14px;
+          		background: url(../../image/lines.png)no-repeat center;
+          		background-size: 2px 10px;
+          		vertical-align: middle;
+          	}
 
-	.img .fix p span {
-		padding: 0 5px;
-		color: #fff;
-		font-size: 12px;
-	}
+          	/*==============边框===============*/
 
-	.img .fix .goodsName {
-		float: right;
-		color: #fff;
-		font-size: 12px;
-		margin-right: 25px;
-		margin-left: 10px;
-	}
+          	.act_content .box_main {
+          		font-size: 12px;
+          		color: #5c5c5c;
+          		padding: 10px 10px 0 10px;
+          	}
 
-	.act_content {
-		background: #fff;
-		padding: 14px 25px;
-		color: #5c5c5c;
-		margin-bottom: 5px;
-	}
+          	.act_content .role_box_main {
+          		padding: 5px 10px 0 10px;
+          		;
+          	}
+          	/*========================底部========================*/
+          	/*学分不足*/
 
-	.act_content .title {
-		font-size: 14px;
-		line-height: 14px;
-	}
-	/*==============边框===============*/
+          	#nopay_footer {
+          		width: 100%;
+          		height: 55px;
+          		line-height: 55px;
+          		background: #fff;
+          		overflow: hidden;
+          		box-shadow: 0 -2px 5px rgba(0, 0, 0, .1);
+          		-webkit-box-shadow: 0 -2px 5px rgba(0, 0, 0, .1);
+          		-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
 
-	.act_content .title .before {
-		display: inline-block;
-		width: 8px;
-		height: 14px;
-		background: url(../../image/lines.png)no-repeat center;
-		background-size: 2px 10px;
-		vertical-align: middle;
-	}
+          	}
 
-	/*==============边框===============*/
+          	#nopay_footer .fo_left {
+          		float: left;
+          		width: 70%;
+          	}
 
-	.act_content .box_main {
-		font-size: 12px;
-		color: #5c5c5c;
-		padding: 10px 10px 0 10px;
-	}
+          	#nopay_footer .fo_left .lf_txt {
+          		font-size: 13px;
+          		color: #999;
+          		padding-left: 25px;
+          		padding-right: 2%;
+          	}
 
-	.act_content .role_box_main {
-		padding: 5px 10px 0 10px;
-		;
-	}
-	/*========================底部========================*/
-	/*学分不足*/
+          	#nopay_footer .fo_left .lf_txt em {
+          		font-size: 15px;
+          		color: #fca958;
+          	}
 
-	#nopay_footer {
-		width: 100%;
-		height: 55px;
-		line-height: 55px;
-		background: #fff;
-		overflow: hidden;
-		box-shadow: 0 -2px 5px rgba(0, 0, 0, .1);
-		-webkit-box-shadow: 0 -2px 5px rgba(0, 0, 0, .1);
-		-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, .1);
-		position: fixed;
-		bottom: 0;
-		left: 0;
-	}
+          	#nopay_footer .btn_pay {
+          		float: right;
+          		width: 30%;
+          		height: 55px;
+          		line-height: 55px;
+          		text-align: center;
+          		color: #fff;
+          		font-size: 15px;
+          		background: #ff5252;
+          	}
 
-	#nopay_footer .fo_left {
-		float: left;
-		width: 70%;
-	}
+          	#nopay_footer .btn_pay.submit {
+          		background: #fca958;
+          	}
+          	/*======================底部==========================*/
 
-	#nopay_footer .fo_left .lf_txt {
-		font-size: 13px;
-		color: #999;
-		padding-left: 25px;
-		padding-right: 2%;
-	}
+          	.introduce span{margin: 0 10px; color: #fca958}
 
-	#nopay_footer .fo_left .lf_txt em {
-		font-size: 15px;
-		color: #fca958;
-	}
+            .swiper-container {
+               width: 100%;
+               height: 300px;
+             }
+             .swiper-slide {
+               text-align: center;
+               font-size: 18px;
+               background: #fff;
 
-	#nopay_footer .btn_pay {
-		float: right;
-		width: 30%;
-		height: 55px;
-		line-height: 55px;
-		text-align: center;
-		color: #fff;
-		font-size: 15px;
-		background: #ff5252;
-	}
+               /* Center slide text vertically */
+               display: -webkit-box;
+               display: -ms-flexbox;
+               display: -webkit-flex;
+               display: flex;
+               -webkit-box-pack: center;
+               -ms-flex-pack: center;
+               -webkit-justify-content: center;
+               justify-content: center;
+               -webkit-box-align: center;
+               -ms-flex-align: center;
+               -webkit-align-items: center;
+               align-items: center;
+             }
 
-	#nopay_footer .btn_pay.submit {
-		background: #fca958;
-	}
-	/*======================底部==========================*/
-	#app{height: 100%;}
-</style>
+             .swiper-slide img{width: 100%; height: 100%; display: block;}
+      </style>
+  </head>
+  <body>
 
-<body style="background:#f2f2f2;">
-	<div id="app">
-		<div id="main" style="margin-bottom: 55px;">
+      <div id="wrap" v-cloak>
+        <header>
+            <em onclick="go_back()"></em>
+            商品详情
+        </header>
+    		<div id="main">
 
-			<div class="img">
-				<!-- <img src="../../image/pic10.jpg" alt=""> -->
-			</div>
+          <!-- Swiper -->
+          <div class="swiper-container" v-if="img">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" v-for="v in img">
+                  <img :src="v" alt="">
+              </div>
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+          </div>
 
-			<div class="act_content">
-				<div class="title">
-					<span class="before"></span>
-					<span class="text">商品名称</span>
-				</div>
-				<div class="box_main">
-					<p class="introduce">
-						{{goodsInfo.goods_name}}
-					</p>
-				</div>
-			</div>
+    			<div class="act_content">
+    				<div class="title">
+    					<span class="before"></span>
+    					<span class="text">商品名称</span>
+    				</div>
+    				<div class="box_main">
+    					<p class="introduce">
+    						{{goodsInfo.goods_name}}
+    						<span>库存:{{goodsInfo.goods_number}}</span>
+    					</p>
+    				</div>
+    			</div>
 
-			<div class="act_content">
-				<div class="title">
-					<span class="before"></span>
-					<span class="text">商品介绍</span>
-					<div class="box_main">
-						<p class="introduce">
-							{{goodsInfo.abs}}
-						</p>
-					</div>
-				</div>
+    			<div class="act_content">
+    				<div class="title">
+    					<span class="before"></span>
+    					<span class="text">商品介绍</span>
+    					<div class="box_main">
+    						<p class="introduce">
+    							{{goodsInfo.abs}}
+    						</p>
+    					</div>
+    				</div>
 
-			</div>
+    			</div>
 
-			<!-- 商品介绍 -->
-			<div class="act_content">
-				<div class="title">
-					<span class="before"></span>
-					<span class="text">商品详情</span>
-				</div>
-				<div class="box_main">
-					<p class="introduce">
-						{{content.content}}
-					</p>
-				</div>
-			</div>
+    			<!-- 商品介绍 -->
+    			<div class="act_content">
+    				<div class="title">
+    					<span class="before"></span>
+    					<span class="text">商品详情</span>
+    				</div>
+    				<div class="box_main">
+    					<p class="introduce">
+    						{{content.content}}
+    					</p>
+    				</div>
+    			</div>
 
-		</div>
-    <!-- 底部 -->
-		<div id="nopay_footer">
-			<div class="fo_left">
-				<span class="lf_txt">单价：<em>{{goodsInfo.total}}学分</em></span>
-			</div>
-			<div class="btn_pay submit">提交订单</div>
-		</div>
+    		</div>
+        <!-- 底部 -->
+    		<div id="nopay_footer">
+    			<div class="fo_left">
+            <span class="lf_txt" v-if="role == '2'">单价：<em>¥{{goodsInfo.total * 0.25}}</em></span>
+    				<span class="lf_txt" v-else>单价：<em>{{goodsInfo.total}}学分</em></span>
+    			</div>
+    			<div class="btn_pay submit" @click="PlaceOrder()">提交订单</div>
+    		</div>
 
-	</div>
-</body>
-</html>
-<script type="text/javascript" src="../../script/api.js"></script>
-<script type="text/javascript" src="../../script/my.js"></script>
-<script type="text/javascript" src="../../script/vue.js"></script>
-<script type="text/javascript">
-    var goodsid;
-		apiready = function(){
-			  loading();
-				goodsid = api.pageParam.goods_id;
-				$api.css($api.dom('#loading'), 'display:block');
-        vm.getGoodsInfo();
-				$api.css($api.dom('#loading'), 'display:none');
-		}
+    	</div>
+  </body>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/my.js"></script>
+  <script type="text/javascript" src="../../script/vue.js"></script>
+  <script type="text/javascript" src="../../script/swiper.min.js"></script>
+  <script type="text/javascript">
+      var header = $api.dom('header');
+      fixStatusBar_API(header);
 
-		var vm = new Vue({
-        el: '#app',
-        data: {
-            goodsInfo:[],
-						content:[],
-        },
-        methods: {
-						getGoodsInfo(){
-							api.ajax({
-							    url: serverurl,
-							    method: 'get',
-									dataType:'json',
-							    data: {
-							        values: {
-							          	type: '10032',
-													goodsid:goodsid
-							        },
-							    }
-							},function(ret, err){
+      var goodsid,role;
+      apiready = function(){
+            fnInitSwipe();
+            goodsid = api.pageParam.goods_id;
+            role = $api.getStorage('role');
 
-							    if (ret) {
-							        vm.goodsInfo = ret.data.info;
-											vm.content = ret.data.content;
-											var x = 0;
-											var y = 0;
-											var h = $api.dom('.img').offsetHeight;
-											var paths = ret.data.img;
-											swiper(x,y,h,paths);
-							    } else {
-							        api.toast({
-							            msg: '网络错误',
-							            duration: 2000,
-							            location: 'bottom'
-							        });
+            vm.getGoodsInfo();
+      };
 
-							    }
-							});
+      var vm = new Vue({
+          el: '#wrap',
+          data: {
+              goodsInfo:[],
+  						content:[],
+              img:[],
+              role:''
+          },
+          methods: {
+  						getGoodsInfo(){
+                vm.role = role;
+  							api.ajax({
+  							    url: serverurl,
+  							    method: 'get',
+  									dataType:'json',
+  							    data: {
+  							        values: {
+  							          	type: '10032',
+  													goodsid:goodsid
+  							        },
+  							    }
+  							},function(ret, err){
+  							    if (ret) {
+  							        vm.goodsInfo = ret.data.info;
+  											vm.content = ret.data.content;
+                        vm.img = ret.data.img;
 
-						}
-        }
-    })
-</script>
+  							    } else {
+  							        api.toast({
+  							            msg: '网络错误',
+  							            duration: 2000,
+  							            location: 'bottom'
+  							        });
+
+  							    }
+  							});
+  						},
+
+  						PlaceOrder(){
+  								api.openWin({
+  								    name: '6confirmOrder',
+  								    url: './6confirmOrder.html',
+  								    pageParam: {
+  								        goods_id: goodsid
+  								    }
+  								});
+
+  						}
+          }
+      })
+
+      // swiper
+      function fnInitSwipe(){
+        var swiper = new Swiper('.swiper-container', {
+          pagination: {
+            el: '.swiper-pagination',
+          },
+          centeredSlides: true,
+          observer:true, //修改swiper自己或子元素时，自动初始化swiper
+          observeParents:true,//修改swiper的父元素时，自动初始化swiper
+          autoplay: {
+            delay: 2500,
+            disableOnInteraction: false,
+          },
+
+        });
+      }
+  </script>
+  </html>

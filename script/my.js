@@ -1,11 +1,18 @@
 var serverurl = "https://x.sdp178.com/xlp_app/api.php"; //服务器地址
 // var serverurl = "http://192.168.110.2/xlp_app/api.php";//明军主机地址
 
-
-//关闭已打开的窗口
+//返回
 function go_back() {
-    api.closeWin({});
+    // api.closeWin({});
+    api.historyBack({//历史记录后退一页
+        // frameName: 'detail'
+    }, function(ret, err) {
+        if (!ret.status) {
+            api.closeWin();
+        }
+    });
 }
+
 
 //IOS设置bar
 function fixIos7Bar_API(el) {
@@ -42,38 +49,6 @@ function fixStatusBar_API(el) {
     }
 };
 
-//时间戳转换
-Date.prototype.format = function(fmt) { //author: meizz
-    var o = {
-        "M+": this.getMonth() + 1, //月份
-        "d+": this.getDate(), //日
-        "h+": this.getHours(), //小时
-        "m+": this.getMinutes(), //分
-        "s+": this.getSeconds(), //秒
-        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
-        "S": this.getMilliseconds() //毫秒
-    };
-    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    for (var k in o)
-        if (new RegExp("(" + k + ")").test(fmt))
-            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-    return fmt;
-}
-
-function Gtime_mdhm(data_) {
-    time = new Date(parseInt(data_) * 1000).format('M月d日 hh:mm');
-    return time;
-}
-
-function Gtime_md(data_) {
-    time = new Date(parseInt(data_) * 1000).format('M月d日');
-    return time;
-}
-
-function Gtime_ymd(data_) {
-    time = new Date(parseInt(data_) * 1000).format('yyyy年M月d日');
-    return time;
-}
 
 //加载 XML 文档函数
 function parseXML(ret) {
@@ -121,8 +96,10 @@ function SendCountDown(obj, wait) {
         SendCountDown(obj, wait);
     }, 1000)
 }
+
 // 发送手机验证码
 function SendCode(obj, tel, wait) {
+
     api.ajax({
         url: serverurl,
         method: 'get',
@@ -187,44 +164,25 @@ function toPercent(point){
     return str;
 }
 
-//轮播模块
-function swiper(x,y,h,paths) {
-    var UIScrollPicture = api.require('UIScrollPicture');
-    UIScrollPicture.open({
-        rect: {
-            x: x,
-            y: y,
-            w: api.winWidth,
-            h: h
-        },
-        data: {
-            paths: paths
-        },
-        styles: {
 
-            indicator: {        //（可选项）JSON对象；指示器样式；不传则不显示指示器
-                  //  dot:{        // （可选项）JSON对象；指示器小圆点样式；不传则使用系统默认小圆点样式
-                  //        w:5,  //（必选项）数字类型；小圆点宽度
-                  //        h:5, //（必选项）数字类型；小圆点高度
-                  //        r:5,  //（必选项）数字类型；小圆点圆角半径
-                  //        margin:10  //（必选项）数字类型；小圆点间距
-                  //      },
-                  align: 'center',                //（可选项）字符串类型；指示器位置；默认：center //取值范围： //center（居中） //left（靠左） //right（靠右）
-                  color: '#000',               //（可选项）指示器颜色 ，支持 rgb、rgba、#；默认：'#FFFFFF'
-                  activeColor: '#007aff'          //（可选项）当前指示器颜色，支持 rgb、rgba、#；默认：'#DA70D6'
-            }
-        },
-        placeholderImg: 'widget://image/pic10.jpg',
-        contentMode: 'scaleToFill',
-        interval: 5,
-        fixedOn: api.frameName,
-        loop: true,
-        fixed: false
-    }, function(ret, err) {
-        if (ret) {
-            console.log(JSON.stringify(ret));
-        } else {
-            console.log(JSON.stringify(err));
-        }
-    });
+
+//解决键盘弹出底部导航被顶上来的bug
+function focus_footer(){
+
+    var h = document.body.scrollHeight;
+    window.onresize = function() {
+      if (document.body.scrollHeight < h) {
+        document.getElementById('footer').style.display = "none";
+      } else {
+        document.getElementById('footer').style.display = "block";
+      }
+    };
+}
+
+//用js限制字数，超出部分以省略号...显示
+function LimitNumber(txt,idName) {
+    var str = txt;
+    str = str.substr(0,20) + '...' ;
+    var id=document.getElementById(idName);
+    id.innerText=str;
 }

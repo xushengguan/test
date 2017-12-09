@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>兑换成功</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/common.css">
+	<link rel="stylesheet" type="text/css" href="../../css/loading.css">
+	<link rel="stylesheet" type="text/css" href="../../css/6goods2.css" />
+	<link rel="stylesheet" type="text/css" href="../../icon/iconfonts/iconfont.css" />
+
+	<style media="screen">
+	    footer{
+	    		position: relative;
+					background: #fff;
+					box-shadow: 0 -2px 5px rgba(0,0,0,.1)
+	    }
+			footer li{
+					float: left;
+					padding: 17px 0;
+			}
+			footer .price-li{
+				width: 65%;
+		    padding-left: 25px;
+		    color: #bdbdbd;
+		    font-size: 13px;
+			}
+			.credit {
+			    color: #fcb676;
+			    font-size: 15px;
+			}
+			.submit-btn {
+			    color: white;
+			    font-size: 15px;
+			    background: #fca958;
+			    text-align: center;
+			}
+
+			.learn-pay{float: left;}
+
+			.money .icon-xuanzhongon.weChat{
+				font-size: 20px;
+				color:#58b64b
+			}
+
+			.money .icon-xuanzhongon.credit{
+				font-size: 20px;
+				color:#fcb068
+			}
+
+			.Recharge{
+				float: right;
+				color: #757575;
+				font-size: 13px;
+				overflow: hidden;
+			}
+
+			.Recharge button{
+					width: 57px;
+					height: 27px;
+					border-radius: 3px;
+					background: #fca958;
+					color: #fff;
+			}
+
+			header{height: 50px; line-height: 50px; background: #ffb300; color: #fff; font-size: 18px; position: relative;}
+			header em{width: 50px; height: 50px; background: url(../../image/back.png) no-repeat center;
+				background-size: 20px; float: left;}
+	</style>
+</head>
+
+<body>
+	<!-- 兑换成功 -->
+
+		<header>
+				<em onclick="go_back()"></em>
+				兑换成功
+		</header>
+		<div class="convert-con">
+			<span><i class="iconfont icon-weixuanzhongxianxing icon-checktop"></i></span>
+			<h3>恭喜您&nbsp;成功兑换</h3>
+			<h6></h6>
+			<p class="times"></p>
+			<p class="check-btns">
+				<button onclick="viewsGoods()">查看商品</button>
+				<button onclick="go_index()">返回首页</button>
+			</p>
+		</div>
+
+</body>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
+<script type="text/javascript" src="../../script/date.js"></script>
+<script type="text/javascript">
+		var header = $api.dom('header');
+		fixStatusBar_API(header);
+	  apiready = function(){
+			  $api.css($api.dom('.convert-con'), 'display:none');
+				$api.css($api.dom('#loading'), 'display:none');
+				var goods_name = api.pageParam.goods_name;
+				var time = api.pageParam.time;
+				$api.text($api.dom('h6'), goods_name);
+				$api.text($api.dom('.times'), Gtime_ymd(time));
+				$api.css($api.dom('.convert-con'), 'display:block');
+				$api.css($api.dom('#loading'), 'display:block');
+		}
+
+		//查看商品
+		function viewsGoods(){
+			api.openWin({
+					name: 'order_title',
+					url: './order_title.html',
+					pageParam: {
+							name: 'test'
+					}
+			});
+		}
+
+		// 返回首页
+		function go_index(){
+			var role = $api.getStorage('role');
+			var NVTabBar = api.require('NVTabBar');
+			NVTabBar.close();
+      if (role == '2') {
+					api.openWin({
+							name: 'index',
+							url: '../../index.html',
+							pageParam: {
+									// index: 2
+							},
+							reload:true
+					});
+      }else {
+					api.openWin({
+							name: 'index',
+							url: '../../index1.html',
+							pageParam: {
+									// index: 2
+							},
+							reload:true
+					});
+      }
+
+		}
+</script>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title>信用评级</title>
+      <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+      <link rel="stylesheet" type="text/css" href="../../css/loading.css"/>
+      <style>
+        .NewsLis li{padding: 15px; background: #fff; margin-bottom: 1px;}
+        .line1{padding-bottom: 10px; overflow: hidden; line-height: 18px;}
+        .line1 .title{width: 70%; color: #212121; float: left; font-size: 15px;}
+        .line1 .time{width: 30%; color: #999; float: left; font-size: 13px; text-align: right;}
+        .line2 {font-size: 13px; color: #999;}
+      </style>
+  </head>
+  <body>
+      <ul class="NewsLis" id="app" v-cloak>
+          <li v-if="status">暂无消息~</li>
+          <li v-for="v in data">
+            <div class="line1">
+                <p class="title">{{v.title}}</p>
+                <span class="time">{{v.time | formatDate}}</span>
+            </div>
+            <div class="line2">{{v.news}}</div>
+          </li>
+      </ul>
+  </body>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/my.js"></script>
+  <script type="text/javascript" src="../../script/vue.js"></script>
+  <script type="text/javascript" src="../../script/date.js"></script>
+  <script type="text/javascript">
+  var token,uid;
+  apiready = function(){
+      loading();
+      token = $api.getStorage('token');
+      uid = $api.getStorage('id');
+      vm.getNews();
+
+      //刷新
+      api.setRefreshHeaderInfo({
+          loadingImg: 'widget://image/refresh.png',
+          bgColor: '#444',
+          textColor: '#fff',
+          textUp: '释放立即刷新...',
+          textLoading: '加载中···',
+          showTime: false
+      }, function(ret, err) {
+          //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+          vm.getNews();
+          api.refreshHeaderLoadDone();
+      });
+  }
+
+  var vm = new Vue({
+      el:'#app',
+      data:{
+          data:[],
+          status:''
+      },
+      filters: {
+          formatDate(time) {
+              var date = new Date(time * 1000);
+              return formatDate(date, 'yyyy-MM-dd');
+          }
+      },
+      methods:{
+          getNews(){//用户消息
+              $api.css($api.byId('app'),'display:none');
+              $api.css($api.byId('loading'),'display:block');
+
+              api.ajax({//未激活学员列表
+                  url: serverurl,
+                  method: 'get',
+                  data: {
+                      values: {
+                          type: '10167',
+                          token: token,
+                          uid:uid
+                      },
+                  }
+              },function(ret, err){
+
+                  $api.css($api.byId('loading'),'display:none');
+                  if (ret) {
+                      $api.css($api.byId('app'),'display:block');
+
+                      if(ret.status == '0'){
+                          vm.status = ret.status;
+                      }else{
+
+                        vm.data = ret;
+
+                      }
+                  } else {
+
+                      api.toast({
+                          msg: '网络错误',
+                          duration: 2000,
+                          location: 'bottom'
+                      });
+
+                  }
+              });
+
+          }
+      }
+  })
+  </script>
+  </html>

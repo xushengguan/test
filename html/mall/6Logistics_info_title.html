@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+		<meta charset="UTF-8">
+		<title>物流信息</title>
+		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+		<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+		<link rel="stylesheet" href="../../css/api.css">
+		<link rel="stylesheet" href="../../css/common.css">
+		<link rel="stylesheet" href="../../icon/iconfonts/iconfont.css">
+		<link rel="stylesheet" href="../../css/6goods3.css">
+		<style media="screen">
+		header{height: 50px; line-height: 50px; background: #ffb300; color: #fff; font-size: 18px; position: relative;}
+		header em{width: 50px; height: 50px; background: url(../../image/back.png) no-repeat center;
+			background-size: 20px; float: left;}
+		</style>
+</head>
+<body>
+	<div class="goods3" id="app">
+		<header>
+				<em onclick="go_back()"></em>
+				物流信息
+		</header>
+		<div class="goods3-con">
+			<div class="delivery-top">
+				<div class="delivery-con hide">
+					<span class="car fl"><i class="iconfont icon-wuliu icon-car"></i></span>
+					<p class="fl odd-nums">
+						<!-- deliverystatus (1.在途中，2.派件中，3.已签收，4.派送失败) -->
+						<span v-if="data.deliverystatus == '1'">{{data.type}}(在途中)</span>
+						<span v-else-if="data.deliverystatus == '2'">{{data.type}}(派件中)</span>
+						<span v-else-if="data.deliverystatus == '3'">{{data.type}}(已签收)</span>
+						<span v-else>{{data.type}}(派送失败)</span>
+						<span>单号:{{data.number}}</span>
+					</p>
+				</div>
+				<h6>物流详情</h6>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript">
+		var header = $api.dom('header');
+		fixStatusBar_API(header);
+		apiready = function(){
+			  var logistics_company = api.pageParam.logistics_company;
+				var tracking_number = api.pageParam.tracking_number;
+				vm.getLog(tracking_number,logistics_company);
+				api.openFrame({
+				    name: '6Logistics_info',
+				    url: './6Logistics_info.html',
+				    rect: {
+				        x: 0,
+				        y: $api.dom('.goods3').offsetHeight,
+				        w: api.winWidth,
+				        h: 'auto'
+				    },
+				    pageParam: {
+								logistics_company:logistics_company,
+								tracking_number:tracking_number
+				    },
+				    bounces: true,
+				    bgColor: 'rgba(0,0,0,0)',
+				    vScrollBarEnabled: true,
+				    hScrollBarEnabled: true
+				});
+
+
+		}
+
+		var vm = new Vue({
+				el:'#app',
+				data:{
+						data:[]
+				},
+				methods:{
+						getLog(tracking_number,logistics_company){
+							api.ajax({//查询物流信息
+									url: serverurl,
+									method: 'get',
+									data: {
+											values: {
+													type:'10020',
+													tracking_number:tracking_number,
+													logistics_company:logistics_company
+											},
+									}
+							},function(ret, err){
+									if (ret) {
+											vm.data = ret.result;
+									} else {
+											api.toast({
+											    msg: '网络错误',
+											    duration: 2000,
+											    location: 'bottom'
+											});
+									}
+							});
+						}
+				}
+		})
+</script>

@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>学客圈详情</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/loading.css" />
+    <style>
+        header {
+            height: 50px;
+            line-height: 50px;
+            background: #ffb300;
+            color: #fff;
+            font-size: 18px;
+            position: relative;
+        }
+
+        header em {
+            width: 50px;
+            height: 50px;
+            background: url(../../image/back.png) no-repeat center;
+            background-size: 20px;
+            float: left;
+        }
+
+        .box {
+            background: #fff;
+            padding: 15px;
+        }
+
+        .box:last-child {
+            margin-bottom: 5px;
+        }
+
+        .box .PerInfo {
+            padding-bottom: 10px;
+            overflow: hidden;
+        }
+
+        .box .PerInfo img {
+            display: block;
+            float: left;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+        }
+
+        .box .PerInfo .info {
+            float: left;
+            margin-left: 15px;
+        }
+
+        .PerInfo .info p {
+            line-height: 22px;
+        }
+
+        .PerInfo .info p:first-child {
+            font-size: 15px;
+            color: #343d66;
+        }
+
+        .PerInfo .info p:nth-child(2) {
+            font-size: 12px;
+            color: #757575;
+        }
+
+        .box .msg {
+            font-size: 14px;
+            color: #212121;
+            margin-bottom: 5px;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+
+        .box .show {
+            font-size: 15px;
+            color: #343d66;
+            margin-bottom: 4px;
+        }
+
+        .box .cell {
+            width: 210px;
+        }
+
+        .box .cell img {
+            width: 100%;
+        }
+
+        .box .cell9 {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .box .cell9.cell4 {
+            width: 240px;
+        }
+
+        .cell9 .item {
+            width: 31%;
+            margin-bottom: 2.3%;
+            float: left;
+            margin-right: 2.3%;
+            position: relative;
+        }
+
+        .cell9.cell4 .item {
+            width: 48%;
+            margin-bottom: 2%;
+            margin-right: 2%;
+        }
+
+        .cell9 .item:before {
+            content: "";
+            display: inline-block;
+            padding-bottom: 100%;
+            width: 0.1px;
+            vertical-align: middle;
+        }
+
+        .cell9 .item img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .box .nav {
+            height: 30px;
+            line-height: 30px;
+            font-size: 13px;
+            color: #7e7e7e;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .box .nav .share {
+            height: 30px;
+            width: 30px;
+            background: url(../../image/share.png) no-repeat left center;
+            background-size: 15px;
+            float: left;
+        }
+
+        .box .nav .comment,
+        .box .nav .love {
+            height: 30px;
+            float: right;
+            padding-left: 36px;
+        }
+
+        .box .nav .comment {
+            background: url(../../image/comment.png) no-repeat center;
+            background-size: 15px 14px;
+        }
+
+        .box .nav .love {
+            background: url(../../image/love1.png) no-repeat center 5px;
+            background-size: 15px;
+        }
+
+        .box .nav .love.on {
+            background: url(../../image/love.png) no-repeat center 5px;
+            background-size: 15px;
+        }
+
+        .box .reply {
+            padding: 8px 10px 10px 10px;
+            background: #f2f2f2;
+            border-radius: 2px;
+            font-size: 14px;
+        }
+
+        .reply .lovePerson {
+            color: #343d66;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #e4e2e2;
+            margin-bottom: 6px;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        .reply .lovePerson em {
+            width: 14px;
+            height: 14px;
+            display: inline-block;
+            background: url(../../image/love1.png) no-repeat center;
+            background-size: 14px;
+        }
+
+        .reply .lovePerson span {
+            margin-left: 2px;
+        }
+
+        .reply li {
+            margin-top: 6px;
+            overflow: hidden;
+            line-height: 14px;
+        }
+
+        .reply li .lf {
+            float: left;
+            margin-right: 2px;
+
+        }
+
+        .reply li .name {
+            color: #343d66;
+            font-size: 14px;
+        }
+
+
+        .reply .checkAll {
+            font-size: 14px;
+            color: #343d66;
+        }
+
+        footer {
+            background: #fff;
+            box-shadow: 0 -1px 3px rgba(0, 0, 0, .1);
+            height: 50px;
+        }
+
+        footer .footer {
+            overflow: hidden;
+            padding: 0 15px;
+            height: 50px;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+
+        .footer textarea {
+            width: calc(100% - 55px);
+            height: 20px;
+            line-height: 20px;
+            font-size: 14px;
+            color: #666;
+            float: left;
+            resize: none;
+            margin: 10px 0;
+            padding: 5px 0;
+            border-bottom: 1px solid #FFD700;
+            margin-right: 5px;
+        }
+
+        .footer button {
+            display: block;
+            text-align: center;
+            width: 50px;
+            height: 30px;
+            line-height: 30px;
+            color: #fff;
+            background: #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+            float: right;
+
+        }
+        footer button.on{background: #FFD700;}
+        #wrap {
+            background: #fff;
+        }
+
+        .del{width: 80px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius:3px;
+        background: #fff; color: #222; font-size: 16px; padding: 10px 20px; box-shadow: 0 0 10px rgba(0,0,0,.1); z-index: 99;}
+    </style>
+</head>
+
+<body>
+    <div id="wrap" v-cloak>
+        <header>
+            <em onclick="go_back()"></em> 详情
+        </header>
+        <div id="main">
+            <div class="box">
+                <div class="PerInfo">
+                    <img src="../../image/pic.png" alt="" v-if="!data.headimgurl">
+                    <img :src="data.headimgurl" alt="" v-else>
+                    <div class="info">
+                        <p>{{data.nickname}}</p>
+                        <p>{{data.last_reply_at | getDate}}</p>
+                    </div>
+                </div>
+                <div class="msg">
+                    {{data.content}}
+                </div>
+
+
+                <div v-if="data.thumb">
+                    <!-- 一张图片 -->
+                    <div class="cell" v-if="data.thumb.length == 1">
+                        <div class="item" v-for="item in data.thumb">
+                            <img :src="item.url+'?x-oss-process=image/resize,p_50'" alt="" @click="viewPicture(data.thumb)">
+                        </div>
+                    </div>
+
+                    <!-- 九张图片，当为4张图片时加样式名cell4 -->
+                    <div class="cell9 cell4" v-else-if="data.thumb.length == 4">
+                        <div class="item" v-for="item in data.thumb">
+                            <img :src="item.url+'?x-oss-process=image/resize,p_50'" alt="" @click="viewPicture(data.thumb)">
+                        </div>
+                    </div>
+
+                    <!-- 九张图片，当为4张图片时加样式名cell4 -->
+                    <div class="cell9" v-else>
+                        <div class="item" v-for="item in data.thumb">
+                            <img :src="item.url+'?x-oss-process=image/resize,p_50'" alt="" @click="viewPicture(data.thumb)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nav">
+                    <div class="share"></div>
+                    <div class="love" :class="{on:data.is_like == '1'}" @click="givePoint()">{{data.like}}</div>
+                    <div class="comment" @click="comment()">{{data.rew}}</div>
+                </div>
+
+                <div class="reply" v-if="data.like_member || data.rewlist">
+                    <div class="lovePerson" v-if="data.like_member">
+                        <em></em>
+                        <span>{{data.like_member}}</span>
+                    </div>
+                    <ul class="reply_box" v-if="data.rewlist">
+                        <li v-for="v in data.rewlist">
+                            <div @click="Reply(v.replier.id,v.replier.nickname,v.rew_id)" v-if="v.replier">
+                                <div class="lf">
+                                    <span class="name">{{v.replier.nickname}}</span> 回复
+                                    <span class="name">{{v.nickname}}:</span>
+                                </div>
+                                <div class="lf" style="max-width:80%;">{{v.content}}</div>
+                            </div>
+                            <div @click="Reply(v.uid,v.nickname,v.rew_id)" v-else>
+                                <div class="lf">
+                                    <span class="name">{{v.nickname}}:</span>
+                                </div>
+                                <div class="lf" style="max-width:80%;">{{v.content}}</div>
+                            </div>
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <footer style="display:none;">
+            <div class="footer">
+                <!--  onpropertychange="MaxMe()" oninput="MaxMe()" -->
+                <textarea name="name" rows="8" cols="80" placeholder="评论" id="reply_txt" onpropertychange="MaxMe()" oninput="MaxMe()"></textarea>
+                <button disabled="true" id="send">发送</button>
+            </div>
+        </footer>
+    </div>
+    <div class="del" style="display:none">删除</div>
+
+
+</body>
+
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript" src="../../script/date.js"></script>
+<script type="text/javascript">
+    var header = $api.dom('header');
+    fixStatusBar_API(header);
+    var token,uid,id,username;
+    apiready = function() {
+        token = $api.getStorage('token');
+        uid = $api.getStorage('id');
+        username = $api.getStorage('username');
+        id = api.pageParam.circle_id;
+
+        loading();
+        vm.getCircleDetail();
+
+    }
+
+    var vm = new Vue({
+        el: '#wrap',
+        data: {
+            data: [],
+        },
+        filters: {
+            getDate(time) {
+                return getDate(time);
+            },
+        },
+        methods: {
+
+            getCircleDetail() { //读取学客圈详情
+                $api.css($api.dom('#main'), 'display:none');
+                $api.css($api.dom('#loading'), 'display:block');
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    dataType:'json',
+                    data: {
+                        values: {
+                            type: '10116',
+                            token: token,
+                            id: id,
+                            uid: uid
+                        },
+                    }
+                }, function(ret, err) {
+
+                    $api.css($api.dom('#loading'), 'display:none');
+
+                    if (ret) {
+                        $api.css($api.dom('#main'), 'display:block');
+                        vm.data = ret.data;
+                    } else {
+                        api.toast({
+                            msg: '网络错误',
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+
+                    }
+                });
+            },
+
+            givePoint() { //点赞，取消点赞
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    data: {
+                        values: {
+                            type: '10119',
+                            uid: uid,
+                            id: id,
+                            token: token
+                        },
+                    }
+                }, function(ret, err) {
+                    if (ret) {
+
+                        if (ret.state == '1') {
+
+                            if (vm.data.like_member == '') {
+
+                                vm.data.like_member += ret.like_member;
+
+                            } else {
+                                vm.data.like_member += ',' + ret.like_member;
+                            }
+
+                            vm.data.is_like = '1';
+                        } else {
+
+                            vm.data.like_member = ret.like_member;
+                            vm.data.is_like = '0';
+                        }
+
+                        vm.data.like = ret.count;
+                    } else {
+
+                        api.toast({
+                            msg: '网络错误',
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+
+                    }
+                });
+            },
+
+            comment(){//评论
+                  $api.css($api.dom('footer'),'display:block');
+                  document.getElementById('reply_txt').focus();
+                  $api.attr($api.dom('#reply_txt'), 'placeholder', '');
+                  send.onclick = function(){
+                      var content = $api.val($api.byId('reply_txt'));
+
+                      api.ajax({
+                          url: serverurl,
+                          method: 'get',
+                          data: {
+                              values: {
+                                  type: '10136',
+                                  uid:uid,
+                                  id:id,
+                                  content:content,
+                                  token:token
+                              }
+                          }
+                      },function(ret, err){
+
+                          vm.data.rewlist = ret.data;
+                          vm.data.rew = ret.count;
+                          $api.val($api.byId('reply_txt'),'');
+                          $api.attr($api.dom('.footer button'), 'disabled', 'true');
+                          $api.removeCls($api.dom('.footer button'), 'on');
+                          $api.css($api.dom('footer'), 'display:none');
+                      });
+                  }
+            },
+
+            Reply(replier_id,replier_nickname,rew_id){//点击回复
+
+                document.getElementById('reply_txt').focus();
+                if (replier_id == uid) {
+                  showDel(rew_id);
+                }else{
+                  $api.css($api.dom('footer'),'display:block');
+                  $api.attr($api.dom('#reply_txt'), 'placeholder','回复:'+replier_nickname);
+                  goReply(replier_id,replier_nickname);
+                }
+
+            },
+
+            viewPicture(data){
+              var url = [];
+              data.forEach(function(ret){
+                  url.push(ret.url);
+              })
+              var imageBrowser = api.require('imageBrowser');
+              imageBrowser.openImages({
+                  imageUrls: url
+              });
+            },
+
+        }
+    })
+
+    //聚焦回复框
+    function MaxMe(){
+        if ($api.val($api.byId('reply_txt')) == '') {
+            $api.attr($api.dom('.footer button'), 'disabled', 'true');
+            $api.removeCls($api.dom('.footer button'), 'on');
+
+        }else{
+            $api.removeAttr($api.dom('.footer button'), 'disabled');
+            $api.addCls($api.dom('.footer button'), 'on');
+        }
+    }
+
+    //回复
+   function goReply(replier_id,replier_nickname){
+     var send = $api.byId('send');
+     send.onclick = function(){
+       var content = $api.val($api.byId('reply_txt'));
+       api.ajax({
+           url: serverurl,
+           method: 'get',
+           data: {
+               values: {
+                   type: '10079',
+                   id:id,//学客圈
+                   uid:replier_id,//用户id
+                   replier:uid,//回复者id
+                   content:content,//回复内容
+               },
+           }
+       },function(ret, err){
+        
+           if (ret) {
+               vm.data.rewlist = ret.data;
+               $api.val($api.byId('reply_txt'),'');
+               $api.attr($api.dom('.footer button'), 'disabled', 'true');
+               $api.removeCls($api.dom('.footer button'), 'on');
+               $api.attr($api.dom('#reply_txt'), 'placeholder', '');
+               $api.css($api.dom('footer'), 'display:none');
+           } else {
+               api.toast({
+                   msg: '网络错误',
+                   duration: 2000,
+                   location: 'bottom'
+               });
+
+           }
+       });
+     }
+   }
+
+
+   //展示删除按钮删除评论
+   function showDel(rew_id){
+      event.stopPropagation();
+      $api.css($api.dom('.del'),'display:block');
+      $api.css($api.dom('footer'),'display:none');
+      var del = $api.dom('.del');
+      del.onclick = function(e){
+        event.stopPropagation();
+         api.ajax({
+               url: serverurl,
+               method: 'get',
+               data: {
+                   values: {
+                       type: '10137',
+                       token:token,
+                       rew_id:rew_id,
+                       id:id
+                   }
+               }
+           },function(ret, err){
+
+               if (ret) {
+                    $api.css($api.dom('.del'),'display:none');
+                    vm.data.rewlist = ret.data;
+                    vm.data.rew = ret.count;
+               } else {
+
+                   api.toast({
+                       msg: '网络错误',
+                       duration: 2000,
+                       location: 'bottom'
+                   });
+
+               }
+           });
+      }
+
+      document.onclick = function(){
+        del.style.display = "none";
+      }
+   }
+
+</script>

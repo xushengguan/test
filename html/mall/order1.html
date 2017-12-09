@@ -3,39 +3,202 @@
 
 <head>
 	<meta charset="UTF-8">
+	<title>全部订单</title>
 	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
 	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-	<title>全部订单</title>
 	<link rel="stylesheet" href="../../css/api.css">
 	<link rel="stylesheet" href="../../css/common.css">
-	<link rel="stylesheet" href="//at.alicdn.com/t/font_384452_rn43nfcu23ej0pb9.css">
+	<link rel="stylesheet" href="../../css/loading.css">
+	<link rel="stylesheet" href="../../icon/iconfonts/iconfont.css">
 	<link rel="stylesheet" href="../../css/6order.css">
-	<script src="../../script/my.js"></script>
+	<style media="screen">
+	.NoAct {
+			width: 100%;
+			height:50px;
+			position: absolute;
+			top: 50%;
+			left: 0;
+			margin-top: -25px;
+			text-align: center;
+			color: #333;
+			font-size: 16px;
+	}
+
+	</style>
 </head>
 
 <body>
+  <div id="app" v-cloak>
+		  <div class="NoAct" v-if="data == '' || data == undefined || data == null">暂无收货订单！</div>
+			<div v-for="v in data" v-else>
+					<div class="sign-con hide" @click="goDetail(v.order_id)">
+		        <!-- 已签收状态（已签收）、配送中（配送中）、退换货处理中（退换处理中）、退换货完成（退换货完成） -->
+						<span class="fl">状态:
+							<label style="color:#fcb068;">配送中</label>
+						</span>
+            <span class="fr" v-if="role == '2'">总价:<label>¥{{v.goods_amount}}</label></span>
+						<span class="fr" v-else>总价:<label>{{v.goods_amount}}学分</label></span>
+					</div>
+					<div class="dispich-con">
+						<div class="purchase-top" @click="goLoglist(v.logistics_company,v.tracking_number)" v-if="v.status !== null">
+							<p class="adds">{{v.status.status}}</p>
+							<p class="time">{{v.status.time}}</p>
+							<i class="iconfont icon-gengduo1 icon-more"></i>
+						</div>
+						<div class="taste-con hide" style="position:relative;">
 
-	<!-- 待收货 -->
-	<div class="sign-con hide">
-		<span class="fl">状态:<label style="color:#fcb068;">配送中</label></span>
-		<span class="fr">总价:<label>50学分</label></span>
-	</div>
-	<div class="purchase-con">
-		<div class="purchase-top">
-			<p class="adds">[广州市]【广东省广州市天河区东圃】您已签收您已签收您已签收您已签收您已签收</p>
-			<p class="time">2017-08-13&nbsp;&nbsp;11:50:32</p>
-			<i class="iconfont icon-gengduo1 icon-more"></i>
-		</div>
-		<div class="taste-con hide" style="position:relative;">
-			<span class="fl square"></span>
-			<p class="fl">
-				<h6 class="free">免费品尝南山十一鸡</h6>
-				<h6 class="chicken">南山十一鸡</h6>
-				<span class="paper">1件</span>
-			</p>
-			<span class="fr sure">确认收货</span>
-		</div>
+							<img class="fl square" :src="v.imgurl" alt="">
+							<div class="fl" style="width:45%">
+								<h6 class="free single">{{v.goods_name}}</h6>
+								<h6 class="chicken more2">{{v.abs}}</h6>
+								<span class="paper">{{v.goods_number}}件</span>
+							</div>
+
+							<!-- 配送中状态添加 -->
+							<span class="fr sure" style="z-index:99" @click="confirmReceipt(v.order_id)">确认收货</span>
+
+						</div>
+					</div>
+		  </div>
 	</div>
 </body>
-
 </html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript">
+		apiready = function(){
+				var token = $api.getStorage('token');
+				var id = $api.getStorage('id');
+				loading();
+
+				vm.get_notOrder(token,id);
+
+
+				//刷新
+        api.setRefreshHeaderInfo({
+            loadingImg: 'widget://image/refresh.png',
+            bgColor: '#444',
+            textColor: '#fff',
+            textUp: '释放立即刷新...',
+            textLoading: '加载中···',
+            showTime: false
+        }, function(ret, err) {
+            //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+            vm.get_notOrder(token,id);
+            api.refreshHeaderLoadDone();
+        });
+
+		}
+
+		var vm = new Vue({
+				el:'#app',
+				data:{
+						data:[],
+						role:''
+				},
+				methods:{
+						get_notOrder(token,id){//获取未收货的订单
+							  $api.css($api.dom('#app'), 'display:none');
+								$api.css($api.dom('#loading'),'display:block');
+								api.ajax({
+								    url: serverurl,
+								    method: 'get',
+								    data: {
+								        values: {
+								            type: '10110',
+														token:token,
+														uid:id
+								        },
+								    }
+								},function(ret, err){
+									  $api.css($api.dom('#app'),'display:block');
+                    $api.css($api.dom('#loading'),'display:none');
+								    if (ret) {
+												vm.data = ret;
+												vm.role = $api.getStorage('role');
+
+								    } else {
+								        api.toast({
+								            msg: '网络错误',
+								            duration: 2000,
+								            location: 'bottom'
+								        });
+
+								    }
+								});
+						},
+
+						goLoglist(logistics_company,tracking_number){//物流信息
+								api.openWin({
+										name: '6Logistics_info_title',
+										url: './6Logistics_info_title.html',
+										pageParam: {
+												logistics_company: logistics_company,
+												tracking_number:tracking_number
+										}
+								});
+						},
+
+						goDetail(order_id){//跳到订单详情
+								api.openWin({
+								    name: '6orderDatail_title',
+								    url: './6orderDatail_title.html',
+								    pageParam: {
+								        order_id: order_id
+								    }
+								});
+						},
+
+						confirmReceipt(order_id) { //确认收货
+							api.confirm({
+								title: '确认收货',
+								msg: '请确认收到货后，再进行确认操作',
+								buttons: ['确定', '取消']
+							}, function(ret, err) {
+								var index = ret.buttonIndex;
+								if (index == '1') {
+									$api.css($api.dom('#loading'), 'display:block');
+									api.ajax({
+										url: serverurl,
+										method: 'get',
+										data: {
+											values: {
+												type: '10131',
+												token: token,
+												order_id: order_id
+											},
+										}
+									}, function(ret, err) {
+										$api.css($api.dom('#loading'), 'display:none');
+										if (ret) {
+
+											if (ret.status == '1') {
+												vm.get_notOrder();
+											}else{
+												api.toast({
+												    msg: '确认收货失败',
+												    duration: 2000,
+												    location: 'bottom'
+												});
+
+											}
+										} else {
+
+											api.toast({
+												msg: '网络错误',
+												duration: 2000,
+												location: 'bottom'
+											});
+										}
+									});
+								};
+							});
+						}
+
+				}
+		})
+
+
+
+</script>

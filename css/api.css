@@ -12,7 +12,7 @@ html,body {
 	-webkit-text-size-adjust:none;
 	-webkit-tap-highlight-color:rgba(0, 0, 0, 0);
 	-webkit-user-select:none;
-	background-color: #fff;
+	background-color: #efeff4;
 }
 nav,article,aside,details,main,header,footer,section,fieldset,figcaption,figure{
 	display: block;
@@ -32,10 +32,11 @@ input,button,textarea {
 	padding:0;
 	font-size:1em;
 	line-height:1em;
-	outline:none;
-	/*-webkit-appearance:none;*/
+	-webkit-appearance:none;
 	background-color:rgba(0, 0, 0, 0);
 }
+input,button,select,textarea{outline:none};
+textarea{resize:none};
 span{
 	display:inline-block;
 }
@@ -81,10 +82,17 @@ td,th {
 	content: '加载更多';
 }
 
+html,body {  font-size:14px; height:100%;  }
+.hover{ opacity: .8; }
+
+#main{ -webkit-box-flex: 1; -webkit-flex: 1; flex: 1; overflow-y: auto;}
+#wrap{ height: 100%;  display: -webkit-box;	display: -webkit-flex;	display: flex; -webkit-box-orient: vertical;-webkit-flex-flow: column;flex-flow: column;}
+
 /*单行文本溢出显示省略号*/
 .single{ overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
 /*多行文本溢出显示省略号*/
-.more{ display: -webkit-box; -webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;}
+.more{ display: -webkit-box; -webkit-box-orient: vertical;-webkit-line-clamp: 6;overflow: hidden;}
+.more2{ display: -webkit-box; -webkit-box-orient: vertical;-webkit-line-clamp: 2;overflow: hidden;}
 
 /*去掉滚动条*/
 ::-webkit-scrollbar {
@@ -95,4 +103,22 @@ td,th {
     border-radius: 5px;
     -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
     background: rgba(0, 0, 0, 0.2);
-} 
+}
+
+.flex-wrap {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.flex-con {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow-y: auto;
+}
+
+/*vue 渲染数据使用*/
+[v-cloak]{
+	display: none !important;
+}

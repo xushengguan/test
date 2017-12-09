@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title>注册账户</title>
+      <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+      <link rel="stylesheet" type="text/css" href="../../css/loading.css"/>
+      <style>
+          .content{height: 100%; background: #fff; padding: 0 25px; overflow-y: auto;}
+          header{padding: 70px 0 45px 0; text-align: center; position: relative; font-size: 25px; font-weight: bold; color: #212121;}
+          header em{position: absolute; left: 0; top: 30px; width: 12px; height: 22px; background:url(../../image/goback.png) no-repeat center;
+          background-size: 12px 22px;}
+          .line{width: 100%; position: relative; margin-bottom: 25px;}
+          .line input,.address{height: 35px; line-height: 35px; width: 100%; font-size: 16px; color: #c0c0c0; border-bottom: 1px solid #d8d8d8;}
+          .line input:focus{border-bottom: 1px solid #ffb300;}
+          .line input.password{width: calc(100% - 25px); padding-right: 25px;}
+          .line input.code{width: calc(100% - 30%);}
+          .address em{width: 8px; height: 15px; position: absolute; top: 10px; right: 0; background: url(../../image/rt.png) no-repeat center;
+          background-size: 8px 15px;}
+          .line .lf_name{width: 28%; height: 35px; line-height: 35px; border-radius: 3px; border: 1px solid #ffb300; text-align: center;
+          font-size: 14px; color: #ffb300; float: right;}
+          .line .eye{width: 25px; height: 35px; position: absolute;  top: 0; right: 0; background: url(../../image/eye2.png) center no-repeat;
+          background-size: 22px 18px;}
+          .line .eye.on{background: url(../../image/eye1.png) center no-repeat; background-size: 22px 16px;}
+          .next{width: 100%; height: 43px; line-height: 43px; border-radius: 3px; background: #b1b1b1; text-align: center;
+          color: #fff; font-size: 18px; margin: 30px 0;}
+          .next.on{background: #ffb300;}
+
+          .bg{width: 185px; height: 157px; background: url(../../image/login_bg.png) no-repeat center; background-size: 185px 157px;
+          position: absolute; bottom: 0; right: 0;}
+          .bg.on{background: url(../../image/login_bg1.png) no-repeat center; background-size: 185px 157px;}
+
+          .pic img{width: 75px; height: 75px; margin-right: 8px;}
+          .prompt{float:right; width: calc(100% - 170px);}
+          .prompt .title{font-size: 16px; color: #333;}
+          .prompt .care{font-size: 13px; color: #c0c0c0;}
+      </style>
+  </head>
+  <body>
+      <div class="content">
+          <header>
+              <em onclick="go_back()"></em>
+              注册账户
+          </header>
+
+          <div class="line">
+              <input class="tel" type="number" placeholder="请输入您的手机号码" oninput="checkValue()" onpropertychange="checkValue()">
+          </div>
+          <div class="line">
+              <input class="code" type="number" placeholder="请输入验证码" oninput="checkValue()" onpropertychange="checkValue()">
+              <input type="button" class="lf_name" value="获取验证码" onclick="getCode(this)">
+          </div>
+          <div class="line">
+              <input class="password password1" type="password" placeholder="请输入密码" oninput="checkValue()" onpropertychange="checkValue()">
+          </div>
+          <div class="line">
+              <input class="password password2" type="password" placeholder="请确认密码" oninput="checkValue()" onpropertychange="checkValue()">
+              <em class="eye on" onclick="change(this)"></em>
+          </div>
+
+          <button class="next" disabled="disabled" onclick="register()">注册</button>
+
+      </div>
+      <!-- 老师加class on,学生家长则去掉 -->
+      <div class="bg" id="footer"></div>
+  </body>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/my.js"></script>
+  <script type="text/javascript">
+      var index;
+      var header = $api.dom('header');
+  		fixStatusBar_API(header);
+      apiready = function(){
+          focus_footer();
+          index = api.pageParam.index;
+          loading();
+          if (index == 2) {
+              $api.addCls($api.dom('.bg'), 'on');
+          };
+
+      };
+
+
+
+      // 获取验证码
+      var wait = 60;
+      function getCode(obj){
+          var myreg = /^1[0-9]{10}$/;//判断是否为手机号码,/^1[34578]\d{9}$/
+          var tel = $api.val($api.dom('.tel'));
+          if (!myreg.test(tel)) {
+              api.toast({
+                  msg: '请输入有效的手机号码',
+                  duration: 2000,
+                  location: 'middle'
+              });
+              return false;
+          }else{
+              SendCode(obj,tel,wait);
+          }
+      };
+
+      // 切换显示密码
+      function change(e){
+          if ($api.hasCls(e,'on')) {
+              $api.attr($api.dom('.password1'), 'type', 'text');
+              $api.attr($api.dom('.password2'), 'type', 'text');
+              $api.removeCls(e, 'on');
+          }else{
+              $api.attr($api.dom('.password1'), 'type', 'password');
+              $api.attr($api.dom('.password2'), 'type', 'password');
+              $api.addCls(e, 'on');
+          }
+      }
+
+      //实时监测输入框输入事件
+      function checkValue(){
+          var tel = $api.val($api.dom('.tel'));
+          var password1 = $api.val($api.dom('.password1'));
+          var password2 = $api.val($api.dom('.password2'));
+          var code = $api.val($api.dom('.code'));
+          if (tel && code && password1 && password2) {
+              $api.addCls($api.dom('.next'), 'on');
+              $api.removeAttr($api.dom('.next'), 'disabled');
+          }else {
+            $api.removeCls($api.dom('.next'), 'on');
+            $api.attr($api.dom('.next'), 'disabled');
+          }
+      }
+
+      // 注册
+      function register(){
+        var tel = $api.val($api.dom('.tel'));
+        var password1 = $api.val($api.dom('.password1'));
+        var password2 = $api.val($api.dom('.password2'));
+        var code = $api.val($api.dom('.code'));
+        var myreg = /^1[0-9]{10}$/;//判断是否为手机号码,/^1[34578]\d{9}$/
+        var mypatrn = /^[0-9A-Za-z]{6,}$/;//密码长度不少于6位,并且由数字和字符组成
+        if (!myreg.test(tel)) {
+            api.toast({
+                msg: '请输入有效的手机号码',
+                duration: 2000,
+                location: 'middle'
+            });
+            return false;
+        }else if (code == '') {
+            api.toast({
+                msg: '请输入验证码',
+                duration: 2000,
+                location: 'middle'
+            });
+            return false;
+
+        }else if (!mypatrn.test(password1)) {
+            api.toast({
+                msg: '请输入至少6位数非中文密码',
+                duration: 2000,
+                location: 'middle'
+            });
+            return false;
+        }else if (password2 !== password1) {
+          api.toast({
+              msg: '两次密码输入不一致',
+              duration: 2000,
+              location: 'middle'
+          });
+          return false;
+        }
+        $api.css($api.dom('#loading'), 'display:block');
+        api.ajax({//注册
+            url: serverurl,
+            method: 'post',
+            data: {
+                values: {
+                     type: '10001',
+                     	tel:tel,
+                     code:code,
+                      pwd: password1,
+                     role: index//角色代号 1：学生家长，2：支教老师
+                },
+            }
+        },function(ret, err){
+            $api.css($api.dom('#loading'), 'display:none');
+
+            if (ret) {
+                if (ret.status == '1') {
+                    api.alert({
+                        title: '温馨提示',
+                        msg: '注册成功,本系统要实名认证才能使用',
+                    }, function(ret, err) {
+                        login(tel,password1);
+                    });
+                }else if (ret.status == '2') {
+                  api.toast({
+                      msg: '该号码已经注册',
+                      duration: 2000,
+                      location: 'middle'
+                  });
+                }else if (ret.status == '4') {
+                  api.toast({
+                      msg: '验证码不正确',
+                      duration: 2000,
+                      location: 'middle'
+                  });
+                }else {
+                  api.toast({
+                      msg: '注册失败',
+                      duration: 2000,
+                      location: 'middle'
+                  });
+                }
+            } else {
+
+                api.toast({
+                    msg: '网络错误',
+                    duration: 2000,
+                    location: 'bottom'
+                });
+            }
+        });
+      }
+
+      // 登录
+      function login(tel,pwd){
+          api.ajax({
+              url: serverurl,
+              method: 'post',
+              data: {
+                  values: {
+                      type: '10003',
+                       tel: tel,
+                       pwd:pwd,
+                       role:index
+                  },
+              }
+          },function(ret, err){
+            
+              if (ret) {
+
+                   if (ret.status == '1') {
+                      $api.setStorage('token', ret.token);
+                      $api.setStorage('id', ret.data.id);
+
+                      if (ret.data.role !== '2' && ret.data.complete_info == '0') {//角色代号 1：学生家长，2：班主任,complete_info是否实名认证 0:不是 1：是
+
+                          api.openWin({
+                              name: 'login4',
+                              url: './login4.html',
+                              pageParam: {
+                                  // id: ret.data.id,
+                                  role:ret.data.role,
+                                  update_status:ret.data.activate_status//是否激活学令牌 支教老师 0:不是 1：是
+                              },
+                              reload:true,
+                        			allowEdit:true
+                          });
+
+                      }else if (ret.data.role == '2' && ret.data.activate_status == '0') {
+
+                          api.openWin({
+                              name: 'login5',
+                              url: './login5.html',
+                              pageParam: {
+                                  // name: 'test'
+                              },
+                              reload:true,
+                        			allowEdit:true
+                          });
+
+                      }else{
+                          api.openWin({
+                              name: 'index',
+                              url: '../../index.html',
+                              pageParam: {
+                                  // name: 'test'
+                              },
+                              reload:true,
+                        			allowEdit:true
+                          });
+
+                      }
+                   }else if (ret.status == '0') {
+                      api.toast({
+                          msg: '密码错误',
+                          duration: 2000,
+                          location: 'middle'
+                      });
+                   }else{
+                     api.toast({
+                         msg: '账号未注册',
+                         duration: 2000,
+                         location: 'middle'
+                     });
+                   }
+
+              } else {
+
+                  api.toast({
+                      msg: '网络错误',
+                      duration: 2000,
+                      location: 'bottom'
+                  });
+
+
+              }
+          });
+
+      }
+  </script>
+  </html>

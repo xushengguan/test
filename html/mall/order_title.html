@@ -5,23 +5,24 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
 	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-	<title>全部订单</title>
+	<title>订单管理</title>
 	<link rel="stylesheet" href="../../css/api.css">
 	<link rel="stylesheet" href="../../css/common.css">
 	<link rel="stylesheet" href="../../icon/iconfonts/iconfont.css">
 	<link rel="stylesheet" href="../../css/6order.css">
-	<script src="../../script/my.js"></script>
+
 </head>
 <style media="screen">
-
+header{height: 50px; line-height: 50px; background: #ffb300; color: #fff; font-size: 18px; position: relative;}
+header em{width: 50px; height: 50px; background: url(../../image/back.png) no-repeat center;
+	background-size: 20px; float: left;}
 </style>
 <body>
 
-	<div id="wrap">
     <div id="header_top">
-				<header class="homePage-header" onclick="go_back()">
-					<h4>全部订单</h4>
-					<i class="iconfont icon-fanhui icon-return"></i>
+				<header>
+						<em onclick="go_back()"></em>
+						订单管理
 				</header>
 				<ul class="order-ul hide" id="TagLis">
 					<li class="add-borderColor" tapmode="hover" onclick="BtnTag(this)">全部订单</li>
@@ -30,13 +31,14 @@
 				</ul>
     </div>
 
-	</div>
-
 </body>
 
 </html>
 <script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
 <script type="text/javascript">
+	var header = $api.dom('header');
+	fixStatusBar_API(header);
 	apiready = function() {
 		orderGroup();
 	}
@@ -49,7 +51,8 @@
 				name: 'order'+i,
 				url: 'order'+i+'.html',
 				bgColor: '#f4f4f4',
-				bounces:true
+				bounces:true,
+				reload:true
 			})
 		}
 
@@ -64,7 +67,6 @@
 				y: topHeader,
 				w: api.winWidth, //当前 window 宽度，数字类型
 				h: 'auto'
-
 			},
 			index: 0,
 			frames: frames

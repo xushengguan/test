@@ -9,44 +9,14 @@
     <link rel="stylesheet" type="text/css" href="./css/api.css" />
     <link rel="stylesheet" type="text/css" href="./css/style.css" />
     <style>
-
-        .title_bg{
-            height: 50px;
-            line-height: 50px;
-            text-align: center;
-            color: #323237;
-            position: relative;
-            font-size: 18px;
-            background: #fcd058;
-            font-size: 16px;
-            font-weight: bold;
+        header {
+            background: #ffb300;
         }
-
-        .title_bg:nth-child(1) em,.title_bg:nth-child(2) em{
-            position: absolute;
-            top: 16px;
-            right: 15px;
-            display: block;
-        }
-
-        .title_bg em {
-            width: 18px;
-            height: 18px;
-            background: url(./image/add.png) no-repeat center;
-            background-size: contain;
-        }
-
-        .title_bg em.on{
-
-            width: 17px;
-            height: 18px;
-            background: url(./image/service.png) no-repeat center;
-            background-size: contain;
-        }
-
 
         header ul li {
             display: none;
+            height: 50px;
+            background: #ffb300;
         }
 
         header ul li.active {
@@ -55,15 +25,18 @@
 
         #footer {
             background-color: #fff;
+            /*box-shadow: 0 3px 3px rgba(0, 0, 0, .1);*/
+            border-top: 1px solid #f2f2f2;
         }
 
         #footer ul li {
-            padding-top: 36px;
+            padding-top: 30px;
             padding-bottom: 6px;
             background: url() no-repeat center 6px;
-            background-size: auto 25px;
+            background-size: auto 20px;
             text-align: center;
-            color: #212121;
+            color: #3f3f3f;
+            font-size: 12px;
         }
 
         #footer ul li.active {
@@ -71,70 +44,126 @@
         }
 
         #footer ul li:nth-child(1) {
-            background-image: url(./image/my.png);
+            background-image: url(./image/home.png);
         }
 
         #footer ul li:nth-child(2) {
-            background-image: url(./image/activity.png);
-        }
-
-        #footer ul li:nth-child(3) {
             background-image: url(./image/circle.png);
         }
 
-        #footer ul li:nth-child(4) {
+        #footer ul li:nth-child(3) {
             background-image: url(./image/mall.png);
         }
 
+        #footer ul li:nth-child(4) {
+            background-image: url(./image/my.png);
+        }
+
         #footer ul li:nth-child(1).active {
-            background-image: url(./image/my1.png);
+            background-image: url(./image/home1.png);
         }
 
         #footer ul li:nth-child(2).active {
-            background-image: url(./image/activity1.png);
-        }
-
-        #footer ul li:nth-child(3).active {
             background-image: url(./image/circle1.png);
         }
 
-        #footer ul li:nth-child(4).active {
+        #footer ul li:nth-child(3).active {
             background-image: url(./image/mall1.png);
         }
 
-        .flex-con {
-            overflow: auto
+        #footer ul li:nth-child(4).active {
+            background-image: url(./image/my1.png);
         }
+
+        .input_box {
+            margin: 5px 10px;
+            position: relative;
+            background: #fff;
+            border-radius: 2px;
+        }
+
+        .input_box input {
+            width: calc(100% - 55px);
+            height: 40px;
+            line-height: 40px;
+            background: #fff;
+            border-radius: 2px;
+            color: #ccc;
+            font-size: 16px;
+            padding-left: 15px;
+            padding-right: 40px;
+            text-align: left;
+        }
+
+        .input_box em {
+            display: block;
+            width: 40px;
+            height: 40px;
+            background: url(./image/search.png) no-repeat center;
+            background-size: 16px;
+            position: absolute;
+            top: 0;
+            right: 10px;
+        }
+
+        .title {
+            color: #fff;
+            font-size: 18px;
+            text-align: center;
+            line-height: 50px;
+        }
+
+        header li span {
+            line-height: 50px;
+            color: #fff;
+            font-size: 18px;
+            padding: 0 15px;
+        }
+
+        .msg {
+            float: left;
+        }
+
+        .admin {
+            float: right;
+        }
+
 
     </style>
 </head>
 
 <body>
-    <div id="wrap" class="flex-wrap flex-vertical">
+    <div id="wrap">
         <header id="header">
             <ul>
-                <li class="border-b"></li>
-                <li class="border-b active">
-                    <div class="title_bg">活动汇</div>
-                </li>
-                <li class="border-b">
-                    <div class="title_bg">学客圈<em></em></div>
+                <li class="active">
+                  
 
                 </li>
-                <li class="border-b">
-                    <div class="title_bg">学分商城<em class="on"></em></div>
+                <li>
+                    <div class="input_box">
+                        <input type="text" placeholder="请输入您想要搜索的内容">
+                        <em onclick="goSearch(this)"></em>
+                    </div>
+                </li>
+                <li>
+                    <div class="title">学分商城</div>
+                </li>
+                <li>
+                    <span class="msg" onclick="MyNews()">消息</span>
+                    <span class="admin" onclick="MyAccount()">账户管理</span>
                 </li>
             </ul>
         </header>
-        <div id="main" class="flex-con">
+        <div id="main">
 
         </div>
-        <div id="footer" class="border-t">
+        <div id="footer">
             <ul class="flex-wrap">
-                <li tapmode="hover" onclick="randomSwitchBtn(0);" class="flex-con active">个人中心</li>
-                <li tapmode="hover" onclick="randomSwitchBtn(1);" class="flex-con">活动汇</li>
-                <li tapmode="hover" onclick="randomSwitchBtn(2);" class="flex-con">学客圈</li>
-                <li tapmode="hover" onclick="randomSwitchBtn(3);" class="flex-con">商城</li>
+                <li tapmode="hover" onclick="randomSwitchBtn(0);" class="flex-con active">首页</li>
+                <li tapmode="hover" onclick="randomSwitchBtn(1);" class="flex-con">学客圈</li>
+                <li tapmode="hover" onclick="randomSwitchBtn(2);" class="flex-con">商城</li>
+                <li tapmode="hover" onclick="randomSwitchBtn(3);" class="flex-con">个人中心</li>
             </ul>
         </div>
     </div>
@@ -144,15 +173,18 @@
 <script type="text/javascript" src="./script/api.js"></script>
 <script type="text/javascript" src="./script/my.js"></script>
 <script type="text/javascript">
+    var header = $api.dom('header');
+    fixStatusBar_API(header);
+
     //此事件是在api对象准备完毕后产生，在每个Window或Frame的HTML代码中都需要监听此事件，以确定APICloud扩展对象已经准备完毕，可以调用了。
     apiready = function() {
         //适配iOS7+、Android4.4+系统状态栏，为传入的DOM元素增加适当的上内边距，避免header与状态栏重叠
-        // $api.fixStatusBar( $api.dom('#main') );
+        $api.fixStatusBar( $api.dom('header') );
 
         //设置状态栏样式为白色（适用于深色背景）或黑色（适用于浅色背景），以及设置状态栏背景颜色
         // api.setStatusBarStyle({
         //     style: 'dark',
-        //     color: '#fcd058'
+        //     color: '#ffb300'
         // });
 
         $api.setStorage('SYSTEMTYPE', api.systemType);
@@ -160,61 +192,49 @@
         $api.setStorage('FULLSCREEN', api.fullScreen);
         $api.setStorage('IOS7STATUSBARAPPEARANCE', api.iOS7StatusBarAppearance);
 
+
         footerHeight = $api.dom("#footer").offsetHeight;
         headerHeight = $api.dom("#header").offsetHeight;
-        randomSwitchBtn(0); //默认打开第一个组
+        var NextPage = api.pageParam.index;
+        if (NextPage) {
+            randomSwitchBtn(NextPage);
 
-        var tel = $api.getStorage('tel');
-        //检查用户登陆状态
-        api.ajax({
-            url: serverurl,
-            method: 'get',
-            data: {
-                values: {
-                    type: '10022',
-                    tel: tel
-                }
-            }
+        } else {
+            randomSwitchBtn(0); //默认打开第一个组
+        }
+
+        //监听返回
+        api.addEventListener({
+            name: 'keyback'
         }, function(ret, err) {
-            if (ret) {
-                if (ret.status !== '1') { //1已经登录
-                    api.openWin({
-                        name: '1login',
-                        url: './html/login/1login.html',
-                        pageParam: {
-
-                        }
-                    });
-
-                }
-            } else {
+            if (daojishi == 0) {
+                //这里设置了倒计时为2秒
+                daojishi = 2000;
                 api.toast({
-                    msg: '网络错误',
+                    msg: '再按一次退出',
                     duration: 2000,
                     location: 'bottom'
                 });
-
+                kaishiJishi();
+            } else {
+                api.closeWidget({
+                    silent: false
+                });
             }
         });
+
 
     }
 
     // 随意切换按钮
     function randomSwitchBtn(index) {
+        $api.val($api.dom('.input_box input'),'');
         var eFootLis = $api.domAll('#footer li');
         var eheaderLis = $api.domAll('#header li');
         for (var i = 0, len = eFootLis.length; i < len; i++) {
             if (index == i) {
                 var y = 0 == index ? 0 : headerHeight;
-                // var y;
-                // if (index == 0) {
-                //     y = 0;
-                // }else if (index == 2) {
-                //     y = 90;
-                // }else {
-                //     y = 50;
-                // }
-
+                // var y = headerHeight;
                 $api.addCls(eFootLis[i], 'active');
                 $api.addCls(eheaderLis[i], 'active');
                 api.openFrame({
@@ -233,7 +253,7 @@
                     pageParam: {
                         id: api.pageParam.id //获取上一页登录后返回的信息
                     },
-                    // reload: true
+                    reload: true
                 });
             } else {
                 $api.removeCls(eFootLis[i], 'active');
@@ -248,5 +268,50 @@
 
     }
 
+    //  消息
+    function MyNews() {
+        api.openWin({
+            name: 'MyNews_title',
+            url: './html/setting/MyNews_title.html',
+            pageParam: {
+                // name: 'test'
+            }
+        });
+    }
 
+    // 账户管理
+    function MyAccount() {
+        api.openWin({
+            name: '7account',
+            url: './html/setting/7account.html',
+            pageParam: {
+                // name: 'test'
+            }
+        });
+    }
+
+    var daojishi = 0;
+    //倒计时
+    function kaishiJishi() {
+        if (daojishi > 0) {
+            setTimeout(function() {
+                daojishi = daojishi - 20;
+                kaishiJishi();
+            }, 20);
+        }
+    }
+
+    // 搜索
+    function goSearch(e){
+        var text = $api.val($api.prev(e));
+
+        api.openWin({
+            name: 'search',
+            url: './html/setting/search.html',
+            pageParam: {
+                text: text
+            }
+        });
+
+    }
 </script>

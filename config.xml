@@ -1,13 +1,12 @@
- <widget id="A6058865883817"  version="0.0.1">
-    <name>demo</name>
+ <widget id="A6058908802893"  version="0.0.1">
+    <name>学令牌</name>
     <description>
-        Example For APICloud.
+        学令牌
     </description>
-    <author email="developer@apicloud.com" href="http://www.apicloud.com">
-        Developer
-
-    </author>
-    <content src="./html/login/1login.html" />
+    <author email="1007237083@qq.com" href="http://www.apicloud.com">
+        嘘晃
+    </author>    <!-- ./index.html-->
+    <content src="./html/login/login0.html" />
     <access origin="*" />
     <preference name="pageBounce" value="false"/>
 	<preference name="appBackground" value="rgba(0,0,0,0.0)"/>
@@ -19,8 +18,8 @@
 	<preference name="fullScreen" value="false"/>
 	<preference name="autoUpdate" value="true" />
 	<preference name="smartUpdate" value="false" />
-	<preference name="debug" value="true"/>  <preference name="iOS7StatusBarAppearance" value="true" />
-	<preference name="statusBarAppearance" value="true"/>  <!-- 下拉刷新模块 -->  <!-- <preference name="customRefreshHeader" value="UIPullRefresh"/> -->
+	<preference name="debug" value="true"/>  <!-- 沉浸式头部true -->
+	<preference name="statusBarAppearance" value="true"/>  <!-- 配置键盘弹出方式    resize：弹出键盘时会把页面往上推移，iOS平台resize和auto等效;    pan：弹出键盘时页面不会被往上推移    auto：由系统根据输入框位置决定是否页面往上推移 -->  <preference name="softInputMode" value="resize"/>
 	<permission name="readPhoneState" />
 	<permission name="camera" />
 	<permission name="record" />
@@ -28,5 +27,5 @@
 	<permission name="fileSystem" />
 	<permission name="internet" />
 	<permission name="bootCompleted" />
-	<permission name="hardware" />
+	<permission name="hardware" />  <!-- 百度模块 -->  <feature name="bMap">   <param name="android_api_key" value="PBWlITa4UxIxmbBF1leAMkhlXAn6gQAc" />   <param name="ios_api_key" value="bGFaUIzODnXMXEkHfbAC1WYnnX3PIt5O" /> </feature>
 </widget>

@@ -1,421 +1,328 @@
+
 <!DOCTYPE html>
 <html>
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>学分商城</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css" />
-    <link rel="stylesheet" type="text/css" href="../css/style.css" />
-    <link rel="stylesheet" type="text/css" href="../css/loading.css" />
-    <link rel="stylesheet" type="text/css" href="../icon/iconfonts/iconfont.css" />
+    <title>支教老师个人中心</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+
     <style>
+        .top_bg{padding: 0 15px 15px 15px; background: #ffb300; position: relative; height: 67px;}
+        .pic{width: 63px; height: 63px; border: 2px solid #fff; border-radius: 2px; float: left;
+        position: relative; margin-right: 15px;}
+        .pic img{width: 100%; height: 100%;}
+        .pic em{display: block; width: 12px; height: 15px; background: url(../image/ident.png) no-repeat center;
+        background-size: contain; position: absolute; bottom: -3px; right: -7px;}
+        .msg{width: 70%; float: left; }
+        .msg .name{font-size: 17px; font-weight: bold; color: #fff; margin-bottom: 5px;}
+        .msg .id{font-size: 14px; color: #ffeaba;}
+        .nav{height: 60px; background: #fff;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;
+        margin-bottom: 7px; box-shadow: -2px 1px 2px rgba(0,0,0,.1);}
+        .nav li{-webkit-box-flex: 1;-webkit-flex: 1;flex: 1;background: url() no-repeat center 10px; background-size:24px;
+        text-align: center; font-size: 13px; color: #999; padding-top: 36px;}
+        .nav li.nav1{background: url(../image/nav1.png) no-repeat center 10px; background-size:24px;}
+        .nav li.nav2{background: url(../image/nav2.png) no-repeat center 10px; background-size:24px;}
+        .nav li.nav3{background: url(../image/nav3.png) no-repeat center 10px; background-size:24px;}
 
-        /*个人信息区*/
+        .navMenu{background: #fff; box-shadow: 0 2px 5px #d4d4d4; border-radius: 3px;}
+        .navMenu li{height: 50px; line-height: 50px; border-bottom: 1px solid #efeff4; padding-right: 15px; padding-left: 43px;
+          background: url() no-repeat 15px center; font-size: 15px; color: #333; position: relative;}
+        .navMenu li:last-child{border-bottom: none;}
+        /*.navMenu li:nth-child(1){background: url(../image/menu1.png) no-repeat 15px center; background-size: 18px;}*/
+        .navMenu li:nth-child(1){background: url(../image/menu2.png) no-repeat 15px center; background-size: 15px 19px;}
+        .navMenu li:nth-child(2){background: url(../image/menu3.png) no-repeat 15px center; background-size: 17px 19px;}
+        .navMenu li:nth-child(3){background: url(../image/menu4.png) no-repeat 15px center; background-size: 18px 14px;}
+        .navMenu li:nth-child(4){background: url(../image/menu5.png) no-repeat 15px center; background-size: 18px;}
+        .navMenu li em{display: block; width: 100px; height: 50px; background: url(../image/rt.png) no-repeat right center;
+          background-size: 8px 15px; position: absolute; top: 0; right: 15px; text-align: right; padding-right: 18px; font-size: 15px;
+        color: #999;}
 
-        .personal_title {
-            background: #fff;
-            padding: 6px 25px;
-            box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            position: relative;
-            margin-bottom: 5px;
-            min-height: 45px;
-            display: flex;
-            align-items: center;
-        }
-
-        .personal_title .per_id_pic {
-            width: 33px;
-            height: 33px;
-            border-radius: 100%;
-            -webkit-border-radius: 100%;
-            -moz-border-radius: 100%;
-            position: absolute;
-            top: 6px;
-            left: 25px;
-            overflow: hidden;
-        }
-
-        .personal_title .per_id_pic img {
-            width: 100%;
-        }
-
-        .personal_title .rt_msgbox {
-            padding-left: 40px;
-            width: 100%;
-        }
-
-        .rt_msgbox .name_vip {
-            line-height: 18px;
-        }
-
-        .rt_msgbox .name_vip .id_name {
-            color: #2196f3;
-            font-size: 12px;
-        }
-
-        .rt_msgbox .name_vip .cret_num {
-            float: right;
-            color: #5c5c5c;
-            font-size: 12px;
-        }
-
-        .rt_msgbox .name_vip .cret_num em {
-            font-size: 13px;
-            color: #ff5252;
-        }
-
-        .bt_msg {
-            font-size: 10px;
-            color: #999;
-            overflow: hidden;
-        }
-
-        .bt_msg span {
-            font-size: 10px;
-            color: #999;
-        }
-
-        .bt_msg .credit_date {
-            float: right;
-        }
-
-        .bt_msg .credit_date em {
-            font-size: 10px;
-            color: #999;
-        }
-        /*功能图标*/
-
-        .credit_icon {
-            background: #fff;
-            padding: 15px 0;
-            margin-bottom: 5px;
-        }
-
-        .credit_icon .credit_icon_btn {
-            display: block;
-            text-align: center;
-            color: #5c5c5c;
-            font-size: 10px;
-            float: left;
-            width: 25%;
-        }
-
-        .credit_icon .credit_icon_btn .icon1 {
-            display: block;
-            width: 30px;
-            height: 30px;
-            line-height: 30px;
-            border-radius: 50%;
-            -webkit-border-radius: 50%;
-            background: #b7dc68;
-            margin: 0 auto;
-        }
-
-        .credit_icon .credit_icon_btn .icon1.icon2 {
-            background: #fd9f4b;
-        }
-
-        .credit_icon .credit_icon_btn .icon1.icon3 {
-            background: #547adb;
-        }
-
-        .credit_icon .credit_icon_btn .icon1.icon4 {
-            background: #face57;
-        }
-
-        .credit_icon .credit_icon_btn p {
-            color: #5c5c5c;
-            font-size: 10px;
-            padding-top: 6px;
-        }
-        /*热门商品区*/
-
-        .hot_goods {
-            margin-bottom: 5px;
-        }
-
-        .hot_goods .hot_title {
-            height: 28px;
-            line-height: 28px;
-            margin-bottom: 1px;
-            text-align: center;
-            color: #ff5252;
-            font-size: 12px;
-            background: #fff;
-        }
-
-        .hot_goods .hot_title.discount {
-            color: #2196f3;
-            font-size: 12PX;
-        }
-
-        .hot_goods .good_box {
-            background: #fff;
-            padding: 0 0 25px 0;
-        }
-
-        .good_box .goodLink {
-            display: block;
-            width: 33.33%;
-            height: 33.33%;
-            float: left;
-            padding-top: 12px;
-        }
-
-        .good_box .goodLink .good_img {
-            width: calc(100% - 50px);
-            height: calc(100% - 50px);
-            overflow: hidden;
-            margin: 0 25px;
-        }
-
-        .good_box .goodLink .good_img img {
-            display: block;
-            width: 100%;
-            height: 100%;
-        }
-
-        .goodLink .mg_txt {
-            margin-left: 25px;
-            line-height: 16px;
-            width: calc(100% - 50px);
-        }
-
-        .goodLink .mg_txt .shop {
-            font-size: 12px;
-            color: #999;
-        }
-
-        .goodLink .mg_txt .good_name {
-            color: #5c5c5c;
-            font-size: 12px;
-        }
-
-        .goodLink .mg_txt .credit {
-            color: #ff5252;
-            font-size: 10px;
-        }
-
-        .pic {
-            width: 100%;
-            height: 150px;
-        }
-
-        .pic img {
-            display: block;
-            width: 100%;
-        }
-
-        #app{
-            height: 100%;
-        }
+        .top_bg .switch{display: block; width: 84px; height: 28px; background: url(../image/switch.png) no-repeat center;
+        background-size: contain; position: absolute; bottom: 15px; right: 0;}
     </style>
 </head>
-
-<body style="background:#f2f2f2;">
-  
-    <div id="app">
+<body>
+    <header class="top_bg">
         <div class="pic">
-            <!-- <img src="../image/pic10.jpg" alt=""> -->
+            <img src="../image/pic3.png" alt="" id="img" onclick="viewPicture()">
+            <em></em>
         </div>
-        <!-- 功能图标区 -->
-        <div class="credit_icon clearfix">
-            <a href="javascript:;" class="credit_icon_btn" v-for="v in ClassInfo">
-                <span class="icon1" v-bind:style="{background:v.color}">
-                  <i class="icon iconfont" v-bind:class="v.fonticon" style="font-size: 20px; color:#fff;"></i>
-                </span>
-                <p>{{v.tname}}</p>
-            </a>
+        <div class="msg">
+            <p class="name"></p>
+            <p class="id"></p>
         </div>
+        <span class="switch" onclick="exitLogin()"></span>
+    </header>
+    <ul class="nav">
+        <li class="nav1" onclick="MyCircle()">我的动态</li>
+        <li class="nav2" onclick="BillDetail()">账单明细</li>
+        <li class="nav3" onclick="MyOrder()">我的订单</li>
+    </ul>
 
-        <!-- 热门商品区 -->
-        <div class="hot_goods">
-            <div class="hot_title">
-                <i class="icon iconfont icon-remen" style="font-size: 15px; color: #ff5252"></i> 热门商品
-            </div>
-            <div class="good_box clearfix" id="hot_goods">
-                <a href="javascript:;" class="goodLink" v-for="v in hotInfo" @click="go_goodsDetail(v.id)">
-                    <div class="good_img">
-                        <img :src="v.imgurl" alt="">
-                    </div>
-                    <div class="mg_txt">
-                        <div class="shop single">
-                            {{v.goods_name}}
-                        </div>
-                        <div class="good_name single">{{v.abs}}</div>
-                        <div class="credit">{{v.total}}学分</div>
-                    </div>
-                </a>
-            </div>
-        </div>
-
-        <!-- 新品优惠 -->
-        <div class="hot_goods">
-            <div class="hot_title" style="color:#2196f3">
-                <i class="icon iconfont icon-xinpin" style="font-size: 15px;"></i> 新品优惠
-            </div>
-            <div class="good_box clearfix">
-                <a href="javascript:;" class="goodLink" v-for="v in hotInfo" @click="go_goodsDetail(v.id)">
-                    <div class="good_img">
-                        <img :src="v.imgurl" alt="">
-                    </div>
-                    <div class="mg_txt">
-                        <div class="shop single">
-                            {{v.goods_name}}
-                        </div>
-                        <div class="good_name single">{{v.abs}}</div>
-                        <div class="credit">{{v.total}}学分</div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
+    <ul class="navMenu" id="app">
+        <!-- <li>成长记录<em></em></li> -->
+        <li onclick="Address()">收货地址<em></em></li>
+        <li onclick="Rating()">信用评级<em id="star"></em></li>
+        <li onclick="goBindCard()">绑定银行卡<em class="isBind"></em></li>
+        <li>规则与帮助<em></em></li>
+    </ul>
 
 </body>
+</html>
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript" src="../script/my.js"></script>
-<script type="text/javascript" src="../script/vue.js"></script>
 <script type="text/javascript">
-    var header = $api.dom('.header');
-    fixStatusBar_API(header);
-    apiready = function() {
-        loading();
-        //轮播
-        var x = 0;
-        var y = 0;
-        var h = $api.dom('.pic').offsetHeight;
-        var paths = ['widget://image/pic10.jpg','widget://image/pic10.jpg'];
-        swiper(x,y,h,paths);
-        $api.css($api.dom('#loading'), 'display:block');
-        vm.getClass();
-        vm.get_hotgoods();
-        vm.get_Newsgoods();
-        $api.css($api.dom('#loading'), 'display:none');
+var id,token,index;
+apiready = function(){
+  id = $api.getStorage('id');
+  token = $api.getStorage('token');
 
-        //刷新
-        api.setRefreshHeaderInfo({
-            loadingImg: 'widget://image/refresh.png',
-            bgColor: '#444',
-            textColor: '#fff',
-            textUp: '释放立即刷新...',
-            textLoading: '加载中···',
-            showTime: false
-        }, function(ret, err) {
-            //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
-            window.location.reload();
-            api.refreshHeaderLoadDone();
+  api.addEventListener({
+      name: 'isBind'
+  }, function(ret, err){
+      if( ret.value.key ){
+           getWidthDraw();
+      }else{
+           console.log( JSON.stringify( err ) );
+      }
+  });
+
+  getUser();
+  getStar();
+  getWidthDraw();
+
+  // 监听用户信息修改
+  api.addEventListener({
+      name: 'ExInfo'
+  }, function(ret, err){
+      if( ret ){
+
+           getUser();
+      }else{
+           console.log( JSON.stringify( err ) );
+      }
+  });
+
+}
+    function getUser(){
+        api.ajax({//获取用户基本信息
+            url: serverurl,
+            method: 'get',
+            data: {
+                values: {
+                    type: '10035',
+                     uid: id,
+                   token: token
+                },
+            }
+        },function(ret, err){
+
+            if (ret.status == '1') {
+              if (!ret.data.headimgurl) {
+                  $api.attr($api.dom('#img'), 'src', '../image/pic3.png');
+              }else {
+                  $api.attr($api.dom('#img'), 'src', ret.data.headimgurl);
+              }
+              if (ret.data.nickname) {
+                  $api.text($api.dom('.name'), ret.data.nickname);
+              }else {
+                  $api.text($api.dom('.name'), ret.data.tel);
+              }
+
+              $api.text($api.dom('.id'), 'ID:'+ret.data.id);
+            }else {
+                api.toast({
+                    msg: '网络错误',
+                    duration: 2000,
+                    location: 'bottom'
+                });
+
+            }
+        });
+    }
+
+    function getWidthDraw(){//用户银行卡列表
+        api.ajax({
+            url: serverurl,
+            method: 'get',
+            data: {
+                values: {
+                    type: '10128',
+                   token:	token,
+                     uid:id
+                },
+            }
+        },function(ret, err){
+
+            if (ret.data) {
+                $api.text($api.dom('.isBind'), '已绑定');
+                index = 1;
+            }else{
+                index = 2;
+                $api.text($api.dom('.isBind'), '未绑定');
+            }
         });
 
-    };
+    }
 
-    var vm = new Vue({
-        el: '#app',
+  //查看信用星级
+  function getStar(){
+    api.ajax({
+        url: serverurl,
+        method: 'get',
         data: {
-            ClassInfo: [],
-            hotInfo: [],
-            newInfo: []
-        },
-        methods: {
-            getClass() { //读取商品分类
-                api.ajax({
-                    url: serverurl,
-                    method: 'get',
-                    dataType: 'json',
-                    data: {
-                        values: {
-                            type: '10030',
-                        }
-                    }
-                }, function(ret, err) {
-
-                    if (ret) {
-                        vm.ClassInfo = ret;
-
-                    } else {
-                        api.toast({
-                            msg: '网络错误',
-                            duration: 2000,
-                            location: 'middle'
-                        });
-
-                    }
-                });
+            values: {
+                 type: '10157',
+                 token:token,
+                 uid:id
             },
-
-            get_hotgoods() { //读取热门商品
-                api.ajax({
-                    url: serverurl,
-                    method: 'get',
-                    dataType: 'json',
-                    data: {
-                        values: {
-                            type: '10031',
-                            gtype: 'hot',
-                            num: '3'
-                        }
-                    }
-                }, function(ret, err) {
-
-                    if (ret) {
-                        vm.hotInfo = ret;
-
-                    } else {
-                        api.toast({
-                            msg: '网络错误',
-                            duration: 2000,
-                            location: 'middle'
-                        });
-
-                    }
-                });
-            },
-
-            get_Newsgoods() { //读取新品商品
-                api.ajax({
-                    url: serverurl,
-                    method: 'get',
-                    dataType: 'json',
-                    data: {
-                        values: {
-                            type: '10031',
-                            gtype: 'new',
-                            num: '6'
-                        }
-                    }
-                }, function(ret, err) {
-
-                    if (ret) {
-                        vm.newInfo = ret;
-
-                    } else {
-                        api.toast({
-                            msg: '网络错误',
-                            duration: 2000,
-                            location: 'middle'
-                        });
-
-                    }
-                });
-            },
-
-            go_goodsDetail(goods_id){
-              api.openWin({
-                  name: 'credit_goodDetail',
-                  url: './mall/credit_goodDetail.html',
-                  pageParam: {
-                      goods_id: goods_id
-                  }
-              });
-            }
         }
-    })
+    },function(ret, err){
+          if (ret) {
+              $api.html($api.byId('star'), ret.credit+'星');
+          }
+    });
+  };
 
+// 我的学客圈
+function MyCircle(){
+    api.openWin({
+        name: 'CircleIndex',
+        url: './circle/CircleIndex.html',
+        pageParam: {
+            id: id
+        }
+    });
 
+}
 
+// 订单管理
+function MyOrder(){
+  api.openWin({
+      name: 'order_title',
+      url: './mall/order_title.html',
+      pageParam: {
+          name: 'test'
+      }
+  });
+}
+
+//信用评级
+function Rating(){
+    api.openWin({
+        name: 'Rating_title',
+        url: './setting/Rating_title.html',
+        pageParam: {
+            // name: 'test'
+        }
+    });
+}
+
+//收货地址
+function Address(){
+    api.openWin({
+        name: '6address_title',
+        url: './mall/6address_title.html',
+        pageParam: {
+            // name: 'test'
+        }
+    });
+}
+
+//账单明细
+function BillDetail(){
+    api.openWin({
+        name: 'BillDetail',
+        url: './setting/BillDetail_title.html',
+        pageParam: {
+            // name: 'test'
+        }
+    });
+}
+
+// 去绑定银行卡
+function goBindCard(){
+    if (index == 1) {//index-1已绑定，2-未绑定
+        api.openWin({
+            name: 'widthdraw',
+            url: './MyBank/widthdraw.html',
+            pageParam: {
+                // name: 'test'
+            },
+            reload:true,
+      			allowEdit:true
+        });
+
+    }else{
+        api.openWin({
+            name: 'BindBankCard',
+            url: './MyBank/BindBankCard.html',
+            pageParam: {
+                // index: index
+            },
+            reload:true,
+      			allowEdit:true
+        });
+    }
+}
+
+//退出登录
+function exitLogin() {
+  api.confirm({
+      title: '切换身份提示',
+      msg: '确定要切换身份吗？',
+      buttons: ['确定', '取消']
+  }, function(ret, err) {
+      var index = ret.buttonIndex;
+      if (index == 1) {
+        api.ajax({
+           url: serverurl,
+           method: 'get',
+           data: {
+               values: {
+                   type:'10039',
+                   uid: id
+               },
+           }
+       },function(ret, err){
+           if (ret) {
+               if (ret.status == '1') {
+                 $api.clearStorage();//清除localStorage的所有数据，慎用
+                
+                 setTimeout(function(){
+                   api.openWin({
+                     name: 'login',
+                     url: './login/login0.html',
+                     reload:true,
+               			allowEdit:true
+                   });
+                 },800);
+               }
+           } else {
+               api.toast({
+                   msg: '网络错误',
+                   duration: 2000,
+                   location: 'bottom'
+               });
+           }
+       });
+      }
+  });
+}
+
+// 查看头像放大
+function viewPicture(){
+  var img = $api.attr($api.dom('#img'), 'src');
+  if (img !== '../image/pic3.png') {
+      var url = [];
+      url.push($api.attr($api.dom('#img'), 'src'));
+      var imageBrowser = api.require('imageBrowser');
+      imageBrowser.openImages({
+          imageUrls: url
+      });
+  }
+
+}
 </script>
-
-</html>

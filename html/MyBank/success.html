@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title>提现成功</title>
+      <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+      <style>
+          header {
+              height: 50px;
+              line-height: 50px;
+              background: #ffb300;
+              color: #fff;
+              font-size: 18px;
+              position: relative;
+          }
+
+          header em {
+              width: 50px;
+              height: 50px;
+              background: url(../../image/back.png) no-repeat center;
+              background-size: 20px;
+              float: left;
+          }
+
+         .icon{width: 100%; height: 174px; background: url(../../image/success.png) no-repeat center; background-size: 98px 97px;}
+         .prompt{font-size: 15px; text-align: center; color: #34302d;}
+         .confirm{width: 92%; height: 44px; background-color: #ffb300; border-radius: 5px; margin: 37px 4%; font-size: 18px;
+         color: #fff;}
+      </style>
+  </head>
+  <body>
+      <div id="wrap">
+        <header>
+            <em onclick="go_back()"></em> 提现成功
+        </header>
+        <div id="main">
+            <div class="icon"></div>
+            <div class="prompt">已提现<em>50</em>元，预计本月10日到账</div>
+            <button class="confirm" onclick="goIndex()">返回首页</button>
+        </div>
+      </div>
+  </body>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/my.js"></script>
+  <script type="text/javascript" src="../../script/vue.js"></script>
+  <script type="text/javascript">
+      var header = $api.dom('header');
+      fixStatusBar_API(header);
+      apiready = function(){
+          var moneyNum = api.pageParam.moneyNum;
+          if (moneyNum) {
+             $api.text($api.dom('.prompt em'), moneyNum);
+          }
+      };
+
+      // 返回首页
+      function goIndex(){
+
+
+          var role = $api.getStorage('role');
+          var NVTabBar = api.require('NVTabBar');
+          NVTabBar.close();
+
+          if (role == '2') {
+
+              api.openWin({
+                  name: 'index',
+                  url: '../../index.html',
+                  pageParam: {
+                      // name: 'test'
+                  },
+                  reload:true
+              });
+          }else {
+              api.openWin({
+                  name: 'index',
+                  url: '../../index1.html',
+                  pageParam: {
+                      // name: 'test'
+                  },
+                  reload:true
+              });
+          }
+
+
+      }
+  </script>
+  </html>

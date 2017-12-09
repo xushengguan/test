@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title>待激活学员</title>
+      <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+      <link rel="stylesheet" type="text/css" href="../../css/loading.css"/>
+      <style>
+          .Lis{background: #fff;}
+          .Lis li{padding: 8px 15px; border-bottom: 1px solid #f2f2f2;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;
+          -webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;font-size: 15px;}
+          .Lis li img{display: block; width: 43px; height: 43px; border-radius: 50%;}
+          .Lis li .name{ color: #212121; margin-left: 17px; width: calc(100% - 160px);}
+          .Lis li .date{color: #999; position: absolute; right: 15px;}
+          .noStu{text-align: center; font-size: 16px; color: #212121; padding: 20px;}
+      </style>
+  </head>
+  <body>
+    <div id="app" v-cloak>
+        <div class="noStu" v-if="status == '0'">暂无未激活的学员</div>
+        <ul class="Lis" v-else>
+            <li v-for="v in Info">
+              <img :src="v.stu_img" alt="">
+              <div class="name">{{v.stu_name}}</div>
+              <!-- <div class="date">2017/7/5</div> -->
+            </li>
+        </ul>
+    </div>
+  </body>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/my.js"></script>
+  <script type="text/javascript" src="../../script/vue.js"></script>
+  <script type="text/javascript">
+      var token,uid;
+      apiready = function(){
+          loading();
+          token = $api.getStorage('token');
+          uid = $api.getStorage('id');
+          vm.getWaitAct();
+
+          //刷新
+          api.setRefreshHeaderInfo({
+              loadingImg: 'widget://image/refresh.png',
+              bgColor: '#444',
+              textColor: '#fff',
+              textUp: '释放立即刷新...',
+              textLoading: '加载中···',
+              showTime: false
+          }, function(ret, err) {
+              //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+              vm.getWaitAct();
+              api.refreshHeaderLoadDone();
+          });
+      }
+
+      var vm = new Vue({
+          el:'#app',
+          data:{
+              Info:[],
+              status:''
+          },
+          methods:{
+              getWaitAct(){
+                  $api.css($api.byId('app'),'display:none');
+                  $api.css($api.byId('loading'),'display:block');
+
+                  api.ajax({//未激活学员列表
+                      url: serverurl,
+                      method: 'get',
+                      data: {
+                          values: {
+                              type: '10169',
+                              token: token,
+                              uid:uid
+                          },
+                      }
+                  },function(ret, err){
+
+                      $api.css($api.byId('loading'),'display:none');
+                      
+                      if (ret) {
+                          $api.css($api.byId('app'),'display:block');
+                          if(ret.status == '0'){
+                              vm.status = ret.status;
+                          }else{
+
+                            vm.Info = ret.data;
+
+                          }
+
+                      } else {
+
+                          api.toast({
+                              msg: '网络错误',
+                              duration: 2000,
+                              location: 'bottom'
+                          });
+
+                      }
+                  });
+
+              }
+          }
+      })
+  </script>
+  </html>

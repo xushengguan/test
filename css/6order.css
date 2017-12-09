@@ -1,5 +1,5 @@
 .order-ul{
-	width: 100%;
+	
 	font-size: 14px;
 	background:white;
 }
@@ -16,7 +16,6 @@
 }
 .sign-con{
 	color:#757575;
-	width: 100%;
 	background:white;
 	font-size: 14px;
 	padding: 14px 10px;
@@ -35,7 +34,7 @@
 	width: 100%;
 }
 .purchase-top{
-	width: 100%;
+
 	color:#212121;
 	font-size: 12px;
 	position: relative;

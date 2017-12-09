@@ -1,29 +1,10 @@
-html,body{
-	width: 100%;
-	height:100%;
-	box-sizing: border-box;
-	background:#f8f8f8;
-}
-* {
+
+/** {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-}
-/*单行文本溢出显示省略号*/
-/*需要加宽度width属来兼容部分浏览。*/
-.single{
-    overflow: hidden;
-    text-overflow:ellipsis;
-    white-space: nowrap;
-}
+}*/
 
-/*多行文本溢出显示省略号*/
-.more{
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
-}
 .img-size{
 	width: 100%;
 	height: 100%;
@@ -38,76 +19,7 @@ html,body{
 .fr{
 	float:right;
 }
-/* login */
-.login  .login01{
-	color:#7a530e;
-	font-size: 30px;
-	display: block;
-}
-.login  .login02{
-	color:#7a530e;
-	font-size: 40px;
-	font-weight: bold;
-	padding-bottom: 20px;
-}
-.img-triangle01{
-	width: 45px;
-  position: relative;
-  top: 30px;
-}
-.wrong-con{
-	width:100%;
-	text-align: center;
-	padding-bottom: 15px;
-}
-.wrong-con .icon-warn{
-	color:#f43530;
-	font-size:18px;
-}
-.wrong-num{
-	color:#f54f4b;
-	position: relative;
-  bottom: 2px;
-}
-.login-btns{
-	padding:0 4px 0 4px;
-}
-.login-btn{
-	display:block;
-	color:white;
-	border-radius:6px;
-	text-align:center;
-	padding: 14px 0;
-	width:100%;
-}
-input{
-	color:#9a9a9a;
-}
-/* login2 */
-.login2{
-	width:100%;
-	color: #212121;
-	font-size: 15px;
-}
-.login2-header{
 
-	background: #f2d776;
-	padding: 32px 35px 0 11px;
-}
-.login2 .icon-back{
-	color:#020201;
-	font-size:30px;
-	display:block;
-  position: relative;
-  right: 5px;
-}
-.header-left{
-	padding-left: 22px;
-}
-.login2 .icon-more{
-	font-size: 17px;
-	color: #848484;
-}
 /* activity2 */
 .activity-bottom{
 	width:100%;
@@ -138,30 +50,8 @@ input{
 	bottom:7px;
 	color:#5c5c5c;
 }
-/* 2promotion */
-.promotion .header-top{
-	width:100%;
-	background: #fcd058;
-	text-align: center;
-	position: relative;
-}
-.promotion .header-top .icon-fanhui{
-	color:#000000;
-	font-size:30px;
-	position: absolute;
-	left: 10px;
-	bottom: 7px;
-}
-.promotion .header-word{
-	padding: 35px 0 14px 0;
-	font-size: 16px;
-}
-/* 3creatAct */
-.title-line{
-	width:2px;
-	height:11px;
-	background:#fcd058;
-}
+
+
 /* fu-body 4promotion2*/
 .quitAct{
 	width:280px;
@@ -209,7 +99,7 @@ input{
 }
 /* creatAct */
 .creatAct-header{
-	background: #fcd058;
+	background: #ffb300;
 	padding: 32px 30px 0 11px;
 }
 .headerAct-left{
@@ -217,12 +107,12 @@ input{
 }
 .headerAct-left span:nth-of-type(1){
 	display: block;
-	color: #212121;
+	color: #fff;
 	font-weight: bold;
 	font-size: 25px;
 }
 .headerAct-left span:nth-of-type(2){
-	color: #3e3828;
+	color: #fff;
 	font-size: 12px;
 	padding:5px 0 29px 0;
 }
@@ -239,13 +129,17 @@ input{
 /* creatAct2 */
 .creatAct2-btns{
 	padding:0 4px;
-	font-size: 15px;
+	font-size: 18px;
 }
 .connection{
-	background:#fcd059;
-	margin-top: 15px;
-	margin-bottom: 19px;
-	border:1px solid #eec249;
+    background: #ffb300;
+    margin-top: 15px;
+    margin-bottom: 19px;
+    width: 100%;
+    height: 43px;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
 }
 /* 4promotion2 */
 .promotion2-bottom{
@@ -279,26 +173,7 @@ input{
 	padding: 18px 0;
 	width:100%;
 }
-/* 5homePage */
-.homePage-header{
-	width: 100%;
-	background: #fcd058;
-	position: relative;
-	padding:15px 0;
-}
-.homePage-header h4{
-	text-align: center;
-	font-size: 16px;
-	color: #212121;
-}
-.homePage-header .icon-return{
-	font-size: 29px;
-	color: #000000;
-	display: block;
-	position: absolute;
-	left: 11px;
-	top:10px;
-}
+
 /* godds */
 .goods-bottom{
 	width: 100%;
@@ -355,11 +230,10 @@ input{
 }
 .taste-con .free{
 	color:#212121;
-	padding-bottom:9px;
 }
 .taste-con .chicken{
 	color:#b4b4b4;
-	padding-bottom:11px;
+
 }
 .taste-con .credit{
 	color:#fdc290;
@@ -391,48 +265,7 @@ input{
 .performance-top p{
 	text-align: center;
 }
-/*.performance-ul{
-	width: 100%;
-	box-sizing: border-box;
-	color: #212121;
-	padding: 15px 44px 0 44px;
-}
-.performance-ul>li{
-	float: left;
-	width: 20%;
-	padding-bottom: 15px;
-}
-.performance-ul span{
-	width:100%;
-	display:block;
-}
-.golds{
-	position: relative;
-	right: 2px;
-}*/
-/*.rate-con{
-	position: relative;
-	width:100%;
-	left:4px;
-}
-.performance-ul .rate{
-	height: 2px;
-	background: #fcd058;
-	margin-top: 5px;
-}
-.performance-ul .circle{
-	height: 11px;
-	width: 11px;
-	border-radius: 50%;
-	background: #fcd058;
-	position: absolute;
-	left:0;
-  bottom: -3px;
-}*/
-/*.performance-ul .lastCircle{
-	top:0;
-	right:0;
-}*/
+
 /* 7earnings2 */
 .cash-btn{
 	padding: 0 15px;

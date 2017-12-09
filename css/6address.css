@@ -1,21 +1,18 @@
 .address-con{
 	width: 100%;
-	box-sizing: border-box;
 	margin-bottom:5px;
 }
 .address1-con{
-	width: 100%;
 	padding: 0 10px;
 	background: white;
 }
 .address1-top{
-	width: 100%;
 	font-size: 13px;
 	color: #212121;
 	padding:20px 0 11px 0;
 }
 .adds{
-	font-size: 10px;
+	font-size: 12px;
 	color:#a1a1a1;
 	line-height: 17px;
 	padding-bottom: 3px;
