@@ -273,6 +273,18 @@
         vm.getSubject();
         vm.getImg();
 
+        var map = api.require('bMap');
+        map.getCoordsFromName({
+            city: '北京',
+            address: '天安门'
+        }, function(ret, err) {
+            console.log(JSON.stringify(ret));
+            console.log(JSON.stringify(err));
+            if (ret.status) {
+                alert(JSON.stringify(ret));
+            }
+        });
+
     };
 
     var vm = new Vue({

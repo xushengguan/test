@@ -3,7 +3,7 @@
 }
 .order-top{
 	padding: 13px 11px 11px 11px;
-	border-bottom: 0.01rem solid #d2d3d5;
+	border-bottom: 1px solid #d2d3d5;
 	position: relative;
 }
 .order-top .icon-more{

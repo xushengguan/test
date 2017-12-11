@@ -290,9 +290,11 @@ function exitLogin() {
            if (ret) {
                if (ret.status == '1') {
                    $api.clearStorage();//清除localStorage的所有数据，慎用
-                   api.closeToWin({
-                       name: 'root'
-                   });
+                   setTimeout(function(){
+										 api.closeToWin({
+	                       name: 'root'
+	                   });
+									 },500);
                }
            } else {
                api.toast({

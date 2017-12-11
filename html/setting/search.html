@@ -43,67 +43,7 @@
           .user{background: #fff; margin-bottom: 15px;}
           .title{padding: 15px 10px; color: #999; font-size: 14px; border-bottom: 1px solid #f2f2f2;}
 
-          #swipe {
-              position: relative;
-              overflow: hidden;
-              visibility: hidden;
-              background-color: #fff;
-          }
-
-          .swipe-wrap {
-              overflow: hidden;
-              padding-bottom: 24px;
-          }
-
-          .swipe-page {
-              float: left;
-              width: 100%;
-              position: relative;
-          }
-
-          .swipe-page-item {
-              float: left;
-              width: 20%;
-              text-align: center;
-          }
-
-          .swipe-page-item>img {
-              width: 50px;
-              height:50px;
-              margin-top: 10px;
-              border-radius: 50%;
-          }
-
-          .swipe-page-item>span {
-              display: block;
-              font-size: 13px;
-              margin-top: 5px;
-          }
-
-          #swipeIndicator {
-              position: absolute;
-              left: 50%;
-              bottom: 0px;
-              -webkit-transform: translateX(-50%);
-              transform: translateX(-50%);
-          }
-
-          #swipeIndicator li {
-              height: 24px;
-              line-height: 24px;
-              width: 16px;
-              float: left;
-              background: url(../image/swipe/indicator.png) no-repeat center center;
-              background-color: transparent;
-              background-size: 8px 8px;
-          }
-
-          #swipeIndicator li.active {
-              background: url(../image/swipe/indicator_act.png) no-repeat center center;
-              background-color: transparent;
-              background-size: 8px 8px;
-          }
-          /* swipe end. */
+        
 
           .activity{background: #fff;}
           .ActLis li{padding: 15px 10px; display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;
@@ -116,11 +56,11 @@
           .noMsg{font-size: 16px; text-align: center; padding: 20px;}
 
           /*swiper begin*/
-    			/*.swiper-container {width: 100%; padding: 15px 0;}
+    			.swiper-container {width: 100%; padding: 15px 0;}
     	    .swiper-slide {text-align: center; font-size: 18px;}
     			.swiper-slide .pic{height: 65px; position: relative;}
     	    .swiper-slide .pic img{width: 63px; height: 63px;  border-radius: 50%; border:2px solid #fff;}
-    	    .swiper-slide .name{font-size: 14px; color: #212121; display: block; padding-top: 8px;}*/
+    	    .swiper-slide .name{font-size: 14px; color: #212121; display: block; padding-top: 8px;}
           /*swiper end*/
       </style>
   </head>
@@ -135,33 +75,34 @@
             </div>
           </header>
           <div id="main">
-              <div class="noMsg" v-if="act == '' && user == ''">暂无相关内容~</div>
-
-              <div class="contentMsg" v-else>
-                  <div class="user" v-if="user">
+              <div class="noMsg" v-show="user == '' && act == ''">暂无相关内容~</div>
+              <div class="contentMsg" v-show="user != '' || act != ''">
+                  <div class="user" v-show="user != ''">
                       <div class="title">相关用户</div>
-                      <!-- swipe begin -->
-                      <section id="swipe" class="section01">
-                          <div class="swipe-wrap">
-                              <div class="swipe-page">
-                                  <div class="swipe-page-row">
-                                      <div class="swipe-page-item open-win" v-for="(v,index) in user" v-if="index < count" @click="goCircel(v.uid)">
-                                          <img :src="v.headimgurl+'?x-oss-process=image/resize,p_50'" v-if="v.headimgurl">
-                                          <img src="../../image/pic3.png" v-else>
-                                          <span class="single">{{v.nickname}}</span>
-                                      </div>
-                                      <div class="swipe-page-item open-win" id="showAll" @click="shoeAll()" v-if="count == 4">
-                                          <img src="../../image/more1.png">
-                                          <span>更多</span>
-                                      </div>
-                                  </div>
+                      <!-- Swiper -->
+                      <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                          <div class="swiper-slide" v-for="(v,index) in user" v-if="index < count" @click="goCircel(v.uid)">
+                              <div class="pic">
+                                  <em></em>
+                                  <img :src="v.headimgurl+'?x-oss-process=image/resize,p_50'" v-if="v.headimgurl">
+                                  <img src="../../image/pic3.png" v-else>
                               </div>
+                              <span class="name">{{v.nickname}}</span>
                           </div>
-                    </section>
-                    <!-- swipe end -->
+                          <div class="swiper-slide" id="showAll" @click="shoeAll()" v-if="count == 4">
+                              <div class="pic">
+                                  <em></em>
+                                  <img src="../../image/more1.png" alt="">
+                              </div>
+                              <span class="name">更多</span>
+                          </div>
+                        </div>
+                    </div>
+                    <!-- Swiper -->
                   </div>
 
-                  <div class="activity" v-if="act">
+                  <div class="activity" v-show="act != ''">
                       <div class="title">相关活动</div>
                       <ul class="ActLis">
                           <li v-for="v in act" @click="goActDetail(v.act_id)">
@@ -174,45 +115,25 @@
                       </ul>
                   </div>
 
+
               </div>
+
+
           </div>
       </div>
 
-      <!-- Swiper -->
-      <div class="contentMsg">
-        <div class="user">
-            <div class="title">相关用户</div>
-            <div class="swiper-container">
-              <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <div class="pic">
-                        <em></em>
-                        <img src="../../image/pic3.png" alt="">
-                    </div>
-                    <span class="name">很多减肥很久</span>
-                </div>
-                <div class="swiper-slide">
-                    <div class="pic">
-                        <em></em>
-                        <img src="../../image/more1.png" alt="">
-                    </div>
-                    <span class="name">更多</span>
-                </div>
-              </div>
-            </div>
-        </div>
-      </div>
-      <!-- Swiper -->
+
   </body>
   <script type="text/javascript" src="../../script/api.js"></script>
   <script type="text/javascript" src="../../script/my.js"></script>
-  <script type="text/javascript" src="../../script/swipe.js"></script>
+  <script type="text/javascript" src="../../script/swiper.min.js"></script>
   <script type="text/javascript" src="../../script/vue.js"></script>
   <script type="text/javascript" src="../../script/date.js"></script>
   <script type="text/javascript">
-  fnInitSwipe();
+
   var header = $api.dom('header');
   fixStatusBar_API(header);
+
       apiready = function(){
           loading();
           var text = api.pageParam.text;
@@ -220,23 +141,20 @@
               $api.val($api.byId('text'),text);
               vm.search();
           }
+
+          fnInitSwipe();
       };
 
       function fnInitSwipe() {
-          var swipe = $api.byId('swipe');
 
-          new Swipe(swipe, {
-              callback: function(index) {}
-          });
+          var swiper = new Swiper('.swiper-container', {
+    				slidesPerView: 4,
+    				spaceBetween: 9,
+    				centeredSlides: true,
+    				observer:true, //修改swiper自己或子元素时，自动初始化swiper
+        		observeParents:true,//修改swiper的父元素时，自动初始化swiper
 
-          // var swiper = new Swiper('.swiper-container', {
-    			// 	slidesPerView: 5,
-    			// 	spaceBetween: 9,
-    			// 	centeredSlides: true,
-    			// 	observer:true, //修改swiper自己或子元素时，自动初始化swiper
-        	// 	observeParents:true,//修改swiper的父元素时，自动初始化swiper
-          //
-    			// });
+    			});
 
 
       };
@@ -280,12 +198,10 @@
                         }
                     },function(ret, err){
                         $api.css($api.dom('#loading'),'display:none');
-                        console.log(JSON.stringify(ret));
-                        console.log(JSON.stringify(err));
+
                         if (ret) {
                             vm.user = ret.user;
                             vm.act = ret.act;
-                             console.log(JSON.stringify(vm.user));
                             vm.count = 4;
                         } else {
 
