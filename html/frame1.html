@@ -713,17 +713,31 @@
                                 console.log("当前设备已安装微信客户端");
                                 var wx = api.require('wx');
                                 wx.auth({
-                                    apiKey: 'wxdc86ebed0e740605'
+                                    apiKey: ''
                                 }, function(ret, err) {
                                     if (ret.status) {
-                                        alert(JSON.stringify(ret));
+                                        console.log(JSON.stringify(ret));
                                     } else {
-                                        alert(err.code);
+                                        console.log(err.code);
                                     }
                                 });
-                              
+
                             } else {
                                 console.log('当前设备未安装微信客户端');
+                            }
+                        });
+
+                        wx.shareText({
+                            apiKey: '',
+                            scene: 'timeline',
+                            text: '我分享的文本'
+                        }, function(ret, err) {
+                            alert(JSON.stringify(ret));
+                              alert(JSON.stringify(err));
+                            if (ret.status) {
+                                alert('分享成功');
+                            } else {
+                                alert(err.code);
                             }
                         });
 
