@@ -714,8 +714,9 @@
                               wx.auth({
                                   apiKey: 'wxdc86ebed0e740605'
                               }, function(ret, err) {
+                                  alert(JSON.stringify(ret));
                                   if (ret.status) {
-                                      alert(JSON.stringify(ret));
+
                                       console.log(JSON.stringify(ret));
                                   } else {
                                       console.log(err.code);
