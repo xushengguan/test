@@ -396,7 +396,7 @@
                 </div>
 
                 <div class="nav">
-                    <div class="share"></div>
+                    <div class="share" @click="Share()"></div>
                     <div class="love" :class="{on:v.is_like == '1'}" @click="givePoint(v,v.id)">{{v.like}}</div>
                     <div class="comment" @click="comment(v,v.id)">{{v.rew}}</div>
                 </div>
@@ -453,7 +453,7 @@
     apiready = function() {
         token = $api.getStorage('token');
         id = $api.getStorage('id');
-        
+
         loading();
         vm.getCircle();
 
@@ -655,7 +655,58 @@
               });
             },
 
+            Share(){
 
+              var dialogBox = api.require('dialogBox');
+              dialogBox.actionMenu ({
+                rect:{
+                    h: 150
+                },
+                texts:{
+                     cancel: '取消'
+                },
+                items:[
+                {
+                    text: '微信',
+                    icon: 'widget://image/weichat.png'
+                },
+                {
+                    text: 'QQ',
+                    icon: 'widget://image/qq.png'
+                },
+                {
+                    text: '微博',
+                    icon: 'widget://image/twitter.png'
+                },
+                ],
+                styles:{
+                    bg:'#FFF',
+                    column: 3,
+                    itemText: {
+                        color: '#000',
+                        size: 14,
+                        marginT:8
+                    },
+                    itemIcon:{
+                        size:50
+                    },
+                    cancel:{
+                        bg: 'fs://icon.png',
+                        color:'#000',
+                        h: 44 ,
+                        size: 16
+                    }
+                },
+                tapClose:true,
+              }, function(ret){
+                  console.log(JSON.stringify(ret));
+                  if (ret.eventType == 'cancel') {
+                    dialogBox.close({
+                      dialogName: 'actionMenu'
+                    });
+                  }
+              });
+            }
 
         },
 

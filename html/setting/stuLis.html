@@ -19,7 +19,7 @@
   </head>
   <body>
     <div id="app" v-cloak>
-        <div class="noStu" v-if="status == '0'">暂无未激活的学员</div>
+        <div class="noStu" v-if="status == '0'">暂无待激活的学员</div>
         <ul class="Lis" v-else>
             <li v-for="v in Info">
               <img :src="v.stu_img" alt="">
@@ -79,7 +79,7 @@
                   },function(ret, err){
 
                       $api.css($api.byId('loading'),'display:none');
-                      
+
                       if (ret) {
                           $api.css($api.byId('app'),'display:block');
                           if(ret.status == '0'){

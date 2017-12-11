@@ -43,7 +43,7 @@
           .user{background: #fff; margin-bottom: 15px;}
           .title{padding: 15px 10px; color: #999; font-size: 14px; border-bottom: 1px solid #f2f2f2;}
 
-        
+
 
           .activity{background: #fff;}
           .ActLis li{padding: 15px 10px; display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;
@@ -90,7 +90,7 @@
                               </div>
                               <span class="name">{{v.nickname}}</span>
                           </div>
-                          <div class="swiper-slide" id="showAll" @click="shoeAll()" v-if="count == 4">
+                          <div class="swiper-slide" id="showAll" @click="showAll()" v-show="count < user.length">
                               <div class="pic">
                                   <em></em>
                                   <img src="../../image/more1.png" alt="">
@@ -150,6 +150,7 @@
           var swiper = new Swiper('.swiper-container', {
     				slidesPerView: 4,
     				spaceBetween: 9,
+            freeMode: true,
     				centeredSlides: true,
     				observer:true, //修改swiper自己或子元素时，自动初始化swiper
         		observeParents:true,//修改swiper的父元素时，自动初始化swiper
@@ -227,7 +228,7 @@
 
             },
 
-            shoeAll(){
+            showAll(){
                 this.count = this.user.length;
             },
 

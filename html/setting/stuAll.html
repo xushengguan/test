@@ -23,7 +23,7 @@
           .numBox .rt span{padding-left: 23px;}
 
           .titleName{padding: 21px 16px 10px 16px; font-size: 14px; color: #999;}
-          .noStu{text-align: center; font-size: 16px; color: #212121; padding: 20px;}
+
       </style>
   </head>
   <body>
@@ -39,15 +39,16 @@
               </div> -->
             </div>
         </div>
-        <div class="titleName">学员列表</div>
-        <div class="noStu" v-if="status == '0'">暂无激活的学员</div>
-        <ul class="Lis" v-else>
-            <li v-for="v in Info">
-              <img :src="v.stu_img" alt="">
-              <div class="name">{{v.stu_name}}</div>
-              <!-- <div class="date">2017/7/5</div> -->
-            </li>
-        </ul>
+        <div v-if="status !== '0'">
+            <div class="titleName">学员列表</div>
+            <ul class="Lis">
+                <li v-for="v in Info">
+                  <img :src="v.stu_img" alt="">
+                  <div class="name">{{v.stu_name}}</div>
+                  <!-- <div class="date">2017/7/5</div> -->
+                </li>
+            </ul>
+        </div>
     </div>
   </body>
   <script type="text/javascript" src="../../script/api.js"></script>

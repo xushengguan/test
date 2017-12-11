@@ -82,7 +82,8 @@
                 </li>
                 <li>
                   <p class="menu_title">冻结资产(元)</p>
-                  <p class="num">{{Info.money}}</p>
+                  <p class="num" v-if="Info.money">{{Info.money}}</p>
+                  <p class="num" v-else>0</p>
                 </li>
                 <li onclick="goStudent()">
                   <p class="menu_title">待激活学员(人)</p>
@@ -223,7 +224,7 @@
                           },
                       }
                   },function(ret, err){
-                    
+
                       if (ret.status == '1') {
                           vm.data = ret.data;
                       }else {
