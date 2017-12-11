@@ -704,6 +704,28 @@
                     dialogBox.close({
                       dialogName: 'actionMenu'
                     });
+                  }else {
+                      if (ret.index == 0) {
+                        var wx = api.require('wx');
+                        wx.isInstalled(function(ret, err) {
+                          if (ret.installed) {
+                              console.log("当前设备已安装微信客户端");
+                              var wx = api.require('wx');
+                              wx.auth({
+                                  apiKey: 'wxdc86ebed0e740605'
+                              }, function(ret, err) {
+                                  if (ret.status) {
+                                      alert(JSON.stringify(ret));
+                                      console.log(JSON.stringify(ret));
+                                  } else {
+                                      console.log(err.code);
+                                  }
+                              });
+                          } else {
+                              alert('当前设备未安装微信客户端');
+                          }
+                        });
+                      }
                   }
               });
             }

@@ -186,17 +186,3 @@ function LimitNumber(txt,idName) {
     var id=document.getElementById(idName);
     id.innerText=str;
 }
-
-(function(){
-    var push = api.require('push');
-    push.bind({
-      userName: 'testName',
-      userId: 'testId'
-    }, function(ret, err){
-      if( ret ){
-          alert( JSON.stringify( ret) );
-      }else{
-          alert( JSON.stringify( err) );
-      }
-    });
-}())
