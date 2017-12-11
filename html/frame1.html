@@ -705,25 +705,34 @@
                       dialogName: 'actionMenu'
                     });
                   }else {
-                      
+
                       if (ret.index == 0) {
                         var wx = api.require('wx');
-                        wx.shareWebpage({
-                            apiKey: '',
-                            scene: 'timeline',
-                            title: '测试标题',
-                            description: '分享内容的描述',
-                            thumb: 'widget://a.jpg',
-                            contentUrl: 'http://apicloud.com'
-                        }, function(ret, err) {
-                            alert(JSON.stringify(ret));
-                            alert(JSON.stringify(err));
-                            if (ret.status) {
-                                alert('分享成功');
+                        wx.isInstalled(function(ret, err) {
+                            if (ret.installed) {
+                                console.log("当前设备已安装微信客户端");
+                                wx.shareWebpage({//微信分享网页
+                                    apiKey: '',
+                                    scene: 'timeline',
+                                    title: '测试标题',
+                                    description: '分享内容的描述',
+                                    thumb: 'https://123win.oss-cn-shenzhen.aliyuncs.com//upload/p-e916b415.jpg',
+                                    contentUrl: 'http://apicloud.com'
+                                }, function(ret, err) {
+                                    alert(JSON.stringify(ret));
+                                    alert(JSON.stringify(err));
+                                    if (ret.status) {
+                                        alert('分享成功');
+                                    } else {
+                                        alert(err.code);
+                                    }
+                                });
+
                             } else {
-                                alert(err.code);
+                                console.log('当前设备未安装微信客户端');
                             }
                         });
+
 
                       }
                   }
