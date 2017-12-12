@@ -344,13 +344,13 @@
                                     <span class="name">{{v.replier.nickname}}</span> 回复
                                     <span class="name">{{v.nickname}}:</span>
                                 </div>
-                                <div class="lf" style="max-width:80%;">{{v.content}}</div>
+                                <div class="lf" style="max-width:70%;">{{v.content}}</div>
                             </div>
                             <div @click="Reply(v.uid,v.nickname,v.rew_id)" v-else>
                                 <div class="lf">
                                     <span class="name">{{v.nickname}}:</span>
                                 </div>
-                                <div class="lf" style="max-width:80%;">{{v.content}}</div>
+                                <div class="lf" style="max-width:70%;">{{v.content}}</div>
                             </div>
 
                         </li>
@@ -570,7 +570,7 @@
                },
            }
        },function(ret, err){
-        
+
            if (ret) {
                vm.data.rewlist = ret.data;
                $api.val($api.byId('reply_txt'),'');

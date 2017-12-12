@@ -413,13 +413,13 @@
                                     <span class="name" @click="goCircel(vv.rew_id)">{{vv.replier.nickname}}</span> 回复
                                     <span class="name" @click="goCircel(vv.uid)">{{vv.nickname}}:</span>
                                 </div>
-                                <div class="lf" style="max-width:80%;" @click="CircleReply(v,v.id,vv.rew_id,vv.uid,vv.replier.id,vv.replier.nickname)">{{vv.content}}</div>
+                                <div class="lf" style="max-width:70%;" @click="CircleReply(v,v.id,vv.rew_id,vv.uid,vv.replier.id,vv.replier.nickname)">{{vv.content}}</div>
                             </div>
                             <div v-else>
                                 <div class="lf">
                                     <span class="name" @click="goCircel(vv.uid)">{{vv.nickname}}:</span>
                                 </div>
-                                <div class="lf" style="max-width:80%;" @click="CircleReply(v,v.id,vv.rew_id,vv.uid,vv.uid,vv.nickname)">{{vv.content}}</div>
+                                <div class="lf" style="max-width:70%;" @click="CircleReply(v,v.id,vv.rew_id,vv.uid,vv.uid,vv.nickname)">{{vv.content}}</div>
                             </div>
 
                         </li>
@@ -711,12 +711,18 @@
                         wx.isInstalled(function(ret, err) {
                             if (ret.installed) {
                                 console.log("当前设备已安装微信客户端");
-                                var wx = api.require('wx');
-                                wx.auth({
-                                    apiKey: ''
+
+                                wx.shareVideo({
+                                    apiKey: '',
+                                    scene: 'timeline',
+                                    title: '测试标题',
+                                    description: '分享内容的描述',
+                                    thumb: 'widget://image/code.png',
+                                    contentUrl: 'http://resource.apicloud.com/video/apicloud.mp4'
                                 }, function(ret, err) {
+                                    alert(ret);
                                     if (ret.status) {
-                                        alert(JSON.stringify(ret));
+                                        alert('分享成功');
                                     } else {
                                         alert(err.code);
                                     }
