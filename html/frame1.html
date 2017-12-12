@@ -712,15 +712,11 @@
                             if (ret.installed) {
                                 console.log("当前设备已安装微信客户端");
 
-                                wx.shareVideo({
+                                wx.shareText({
                                     apiKey: '',
                                     scene: 'timeline',
-                                    title: '测试标题',
-                                    description: '分享内容的描述',
-                                    thumb: 'widget://image/code.png',
-                                    contentUrl: 'http://resource.apicloud.com/video/apicloud.mp4'
+                                    text: '我分享的文本'
                                 }, function(ret, err) {
-                                    alert(ret);
                                     if (ret.status) {
                                         alert('分享成功');
                                     } else {
@@ -886,6 +882,7 @@
           pageParam: {
 
           },
+          allowEdit:true,
           reload:true
       });
 
