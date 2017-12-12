@@ -124,7 +124,7 @@
           quality: 100,
           saveToPhotoAlbum: false
         }, function(ret, err) {
-        
+
           if (ret.data) {
               $api.attr(e, 'src', ret.data);
           }
@@ -197,7 +197,7 @@
     				var expire = ret.expire;
             ALIcloud(host, policy, signature, accessid, dir, expire);
     			} else {
-
+            $api.css($api.dom('#loading'), 'display:none');
     				api.toast({
     					msg: '网络错误',
     					duration: 2000,
@@ -244,6 +244,7 @@
                 }
 
         			} else {
+                $api.css($api.dom('#loading'), 'display:none');
         				api.toast({
         					msg: '网络错误',
         					duration: 2000,
@@ -274,7 +275,8 @@
               }
           },function(ret, err){
               $api.css($api.dom('#loading'), 'display:none');
-
+              console.log(JSON.stringify(ret));
+              console.log(JSON.stringify(err));
               if (ret && ret.status == '1') {
                   if (role == '2' && update_status == '0') {
                       api.openWin({

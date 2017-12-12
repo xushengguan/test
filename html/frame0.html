@@ -250,6 +250,7 @@
                           },
                       }
                   },function(ret, err){
+
                       vm.Info = ret;
                   });
               }
@@ -352,7 +353,8 @@
                   },
               }
           },function(ret, err){
-
+              console.log(JSON.stringify(ret));
+              console.log(JSON.stringify(err));
               if (ret) {
 
                   if (!ret.status) {
