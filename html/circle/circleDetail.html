@@ -538,7 +538,7 @@
             },
 
             Share(content,circle_id){
-              
+
               var dialogBox = api.require('dialogBox');
               dialogBox.actionMenu ({
                 rect:{
@@ -588,7 +588,7 @@
                       });
                       if (ret.index == 0) {
                           weiShare('timeline',content,content,circle_id);
-                      }else if (ret.index == '1') {
+                      }else if (ret.index == 1) {
                           weiShare('session','学客圈',content,circle_id);
                       }
                   }
@@ -601,7 +601,7 @@
 
     // 微信分享网页
     function weiShare(scene,title,content,circle_id){
-        var contentUrl = 'https://x.sdp178.com/circleDetail/circleDetail.html?circle_id='+circle_id;
+        var contentUrl = 'https://x.sdp178.com/xlp/circleDetail.html?circle_id='+circle_id;
 
         var wx = api.require('wx');
         wx.isInstalled(function(ret, err) {//判断当前设备是否已经安装微信

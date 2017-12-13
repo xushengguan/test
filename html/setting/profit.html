@@ -14,7 +14,7 @@
           .half .txt{font-size: 14px; color: #fff1cf; padding-bottom: 10px;}
           .half .num{font-size: 18px; color: #ffebbf;}
           .half .num em{font-size: 29px; color: #fff; font-weight: bold; padding-left: 4px;}
-          .chart{width: 350px; height: 250px; margin: 0 auto;}
+          .chart{width: 100%; height: 250px; margin: 0 auto;}
           .head{font-size: 15px; color: #999; padding: 10px 15px;}
 
           .Lis{background: #fff;}
@@ -43,7 +43,7 @@
                       <div class="num">¥<em id="week"></em></div>
                   </div>
               </div>
-              <div class="chart" id="chart"></div>
+              <div class="chart" id="chart" v-show="!ret.status"></div>
           </header>
           <div class="head">收益明细</div>
           <div class="noIncome" v-if="ret.status">暂无收益明细~</div>
@@ -56,17 +56,6 @@
                   <div class="rt"><em>{{v.count}}</em>元</div>
               </li>
           </ul>
-
-          <ul class="Lis">
-              <li>
-                  <div class="lf">
-                      <div class="name">空间和客户说的</div>
-                      <div class="time">2017-10-2</div>
-                  </div>
-                  <div class="rt"><em>50</em>元</div>
-              </li>
-          </ul>
-
       </div>
   </body>
   <script type="text/javascript" src="../../script/api.js"></script>
@@ -81,12 +70,12 @@
           var index = api.pageParam.index;
 
           loading();
-          $api.css($api.byId('app'), 'display:none');
+
           $api.css($api.byId('loading'), 'display:block');
           getProfit(index);
           vm.getIncome(index);
           $api.css($api.byId('loading'), 'display:none');
-          $api.css($api.byId('app'), 'display:block');
+
 
           //刷新
           api.setRefreshHeaderInfo({
@@ -122,7 +111,7 @@
                           },
                       }
                   },function(ret, err){
-                    
+
                       if (ret) {
                           vm.ret = ret;
                       }else {

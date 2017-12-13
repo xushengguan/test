@@ -72,12 +72,14 @@
             <ul class="menu">
                 <li onclick="isActive()">
                   <p class="menu_title">已激活产品(套)</p>
-                  <p class="num">{{Info.count_actvate_product}}</p>
+                  <p class="num" v-if="Info.count_actvate_product">{{Info.count_actvate_product}}</p>
+                  <p class="num" v-else>0</p>
                   <em></em>
                 </li>
                 <li onclick="goStudentAll()">
                   <p class="menu_title">已激活学员(人)</p>
-                  <p class="num">{{Info.count_actvate}}</p>
+                  <p class="num" v-if="Info.count_actvate">{{Info.count_actvate}}</p>
+                  <p class="num" v-else>0</p>
                   <em></em>
                 </li>
                 <li>
@@ -353,8 +355,7 @@
                   },
               }
           },function(ret, err){
-              console.log(JSON.stringify(ret));
-              console.log(JSON.stringify(err));
+
               if (ret) {
 
                   if (!ret.status) {
@@ -371,6 +372,7 @@
                           })
                           var myChart1 = echarts.init(document.getElementById('chart1'));  // 基于准备好的dom，初始化echarts实例
                           option1 = {
+
                                     title: {
                                         text: '近1周收益'
                                     },
@@ -402,6 +404,7 @@
                                         }
                                     ]
                                 };
+                          
                           myChart1.setOption(option1);// 使用刚指定的配置项和数据显示图表。
                       }
                   }else {
