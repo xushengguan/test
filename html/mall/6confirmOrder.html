@@ -630,15 +630,6 @@
 
 								if (vm.payMethod == 1) {//payMethod,1微信支付，2学分支付
 									get_weiChat(vm.goods_name,goods_amount,ret.order_sn);//获取微信签名
-									//
-									// api.openWin({
-									// 		name: 'success',
-									// 		url: './success.html',
-									// 		pageParam: {
-									// 				time: add_time,
-									// 				goods_name:vm.goods_name
-									// 		}
-									// });
 								}else{
 										UpdateOrder(goods_amount);
 								}
@@ -737,11 +728,13 @@
 			        },
 			    }
 			},function(ret, err){
+				  console.log(JSON.stringify(ret));
+					console.log(JSON.stringify(err));
 			    if (ret) {
-			        console.log( JSON.stringify( ret ) );
+
 							goPay(ret);
 			    } else {
-			        console.log( JSON.stringify( err ) );
+
 							api.toast({
 							    msg: '网络错误',
 							    duration: 2000,
@@ -766,11 +759,17 @@
 			}, function(ret, err) {
 				if (ret.status) {
 						//支付成功
-						alert(JSON.stringify(ret));
+						api.openWin({
+								name: 'success',
+								url: './success.html',
+								pageParam: {
+										time: add_time,
+										goods_name:vm.goods_name
+								}
+						});
 				} else {
-
 						api.toast({
-						    msg: err.code,
+						    msg: '支付失败',
 						    duration: 2000,
 						    location: 'bottom'
 						});
