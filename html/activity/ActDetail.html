@@ -265,6 +265,7 @@
 								    }
 								},function(ret, err){
 									  $api.css($api.byId('loading'), 'display:none');
+
 								    if (ret) {
 											  $api.css($api.byId('app'), 'display:block');
 												vm.data = ret;
@@ -297,11 +298,12 @@
 								        values: {
 								             type: '10177',
 														 uid:uid,
-														actid:actid
+														actid:actid,
+														token:token
 								        },
 								    }
 								},function(ret, err){
-
+                  
 								    if (ret) {
 
 												vm.status = ret.status;
@@ -370,7 +372,7 @@
 				centeredSlides: true,
 				observer:true, //修改swiper自己或子元素时，自动初始化swiper
     		observeParents:true,//修改swiper的父元素时，自动初始化swiper
-			
+
 			});
 		}
 

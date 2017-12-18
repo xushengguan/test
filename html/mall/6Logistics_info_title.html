@@ -16,7 +16,7 @@
 		</style>
 </head>
 <body>
-	<div class="goods3" id="app">
+	<div class="goods3" id="app" v-cloak>
 		<header>
 				<em onclick="go_back()"></em>
 				物流信息
@@ -31,7 +31,7 @@
 						<span v-else-if="data.deliverystatus == '2'">{{data.type}}(派件中)</span>
 						<span v-else-if="data.deliverystatus == '3'">{{data.type}}(已签收)</span>
 						<span v-else>{{data.type}}(派送失败)</span>
-						<span>单号:{{data.number}}</span>
+						<span v-if="data.number">单号:{{data.number}}</span>
 					</p>
 				</div>
 				<h6>物流详情</h6>
@@ -90,6 +90,7 @@
 											},
 									}
 							},function(ret, err){
+							
 									if (ret) {
 											vm.data = ret.result;
 									} else {

@@ -344,9 +344,9 @@
             }
         },function(ret, err){
             $api.css($api.dom('#loading'), 'display:none');
-
+            
             if (ret) {
-                if (ret.state == '1') {
+                if (ret.status == '1') {
                     var role = $api.getStorage('role');
                     api.sendEvent({
                         name: 'Publish',

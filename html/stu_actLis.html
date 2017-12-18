@@ -15,9 +15,9 @@
             background: #ffb300;
             overflow: hidden;
             z-index: 99;
-            /*position: fixed;
+            position: fixed;
             top: 0;
-            left: 0;*/
+            left: 0;
         }
 
         .ActLis li {
@@ -48,9 +48,9 @@
             font-size: 16px;
         }
 
-        /*.box {
+        .box {
             margin-top: 50px;
-        }*/
+        }
 
         .enter{
         	padding-bottom:60px;
@@ -123,12 +123,12 @@
 </head>
 
 <body>
-    <div id="wrap" v-cloak>
+    <div id="">
           <ul class="ActLis">
-              <li class="Lis0 addColor" @click="btn_list(0)">全部活动</li>
-              <li class="Lis1" @click="btn_list(1)">附近活动</li>
+              <li class="Lis0 addColor" onclick="btn_list(0)">全部活动</li>
+              <li class="Lis1" onclick="btn_list(1)">附近活动</li>
           </ul>
-        <div id="main">
+        <div id="main" v-cloak>
           <div class="box">
               <div v-if="!ActInfo.status">
                   <div v-for="v in ActInfo">
@@ -145,7 +145,7 @@
                       </div>
                   </div>
               </div>
-              <div class="NoAct" v-else>抱歉，您暂时还没有报名的活动！</div>
+              <div class="NoAct" v-else>抱歉，暂时还没有活动！</div>
           </div>
         </div>
     </div>
@@ -158,10 +158,9 @@
     var id, token;
     apiready = function() {
         loading();
-        vm.btn_list(0);
         id = $api.getStorage('id');
         token = $api.getStorage('token');
-
+        btn_list(0);
         //刷新
         api.setRefreshHeaderInfo({
             loadingImg: 'widget://image/refresh.png',
@@ -172,12 +171,12 @@
             showTime: false
         }, function(ret, err) {
             //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
-            vm.btn_list(vm.Lisindex);
+            btn_list(vm.Lisindex);
             api.refreshHeaderLoadDone();
         });
     };
     var vm = new Vue({
-        el: '#wrap',
+        el: '#main',
         data: {
             ActInfo: [],
             Lisindex: '',
@@ -190,8 +189,8 @@
         },
         methods: {
             get_ActLis() { //获取活动列表
+
                 $api.css($api.dom('#loading'), 'display:block');
-                $api.css($api.dom('.box'), 'display:none');
                 api.ajax({
                     url: serverurl,
                     method: 'get',
@@ -209,7 +208,7 @@
 
                     if (ret) {
                         vm.ActInfo = ret;
-                        $api.css($api.dom('.box'), 'display:block');
+
                     } else {
                         api.toast({
                             msg: '网络错误',
@@ -250,7 +249,7 @@
                         }, function(ret, err) {
 
                             $api.css($api.dom('#loading'), 'display:none');
-
+                          
                             if (ret) {
                                 vm.ActInfo = ret;
                                 $api.css($api.dom('.box'), 'display:block');
@@ -290,24 +289,25 @@
                 });
             },
 
-            btn_list(index) {
 
-                vm.Lisindex = index;
-                if (index == 1) {
-                    $api.removeCls($api.dom('.ActLis .Lis0'), 'addColor');
-                    $api.addCls($api.dom('.ActLis .Lis1'), 'addColor');
-                    vm.ActSignUpLis();
-                } else {
-                    $api.removeCls($api.dom('.ActLis .Lis1'), 'addColor');
-                    $api.addCls($api.dom('.ActLis .Lis0'), 'addColor');
-                    vm.get_ActLis();
-                }
-
-            }
 
         }
     })
 
+    function btn_list(index) {
+        vm.Lisindex = index;
+
+        if (index == 1) {
+            $api.removeCls($api.dom('.ActLis .Lis0'), 'addColor');
+            $api.addCls($api.dom('.ActLis .Lis1'), 'addColor');
+            vm.ActSignUpLis();
+        } else {
+            $api.removeCls($api.dom('.ActLis .Lis1'), 'addColor');
+            $api.addCls($api.dom('.ActLis .Lis0'), 'addColor');
+            vm.get_ActLis();
+        }
+
+    }
 </script>
 
 </html>

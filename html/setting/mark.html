@@ -106,7 +106,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="total">本次最高可打<em>100</em>分</p>
+                <p class="total">一次最高可打<em>100</em>分</p>
             </div>
         </div>
         <div class="markBox">
@@ -173,6 +173,7 @@
       var uid,token,key,bracelet_id;
       apiready = function(){
           loading();
+
           uid = $api.getStorage('id');
           token = $api.getStorage('token');
           key = api.pageParam.key.substr(-4);
@@ -257,7 +258,7 @@
                      $api.attr($api.dom('#img2'), 'src',ret.data.stu_img);
                      $api.text($api.dom('.info .name'),ret.data.stu_name);
                      $api.text($api.dom('.remark'), ret.data.log);
-                     $api.text($api.dom('.times'),ret.count.count + '次');
+                     $api.text($api.dom('.times'),ret.count + '次');
                      bracelet_id = ret.data.id;
                 }else {
                     $api.css($api.dom('.top'), 'display:none');
@@ -312,7 +313,7 @@
                   }
               },function(ret, err){
                   $api.css($api.byId('loading'), 'display:none');
-              
+
                   if (ret) {
                       if (ret.status == '1') {
                           api.toast({
@@ -465,6 +466,7 @@
         		});
     	}
 
+
       // 支教老师打分
       function confirmMark(index){
           var result = parseInt($api.text($api.dom('#result')));
@@ -502,7 +504,7 @@
               },function(ret, err){
 
                   $api.css($api.dom('#loading'), 'display:none');
-
+                
                   if (ret) {
 
                       if (ret.status == '1') {

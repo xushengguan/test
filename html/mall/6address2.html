@@ -127,7 +127,7 @@
 			<!-- <a href="javascript:;">删除地址</a> -->
 		</div>
 		<div class="btn_save">
-			<a href="javascript:;" @click="edit_address()" v-if="address_id !== '' && address_id !== undefined &&  address_id !== null">提交</a>
+			<a href="javascript:;" @click="edit_address()" v-if="address_id">提交</a>
 			<a href="javascript:;" @click="save_address()" v-else>保存</a>
 		</div>
 	</form>
@@ -207,6 +207,8 @@
 					}
 				}, function(ret, err) {
 					$api.css($api.dom('#loading'), 'display:none');
+					console.log(JSON.stringify(ret));
+					console.log(JSON.stringify(err));
 					if (ret) {
 						if (ret.status == '1') {
 								api.toast({
@@ -319,7 +321,8 @@
 					}
 				}, function(ret, err) {
 					$api.css($api.dom('#loading'), 'display:none');
-
+					console.log(JSON.stringify(ret));
+				 console.log(JSON.stringify(err));
 					if (ret) {
 						if (ret.status == '1') {
 								api.toast({

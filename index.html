@@ -137,7 +137,7 @@
         <header id="header">
             <ul>
                 <li class="active">
-                  
+
 
                 </li>
                 <li>
@@ -253,7 +253,9 @@
                     pageParam: {
                         id: api.pageParam.id //获取上一页登录后返回的信息
                     },
-                    reload: true
+                    reload: true,
+                    allowEdit:true,
+                    softInputMode:'resize'
                 });
             } else {
                 $api.removeCls(eFootLis[i], 'active');

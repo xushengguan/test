@@ -284,11 +284,11 @@
 </head>
 
 <body>
-    <div id="wrap" v-cloak>
+    <div id="wrap">
         <header>
             <em onclick="go_back()"></em> 详情
         </header>
-        <div id="main">
+        <div id="main" v-cloak>
             <div class="box">
                 <div class="PerInfo">
                     <img src="../../image/pic.png" alt="" v-if="!data.headimgurl">
@@ -393,7 +393,7 @@
     }
 
     var vm = new Vue({
-        el: '#wrap',
+        el: '#main',
         data: {
             data: [],
         },
@@ -405,7 +405,7 @@
         methods: {
 
             getCircleDetail() { //读取学客圈详情
-                $api.css($api.dom('#main'), 'display:none');
+
                 $api.css($api.dom('#loading'), 'display:block');
                 api.ajax({
                     url: serverurl,
@@ -422,9 +422,9 @@
                 }, function(ret, err) {
 
                     $api.css($api.dom('#loading'), 'display:none');
-
+                  
                     if (ret) {
-                        $api.css($api.dom('#main'), 'display:block');
+
                         vm.data = ret.data;
                     } else {
                         api.toast({
@@ -438,6 +438,7 @@
             },
 
             givePoint() { //点赞，取消点赞
+                $api.css($api.dom('#loading'), 'display:block');
                 api.ajax({
                     url: serverurl,
                     method: 'get',
@@ -450,6 +451,7 @@
                         },
                     }
                 }, function(ret, err) {
+                    $api.css($api.dom('#loading'), 'display:none');
                     if (ret) {
 
                         if (ret.state == '1') {
@@ -669,6 +671,7 @@
                    uid:replier_id,//用户id
                    replier:uid,//回复者id
                    content:content,//回复内容
+                   token:token
                },
            }
        },function(ret, err){

@@ -29,9 +29,9 @@
 
 <body>
   <div id="app" v-cloak>
-		  <div class="NoAct" v-if="data == '' || data == undefined || data == null">暂无退货订单！</div>
+		  <div class="NoAct" v-if="data.status">暂无退货订单！</div>
 			<div v-for="v in data" v-else>
-					<div class="sign-con hide" @click="goDetail(v.order_id)">
+					<div class="sign-con hide">
 		        <!-- shipping_status商品配送情况;0未发货,1已发货,2已收货,4申请退货;5处理中;6退货完成 -->
 						<span class="fl">状态:
 							<label v-if="v.shipping_status == '5'">处理中</label>
@@ -41,7 +41,7 @@
             <span class="fr" v-if="role == '2'">总价:<label>¥{{v.goods_amount}}</label></span>
 						<span class="fr" v-else>总价:<label>{{v.goods_amount}}学分</label></span>
 					</div>
-					<div class="dispich-con">
+					<div class="dispich-con" @click="goDetail(v.order_id)">
 
 						<div class="taste-con hide" style="position:relative;">
 
@@ -93,7 +93,7 @@
 				methods:{
 						get_ReturnOrder(token,id){//获取退换货的订单
 								$api.css($api.dom('#loading'),'display:block');
-								$api.css($api.dom('#app'),'display:none');
+
 								api.ajax({
 								    url: serverurl,
 								    method: 'get',
@@ -106,7 +106,7 @@
 								    }
 								},function(ret, err){
 									  $api.css($api.dom('#loading'),'display:none');
-                    $api.css($api.dom('#app'),'display:block');
+
 								    if (ret) {
 												vm.data = ret;
 												vm.role = $api.getStorage('role');

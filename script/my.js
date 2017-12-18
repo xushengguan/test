@@ -110,7 +110,7 @@ function SendCode(obj, tel, wait) {
             },
         }
     }, function(ret, err) {
-
+        
         switch (ret.status) {
             case '1':
                 api.toast({

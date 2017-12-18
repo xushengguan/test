@@ -168,6 +168,7 @@
           return false;
         }
         $api.css($api.dom('#loading'), 'display:block');
+
         api.ajax({//注册
             url: serverurl,
             method: 'post',
@@ -182,7 +183,7 @@
             }
         },function(ret, err){
             $api.css($api.dom('#loading'), 'display:none');
-
+            
             if (ret) {
                 if (ret.status == '1') {
                     api.alert({
@@ -235,7 +236,7 @@
                   },
               }
           },function(ret, err){
-            
+
               if (ret) {
 
                    if (ret.status == '1') {

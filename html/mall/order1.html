@@ -29,9 +29,9 @@
 
 <body>
   <div id="app" v-cloak>
-		  <div class="NoAct" v-if="data == '' || data == undefined || data == null">暂无收货订单！</div>
+		  <div class="NoAct" v-if="data.status">暂无收货订单！</div>
 			<div v-for="v in data" v-else>
-					<div class="sign-con hide" @click="goDetail(v.order_id)">
+					<div class="sign-con hide">
 		        <!-- 已签收状态（已签收）、配送中（配送中）、退换货处理中（退换处理中）、退换货完成（退换货完成） -->
 						<span class="fl">状态:
 							<label style="color:#fcb068;">配送中</label>
@@ -40,15 +40,15 @@
 						<span class="fr" v-else>总价:<label>{{v.goods_amount}}学分</label></span>
 					</div>
 					<div class="dispich-con">
-						<div class="purchase-top" @click="goLoglist(v.logistics_company,v.tracking_number)" v-if="v.status !== null">
+						<div class="purchase-top" @click="goLoglist(v.logistics_company,v.tracking_number)" v-if="v.status">
 							<p class="adds">{{v.status.status}}</p>
 							<p class="time">{{v.status.time}}</p>
 							<i class="iconfont icon-gengduo1 icon-more"></i>
 						</div>
 						<div class="taste-con hide" style="position:relative;">
 
-							<img class="fl square" :src="v.imgurl" alt="">
-							<div class="fl" style="width:45%">
+							<img class="fl square" :src="v.imgurl" alt="" @click="goDetail(v.order_id)">
+							<div class="fl" style="width:45%" @click="goDetail(v.order_id)">
 								<h6 class="free single">{{v.goods_name}}</h6>
 								<h6 class="chicken more2">{{v.abs}}</h6>
 								<span class="paper">{{v.goods_number}}件</span>
@@ -89,6 +89,17 @@
             api.refreshHeaderLoadDone();
         });
 
+				api.addEventListener({
+				    name: 'isConfirm'
+				}, function(ret, err){
+				    if( ret ){
+				         vm.get_notOrder(token,id);
+				    }else{
+				         console.log( JSON.stringify( err ) );
+				    }
+				});
+
+
 		}
 
 		var vm = new Vue({
@@ -99,7 +110,7 @@
 				},
 				methods:{
 						get_notOrder(token,id){//获取未收货的订单
-							  $api.css($api.dom('#app'), 'display:none');
+
 								$api.css($api.dom('#loading'),'display:block');
 								api.ajax({
 								    url: serverurl,
@@ -112,8 +123,9 @@
 								        },
 								    }
 								},function(ret, err){
-									  $api.css($api.dom('#app'),'display:block');
+
                     $api.css($api.dom('#loading'),'display:none');
+
 								    if (ret) {
 												vm.data = ret;
 												vm.role = $api.getStorage('role');

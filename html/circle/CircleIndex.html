@@ -32,6 +32,7 @@
 			background-size: 20px; float: left;}
 
 		.publish-contents h6 span{float: right;}
+		.header-msg{background: #ffb300;}
 	</style>
 </head>
 
@@ -41,25 +42,25 @@
 			<div class="header">
 				<em onclick="go_back()"></em> 我的学客圈
 			</div>
-			<div class="header-msg">
-				<div class="msg-con hide">
-					<img class="fl msg-pic" :src="data.headimgurl+'?x-oss-process=image/resize,p_50'" alt="" v-if="data.headimgurl" @click="viewPicture(data.headimgurl)">
-					<img class="fl msg-pic" src="../../image/pic.png" alt="" v-else>
-					<p class="fl msg-name">
-						<span class="rank">{{data.nickname}}
-							<!-- <label>15207596240</label> -->
-						</span>
-						<span class="follower" v-if="data.count">您已分享了{{data.count}}条动态</span>
-						<span class="follower" v-else>您还没有分享过动态</span>
-					</p>
-				</div>
-			</div>
 		</header>
-		<div class="publish-con hide">
-			<i class="iconfont icon-feiji2 icon-flane fl"></i>
-			<h5>他发表的动态</h5>
-		</div>
+
 		<div id="main">
+				<div class="header-msg">
+					<div class="msg-con hide">
+						<img class="fl msg-pic" :src="data.headimgurl+'?x-oss-process=image/resize,p_50'" alt="" v-if="data.headimgurl" @click="viewPicture(data.headimgurl)">
+						<img class="fl msg-pic" src="../../image/pic.png" alt="" v-else>
+						<p class="fl msg-name">
+							<span class="rank">{{data.nickname}}</span>
+							<span class="follower" v-if="data.count">您已分享了{{data.count}}条动态</span>
+							<span class="follower" v-else>您还没有分享过动态</span>
+						</p>
+					</div>
+				</div>
+
+			<div class="publish-con hide">
+				<i class="iconfont icon-feiji2 icon-flane fl"></i>
+				<h5>他发表的动态</h5>
+			</div>
 			<div class="publish-contents" v-if="!data.list">暂无动态，快去分享自己的心情吧！</div>
 			<div class="publish-contents" v-for="v in data.list" v-else>
 				<h6>{{v.last_reply_at | formatDate}}<span @click="DelCircle(v.id)" v-if="oneself == 1">删除</span></h6>
@@ -86,7 +87,7 @@
 		fixStatusBar_API(header);
     var id,token;
 		apiready = function(){
-			  $api.css($api.byId('wrap'), 'display:none');
+			  // $api.css($api.byId('wrap'), 'display:none');
 				token = $api.getStorage('token');
 				id = api.pageParam.id;
 
@@ -123,9 +124,9 @@
 								},function(ret, err){
 
 										$api.css($api.byId('loading'), 'display:none');
+
 								    if (ret) {
 
-											  $api.css($api.byId('wrap'), 'display:block');
 												vm.data = ret;
 												var uid = $api.getStorage('id');
 
@@ -134,6 +135,7 @@
                         }else {
                         		vm.oneself = 0;
                         }
+												// $api.css($api.byId('wrap'), 'display:block');
 								    } else {
 												api.toast({
 												    msg: '网络错误',
@@ -157,6 +159,7 @@
 								        },
 								    }
 								},function(ret, err){
+								
 								    if (ret) {
 												if (ret.status == '1') {
 														vm.getMyCircle();

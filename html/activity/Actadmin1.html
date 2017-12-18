@@ -12,7 +12,7 @@
     <style media="screen">
 
         .NoAct {
-          
+
             height:50px;
             padding: 20% 15px;
             text-align: center;
@@ -178,6 +178,7 @@ var vm = new Vue({
                 }
             }, function(ret, err) {
                 $api.css($api.dom('#loading'), 'display:none');
+                
                 vm.ActInfo = ret;
 
             });
