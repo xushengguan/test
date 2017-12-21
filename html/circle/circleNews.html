@@ -99,12 +99,13 @@
           },
           methods:{
               getReplyUser(){//用户收到的回复
-                  $api.css($api.byId('main'), 'display:none');
+
                   $api.css($api.byId('loading'), 'display:block');
 
                   api.ajax({
                       url: serverurl,
                       method: 'get',
+                      cache:true,
                       data: {
                           values: {
                               type: '10134',
@@ -115,10 +116,9 @@
                   },function(ret, err){
 
                       $api.css($api.byId('loading'), 'display:none');
-                      // console.log(JSON.stringify(ret));
-                      // console.log(JSON.stringify(err));
+
                       if (ret) {
-                          $api.css($api.byId('main'), 'display:block');
+
                           vm.rew = ret.rew;
                           vm.like = ret.like;
 
@@ -151,13 +151,13 @@
       // 清空消息
       function clearNews(){
           $api.css($api.byId('loading'), 'display:block');
-          var idArr = [];
-          vm.rew.forEach(function(item){
-              console.log(JSON.stringify(item));
-              idArr.push(item.id);
-          })
-          console.log(typeof idArr);
+          if (vm.rew) {
+            var idArr = [];
+            vm.rew.forEach(function(item){
 
+                idArr.push(item.id);
+            })
+          }
           api.ajax({
               url: serverurl,
               method: 'get',
@@ -171,8 +171,7 @@
               }
           },function(ret, err){
               $api.css($api.byId('loading'), 'display:none');
-              console.log(JSON.stringify(ret));
-              console.log(JSON.stringify(err));
+            
               if (ret) {
 
                   if (ret.status == '1') {

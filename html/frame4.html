@@ -208,7 +208,7 @@ function braceletMsg(){
 							},
 					}
 			},function(ret, err){
-
+          
 					if (ret.data) {
             api.openWin({
                 name: 'braceletMsg',
@@ -235,6 +235,7 @@ function getUser(){
     api.ajax({//获取用户基本信息
         url: serverurl,
         method: 'get',
+        cache:true,
         data: {
             values: {
                 type: '10035',
@@ -255,14 +256,14 @@ function getUser(){
               api.toast({
                   msg: '网络错误',
                   duration: 2000,
-                  location: 'bottom'
+                  location: 'middle'
               });
             }
         }else {
             api.toast({
                 msg: '网络错误',
                 duration: 2000,
-                location: 'bottom'
+                location: 'middle'
             });
 
         }

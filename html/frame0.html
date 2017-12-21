@@ -66,7 +66,10 @@
             </div>
             <div class="assets">现金资产</div>
             <div class="money">
-                <div class="num">¥ <em>{{data.winmoney}}</em></div>
+                <div class="num">¥
+                    <em v-if="data.winmoney">{{data.winmoney}}</em>
+                    <em v-else>0</em>
+                </div>
                 <button onclick="ApplyFor()">申请提现</button>
             </div>
             <ul class="menu">
@@ -110,16 +113,16 @@
             <div class="income">
                 <div class="num">
                     <p class="txt">总收益(元)</p>
-                    <p class="total total1"></p>
+                    <p class="total total2"></p>
                 </div>
                 <div class="num">
                     <p class="txt">最近7天收益(元)</p>
-                    <p class="total week1"></p>
+                    <p class="total week2"></p>
                 </div>
             </div>
-            <div class="chartBox boxOne">
+            <div class="chartBox ebox2">
                <div class="title">近1周收益折线图</div>
-               <div class="chart" id="chart1"></div>
+               <div class="chart" id="chart2"></div>
             </div>
         </div>
 
@@ -132,16 +135,16 @@
             <div class="income">
                 <div class="num">
                     <p class="txt">总收益(元)</p>
-                    <p class="total total2"></p>
+                    <p class="total total1"></p>
                 </div>
                 <div class="num">
                     <p class="txt">最近7天收益(元)</p>
-                    <p class="total week2"></p>
+                    <p class="total week1"></p>
                 </div>
             </div>
-            <div class="chartBox boxTwo">
+            <div class="chartBox ebox1">
                <div class="title">近1周收益折线图</div>
-               <div class="chart" id="chart2"></div>
+               <div class="chart" id="chart1"></div>
             </div>
         </div>
 
@@ -161,7 +164,7 @@
                     <p class="total week3"></p>
                 </div>
             </div>
-            <div class="chartBox boxThree">
+            <div class="chartBox ebox3">
                <div class="title">近1周收益折线图</div>
                <div class="chart" id="chart3"></div>
             </div>
@@ -177,7 +180,6 @@
       fixStatusBar_API(header);
       var uid,token;
       apiready = function(){
-        // $api.fixStatusBar( $api.dom('#header') );
 
         uid = $api.getStorage('id');
         token = $api.getStorage('token');
@@ -186,9 +188,9 @@
         $api.css($api.byId('loading'), 'display:block');
         vm.getUser();
         vm.getInfo();
-        getProfit1();
-        getProfit2();
-        getProfit3();
+        getProfit(2);//form收益类型 1:生源奖 2:参与奖 3:下线收益
+        getProfit(1);
+        getProfit(3);
         $api.css($api.byId('app'), 'display:block');
         $api.css($api.byId('loading'), 'display:none');
 
@@ -218,6 +220,7 @@
                   api.ajax({//获取用户基本信息
                       url: serverurl,
                       method: 'get',
+                      cache:true,
                       data: {
                           values: {
                               type: '10035',
@@ -233,7 +236,7 @@
                           api.toast({
                               msg: '网络错误',
                               duration: 2000,
-                              location: 'bottom'
+                              location: 'middle'
                           });
 
                       }
@@ -241,9 +244,11 @@
               },
 
               getInfo(){
+
                   api.ajax({//个人中心
                       url: serverurl,
                       method: 'get',
+                      cache:true,
                       data: {
                           values: {
                               type: '10171',
@@ -253,7 +258,17 @@
                       }
                   },function(ret, err){
 
-                      vm.Info = ret;
+                      if (ret) {
+                          vm.Info = ret;
+                      }else {
+                          api.toast({
+                              msg: '网络错误',
+                              duration: 2000,
+                              location: 'bottom'
+                          });
+
+                      }
+
                   });
               }
           }
@@ -342,36 +357,37 @@
       }
 
       // 支教老师收益
-      function getProfit1(){//form收益类型 1:生源奖 2:参与奖 3:下线收益
+      function getProfit(form){//form收益类型 1:生源奖 2:参与奖 3:下线收益
           api.ajax({
               url: serverurl,
               method: 'get',
+              cache:true,
               data: {
                   values: {
                        type: '10174',
                       token: token,
                        uid:uid,
-                      form:'2'
+                      form:form
                   },
               }
           },function(ret, err){
-               
+          
               if (ret) {
 
                   if (!ret.status) {
-                      $api.text($api.dom('.total1'),ret.total);
-                      $api.text($api.dom('.week1'),ret.week);
+                      $api.text($api.dom('.total'+form),ret.total);
+                      $api.text($api.dom('.week'+form),ret.week);
 
                       if (ret.data) {
-                          $api.css($api.dom('.boxOne'),'display:block');
-                          var data1 = [];
-                          var time1 = [];
+                          $api.css($api.dom('.ebox'+form),'display:block');
+                          var data = [];
+                          var time = [];
                           ret.data.forEach(function(e){
-                              data1.push(e.count);
-                              time1.push(e.time);
+                              data.push(e.count);
+                              time.push(e.time);
                           })
-                          var myChart1 = echarts.init(document.getElementById('chart1'));  // 基于准备好的dom，初始化echarts实例
-                          option1 = {
+                          var myChart = echarts.init(document.getElementById('chart'+form));  // 基于准备好的dom，初始化echarts实例
+                          option = {
 
                                     title: {
                                         text: '近1周收益'
@@ -390,7 +406,7 @@
                                     xAxis: {
                                         type: 'category',
                                         boundaryGap: false,
-                                        data: time1
+                                        data: time
                                     },
                                     yAxis: {
                                         type: 'value'
@@ -400,23 +416,23 @@
                                             name:'参与奖收益',
                                             type:'line',
                                             stack: '总量',
-                                            data:data1
+                                            data:data
                                         }
                                     ]
                                 };
 
-                          myChart1.setOption(option1);// 使用刚指定的配置项和数据显示图表。
+                          myChart.setOption(option);// 使用刚指定的配置项和数据显示图表。
                       }
                   }else {
-                      $api.text($api.dom('.total1'),0);
-                      $api.text($api.dom('.week1'),0);
+                      $api.text($api.dom('.total'+form),0);
+                      $api.text($api.dom('.week'+form),0);
                   }
               } else {
 
                   api.toast({
                       msg: '网络错误',
                       duration: 2000,
-                      location: 'bottom'
+                      location: 'middle'
                   });
 
               }
@@ -424,166 +440,6 @@
 
       }
 
-      // 支教老师收益
-      function getProfit2(){//form收益类型 1:生源奖 2:参与奖 3:下线收益
-          api.ajax({
-              url: serverurl,
-              method: 'get',
-              data: {
-                  values: {
-                       type: '10174',
-                      token: token,
-                       uid:uid,
-                      form:'1'
-                  },
-              }
-          },function(ret, err){
-
-              if (ret) {
-
-                  if (!ret.status) {
-                      $api.text($api.dom('.total2'),ret.total);
-                      $api.text($api.dom('.week2'),ret.week);
-                      if (ret.data) {
-                          $api.css($api.dom('.boxTwo'),'display:block');
-                          var data2 = [];
-                          var time2 = [];
-                          ret.data.forEach(function(e){
-                              data2.push(e.count);
-                              time2.push(e.time);
-                          })
-                          var myChart2 = echarts.init(document.getElementById('chart2'));
-                          option2 = {
-                                    title: {
-                                        text: '近1周收益'
-                                    },
-                                    tooltip: {
-                                        trigger: 'axis'
-                                    },
-
-                                    grid: {
-                                        left: '3%',
-                                        right: '4%',
-                                        bottom: '3%',
-                                        containLabel: true
-                                    },
-
-                                    xAxis: {
-                                        type: 'category',
-                                        boundaryGap: false,
-                                        data: time2
-                                    },
-                                    yAxis: {
-                                        type: 'value'
-                                    },
-                                    series: [
-                                        {
-                                            name:'生源奖收益',
-                                            type:'line',
-                                            stack: '总量',
-                                            data:data2
-                                        }
-                                    ]
-                                };
-                          myChart2.setOption(option2);
-                      }
-                  }else {
-                      $api.text($api.dom('.total2'),0);
-                      $api.text($api.dom('.week2'),0);
-                  }
-              } else {
-
-                  api.toast({
-                      msg: '网络错误',
-                      duration: 2000,
-                      location: 'bottom'
-                  });
-
-              }
-          });
-
-      }
-
-      // 支教老师收益
-      function getProfit3(){//form收益类型 1:生源奖 2:参与奖 3:下线收益
-          api.ajax({
-              url: serverurl,
-              method: 'get',
-              data: {
-                  values: {
-                       type: '10174',
-                      token: token,
-                       uid:uid,
-                      form:'3'
-                  },
-              }
-          },function(ret, err){
-
-              if (ret) {
-
-                  if (!ret.status) {
-                      $api.text($api.dom('.total3'),ret.total);
-                      $api.text($api.dom('.week3'),ret.week);
-                      if (ret.data) {
-                          $api.css($api.dom('.boxThree'),'display:block');
-                          var data3 = [];
-                          var time3 = [];
-                          ret.data.forEach(function(e){
-                              data3.push(e.count);
-                              time3.push(e.time);
-                          })
-                          var myChart3 = echarts.init(document.getElementById('chart3'));
-                          option3 = {
-                                    title: {
-                                        text: '近1周收益'
-                                    },
-                                    tooltip: {
-                                        trigger: 'axis'
-                                    },
-
-                                    grid: {
-                                        left: '3%',
-                                        right: '4%',
-                                        bottom: '3%',
-                                        containLabel: true
-                                    },
-
-                                    xAxis: {
-                                        type: 'category',
-                                        boundaryGap: false,
-                                        data: time3
-                                    },
-                                    yAxis: {
-                                        type: 'value'
-                                    },
-                                    series: [
-                                        {
-                                            name:'下线收益',
-                                            type:'line',
-                                            stack: '总量',
-                                            data:data3
-                                        }
-                                    ]
-                                };
-                          myChart3.setOption(option3);
-                      }
-
-                  }else {
-                      $api.text($api.dom('.total3'),0);
-                      $api.text($api.dom('.week3'),0);
-                  }
-              } else {
-
-                  api.toast({
-                      msg: '网络错误',
-                      duration: 2000,
-                      location: 'bottom'
-                  });
-
-              }
-          });
-
-      }
 
       // 邀请注册
       function inviteToreg(){

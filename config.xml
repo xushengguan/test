@@ -5,7 +5,7 @@
     </description>
     <author email="1007237083@qq.com" href="http://www.apicloud.com">
         嘘晃
-    </author>    <!-- ./index.html-->
+    </author>
     <content src="./html/login/login0.html" />
     <access origin="*" />
     <preference name="pageBounce" value="false"/>
@@ -17,9 +17,8 @@
 	<preference name="autoLaunch" value="true"/>
 	<preference name="fullScreen" value="false"/>
 	<preference name="autoUpdate" value="true" />
-	<preference name="smartUpdate" value="false" />
-	<preference name="debug" value="true"/>  <!-- 沉浸式头部true -->
-	<preference name="statusBarAppearance" value="true"/>  <!-- 配置键盘弹出方式    resize：弹出键盘时会把页面往上推移，iOS平台resize和auto等效;    pan：弹出键盘时页面不会被往上推移    auto：由系统根据输入框位置决定是否页面往上推移 -->  <preference name="softInputMode" value="resize"/>
+	<preference name="smartUpdate" value="true" />	<preference name="debug" value="true"/>
+	<preference name="statusBarAppearance" value="true"/>  <preference name="softInputMode" value="resize"/>
 	<permission name="readPhoneState" />
 	<permission name="camera" />
 	<permission name="record" />
@@ -27,13 +26,13 @@
 	<permission name="fileSystem" />
 	<permission name="internet" />
 	<permission name="bootCompleted" />
-	<permission name="hardware" />  <!-- 百度模块 -->  <feature name="bMap">    <param name="android_api_key" value="3kh893qMUHS8US4QYw3w0lLzhabSlAx4" />    <param name="ios_api_key" value="jcEOSTppWsFNnEkP49lwzcWFxo7X7lfz" />  </feature>  <!-- wx -->
+	<permission name="hardware" />  <feature name="bMap">    <param name="android_api_key" value="3kh893qMUHS8US4QYw3w0lLzhabSlAx4" />    <param name="ios_api_key" value="jcEOSTppWsFNnEkP49lwzcWFxo7X7lfz" />  </feature>
   <feature name="wx">
     <param name="urlScheme" value="wxdc86ebed0e740605"/>
     <param name="apiKey" value="wxdc86ebed0e740605"/>
     <param name="apiSecret" value="f17fd06ab397bf95d0f28527f481c570"/>
   </feature>
-  <!-- 极光推送 -->
+
   <feature name="ajpush">
         <param name="app_key" value="f787308e3c07449475595f55" />
         <param name="channel" value="16a88661db207abc8422cf3f" />

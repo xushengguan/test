@@ -192,7 +192,6 @@
         $api.setStorage('FULLSCREEN', api.fullScreen);
         $api.setStorage('IOS7STATUSBARAPPEARANCE', api.iOS7StatusBarAppearance);
 
-
         footerHeight = $api.dom("#footer").offsetHeight;
         headerHeight = $api.dom("#header").offsetHeight;
         var NextPage = api.pageParam.index;
@@ -267,7 +266,7 @@
             }
 
         }
-
+        api.parseTapmode();
     }
 
     //  消息

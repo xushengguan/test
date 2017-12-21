@@ -110,6 +110,7 @@ apiready = function(){
         api.ajax({//获取用户基本信息
             url: serverurl,
             method: 'get',
+            cache:true,
             data: {
                 values: {
                     type: '10035',
@@ -136,7 +137,7 @@ apiready = function(){
                 api.toast({
                     msg: '网络错误',
                     duration: 2000,
-                    location: 'bottom'
+                    location: 'middle'
                 });
 
             }
@@ -147,6 +148,7 @@ apiready = function(){
         api.ajax({
             url: serverurl,
             method: 'get',
+            cache:true,
             data: {
                 values: {
                     type: '10128',
@@ -172,6 +174,7 @@ apiready = function(){
     api.ajax({
         url: serverurl,
         method: 'get',
+        cache:true,
         data: {
             values: {
                  type: '10157',
@@ -244,7 +247,7 @@ function BillDetail(){
 
 // 去绑定银行卡
 function goBindCard(){
-    
+
     if (index == 1) {//index-1已绑定，2-未绑定
         api.openWin({
             name: 'widthdraw',
@@ -301,7 +304,7 @@ function exitLogin() {
                api.toast({
                    msg: '网络错误',
                    duration: 2000,
-                   location: 'bottom'
+                   location: 'middle'
                });
            }
        });

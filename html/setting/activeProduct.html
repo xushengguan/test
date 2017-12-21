@@ -46,10 +46,13 @@
           <div class="noStu" v-if="status == '0'">暂无激活的产品</div>
           <ul class="Lis" v-else>
             <li v-for="v in Info">
-                <p class="title">{{v.tdate}}</p>
+                <p class="title">{{v.time | formatDate}}</p>
                 <div class="container">
                     <p class="txt">学令牌ID-{{v.key}}</p>
-                    <span @click="applyReturn(v.key)">申请退款>></span>
+                    <span style="color:#ffb300;" v-if="v.status == '0'">处理中</span>
+                    <span style="color:#006400;" v-else-if="v.status == '1'">同意退款</span>
+                    <span style="color:#B22222;" v-else-if="v.status == '2'">不允许退款</span>
+                    <span @click="applyReturn(v.key)" v-else>申请退款>></span>
                 </div>
             </li>
           </ul>
@@ -59,6 +62,7 @@
   <script type="text/javascript" src="../../script/api.js"></script>
   <script type="text/javascript" src="../../script/my.js"></script>
   <script type="text/javascript" src="../../script/vue.js"></script>
+  <script type="text/javascript" src="../../script/date.js"></script>
   <script type="text/javascript">
   var token,uid;
   apiready = function(){
@@ -86,12 +90,18 @@
       el:'#app',
       data:{
           Info:[],
-          status:'',
-          count:''
+          count:'',
+          status:''
+      },
+      filters: {
+          formatDate(time) {
+              var date = new Date(time * 1000);
+              return formatDate(date, 'yyyy-MM-dd');
+          }
       },
       methods:{
           actProduct(){//激活产品列表
-              $api.css($api.byId('app'),'display:none');
+
               $api.css($api.byId('loading'),'display:block');
 
               api.ajax({
@@ -101,20 +111,20 @@
                       values: {
                           type: '10144',
                           token: token,
-                          uid:uid
+                          uid:uid,
                       },
                   }
               },function(ret, err){
 
                   $api.css($api.byId('loading'),'display:none');
-                  
+
                   if (ret) {
-                      $api.css($api.byId('app'),'display:block');
+
                       if(ret.status == '0'){
                           vm.status = ret.status;
                       }else{
 
-                        vm.Info = ret.data;
+                        vm.Info = ret.data;//status0:处理中 1:同意退款 2:不允许退款    为空时申请退款
                         vm.count = ret.count;
                       }
 

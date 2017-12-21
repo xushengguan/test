@@ -207,8 +207,7 @@
 					}
 				}, function(ret, err) {
 					$api.css($api.dom('#loading'), 'display:none');
-					console.log(JSON.stringify(ret));
-					console.log(JSON.stringify(err));
+				
 					if (ret) {
 						if (ret.status == '1') {
 								api.toast({

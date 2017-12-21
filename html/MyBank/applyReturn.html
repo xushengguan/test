@@ -110,6 +110,7 @@
                       },
                   }
               },function(ret, err){
+                
                   if (ret) {
 
                       if (ret.status == '1') {
@@ -134,7 +135,7 @@
                           });
                       }
                   } else {
-                      console.log( JSON.stringify( err ) );
+
                       api.toast({
                           msg: '网络错误',
                           duration: 2000,

@@ -249,18 +249,28 @@
                         }, function(ret, err) {
 
                             $api.css($api.dom('#loading'), 'display:none');
-                          
-                            if (ret) {
-                                vm.ActInfo = ret;
-                                $api.css($api.dom('.box'), 'display:block');
-                            } else {
+
+                            if (lon && lat) {
+                                if (ret) {
+                                    vm.ActInfo = ret;
+                                    $api.css($api.dom('.box'), 'display:block');
+                                } else {
+                                    api.toast({
+                                        msg: '网络错误',
+                                        duration: 2000,
+                                        location: 'middle'
+                                    });
+
+                                }
+                            }else {
                                 api.toast({
-                                    msg: '网络错误',
+                                    msg: '请检查您的设备是否授予定位权限',
                                     duration: 2000,
                                     location: 'middle'
                                 });
 
                             }
+
                         });
                     } else {
                         $api.css($api.dom('#loading'), 'display:none');

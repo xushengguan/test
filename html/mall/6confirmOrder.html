@@ -218,6 +218,7 @@
 			var address_id = api.pageParam.address_id;
 
       $api.css($api.byId('loading'),'display:block');
+
 			if (address_id) {
 					vm.get_address(address_id);
 			}else{
@@ -623,8 +624,7 @@
 					}
 			},function(ret, err){
 				  $api.css($api.byId('loading'), 'display:none');
-					console.log(JSON.stringify(ret));
-					console.log(JSON.stringify(err));
+
 					if (ret) {
 							if (ret.status == '1') {
 
@@ -665,8 +665,7 @@
 			    }
 			},function(ret, err){
 				  $api.css($api.byId('loading'), 'display:none');
-					console.log(JSON.stringify(ret));
-					console.log(JSON.stringify(err));
+
 			    if (ret) {
 							if (ret.status == '1') {
 									api.openWin({
@@ -728,8 +727,7 @@
 			        },
 			    }
 			},function(ret, err){
-				  console.log(JSON.stringify(ret));
-					console.log(JSON.stringify(err));
+
 			    if (ret) {
 
 							goPay(ret);
@@ -747,34 +745,55 @@
 	}
 
 	// 微信支付
-	function goPay(ret){
+	function goPay(content){
 			var wxPay = api.require('wxPay');
 			wxPay.payOrder({
-				apiKey: ret.appid,//从微信开放平台获取的 appid
-				orderId: ret.prepayid,//获取的订单号 （prepay_id）
-				mchId: ret.partnerid,//商家和微信合作的 id 号，审核通过后微信服务器会发送到商家邮箱
-				nonceStr: ret.noncestr,//随机字符串，防重发
-				timeStamp: ret.timestamp,//时间戳，防重发
-				sign: ret.sign//商家根据微信开放平台文档对数据做的签名
+				apiKey: content.appid,//从微信开放平台获取的 appid
+				orderId: content.prepayid,//获取的订单号 （prepay_id）
+				mchId: content.partnerid,//商家和微信合作的 id 号，审核通过后微信服务器会发送到商家邮箱
+				nonceStr: content.noncestr,//随机字符串，防重发
+				timeStamp: content.timestamp,//时间戳，防重发
+				sign: content.sign//商家根据微信开放平台文档对数据做的签名
 			}, function(ret, err) {
-				if (ret.status) {
-						//支付成功
-						api.openWin({
-								name: 'success',
-								url: './success.html',
-								pageParam: {
-										time: add_time,
-										goods_name:vm.goods_name
-								}
-						});
-				} else {
-						api.toast({
-						    msg: '支付失败',
-						    duration: 2000,
-						    location: 'bottom'
-						});
 
+				if (ret.status) {
+					//支付成功
+					getweiPay(content.prepayid);
+
+				} else {
+						console.log(err.code);
 				}
+
 			});
+	}
+
+	// 微信回调信息
+	function getweiPay(prepayid){
+
+		api.ajax({
+				url: serverurl,
+				method: 'post',
+				data: {
+						values: {
+								type: '10190',
+								token:token,
+								order_sn:prepayid
+						},
+				}
+		},function(ret, err){
+				if (ret) {
+						alert( JSON.stringify( ret ) );
+						// api.openWin({
+						// 		name: 'success',
+						// 		url: './success.html',
+						// 		pageParam: {
+						// 				time: add_time,
+						// 				goods_name:vm.goods_name
+						// 		}
+						// });
+				} else {
+						alert( JSON.stringify( err ) );
+				}
+		});
 	}
 </script>

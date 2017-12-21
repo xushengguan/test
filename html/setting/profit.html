@@ -28,34 +28,44 @@
           .rt em{font-size: 18px;}
 
           .noIncome{font-size: 16px; color: #333; padding: 0 15px;}
+          .noContent{font-size: 16px; color: #333; padding: 30px; text-align: center;}
       </style>
   </head>
   <body>
       <div id="app" v-cloak>
-          <header>
-              <div class="title">
-                  <div class="half">
-                      <p class="txt">总收益(元)</p>
-                      <div class="num">¥<em id="total"></em></div>
-                  </div>
-                  <div class="half" style="text-align:right">
-                      <p class="txt">最近7天收益(元)</p>
-                      <div class="num">¥<em id="week"></em></div>
-                  </div>
-              </div>
-              <div class="chart" id="chart" v-show="!ret.status"></div>
-          </header>
-          <div class="head">收益明细</div>
-          <div class="noIncome" v-if="ret.status">暂无收益明细~</div>
-          <ul class="Lis" v-else>
-              <li v-for="v in ret">
-                  <div class="lf">
-                      <div class="name">{{v. title}}</div>
-                      <div class="time">{{v.time}}</div>
-                  </div>
-                  <div class="rt"><em>{{v.count}}</em>元</div>
-              </li>
-          </ul>
+          <div class="noContent" v-if="ret.status == '0'">暂无收益~</div>
+          <div v-else>
+            <header>
+                <div class="title">
+                    <div class="half">
+                        <p class="txt">总收益(元)</p>
+                        <div class="num">¥
+                          <em v-if="profit.total">{{profit.total}}</em>
+                          <em v-else>0</em>
+                        </div>
+                    </div>
+                    <div class="half" style="text-align:right">
+                        <p class="txt">最近7天收益(元)</p>
+                        <div class="num">¥
+                          <em v-if="profit.week">{{profit.week}}</em>
+                          <em v-else>0</em>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart" id="chart" v-show="profit.data"></div>
+            </header>
+            <div class="head">收益明细</div>
+            <div class="noIncome" v-if="ret.status">暂无收益明细~</div>
+            <ul class="Lis" v-else>
+                <li v-for="v in ret">
+                    <div class="lf">
+                        <div class="name">{{v.title}}</div>
+                        <div class="time">{{v.daily}}</div>
+                    </div>
+                    <div class="rt"><em>{{v.count}}</em>元</div>
+                </li>
+            </ul>
+          </div>
       </div>
   </body>
   <script type="text/javascript" src="../../script/api.js"></script>
@@ -72,7 +82,7 @@
           loading();
 
           $api.css($api.byId('loading'), 'display:block');
-          getProfit(index);
+          vm.getProfit(index);
           vm.getIncome(index);
           $api.css($api.byId('loading'), 'display:none');
 
@@ -96,6 +106,7 @@
           el:"#app",
           data:{
               ret:[],
+              profit:[]
           },
           methods:{
               getIncome(index){
@@ -111,7 +122,7 @@
                           },
                       }
                   },function(ret, err){
-
+                    
                       if (ret) {
                           vm.ret = ret;
                       }else {
@@ -139,89 +150,88 @@
                   },function(ret, err){
                       vm.Info = ret;
                   });
-              }
-          }
-      })
+              },
 
-      // 支教老师收益
-      function getProfit(index){//form收益类型 1:生源奖 2:参与奖 3:下线收益
+              // 支教老师收益
+              getProfit(index){//form收益类型 1:生源奖 2:参与奖 3:下线收益
 
-          api.ajax({
-              url: serverurl,
-              method: 'get',
-              data: {
-                  values: {
-                       type: '10174',
-                      token: token,
-                       uid:uid,
-                      form:index
-                  },
-              }
-          },function(ret, err){
+                  api.ajax({
+                      url: serverurl,
+                      method: 'get',
+                      data: {
+                          values: {
+                               type: '10174',
+                              token: token,
+                               uid:uid,
+                              form:index
+                          },
+                      }
+                  },function(ret, err){
 
-              if (ret) {
+                      vm.profit = ret;
+                      if (ret) {
 
-                  if (!ret.status) {
-                      $api.text($api.dom('#total'),ret.total);
-                      $api.text($api.dom('#week'),ret.week);
-                      var data = [];
-                      var time = [];
-                      ret.data.forEach(function(e){
-                          data.push(e.count);
-                          time.push(e.time);
-                      })
-                      var myChart = echarts.init(document.getElementById('chart'));  // 基于准备好的dom，初始化echarts实例
-                      option = {
-                                title: {
-                                    text: '近1周收益'
-                                },
-                                tooltip: {
-                                    trigger: 'axis'
-                                },
+                          if (ret.data) {
 
-                                grid: {
-                                    left: '3%',
-                                    right: '4%',
-                                    bottom: '3%',
-                                    containLabel: true
-                                },
+                            var data = [];
+                            var time = [];
+                            ret.data.forEach(function(e){
+                                data.push(e.count);
+                                time.push(e.time);
+                            })
+                            var myChart = echarts.init(document.getElementById('chart'));  // 基于准备好的dom，初始化echarts实例
+                            option = {
+                                      title: {
+                                          text: '近1周收益'
+                                      },
+                                      tooltip: {
+                                          trigger: 'axis'
+                                      },
 
-                                xAxis: {
-                                    type: 'category',
-                                    boundaryGap: false,
-                                    data: time
-                                },
-                                yAxis: {
-                                    type: 'value'
-                                },
-                                series: [
-                                    {
-                                        name:'收益',
-                                        type:'line',
-                                        stack: '总量',
-                                        data:data
-                                    }
-                                ]
-                            };
-                    myChart.setOption(option);// 使用刚指定的配置项和数据显示图表。
+                                      grid: {
+                                          left: '3%',
+                                          right: '4%',
+                                          bottom: '3%',
+                                          containLabel: true
+                                      },
 
-                  }else {
-                      $api.text($api.dom('#total'),0);
-                      $api.text($api.dom('#week'),0);
-                  }
+                                      xAxis: {
+                                          type: 'category',
+                                          boundaryGap: false,
+                                          data: time
+                                      },
+                                      yAxis: {
+                                          type: 'value'
+                                      },
+                                      series: [
+                                          {
+                                              name:'收益',
+                                              type:'line',
+                                              stack: '总量',
+                                              data:data
+                                          }
+                                      ]
+                                  };
+                          myChart.setOption(option);// 使用刚指定的配置项和数据显示图表。
+                        }
 
-              } else {
 
-                  api.toast({
-                      msg: '网络错误',
-                      duration: 2000,
-                      location: 'bottom'
+                      } else {
+
+                          api.toast({
+                              msg: '网络错误',
+                              duration: 2000,
+                              location: 'bottom'
+                          });
+
+                      }
                   });
 
               }
-          });
 
-      }
+          }
+      })
+
 
   </script>
   </html>

@@ -71,7 +71,7 @@
               $api.css($api.byId('app'),'display:none');
               $api.css($api.byId('loading'),'display:block');
 
-              api.ajax({//未激活学员列表
+              api.ajax({
                   url: serverurl,
                   method: 'get',
                   data: {
@@ -84,6 +84,7 @@
               },function(ret, err){
 
                   $api.css($api.byId('loading'),'display:none');
+                
                   if (ret) {
                       $api.css($api.byId('app'),'display:block');
 

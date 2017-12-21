@@ -396,7 +396,7 @@
                 goScircle();
               }
 
-
+               api.parseTapmode();
             }
 
             var frames = ['frame1', 'stu_actLis','scan', 'frame2', 'frame4'];
@@ -651,8 +651,7 @@
               },
           }
       },function(ret, err){
-        alert(JSON.stringify(ret));
-      
+    
           if (ret) {
               if (ret.status == '1') {
                   api.toast({

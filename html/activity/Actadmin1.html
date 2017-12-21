@@ -178,8 +178,17 @@ var vm = new Vue({
                 }
             }, function(ret, err) {
                 $api.css($api.dom('#loading'), 'display:none');
-                
-                vm.ActInfo = ret;
+              
+                if (ret) {
+                    vm.ActInfo = ret;
+                }else {
+                    api.toast({
+                        msg: '网络错误',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+
+                }
 
             });
         },

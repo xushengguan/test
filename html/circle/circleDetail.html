@@ -405,7 +405,7 @@
         methods: {
 
             getCircleDetail() { //读取学客圈详情
-
+                $api.css($api.dom('#main'), 'display:none');
                 $api.css($api.dom('#loading'), 'display:block');
                 api.ajax({
                     url: serverurl,
@@ -422,7 +422,7 @@
                 }, function(ret, err) {
 
                     $api.css($api.dom('#loading'), 'display:none');
-                  
+                    $api.css($api.dom('#main'), 'display:block');
                     if (ret) {
 
                         vm.data = ret.data;

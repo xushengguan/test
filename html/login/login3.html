@@ -224,6 +224,9 @@
 
       // 登录
       function login(tel,pwd){
+        var ajpush = api.require('ajpush');
+        ajpush.getRegistrationId(function(ret) {
+          var registrationId = ret.id;
           api.ajax({
               url: serverurl,
               method: 'post',
@@ -232,7 +235,8 @@
                       type: '10003',
                        tel: tel,
                        pwd:pwd,
-                       role:index
+                       role:index,
+                       registrationid_id:registrationId
                   },
               }
           },function(ret, err){
@@ -306,7 +310,7 @@
 
               }
           });
-
+        })
       }
   </script>
   </html>

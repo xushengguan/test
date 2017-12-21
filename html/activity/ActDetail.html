@@ -251,8 +251,9 @@
 				methods:{
 						getDetail(){//获取活动详情
                 vm.role = role;
-							  $api.css($api.byId('app'), 'display:none');
+
                 $api.css($api.byId('loading'), 'display:block');
+								$api.css($api.byId('main'), 'display:none');
 								api.ajax({
 								    url: serverurl,
 								    method: 'get',
@@ -265,9 +266,9 @@
 								    }
 								},function(ret, err){
 									  $api.css($api.byId('loading'), 'display:none');
-
+                    $api.css($api.byId('main'), 'display:block');
 								    if (ret) {
-											  $api.css($api.byId('app'), 'display:block');
+
 												vm.data = ret;
 												if(role == '2'){
 													  if (ret.actsta == 0) {
@@ -303,7 +304,7 @@
 								        },
 								    }
 								},function(ret, err){
-                  
+
 								    if (ret) {
 
 												vm.status = ret.status;
@@ -393,9 +394,7 @@
         mediaValue: 'pic',
         destinationType: 'url',
         allowEdit: true,
-        quality: 50,
-        targetWidth: 100,
-        targetHeight: 100,
+        quality: 100,
         saveToPhotoAlbum: false
       }, function(ret, err) {
 

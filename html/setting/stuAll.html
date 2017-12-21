@@ -23,24 +23,24 @@
           .numBox .rt span{padding-left: 23px;}
 
           .titleName{padding: 21px 16px 10px 16px; font-size: 14px; color: #999;}
-
+          .noStudent{padding: 30px; text-align: center; color: #333; font-size: 16px;}
       </style>
   </head>
   <body>
     <div id="app" v-cloak>
-        <div class="top">
+        <!-- <div class="top">
             <p class="title">已激活学员(人)</p>
             <div class="numBox">
               <em v-if="status == '0'">0</em>
-              <em v-else>{{count}}</em>
+              <em v-else>{{count}}</em> -->
               <!-- <div class="rt">
                 <span>已激活:47</span>
                 <span>待激活:27</span>
               </div> -->
-            </div>
-        </div>
-        <div v-if="status !== '0'">
-            <div class="titleName">学员列表</div>
+            <!-- </div>
+        </div> -->
+         <div v-if="status !== '0'">
+            <!-- <div class="titleName">学员列表</div> -->
             <ul class="Lis">
                 <li v-for="v in Info">
                   <img :src="v.stu_img" alt="">
@@ -49,6 +49,7 @@
                 </li>
             </ul>
         </div>
+        <div class="noStudent" v-else>暂无已激活学员~</div>
     </div>
   </body>
   <script type="text/javascript" src="../../script/api.js"></script>
@@ -102,7 +103,7 @@
               },function(ret, err){
 
                   $api.css($api.byId('loading'),'display:none');
-                
+                  
                   if (ret) {
                       $api.css($api.byId('app'),'display:block');
                       if(ret.status == '0'){

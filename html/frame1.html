@@ -245,7 +245,7 @@
         .reply li {
             margin-top: 6px;
             overflow: hidden;
-            line-height: 14px;
+            line-height: 16px;
         }
 
         .reply li .lf {
@@ -345,6 +345,7 @@
         }
 */
        .noCircle{padding-top: 30px; font-size: 16px; color: #333; text-align: center; width: 100%;}
+
     </style>
 </head>
 
@@ -416,13 +417,13 @@
                                       <span class="name" @click="goCircel(vv.rew_id)">{{vv.replier.nickname}}</span> 回复
                                       <span class="name" @click="goCircel(vv.uid)">{{vv.nickname}}:</span>
                                   </div>
-                                  <div class="lf" style="max-width:70%;" @click="CircleReply(v,v.id,vv.rew_id,vv.uid,vv.replier.id,vv.replier.nickname)">{{vv.content}}</div>
+                                  <div class="lf inline" @click="CircleReply(v,v.id,vv.rew_id,vv.uid,vv.replier.id,vv.replier.nickname)">{{vv.content}}</div>
                               </div>
                               <div v-else>
                                   <div class="lf">
                                       <span class="name" @click="goCircel(vv.uid)">{{vv.nickname}}:</span>
                                   </div>
-                                  <div class="lf" style="max-width:70%;" @click="CircleReply(v,v.id,vv.rew_id,vv.uid,vv.uid,vv.nickname)">{{vv.content}}</div>
+                                  <div class="lf inline" @click="CircleReply(v,v.id,vv.rew_id,vv.uid,vv.uid,vv.nickname)">{{vv.content}}</div>
                               </div>
 
                           </li>
@@ -433,7 +434,6 @@
                 </div>
             </div>
             <div class="noCircle" v-else>暂无动态~</div>
-
         </div>
         <footer style="display:none">
             <div class="footer">
@@ -520,11 +520,12 @@
             },
 
             getCircle() { //读取学客圈列表
-                $api.css($api.dom('#wrap'), 'display:none');
+                $api.css($api.dom('#main'), 'display:none');
                 $api.css($api.dom('#loading'), 'display:block');
                 api.ajax({
                     url: serverurl,
                     method: 'get',
+                    cache:true,
                     dataType:'json',
                     data: {
                         values: {
@@ -534,19 +535,19 @@
                     }
                 }, function(ret, err) {
                       $api.css($api.dom('#loading'), 'display:none');
-                      
+
                       if (ret) {
                         for (var i in ret.data) {
                           ret.data[i].fold = true;
                         }
                         vm.data = ret.data;
-                        $api.css($api.dom('#wrap'), 'display:block');
+                        $api.css($api.dom('#main'), 'display:block');
                       }else {
 
                         api.toast({
                             msg: '网络错误',
                             duration: 2000,
-                            location: 'bottom'
+                            location: 'middle'
                         });
                       }
 
@@ -591,7 +592,7 @@
                         api.toast({
                             msg: '网络错误',
                             duration: 2000,
-                            location: 'bottom'
+                            location: 'middle'
                         });
 
                     }
@@ -824,7 +825,7 @@
                        api.toast({
                            msg: '删除失败',
                            duration: 2000,
-                           location: 'bottom'
+                           location: 'middle'
                        });
 
                     }else {
@@ -837,7 +838,7 @@
                     api.toast({
                         msg: '网络错误',
                         duration: 2000,
-                        location: 'bottom'
+                        location: 'middle'
                     });
 
                 }
@@ -869,7 +870,8 @@
                },
            }
        },function(ret, err){
-
+           console.log(JSON.stringify(ret));
+           console.log(JSON.stringify(err));
            if (ret) {
                item.rewlist = ret.data;
                $api.val($api.byId('reply_txt'),'');
@@ -881,7 +883,7 @@
                api.toast({
                    msg: '网络错误',
                    duration: 2000,
-                   location: 'bottom'
+                   location: 'middle'
                });
 
            }
