@@ -121,7 +121,7 @@
       }
 
       function weiShare(scene){
-        var contentUrl = 'https://x.sdp178.com/xlp/invite.html?uid='+uid+'&token='+token;
+        var contentUrl = 'https://x.sdp178.com/xlp/invite.html?uid='+uid;
         var nickname = $api.text($api.dom('.nickname'));
         var wx = api.require('wx');
         wx.isInstalled(function(ret, err) {//判断当前设备是否已经安装微信

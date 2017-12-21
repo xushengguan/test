@@ -55,7 +55,7 @@
 					<div class="fl" style="width:45%" @click="goDetail(v.order_id)">
 						<h6 class="free single">{{v.goods_name}}</h6>
 						<h6 class="chicken more2">{{v.abs}}</h6>
-						<span class="paper">{{v.goods_number}}件</span>
+						<span class="paper">购买数量:{{v.goods_number}}件</span>
 					</div>
 
 					<!-- 配送中状态添加 -->
@@ -128,7 +128,8 @@
 				}, function(ret, err) {
 					$api.css($api.dom('#loading'), 'display:none');
 					vm.role = $api.getStorage('role');
-				
+          console.log(JSON.stringify(ret));
+					console.log(JSON.stringify(err));
 					if (ret) {
 						vm.data = ret;
 

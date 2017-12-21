@@ -52,10 +52,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="chart" id="chart" v-show="profit.data"></div>
+                <div class="chart" id="chart"></div>
             </header>
             <div class="head">收益明细</div>
-            <div class="noIncome" v-if="ret.status">暂无收益明细~</div>
+            <div class="noIncome" v-if="ret.status == '0'">暂无收益明细~</div>
             <ul class="Lis" v-else>
                 <li v-for="v in ret">
                     <div class="lf">
@@ -122,7 +122,7 @@
                           },
                       }
                   },function(ret, err){
-                    
+
                       if (ret) {
                           vm.ret = ret;
                       }else {

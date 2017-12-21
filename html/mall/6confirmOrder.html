@@ -665,7 +665,7 @@
 			    }
 			},function(ret, err){
 				  $api.css($api.byId('loading'), 'display:none');
-
+        
 			    if (ret) {
 							if (ret.status == '1') {
 									api.openWin({
@@ -730,7 +730,7 @@
 
 			    if (ret) {
 
-							goPay(ret);
+							goPay(ret,order_sn);
 			    } else {
 
 							api.toast({
@@ -745,7 +745,7 @@
 	}
 
 	// 微信支付
-	function goPay(content){
+	function goPay(content,order_sn){
 			var wxPay = api.require('wxPay');
 			wxPay.payOrder({
 				apiKey: content.appid,//从微信开放平台获取的 appid
@@ -758,7 +758,7 @@
 
 				if (ret.status) {
 					//支付成功
-					getweiPay(content.prepayid);
+					getweiPay(order_sn);
 
 				} else {
 						console.log(err.code);
@@ -767,8 +767,8 @@
 			});
 	}
 
-	// 微信回调信息
-	function getweiPay(prepayid){
+	// 微信支付成功更新订单
+	function getweiPay(order_sn){
 
 		api.ajax({
 				url: serverurl,
@@ -777,22 +777,38 @@
 						values: {
 								type: '10190',
 								token:token,
-								order_sn:prepayid
+								order_sn:order_sn
 						},
 				}
 		},function(ret, err){
 				if (ret) {
-						alert( JSON.stringify( ret ) );
-						// api.openWin({
-						// 		name: 'success',
-						// 		url: './success.html',
-						// 		pageParam: {
-						// 				time: add_time,
-						// 				goods_name:vm.goods_name
-						// 		}
-						// });
+
+						if (ret.status == '1') {
+							api.openWin({
+									name: 'success',
+									url: './success.html',
+									pageParam: {
+											time: add_time,
+											goods_name:vm.goods_name
+									}
+							});
+						}else {
+								api.toast({
+								    msg: '兑换失败',
+								    duration: 2000,
+								    location: 'middle'
+								});
+
+						}
+
 				} else {
-						alert( JSON.stringify( err ) );
+
+						api.toast({
+						    msg: '网络错误',
+						    duration: 2000,
+						    location: 'bottom'
+						});
+
 				}
 		});
 	}

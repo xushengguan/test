@@ -175,7 +175,7 @@
       function confirm(){
         var moneyNum = $api.val($api.dom('.moneyNum'));
         var code = $api.val($api.dom('.code'));
-      
+
         if (!vm.data) {
             api.toast({
                 msg: '请先绑定银行卡',
@@ -183,7 +183,7 @@
                 location: 'middle'
             });
             return false;
-        }else if (parseInt(vm.winmoney) <= parseInt(moneyNum)) {
+        }else if (parseInt(vm.winmoney) < parseInt(moneyNum)) {
             api.toast({
                 msg: '抱歉，您的余额不足',
                 duration: 2000,
@@ -222,7 +222,7 @@
                 }
             },function(ret, err){
                 $api.css($api.byId('loading'), 'display:none');
-
+                
                 if (ret) {
 
                     if (ret.status == '1') {

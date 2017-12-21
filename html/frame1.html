@@ -118,7 +118,7 @@
 
         .box .cell {
             width: 210px;
-            height: 210px;
+            max-height: 210px;
             overflow: hidden;
 
         }
@@ -520,7 +520,7 @@
             },
 
             getCircle() { //读取学客圈列表
-                $api.css($api.dom('#main'), 'display:none');
+                $api.css($api.dom('#wrap'), 'display:none');
                 $api.css($api.dom('#loading'), 'display:block');
                 api.ajax({
                     url: serverurl,
@@ -541,7 +541,7 @@
                           ret.data[i].fold = true;
                         }
                         vm.data = ret.data;
-                        $api.css($api.dom('#main'), 'display:block');
+                        $api.css($api.dom('#wrap'), 'display:block');
                       }else {
 
                         api.toast({

@@ -220,7 +220,7 @@
                 });
             },
 
-            ActSignUpLis() { //获取用户报名活动列表
+            ActSignUpLis() { //获取附近活动列表
                 $api.css($api.dom('#loading'), 'display:block');
                 $api.css($api.dom('.box'), 'display:none');
                 var bMap = api.require('bMap');
@@ -229,6 +229,7 @@
                     autoStop: true,
                     filter: 1
                 }, function(ret, err) {
+
                     if (ret.status) {
 
                         var lon = ret.lon;//经度
@@ -249,7 +250,7 @@
                         }, function(ret, err) {
 
                             $api.css($api.dom('#loading'), 'display:none');
-
+                          
                             if (lon && lat) {
                                 if (ret) {
                                     vm.ActInfo = ret;
