@@ -66,13 +66,13 @@
 </body>
 </html>
 <script type="text/javascript" src="../../script/api.js"></script>
-<script type="text/javascript" src="../../script/My.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
 <script type="text/javascript" src="../../script/vue.js"></script>
 <script type="text/javascript">
 		var token,id;
 		apiready = function(){
 			  loading();
-				alert('走进收货地址管理页面')
+		
 				token = $api.getStorage('token');
 				id = $api.getStorage('id');
 				vm.getAdress();
