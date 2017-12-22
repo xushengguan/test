@@ -72,6 +72,7 @@
 		var token,id;
 		apiready = function(){
 			  loading();
+				alert('走进收货地址管理页面')
 				token = $api.getStorage('token');
 				id = $api.getStorage('id');
 				vm.getAdress();
