@@ -64,6 +64,7 @@
                   api.ajax({
                       url: serverurl,
                       method: 'get',
+                      cache:true,
                       data: {
                           values: {
                                type: '10157',
@@ -73,9 +74,19 @@
                       }
                   },function(ret, err){
                       $api.css($api.byId('loading'),'display:none');
-                      vm.credit = ret.credit;
-                      vm.num = parseInt(ret.credit);
-                      $api.css($api.byId('app'),'display:block');
+                      if (ret) {
+                          vm.credit = ret.credit;
+                          vm.num = parseInt(ret.credit);
+                          $api.css($api.byId('app'),'display:block');
+                      }else {
+                          api.toast({
+                              msg: '网络错误',
+                              duration: 2000,
+                              location: 'bottom'
+                          });
+
+                      }
+
 
                   });
               }

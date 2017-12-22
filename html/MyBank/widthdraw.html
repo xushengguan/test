@@ -222,7 +222,7 @@
                 }
             },function(ret, err){
                 $api.css($api.byId('loading'), 'display:none');
-                
+
                 if (ret) {
 
                     if (ret.status == '1') {
@@ -327,9 +327,6 @@
           api.openWin({
               name: 'BindBankCard',
               url: './BindBankCard.html',
-              pageParam: {
-                  // name: 'test'
-              },
               reload:true,
               allowEdit:true
           });

@@ -134,6 +134,7 @@
 					api.ajax({
 						url: serverurl,
 						method: 'get',
+						cache:true,
 						data: {
 							values: {
 								type: '10129',
@@ -143,7 +144,7 @@
 						}
 					}, function(ret, err) {
 						$api.css($api.dom('#loading'), 'display:none');
-					
+
 						if (ret) {
 
 							vm.data = ret;
@@ -250,8 +251,7 @@
 						    }
 						},function(ret, err){
 							  $api.css($api.dom('#loading'), 'display:none');
-								console.log(JSON.stringify(ret));
-								console.log(JSON.stringify(err));
+								
 						    if (ret) {
 
 										if (ret.status == '1') {

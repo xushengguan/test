@@ -74,6 +74,7 @@
               api.ajax({
                   url: serverurl,
                   method: 'get',
+                  cache:true,
                   data: {
                       values: {
                           type: '10167',
@@ -84,7 +85,7 @@
               },function(ret, err){
 
                   $api.css($api.byId('loading'),'display:none');
-                
+
                   if (ret) {
                       $api.css($api.byId('app'),'display:block');
 
