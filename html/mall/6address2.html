@@ -148,7 +148,7 @@
 
 		vm.address_id = api.pageParam.address_id;
 
-		if (!vm.address_id) {
+		if (vm.address_id) {
 				vm.get_address();
 				$api.html($api.dom('header span'), '编辑收货地址');
 		}
