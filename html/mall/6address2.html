@@ -99,7 +99,7 @@
 	<header>
 		<em onclick="go_back()"></em> <span>添加收货地址</span>
 	</header>
-	<div id="app">
+	<div id="app" v-cloak>
 		<ul class="edit_main clearfix">
 			<li>
 				<label for="">收货人</label>
@@ -135,7 +135,7 @@
 
 </html>
 <script type="text/javascript" src="../../script/api.js"></script>
-<script type="text/javascript" src="../../script/My.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
 <script type="text/javascript" src="../../script/vue.js"></script>
 <script type="text/javascript">
 	var header = $api.dom('header');
