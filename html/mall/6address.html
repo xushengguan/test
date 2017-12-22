@@ -26,7 +26,7 @@
 		</style>
 </head>
 <body>
-		<div class="address-con hide" id="app" v-cloak>
+		<div class="address-con hide" id="app">
 			<div class="NoAddress" v-if="data.status == '0'">暂无收货地址</div>
 			<div v-for="v in data" v-else>
 					<div class="address1-con" @click="go_order(v.address_id)">
