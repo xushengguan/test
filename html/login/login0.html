@@ -56,7 +56,16 @@
           var uid = $api.getStorage('id');
           var token = $api.getStorage('token');
           var role = $api.getStorage('role');
-        
+
+          // 静默修复
+          api.addEventListener({
+              name:'smartupdatefinish'
+          }, function(ret, err){
+              alert('云修复完成');
+              api.rebootApp();//重启应用
+          });
+
+          // 监听网络
           api.addEventListener({
               name:'offline'
           }, function(ret, err){
