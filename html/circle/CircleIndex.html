@@ -87,7 +87,7 @@
 		fixStatusBar_API(header);
     var id,token;
 		apiready = function(){
-			  // $api.css($api.byId('wrap'), 'display:none');
+
 				token = $api.getStorage('token');
 				id = api.pageParam.id;
 
@@ -114,6 +114,7 @@
 								api.ajax({
 								    url: serverurl,
 								    method: 'get',
+										cache:true,
 								    data: {
 								        values: {
 								            type:'10138',
@@ -135,7 +136,7 @@
                         }else {
                         		vm.oneself = 0;
                         }
-												// $api.css($api.byId('wrap'), 'display:block');
+
 								    } else {
 												api.toast({
 												    msg: '网络错误',
@@ -159,7 +160,7 @@
 								        },
 								    }
 								},function(ret, err){
-								
+
 								    if (ret) {
 												if (ret.status == '1') {
 														vm.getMyCircle();

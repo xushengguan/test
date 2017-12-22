@@ -870,8 +870,7 @@
                },
            }
        },function(ret, err){
-           console.log(JSON.stringify(ret));
-           console.log(JSON.stringify(err));
+           
            if (ret) {
                item.rewlist = ret.data;
                $api.val($api.byId('reply_txt'),'');

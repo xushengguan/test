@@ -164,7 +164,7 @@
 
                   }else {
                       var index = ret[0].role;
-                      // userLogin(index,tel);
+                    
                       ChangePwd(index,tel,code,password1,password2);
                   }
               } else {
@@ -252,7 +252,7 @@
             }
         },function(ret, err){
             $api.css($api.dom('#loading'), 'display:none');
-          
+
             if (ret) {
                 if (ret.status == '1') {
                     go_back();

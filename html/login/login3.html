@@ -183,7 +183,7 @@
             }
         },function(ret, err){
             $api.css($api.dom('#loading'), 'display:none');
-            
+
             if (ret) {
                 if (ret.status == '1') {
                     api.alert({
@@ -266,9 +266,6 @@
                           api.openWin({
                               name: 'login5',
                               url: './login5.html',
-                              pageParam: {
-                                  // name: 'test'
-                              },
                               reload:true,
                         			allowEdit:true
                           });
@@ -277,9 +274,6 @@
                           api.openWin({
                               name: 'index',
                               url: '../../index.html',
-                              pageParam: {
-                                  // name: 'test'
-                              },
                               reload:true,
                         			allowEdit:true
                           });

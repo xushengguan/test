@@ -151,10 +151,10 @@
       // 清空消息
       function clearNews(){
           $api.css($api.byId('loading'), 'display:block');
+          console.log(JSON.stringify(vm.rew));
           if (vm.rew) {
             var idArr = [];
             vm.rew.forEach(function(item){
-
                 idArr.push(item.id);
             })
           }
@@ -171,7 +171,8 @@
               }
           },function(ret, err){
               $api.css($api.byId('loading'), 'display:none');
-            
+              console.log(JSON.stringify(ret));
+              console.log(JSON.stringify(err));
               if (ret) {
 
                   if (ret.status == '1') {

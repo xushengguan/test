@@ -128,8 +128,7 @@
 				}, function(ret, err) {
 					$api.css($api.dom('#loading'), 'display:none');
 					vm.role = $api.getStorage('role');
-          console.log(JSON.stringify(ret));
-					console.log(JSON.stringify(err));
+        
 					if (ret) {
 						vm.data = ret;
 

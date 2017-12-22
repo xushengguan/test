@@ -294,8 +294,17 @@
                         },
                     }
                 },function(ret, err){
+                    if(ret){
+                        vm.data = ret;
+                    }else {
+                        api.toast({
+                            msg: '网络错误',
+                            duration: 2000,
+                            location: 'bottom'
+                        });
 
-                    vm.data = ret;
+                    }
+
                 });
 
             },
@@ -311,8 +320,17 @@
                         },
                     }
                 },function(ret, err){
+                    if (ret) {
+                        vm.dataImg = ret;
+                    }else {
+                        api.toast({
+                            msg: '网络错误',
+                            duration: 2000,
+                            location: 'bottom'
+                        });
 
-                    vm.dataImg = ret;
+                    }
+
                 });
 
             }

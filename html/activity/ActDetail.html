@@ -156,7 +156,7 @@
 						      </div>
 						    </div>
 						  </div>
-			        <!-- Swiper -->
+			        <!-- Swiper 活动结束排名-->
 
 							<div class="img" v-show="data.actsta == '1' && role == '2'">
 								  <div class="title">上传活动照片</div>
@@ -270,15 +270,11 @@
 								    if (ret) {
 
 												vm.data = ret;
-												if(role == '2'){
-													  if (ret.actsta == 0) {
-																vm.getRank();
-													  }
-												}else {
-														if (vm.status !== '0' && vm.status !== '1') {
-																vm.getRank();
-														}
-												}
+
+											  if (ret.actsta == 0) {//活动状态 0 已结束 1 活动进行中 2活动未开始
+														vm.getRank();
+											  }
+
 								    } else {
 
 												api.toast({
@@ -333,7 +329,7 @@
 								        },
 								    }
 								},function(ret, err){
-
+                    
 								    if (ret) {
 											vm.rank = ret;
 
@@ -358,9 +354,6 @@
 
 				},
 
-				mounted(){
-
-				}
 
 		})
 

@@ -244,7 +244,6 @@
               },
 
               getInfo(){
-
                   api.ajax({//个人中心
                       url: serverurl,
                       method: 'get',
@@ -278,9 +277,6 @@
           api.openWin({
               name: 'Actadmin_title',
               url: './activity/Actadmin_title.html',
-              pageParam: {
-                  name: 'test'
-              }
           });
 
       }
@@ -290,9 +286,6 @@
           api.openWin({
               name: 'creat_Act_title',
               url: './activity/creat_Act_title.html',
-              pageParam: {
-                  name: 'test'
-              },
               reload:true,
               allowEdit:true
           });
@@ -303,9 +296,6 @@
           api.openWin({
               name: 'stuLis_title',
               url: './setting/stuLis_title.html',
-              pageParam: {
-                  // name: 'test'
-              }
           });
       }
 
@@ -314,9 +304,6 @@
         api.openWin({
             name: 'stuAll_title',
             url: './setting/stuAll_title.html',
-            pageParam: {
-                // name: 'test'
-            }
         });
       }
 
@@ -325,9 +312,6 @@
         api.openWin({
             name: 'activeProduct_title',
             url: './setting/activeProduct_title.html',
-            pageParam: {
-                // name: 'test'
-            }
         });
       }
 
@@ -336,9 +320,6 @@
         api.openWin({
             name: 'widthdraw',
             url: './MyBank/widthdraw.html',
-            pageParam: {
-                // name: 'test'
-            },
             reload:true,
             allowEdit:true
         });
@@ -371,7 +352,7 @@
                   },
               }
           },function(ret, err){
-          
+
               if (ret) {
 
                   if (!ret.status) {
@@ -446,9 +427,6 @@
           api.openWin({
               name: 'invite',
               url: './setting/invite.html',
-              pageParam: {
-                  // name: 'test'
-              }
           });
 
       }

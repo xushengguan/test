@@ -125,7 +125,6 @@
                 +    '</div>'
 
             $api.prepend($api.dom('.img'), str);//在DOM元素内部，首个子元素前插入HTML字符串
-            // imgUrl.push(ret);
 
           }
       })
@@ -201,8 +200,6 @@
         destinationType: 'url',
         allowEdit: true,
         quality: 100,
-        // targetWidth: 100,
-        // targetHeight: 100,
         saveToPhotoAlbum: false
       }, function(ret, err) {
         if (ret) {
@@ -344,7 +341,7 @@
             }
         },function(ret, err){
             $api.css($api.dom('#loading'), 'display:none');
-            
+
             if (ret) {
                 if (ret.status == '1') {
                     var role = $api.getStorage('role');
