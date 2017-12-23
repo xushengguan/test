@@ -38,14 +38,14 @@
             <header>
                 <div class="title">
                     <div class="half">
-                        <p class="txt">总收益(元)</p>
-                        <div class="num">¥
+                        <p class="txt">总收益(学分)</p>
+                        <div class="num">
                           <em v-if="profit.total">{{profit.total}}</em>
                           <em v-else>0</em>
                         </div>
                     </div>
                     <div class="half" style="text-align:right">
-                        <p class="txt">最近7天收益(元)</p>
+                        <p class="txt">最近7天收益(学分)</p>
                         <div class="num">¥
                           <em v-if="profit.week">{{profit.week}}</em>
                           <em v-else>0</em>
@@ -62,7 +62,7 @@
                         <div class="name">{{v.title}}</div>
                         <div class="time">{{v.daily}}</div>
                     </div>
-                    <div class="rt"><em>{{v.count}}</em>元</div>
+                    <div class="rt"><em>{{v.count}}</em>学分</div>
                 </li>
             </ul>
           </div>

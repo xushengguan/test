@@ -56,13 +56,13 @@
 
             <!-- 未绑定银行卡 -->
             <div class="top" v-if="!data">
-                <div class="money">可提现金额:<em>{{winmoney}}</em>元</div>
+                <div class="money">可提现金额:<em>{{winmoney}}</em>学分</div>
                 <button class="bind" onclick="BindBankCard()">绑定银行卡</button>
             </div>
 
             <!-- 已绑定银行卡 -->
             <div class="top" v-else>
-                <div class="money">可提现金额:<em>{{winmoney}}</em>元</div>
+                <div class="money">可提现金额:<em>{{winmoney}}</em>学分</div>
                 <div class="cardNum">{{card_number}}</div>
                 <div class="remove">
                     <span class="" onclick="RemoveBind()">解除当前绑定银行卡</span>
@@ -82,7 +82,7 @@
                 </li>
             </ul>
             <p class="prompt">
-              注意:提现每月10号，26号统一转账
+              注意:1学分=0.2元，提现每月10号，26号统一转账，每提现一笔收取20%做公益。
             </p>
             <button class="confirm" disabled="disabled" onclick="confirm()">确认提现</button>
 

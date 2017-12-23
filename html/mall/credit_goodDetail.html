@@ -189,8 +189,7 @@
         <!-- 底部 -->
     		<div id="nopay_footer">
     			<div class="fo_left">
-            <span class="lf_txt" v-if="role == '2'">单价：<em>¥{{goodsInfo.total * 0.25}}</em></span>
-    				<span class="lf_txt" v-else>单价：<em>{{goodsInfo.total}}学分</em></span>
+    				<span class="lf_txt">单价：<em>{{goodsInfo.total}}学分</em></span>
     			</div>
     			<div class="btn_pay submit" @click="PlaceOrder()">提交订单</div>
     		</div>
@@ -221,7 +220,6 @@
               goodsInfo:[],
   						content:[],
               img:[],
-              role:''
           },
           methods: {
   						getGoodsInfo(){//读取商品详情

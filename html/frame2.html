@@ -283,8 +283,7 @@
                             {{v.goods_name}}
                         </div>
                         <div class="good_name single">{{v.abs}}</div>
-                        <div class="credit" v-if="role == '2'">¥{{v.total * 0.25}}</div>
-                        <div class="credit" v-else>{{v.total}}学分</div>
+                        <div class="credit">{{v.total}}学分</div>
                     </div>
                 </a>
             </div>
@@ -305,8 +304,7 @@
                             {{v.goods_name}}
                         </div>
                         <div class="good_name single">{{v.abs}}</div>
-                        <div class="credit" v-if="role == '2'">¥{{v.total * 0.25}}</div>
-                        <div class="credit" v-else>{{v.total}}学分</div>
+                        <div class="credit">{{v.total}}学分</div>
                     </div>
                 </a>
             </div>
@@ -338,7 +336,6 @@
             ClassInfo: [],
             hotInfo: [],
             newInfo: [],
-            role:''
         },
         methods: {
             getClass() { //读取商品分类
@@ -385,7 +382,6 @@
 
                     if (ret) {
                         vm.hotInfo = ret;
-                        vm.role = $api.getStorage('role');
 
                     } else {
                         api.toast({

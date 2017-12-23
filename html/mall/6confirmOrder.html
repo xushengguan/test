@@ -103,8 +103,7 @@
 				<div class="fl free-right">
 					<h6 class="single">{{goods_name}}</h6>
 					<span class="chicken more2">{{abs}}</span>
-					<span class="credit" v-if="role == 2"><label>{{total * 0.25}}</label>元</span>
-					<span class="credit" v-else><label>{{total}}</label>学分</span>
+					<span class="credit"><label>{{total}}</label>学分</span>
 				</div>
 			</div>
 			<div class="num-con hide">
@@ -134,11 +133,11 @@
 					<span>微信支付</span>
 				</p>
 				<p class="fr money" onclick="sel_wechat_pay()">
-					<span id="money">¥{{total * 0.25}}</span>
-					<i class="iconfont icon-xuanzhongon weChat" id="weChat" v-if="role !== 2"></i>
+					<span id="money">¥{{total * 0.2}}</span>
+					<i class="iconfont icon-xuanzhongon weChat" id="weChat"></i>
 				</p>
 			</div>
-			<div class="wechat-con hide" v-if="role !== 2">
+			<div class="wechat-con hide">
 				<p class="fl wechat-pay">
 					<i class="iconfont icon-xue icon-learn"></i>
 					<p class="learn-pay">
@@ -163,12 +162,9 @@
 		</div>
 		<footer id="footer">
 			<ul class="hide">
-				<li class="price-li" v-if="role == 2">总价:
-					<label class="credit" id="money_total">¥{{total * 0.25}}</label>
-				</li>
-				<li class="price-li" v-else>总价:
+				<li class="price-li">总价:
 					<label class="credit" id="total" style="display:none;">{{total}}学分</label>
-					<label class="credit" id="money_total" style="color:#58b64b">¥{{total * 0.25}}</label>
+					<label class="credit" id="money_total" style="color:#58b64b">¥{{total * 0.2}}</label>
 				</li>
 				<!-- 分别有确认兑换、确认支付状态 -->
 				<li class="submit-btn" style="width:35%" onclick="ConExchange()">确认兑换</li>
@@ -209,10 +205,7 @@
 			focus_footer(h);
       loading();
 			id = $api.getStorage('id');
-			var role = $api.getStorage('role');
-			if (role == '2') {
-				 vm.role = 2
-			}
+
 			token = $api.getStorage('token');
 			goods_id = api.pageParam.goods_id;
 			var address_id = api.pageParam.address_id;
@@ -246,7 +239,6 @@
 						goods_number:'',
 						payMethod:1,
 						winmoney:'',
-						role:''
 				},
 				methods:{
 						get_Defaddress(){//读取收货地址列表(默认地址：is_default:'1')
@@ -464,19 +456,14 @@
 
 		}
 
-		vm.money = (num * vm.total) * 0.25;
+		vm.money = (num * vm.total) * 0.2;
 		var str1 = '¥' + vm.money;
+		
+		vm.totalone = num * vm.total;
+		var str = vm.totalone + '学分';
 
-		if (vm.role !== 2) {
-			vm.totalone = num * vm.total;
-			var str = vm.totalone + '学分';
-
-			$api.text($api.byId('totalone'), str);
-			$api.text($api.byId('total'), str);
-		}
-
-
-
+		$api.text($api.byId('totalone'), str);
+		$api.text($api.byId('total'), str);
 		$api.text($api.byId('money_total'), str1);
 		$api.text($api.byId('money'), str1);
 
@@ -597,7 +584,7 @@
 
 					var value1 = weiChatNum.replace(/[^0-9]/ig,"");//提取数字，微信支付
 					goods_amount = value1;
-					price = vm.total * 0.25;
+					price = vm.total * 0.2;
 			}
       $api.css($api.byId('loading'), 'display:block');
 			api.ajax({

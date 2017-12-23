@@ -86,8 +86,7 @@
 				<div class="pro_con">
 					<p class="subtitle single">{{v.goods_name}}</p>
 					<p class="title more2">{{v.abs}}</p>
-					<p class="pay" v-if="role == '2'">¥<span>{{v.total * 0.25}}</span></p>
-					<p class="pay" v-else><span>{{v.total}}</span>学分</p>
+					<p class="pay"><span>{{v.total}}</span>学分</p>
 				</div>
 			</div>
 		</div>
@@ -121,7 +120,6 @@
 	        el: '#app',
 	        data: {
 							info:[],
-							role:''
 	        },
 	        methods: {
 	            getClass(clsid) { //读取商品分类列表
@@ -139,8 +137,6 @@
 	                    }
 	                }, function(ret, err) {
 										  $api.css($api.byId('loading'),'display:none');
-											vm.role = $api.getStorage('role');
-
 	                    vm.info = ret;
 	                });
 	            },

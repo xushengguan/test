@@ -72,7 +72,7 @@
 		var token,id;
 		apiready = function(){
 			  loading();
-		
+
 				token = $api.getStorage('token');
 				id = $api.getStorage('id');
 				vm.getAdress();
@@ -115,8 +115,7 @@
 								}, function(ret, err) {
 
 										$api.css($api.byId('loading'),'display:none');
-                    alert(JSON.stringify(ret));
-										alert(JSON.stringify(err));
+                
                   	if (ret) {
 												vm.data = ret;
 										} else {

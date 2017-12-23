@@ -66,9 +66,10 @@
             </div>
             <div class="assets">现金资产</div>
             <div class="money">
-                <div class="num">¥
+                <div class="num">
                     <em v-if="data.winmoney">{{data.winmoney}}</em>
                     <em v-else>0</em>
+                    学分
                 </div>
                 <button onclick="ApplyFor()">申请提现</button>
             </div>
@@ -86,7 +87,7 @@
                   <em></em>
                 </li>
                 <li>
-                  <p class="menu_title">冻结资产(元)</p>
+                  <p class="menu_title">冻结资产(学分)</p>
                   <p class="num" v-if="Info.money">{{Info.money}}</p>
                   <p class="num" v-else>0</p>
                 </li>
@@ -112,11 +113,11 @@
             </div>
             <div class="income">
                 <div class="num">
-                    <p class="txt">总收益(元)</p>
+                    <p class="txt">总收益(学分)</p>
                     <p class="total total2"></p>
                 </div>
                 <div class="num">
-                    <p class="txt">最近7天收益(元)</p>
+                    <p class="txt">最近7天收益(学分)</p>
                     <p class="total week2"></p>
                 </div>
             </div>
@@ -134,11 +135,11 @@
             </div>
             <div class="income">
                 <div class="num">
-                    <p class="txt">总收益(元)</p>
+                    <p class="txt">总收益(学分)</p>
                     <p class="total total1"></p>
                 </div>
                 <div class="num">
-                    <p class="txt">最近7天收益(元)</p>
+                    <p class="txt">最近7天收益(学分)</p>
                     <p class="total week1"></p>
                 </div>
             </div>
@@ -156,11 +157,11 @@
             </div>
             <div class="income">
                 <div class="num">
-                    <p class="txt">总收益(元)</p>
+                    <p class="txt">总收益(学分)</p>
                     <p class="total total3"></p>
                 </div>
                 <div class="num">
-                    <p class="txt">最近7天收益(元)</p>
+                    <p class="txt">最近7天收益(学分)</p>
                     <p class="total week3"></p>
                 </div>
             </div>
