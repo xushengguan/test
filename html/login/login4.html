@@ -216,7 +216,7 @@
         		api.ajax({
         			url: host,
         			method: 'post',
-        			dataType: 'xml',
+        			// dataType: 'xml',
         			data: {
         				values: {
         					OSSAccessKeyId: accessid,
@@ -230,8 +230,8 @@
         				}
         			}
         		}, function(ret, err) {
-              alert("阿里云上传----"+ret);
-              alert("阿里云上传----"+err);
+              alert(JSON.stringify("阿里云上传----"+ret));
+              alert(JSON.stringify("阿里云上传----"+err));
         			if (ret) {
         				// 在回调函数里面调用
         				var dom = parseXML(ret);
