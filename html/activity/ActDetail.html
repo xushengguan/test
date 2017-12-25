@@ -118,20 +118,16 @@
 									</div>
 							</div>
 
-							<div class="SignUp" v-if="role == '2'">
+							<div class="SignUp">
 								  <!-- 加class on 进行中为状态，on1则为已结束状态,否则为等待开始状态-->
-									<button onclick="changeState(1)" v-show="data.actsta == 2">开始活动</button>
-									<button onclick="changeState(0)" class="on" v-show="data.actsta == 1">结束活动</button>
+									<button onclick="changeState(1)" v-show="data.actsta == 2 && role == '2'">开始活动</button>
+									<button onclick="changeState(0)" class="on" v-show="data.actsta == 1 && role == '2'">结束活动</button>
 									<button class="on1" v-show="data.actsta == 0">已结束</button>
+									<button onclick="joinAct()" v-show="status == '0' && data.actsta == 2 ">报名参加</button>
+									<button class="on" v-show="status == '1' && role == '1' && data.actsta != 0">已报名</button>
 									<!-- <div class="places">剩余名额:20人</div> -->
 							</div>
 
-							<div class="SignUp" v-else>
-								  <!-- 加class on 进行中为状态，on1则为已结束状态,否则为等待开始状态-->
-									<button onclick="joinAct()" v-show="status == '0'">报名参加</button>
-									<button class="on" v-show="status == '1'">已报名</button>
-									<!-- <div class="places">剩余名额:20人</div> -->
-							</div>
 							<!-- 活动状态 -->
 							<!-- <div class="ActStaus">
 								活动结束了，看看都发生了什么吧
@@ -159,7 +155,7 @@
 			        <!-- Swiper 活动结束排名-->
 
 							<!-- actsta='1' 进行中，actsta='0' 结束 -->
-							<div class="img" v-show="data.actsta == '1'">
+							<div class="img" v-show="data.actsta == '1' && role == '2'">
 								  <div class="title">上传活动照片</div>
 									<div class="prompt">注意：请至少上传3张活动照片，照片中需要包含有参赛者</div>
 									<div class="item" onclick="UploadPic(this,'start_img')">
