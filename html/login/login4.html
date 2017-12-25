@@ -230,8 +230,7 @@
         				}
         			}
         		}, function(ret, err) {
-              alert("阿里云上传----"+JSON.stringify(ret));
-              alert("阿里云上传----"+JSON.stringify(err));
+
         			if (ret) {
         				// 在回调函数里面调用
         				var dom = parseXML(ret);
@@ -241,7 +240,7 @@
                 arr.push(url);
 
                 if (arr.length == arrSrc.length) {
-                    alert("走进提交")
+
                     Finish();
                 }
 
@@ -277,8 +276,7 @@
               }
           },function(ret, err){
               $api.css($api.dom('#loading'), 'display:none');
-              alert("提交-----"+JSON.stringify(ret));
-              alert("提交-----"+JSON.stringify(err));
+
               if (ret && ret.status == '1') {
                   if (role == '2' && update_status == '0') {
                       api.openWin({
@@ -292,17 +290,13 @@
                         api.openWin({
                             name: 'index',
                             url: '../../index.html',
-                            pageParam: {
-                                // name: 'test'
-                            }
+                            reload:true
                         });
                       }else {
                         api.openWin({
                             name: 'index1',
                             url: '../../index1.html',
-                            pageParam: {
-                                // name: 'test'
-                            }
+                            reload:true
                         });
                       }
                   }
