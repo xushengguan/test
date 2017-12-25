@@ -230,8 +230,8 @@
         				}
         			}
         		}, function(ret, err) {
-              alert(JSON.stringify("阿里云上传----"+ret));
-              alert(JSON.stringify("阿里云上传----"+err));
+              alert("阿里云上传----"+ret);
+              alert("阿里云上传----"+err);
         			if (ret) {
         				// 在回调函数里面调用
         				var dom = parseXML(ret);
@@ -240,7 +240,8 @@
 
                 arr.push(url);
 
-                if (arr.length == imgUrl.length) {
+                if (arr.length == arrSrc.length) {
+                    alert("走进提交")
                     Finish();
                 }
 
