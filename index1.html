@@ -111,7 +111,7 @@
           <div class="input_box">
               <div class="bg">
                 <input type="text" placeholder="请输入您想要搜索的内容">
-                <em onclick="goSearch(this)"></em>
+                <em tapmode onclick="goSearch(this)"></em>
               </div>
           </div>
 
@@ -120,7 +120,7 @@
           <div class="input_box">
               <div class="bg">
                 <input type="text" placeholder="请输入您想要搜索的内容">
-                <em onclick="goSearch(this)"></em>
+                <em tapmode onclick="goSearch(this)"></em>
               </div>
           </div>
         </li>
@@ -651,7 +651,7 @@
               },
           }
       },function(ret, err){
-    
+
           if (ret) {
               if (ret.status == '1') {
                   api.toast({
