@@ -216,7 +216,7 @@
         		api.ajax({
         			url: host,
         			method: 'post',
-        			// dataType: 'xml',
+        			dataType: 'xml',
         			data: {
         				values: {
         					OSSAccessKeyId: accessid,
@@ -230,8 +230,8 @@
         				}
         			}
         		}, function(ret, err) {
-              alert(JSON.stringify("阿里云上传----"+ret));
-              alert(JSON.stringify("阿里云上传----"+err));
+              alert("阿里云上传----"+JSON.stringify(ret));
+              alert("阿里云上传----"+JSON.stringify(err));
         			if (ret) {
         				// 在回调函数里面调用
         				var dom = parseXML(ret);
@@ -277,8 +277,8 @@
               }
           },function(ret, err){
               $api.css($api.dom('#loading'), 'display:none');
-              alert(JSON.stringify("提交-----"+ret));
-              alert(JSON.stringify("提交-----"+err));
+              alert("提交-----"+JSON.stringify(ret));
+              alert("提交-----"+JSON.stringify(err));
               if (ret && ret.status == '1') {
                   if (role == '2' && update_status == '0') {
                       api.openWin({
