@@ -159,13 +159,13 @@ var vm = new Vue({
 
             $api.css($api.dom('#loading'), 'display:block');
             var role = $api.getStorage('role');
-            alert(role);
+
             if (role == '2') {
                 var type = '10151';//获取活动列表（支教老师）
             }else if(role == '1'){
                 var type = '10028';//获取用户报名活动列表（学生）
             }
-            alert(type);
+            
             api.ajax({
                 url: serverurl,
                 method: 'get',
@@ -180,8 +180,7 @@ var vm = new Vue({
                 }
             }, function(ret, err) {
                 $api.css($api.dom('#loading'), 'display:none');
-                alert(JSON.stringify(ret));
-                alert(JSON.stringify(err));
+
                 if (ret) {
                     vm.ActInfo = ret;
                 }else {

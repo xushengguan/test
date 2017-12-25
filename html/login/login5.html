@@ -99,6 +99,7 @@
         FNScanner.openScanner({
             autorotation: true
         }, function(ret, err) {
+
             if (ret) {
                 if (ret.eventType == 'success') {
                      BindCard(ret.content);
@@ -135,7 +136,7 @@
                   },
               }
           },function(ret, err){
-
+            
               if (ret) {
 
                   if (ret.status == '1') {
