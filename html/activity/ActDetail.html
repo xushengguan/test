@@ -178,13 +178,13 @@
 
 							<div class="img" v-show="data.actsta == '0'">
 									<div class="item">
-	                    <img :src="data.start_img" alt="" v-if="data.start_img">
+	                    <img :src="data.start_img" alt=""  @click="viewPicture(data.start_img)" v-if="data.start_img">
 									</div>
 									<div class="item">
-	                    <img :src="data.underway_img" alt="" v-if="data.underway_img">
+	                    <img :src="data.underway_img" alt=""  @click="viewPicture(data.underway_img)" v-if="data.underway_img">
 									</div>
 									<div class="item">
-	                    <img :src="data.end_img" alt="" v-if="data.end_img">
+	                    <img :src="data.end_img" alt=""  @click="viewPicture(data.end_img)" v-if="data.end_img">
 									</div>
 							</div>
 
@@ -280,7 +280,7 @@
 								},function(ret, err){
 									  $api.css($api.byId('loading'), 'display:none');
                     $api.css($api.byId('main'), 'display:block');
-								
+
 								    if (ret) {
 
 												vm.data = ret;
@@ -364,7 +364,16 @@
 								    type: 'tel_prompt',
 								    number: tel
 								});
-						}
+						},
+
+						viewPicture(data){
+								var url = [];
+								url.push(data);
+								var imageBrowser = api.require('imageBrowser');
+								imageBrowser.openImages({
+										imageUrls: url
+								});
+            },
 
 				},
 
