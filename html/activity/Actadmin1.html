@@ -178,7 +178,8 @@ var vm = new Vue({
                 }
             }, function(ret, err) {
                 $api.css($api.dom('#loading'), 'display:none');
-              
+                alert(JSON.stringify(ret));
+                alert(JSON.stringify(err));
                 if (ret) {
                     vm.ActInfo = ret;
                 }else {
