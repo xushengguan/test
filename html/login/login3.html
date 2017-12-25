@@ -246,7 +246,7 @@
                    if (ret.status == '1') {
                       $api.setStorage('token', ret.token);
                       $api.setStorage('id', ret.data.id);
-
+                      $api.setStorage('role', ret.data.role);
                       if (ret.data.role !== '2' && ret.data.complete_info == '0') {//角色代号 1：学生家长，2：班主任,complete_info是否实名认证 0:不是 1：是
 
                           api.openWin({
