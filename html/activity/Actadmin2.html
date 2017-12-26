@@ -92,6 +92,25 @@
         	right: 11px;
         }
 
+        .actLis{
+            position: relative;
+        }
+        .del {
+            width: 80px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 3px;
+            background: #fff;
+            text-align: center;
+            color: #333;
+            font-size: 16px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+            z-index: 99;
+            display: none;
+        }
     </style>
 </head>
 
@@ -100,8 +119,8 @@
 
         <div class="box">
             <div class="Lis" v-if="ActInfo.status !== '0'">
-                <div v-for="v in ActInfo">
-                    <div class="enter-news" @click="goDatail(v.id)">
+                <div class="actLis" v-for="v in ActInfo">
+                    <div class="enter-news" @click="goDatail(v.id)" @touchstart="goDel($event)">
                         <div class="news-con hide">
                             <span class="fl img-pic08"><img :src="v.actimgurl" alt=""></span>
                             <div class="content fl">
@@ -112,6 +131,7 @@
                             <span class="peoples sites">{{v.userlimit}}人</span>
                         </div>
                     </div>
+                    <div class="del">删除</div>
                 </div>
             </div>
             <div class="NoAct" v-else>抱歉，您暂时还没有结束的活动！</div>
@@ -136,7 +156,7 @@ apiready = function() {
         textColor: '#fff',
         textUp: '释放立即刷新...',
         textLoading: '加载中···',
-        showTime: false
+        showTime: true
     }, function(ret, err) {
         //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
         vm.get_ActLis();
@@ -204,6 +224,26 @@ var vm = new Vue({
             });
         },
 
+        // 长按删除活动
+        // goDel(event){
+        //     console.log(JSON.stringify(event.currentTarget));
+        //     $api.css($api.next(event.currentTarget),'display:block');
+        //     api.addEventListener({
+        //         name:'longpress'
+        //     }, function(ret, err){
+        //         vm.isShow = false;
+        //
+        //           api.addEventListener({
+        //               name:'tap'
+        //           }, function(ret, err){
+        //               if (!event.currentTarget) {
+        //                vm.isShow = true;
+        //               }
+        //           });
+        //
+        //     });
+        //
+        // },
 
     }
 })

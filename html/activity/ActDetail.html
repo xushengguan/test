@@ -40,7 +40,7 @@
 			.userInfo{overflow: hidden; padding: 15px 15px 0;}
 			.userInfo img{float: left; width: 63px; height: 63px;}
 			.userInfo .msg{margin-left: 12px; float: left; width: calc(100% - 75px)}
-			.userInfo .msg .title{color: #000; font-size: 18px; font-weight: bold; padding-bottom: 5px;}
+			.userInfo .msg .title{color: #000; font-size: 18px; font-weight: bold;}
 			.userInfo .msg .userId{color: #666; font-size: 15px;}
 
 			.SignUp{padding: 15px; overflow: hidden; text-align: right;}
@@ -66,7 +66,7 @@
 			.content{background: #fff; padding: 15px 15px 65px 15px; font-size: 16px; color: #999; line-height: 20px;}
 
 			.ActStaus{height: 40px; line-height: 40px; font-size: 15px; color: #fff; padding-left: 18px; background: #ffb300;
-			position: relative; border-radius: 3px; margin-bottom: 20px;}
+			position: relative; margin-bottom: 20px;}
 			.ActStaus.on{background: #09bb07;}
 			.ActStaus em{width: 50px; height: 40px; background: url(../../image/more.png) center no-repeat; background-size: 14px;
 			position: absolute; top: 0; right: 0; display: block;}
@@ -115,6 +115,7 @@
 									<div class="msg">
 											<div class="title">{{data.title}}</div>
 											<div class="userId">活动ID:{{data.id}}</div>
+											<div class="userId" v-if="data.join_num">报名人数:{{data.join_num}}</div>
 									</div>
 							</div>
 
@@ -129,12 +130,12 @@
 							</div>
 
 							<!-- 活动状态 -->
-							<!-- <div class="ActStaus">
-								活动结束了，看看都发生了什么吧
+							<div class="ActStaus" v-if="data.actsta == 1 || data.actsta == 0 && role == '2'">
+								查看打分记录
 								<em></em>
 							</div>
 
-							<div class="ActStaus on">
+							<!-- <div class="ActStaus on">
 								进入管理员房间
 								<em></em>
 							</div> -->
@@ -172,7 +173,7 @@
 									</div>
 							</div>
 
-							<div class="img" v-show="data.actsta == '0'">
+							<div class="img" v-show="data.actsta == '0' && data.start_img || data.underway_img || data.end_img">
 									<div class="item">
 	                    <img :src="data.start_img+'?x-oss-process=image/resize,p_50'" alt=""  @click="viewPicture(data.start_img)" v-if="data.start_img">
 									</div>
@@ -276,7 +277,8 @@
 								},function(ret, err){
 									  $api.css($api.byId('loading'), 'display:none');
                     $api.css($api.byId('main'), 'display:block');
-
+                    console.log(JSON.stringify(ret));
+										console.log(JSON.stringify(err));
 								    if (ret) {
 
 												vm.data = ret;

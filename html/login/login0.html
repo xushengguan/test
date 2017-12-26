@@ -85,13 +85,24 @@
           })
 
           api.addEventListener({name:'appintent'}, function(ret,err) {
+  
+              alert(ret.appParam.ajpush.content);
+              if (ret.appParam.ajpush.content.indexOf("重新登陆") > 0) {
+                  $api.clearStorage();//清除localStorage的所有数据，慎用
 
-              api.openWin({
-                  name: 'circleNews',
-                  url: '../circle/circleNews.html',
-                  reload:true,
-                  allowEdit:true
-              });
+                  setTimeout(function(){
+                    api.closeToWin({
+                        name: 'root'
+                    });
+                  },500);
+              }else {
+                  api.openWin({
+                      name: 'circleNews',
+                      url: '../circle/circleNews.html',
+                      reload:true,
+                      allowEdit:true
+                  });
+              }
 
           })
           api.addEventListener({name:'pause'}, function(ret,err) {
@@ -279,7 +290,6 @@
                 }
             },function(ret, err){
                 $api.css($api.dom('#loading'), 'display:none');
-
                 if (ret) {
                      if (ret.status == '1') {
 

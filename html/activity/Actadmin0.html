@@ -102,25 +102,9 @@
             right: 11px;
         }
 
-        .del {
-            width: 80px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border-radius: 3px;
-            background: #fff;
-            text-align: center;
-            color: #333;
-            font-size: 16px;
-            padding: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, .1);
-            z-index: 99;
-        }
+        
 
-        .actLis{
-            position: relative;
-        }
+
     </style>
 </head>
 
@@ -129,7 +113,7 @@
         <div class="box">
             <div class="Lis" v-if="ActInfo.status !== '0'">
                 <div class="actLis" v-for="v in ActInfo">
-                    <div class="enter-news" @click="goDatail(v.id)" @touchstart="goDel">
+                    <div class="enter-news" @click="goDatail(v.id)">
                         <div class="news-con hide">
                             <span class="fl img-pic08"><img :src="v.actimgurl" alt=""></span>
                             <div class="content fl">
@@ -140,7 +124,6 @@
                             <span class="peoples sites">{{v.userlimit}}人</span>
                         </div>
                     </div>
-                    <div class="del" style="display:none">删除</div>
                 </div>
             </div>
             <div class="NoAct" v-else>抱歉，您暂时还没有进行中的活动！</div>
@@ -178,7 +161,6 @@
         el: '#app',
         data: {
             ActInfo: [],
-            timeOutEvent:0
         },
         filters: {
             formatDate(time) {
@@ -225,7 +207,6 @@
             },
 
             goDatail(actid) { //跳到活动详情
-              return false;
               api.openWin({
                   name: 'ActDetail',
                   url: './ActDetail.html',
@@ -235,15 +216,6 @@
               });
             },
 
-            // 长按删除活动
-            goDel(){
-                console.log(this.timeOutEvent);
-                this.timeOutEvent = setTimeout(function(){
-                    alert('长按了');
-                },1000);
-
-                return false;
-            },
 
         }
     })
