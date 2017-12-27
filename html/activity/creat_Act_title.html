@@ -68,7 +68,6 @@
         }
 
         .ActLis li .box {
-            height: 40px;
             background: url(../../image/ActIcon1.png) no-repeat left center;
             background-size: 25px 21px;
             margin: 0 15px;
@@ -155,6 +154,7 @@
         .img .sel{display: block; width: 20px; height: 20px; background: url(../../image/round1.png) no-repeat center; background-size: contain;
         position: absolute; top: 10px; right: 10px;}
         .img .sel.on{background: url(../../image/round2.png) no-repeat center; background-size: contain;}
+        .Actimg{width: 100%; height: 120px; display: none;}
     </style>
 </head>
 
@@ -209,8 +209,9 @@
             </li>
             <li>
                 <div class="box box6">
-                    <div class="name">活动头图</div>
+                    <div class="name" id="imgtxt">活动头图</div>
                     <input type="button" id="img" value="选择活动顶部图片" tapmode onclick="selImg()">
+                    <img class="Actimg" src="" alt="活动图片" tapmode onclick="selImg()">
                 </div>
             </li>
             <li>
@@ -389,7 +390,10 @@
         var imgUrl = $api.attr($api.next(e),'src');
         var tid = document.getElementById("isSure");
         tid.addEventListener('click',function(){
-            $api.val($api.byId('img'), imgUrl);
+            $api.attr($api.dom('.Actimg'), 'src',imgUrl);
+            $api.css($api.byId('img'), 'display:none');
+            $api.css($api.byId('imgtxt'), 'display:none');
+            $api.css($api.dom('.Actimg'), 'display:block');
             $api.css($api.dom('#sel_pic'), 'display:none');
         });
     }
@@ -424,7 +428,7 @@
       var time = Math.round(new Date(dateTime).getTime()/1000);
       var tel = $api.val($api.byId('tel'));//联系电话
       var address = $api.val($api.byId('address'));//活动地址
-      var img = $api.val($api.byId('img'));//活动图片
+      var img = $api.attr($api.dom('.Actimg'), 'src');//活动图片
       var ActDetail = $api.val($api.byId('ActDetail'));//活动详情
       var myreg = /^1[0-9]{10}$/;//判断是否为手机号码,/^1[34578]\d{9}$/
       var myNum = /^\+?[1-9][0-9]*$///验证非零的正整数

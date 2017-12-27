@@ -131,7 +131,7 @@
 							</div>
 
 							<!-- 活动状态 -->
-							<div class="ActStaus" tapmode v-if="data.actsta == 1 || data.actsta == 0 && role == '2'" @click="goMarkPage(data.id)">
+							<div class="ActStaus" tapmode v-if="data.actsta == 1 && role == '2' || data.actsta == 0 && role == '2'" @click="goMarkPage(data.id)">
 								查看打分记录
 								<em></em>
 							</div>

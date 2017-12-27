@@ -3,7 +3,7 @@
     width: 130px;
     height: 130px;
     position: fixed;
-    overflow: hidden;
+    /*overflow: hidden;*/
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     border-radius: 8px;
