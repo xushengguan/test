@@ -296,7 +296,12 @@
                     }
                 },function(ret, err){
                     if(ret){
-                        vm.data = ret;
+                        if(ret.status == '5'){
+                            ExitLogin();
+                        }else {
+                            vm.data = ret;
+                        }
+
                     }else {
                         api.toast({
                             msg: '网络错误',
@@ -322,7 +327,12 @@
                     }
                 },function(ret, err){
                     if (ret) {
-                        vm.dataImg = ret;
+                        if (ret.status == '5') {
+                            ExitLogin();
+                        }else {
+                            vm.dataImg = ret;
+                        }
+
                     }else {
                         api.toast({
                             msg: '网络错误',
@@ -533,6 +543,8 @@
                               location: 'bottom'
                           });
                           go_back();
+                      }else if (ret.status == '5') {
+                          ExitLogin();
                       }else{
                           api.toast({
                               msg: '发布失败',
