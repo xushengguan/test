@@ -63,7 +63,8 @@
 			.address em{width: 22px; height:29px; background: url(../../image/map.png) no-repeat left center;
 				 background-size: 22px 29px; margin-right: 10px;}
 
-			.content{background: #fff; padding: 15px 15px 65px 15px; font-size: 16px; color: #999; line-height: 20px;}
+			.content{background: #fff; padding: 15px 15px 65px 15px; font-size: 16px; color: #999; line-height: 20px;
+				word-wrap: break-word; word-break: normal;}
 
 			.ActStaus{height: 40px; line-height: 40px; font-size: 15px; color: #fff; padding-left: 18px; background: #ffb300;
 			position: relative; margin-top: 10px;}
@@ -154,15 +155,15 @@
 							<div class="img" v-show="data.actsta == '1' && role == '2'">
 								  <div class="title">上传活动照片</div>
 									<div class="prompt">注意：请至少上传3张活动照片，照片中需要包含有参赛者</div>
-									<div class="item" onclick="UploadPic(this,'start_img')">
+									<div class="item" tapmode onclick="UploadPic(this,'start_img')">
 	                    <img :src="data.start_img+'?x-oss-process=image/resize,p_50'" alt="" v-if="data.start_img">
 											<img id="img1" src="../../image/up1.png" alt="" v-else>
 									</div>
-									<div class="item" onclick="UploadPic(this,'underway_img')">
+									<div class="item" tapmode onclick="UploadPic(this,'underway_img')">
 	                    <img :src="data.underway_img+'?x-oss-process=image/resize,p_50'" alt="" v-if="data.underway_img">
 											<img id="img2" src="../../image/up2.png" alt="" v-else>
 									</div>
-									<div class="item" onclick="UploadPic(this,'end_img')">
+									<div class="item" tapmode onclick="UploadPic(this,'end_img')">
 	                    <img :src="data.end_img+'?x-oss-process=image/resize,p_50'" alt="" v-if="data.end_img">
 											<img id="img3" src="../../image/up3.png" alt="" v-else>
 									</div>
@@ -199,7 +200,7 @@
 							{{data.content}}
 					</div>
 				</div>
-				<footer v-show="data.actsta == 1 && role == '2'" onclick="scan()">
+				<footer v-show="data.actsta == 1 && role == '2'" tapmode onclick="scan()">
 					    <em></em>点击扫码 为他打分
 				</footer>
 		</div>
@@ -262,6 +263,7 @@
 								api.ajax({
 								    url: serverurl,
 								    method: 'get',
+										cache:true,
 								    data: {
 								        values: {
 								             type: '10018',
@@ -274,14 +276,16 @@
                     $api.css($api.byId('main'), 'display:block');
 
 								    if (ret) {
-
+                        if (ret.status == '5') {
+														ExitLogin();
+                        }
 												vm.data = ret;
 
 											  if (ret.actsta == 0) {//活动状态 0 已结束 1 活动进行中 2活动未开始
 														vm.getRank();
 											  }
 
-								    } else {
+								    }else {
 
 												api.toast({
 												    msg: '网络错误',
@@ -308,9 +312,11 @@
 								},function(ret, err){
 
 								    if (ret) {
-
+                        if (ret.status == '5') {
+                        		ExitLogin();
+                        }
 												vm.status = ret.status;
-								    } else {
+								    }else {
 
 												api.toast({
 												    msg: '网络错误',
@@ -337,9 +343,13 @@
 								},function(ret, err){
 
 								    if (ret) {
+
+											if (ret.status == '5') {
+													ExitLogin();
+											}
 											vm.rank = ret;
 
-								    } else {
+								    }else {
 
 												api.toast({
 												    msg: '网络错误',
@@ -517,7 +527,10 @@
 					  $api.css($api.dom('#loading'), 'display:none');
 				    if (ret) {
 
-								if (ret.status == '1') {
+								if (ret.status == '5') {
+									  ExitLogin();
+
+								}else if (ret.status == '1') {
 										$api.attr($api.first(e), 'src', url);
 								}else {
 										api.toast({
@@ -527,7 +540,7 @@
 										});
 
 								}
-				    } else {
+				    }else {
 
 								api.toast({
 								    msg: '网络错误',
@@ -573,8 +586,9 @@
 					}
 			},function(ret, err){
 					if (ret) {
-
-							if (ret.status == '1') {
+              if (ret.status == '5') {
+									ExitLogin();
+              }else if (ret.status == '1') {
 									api.toast({
 											msg: '操作成功',
 											duration: 2000,
@@ -670,7 +684,9 @@
 			},function(ret, err){
 
 					if (ret) {
-							if (ret.status == '1') {
+						  if (ret.status == '5') {
+									ExitLogin();
+						  }else if (ret.status == '1') {
 									api.toast({
 											msg: '报名成功',
 											duration: 2000,

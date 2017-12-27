@@ -125,14 +125,14 @@
 <body>
     <div id="">
           <ul class="ActLis">
-              <li class="Lis0 addColor" onclick="btn_list(0)">全部活动</li>
-              <li class="Lis1" onclick="btn_list(1)">附近活动</li>
+              <li class="Lis0 addColor" tapmode onclick="btn_list(0)">全部活动</li>
+              <li class="Lis1" tapmode onclick="btn_list(1)">附近活动</li>
           </ul>
         <div id="main" v-cloak>
           <div class="box">
               <div v-if="!ActInfo.status">
                   <div v-for="v in ActInfo">
-                      <div class="enter-news" @click="goDatail(v.id)">
+                      <div class="enter-news" tapmode @click="goDatail(v.id)">
                           <div class="news-con hide">
                               <span class="fl img-pic08"><img :src="v.actimgurl" alt=""></span>
                               <div class="content fl">
@@ -205,9 +205,12 @@
                     }
                 }, function(ret, err) {
                     $api.css($api.dom('#loading'), 'display:none');
-
                     if (ret) {
-                        vm.ActInfo = ret;
+                        if (ret.status == '5') {
+                            ExitLogin();
+                        }else {
+                            vm.ActInfo = ret;
+                        }
 
                     } else {
                         api.toast({
@@ -296,7 +299,8 @@
                     url: './activity/ActDetail.html',
                     pageParam: {
                         actid: actid,
-                    }
+                    },
+                    reload:true
                 });
             },
 

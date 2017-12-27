@@ -182,14 +182,10 @@ var vm = new Vue({
                 $api.css($api.dom('#loading'), 'display:none');
 
                 if (ret) {
+                    if (ret.status == '5') {
+                        ExitLogin();
+                    }
                     vm.ActInfo = ret;
-                }else if (ret.status == '5') {
-                    $api.clearStorage();//清除localStorage的所有数据，慎用
-                   setTimeout(function(){
-                     api.closeToWin({
-                         name: 'root'
-                     });
-                   },500);
                 }else {
                     api.toast({
                         msg: '网络错误',

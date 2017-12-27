@@ -97,7 +97,7 @@
 
 <body>
 	<header>
-		<em onclick="go_back()"></em> <span>添加收货地址</span>
+		<em tapmode onclick="go_back()"></em> <span>添加收货地址</span>
 	</header>
 	<div id="app" v-cloak>
 		<ul class="edit_main clearfix">
@@ -115,10 +115,10 @@
 			</li>
 			<li>
 				<i class="iconfont icon-fangxingxuanzetianchong" style="color: #fca958; font-size: 20px; position: absolute;
-		left: 15px; top:12px;" v-if="form.def == '1'" @click="del_def()"></i>
+		left: 15px; top:12px;" tapmode v-if="form.def == '1'" @click="del_def()"></i>
 
 				<i class="iconfont icon-square" style="color: #5c5c5c; font-size: 20px; position: absolute;
-    left: 10px; top:12px;" v-else @click="set_def()"></i>
+    left: 10px; top:12px;" tapmode v-else @click="set_def()"></i>
 
 				<span>设为默认地址</span>
 			</li>
@@ -127,8 +127,8 @@
 			<!-- <a href="javascript:;">删除地址</a> -->
 		</div>
 		<div class="btn_save">
-			<a href="javascript:;" @click="edit_address()" v-if="address_id">提交</a>
-			<a href="javascript:;" @click="save_address()" v-else>保存</a>
+			<a href="javascript:;" tapmode @click="edit_address()" v-if="address_id">提交</a>
+			<a href="javascript:;" tapmode @click="save_address()" v-else>保存</a>
 		</div>
 	</div>
 </body>
@@ -209,7 +209,9 @@
 					$api.css($api.dom('#loading'), 'display:none');
 
 					if (ret) {
-						if (ret.status == '1') {
+						if (ret.status == '5') {
+								ExitLogin();
+						}else if (ret.status == '1') {
 								api.toast({
 								    msg: '操作成功',
 								    duration: 2000,
@@ -261,10 +263,15 @@
 					},function(ret, err){
 						  $api.css($api.dom('#loading'), 'display:none');
 					    if (ret) {
-					        vm.form.name = ret.consignee;
-									vm.form.address = ret.address;
-									vm.form.tel = ret.tel;
-									vm.form.def = ret.default;
+								  if (ret.status == '5') {
+										ExitLogin();
+								  }else {
+										vm.form.name = ret.consignee;
+										vm.form.address = ret.address;
+										vm.form.tel = ret.tel;
+										vm.form.def = ret.default;
+								  }
+
 					    } else {
 					        api.toast({
 					            msg: '网络错误',
@@ -322,7 +329,9 @@
 					$api.css($api.dom('#loading'), 'display:none');
 
 					if (ret) {
-						if (ret.status == '1') {
+						if (ret.status == '5') {
+								ExitLogin();
+						}else if (ret.status == '1') {
 								api.toast({
 										msg: '操作成功',
 										duration: 2000,

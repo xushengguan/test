@@ -50,14 +50,14 @@
   <body>
       <div id="wrap" v-cloak>
         <header>
-            <em onclick="go_back()"></em> 提现
+            <em tapmode onclick="go_back()"></em> 提现
         </header>
         <div id="main">
 
             <!-- 未绑定银行卡 -->
             <div class="top" v-if="!data">
                 <div class="money">可提现金额:<em>{{winmoney}}</em>学分</div>
-                <button class="bind" onclick="BindBankCard()">绑定银行卡</button>
+                <button class="bind" tapmode onclick="BindBankCard()">绑定银行卡</button>
             </div>
 
             <!-- 已绑定银行卡 -->
@@ -65,7 +65,7 @@
                 <div class="money">可提现金额:<em>{{winmoney}}</em>学分</div>
                 <div class="cardNum">{{card_number}}</div>
                 <div class="remove">
-                    <span class="" onclick="RemoveBind()">解除当前绑定银行卡</span>
+                    <span class="" tapmode onclick="RemoveBind()">解除当前绑定银行卡</span>
                 </div>
             </div>
 
@@ -78,13 +78,13 @@
                 <li>
                   <span class="inputName">短信验证码</span>
                   <input class="code" type="number" name="" value="" placeholder="请输入验证码" oninput="checkValue()" onpropertychange="checkValue()">
-                  <input class="btn" type="button" name="" value="获取验证码" onclick="getCode(this)">
+                  <input class="btn" type="button" name="" value="获取验证码" tapmode onclick="getCode(this)">
                 </li>
             </ul>
             <p class="prompt">
               注意:1学分=0.2元，提现每月10号，26号统一转账，每提现一笔收取20%做公益。
             </p>
-            <button class="confirm" disabled="disabled" onclick="confirm()">确认提现</button>
+            <button class="confirm" disabled="disabled" tapmode onclick="confirm()">确认提现</button>
 
         </div>
       </div>
@@ -127,14 +127,18 @@
                         }
                     },function(ret, err){
                         $api.css($api.byId('loading'), 'display:none');
-
-                        vm.winmoney = ret.winmoney;
-                        vm.data = ret.data;
-                        if (ret.data) {
-                            vm.card_number = ret.data.card_number;
-                            vm.w_id = ret.data.id;
+                        if (ret.status == '5') {
+                          ExitLogin();
+                        }else {
+                          vm.winmoney = ret.winmoney;
+                          vm.data = ret.data;
+                          if (ret.data) {
+                              vm.card_number = ret.data.card_number;
+                              vm.w_id = ret.data.id;
+                          }
+                          $api.css($api.byId('main'), 'display:block');
                         }
-                        $api.css($api.byId('main'), 'display:block');
+
                     });
 
                 }
@@ -207,6 +211,7 @@
           return false;
         }else{
             $api.css($api.byId('loading'), 'display:block');
+
             api.ajax({//用户发起提现
                 url: serverurl,
                 method: 'get',
@@ -215,14 +220,14 @@
                         type: '10127',
                       user_id:uid,
                       token:token,
-                       money:moneyNum,
+                       money:moneyNum * 0.2,
                         w_id:vm.w_id,
                          code:code
                     },
                 }
             },function(ret, err){
                 $api.css($api.byId('loading'), 'display:none');
-
+                
                 if (ret) {
 
                     if (ret.status == '1') {

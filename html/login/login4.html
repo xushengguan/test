@@ -44,7 +44,7 @@
   <body>
       <div class="content">
           <header>
-              <em onclick="go_back()"></em>
+              <em tapmode onclick="go_back()"></em>
               完善信息
               <div class="RealName"><span>实名认证</span>信息</div>
           </header>
@@ -55,19 +55,19 @@
           <div class="line">
               <input class="tel id" type="text" style="ime-mode:disabled" placeholder="身份证号码">
           </div>
-          <div class="line address" onclick="sel_address()">
+          <div class="line address" tapmode onclick="sel_address()">
               <em></em>
               <span>选择当前住址</span>
           </div>
           <div class="pic">
-              <img id="pic1" src="../../image/pic1.png" alt="" onclick="getPicture(this)">
-              <img id="pic2" src="../../image/pic2.png" alt="" onclick="getPicture(this)">
+              <img id="pic1" src="../../image/pic1.png" alt="" tapmode onclick="getPicture(this)">
+              <img id="pic2" src="../../image/pic2.png" alt="" tapmode onclick="getPicture(this)">
               <div class="prompt">
                   <div class="title">上传照片</div>
                   <div class="care">注意:请上传正面免冠照片一张请勿上传美图、面部不清晰的照片</div>
               </div>
           </div>
-          <button class="next on" onclick="uploader()">完成</button>
+          <button class="next on" tapmode onclick="uploader()">完成</button>
 
     </div>
 
@@ -230,8 +230,7 @@
         				}
         			}
         		}, function(ret, err) {
-              console.log(JSON.stringify(ret));
-              console.log(JSON.stringify(err));
+
         			if (ret) {
         				// 在回调函数里面调用
         				var dom = parseXML(ret);
@@ -276,31 +275,35 @@
               }
           },function(ret, err){
               $api.css($api.dom('#loading'), 'display:none');
-              console.log(JSON.stringify(ret));
-              console.log(JSON.stringify(err));
-              if (ret && ret.status == '1') {
-                  if (role == '2' && update_status == '0') {
-                      api.openWin({
-                          name: 'login5',
-                          url: './login5.html',
-                          reload:true,
-                    			allowEdit:true
-                      });
-                  }else{
-                      if (role == '2') {
-                        api.openWin({
-                            name: 'index',
-                            url: '../../index.html',
-                            reload:true
-                        });
-                      }else {
-                        api.openWin({
-                            name: 'index1',
-                            url: '../../index1.html',
-                            reload:true
-                        });
+
+              if (ret) {
+                  if (ret.status == '5') {
+                      ExitLogin();
+                  }else if (ret.status == '1') {
+                      if (role == '2' && update_status == '0') {
+                          api.openWin({
+                              name: 'login5',
+                              url: './login5.html',
+                              reload:true,
+                              allowEdit:true
+                          });
+                      }else{
+                          if (role == '2') {
+                            api.openWin({
+                                name: 'index',
+                                url: '../../index.html',
+                                reload:true
+                            });
+                          }else {
+                            api.openWin({
+                                name: 'index1',
+                                url: '../../index1.html',
+                                reload:true
+                            });
+                          }
                       }
-                  }
+                }
+
               } else {
 
                   api.toast({

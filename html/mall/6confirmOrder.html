@@ -81,12 +81,12 @@
 	<!-- 确认兑换 -->
 	<div id="wrap" v-cloak>
 		<header>
-				<em onclick="cancel()"></em>
+				<em tapmode onclick="cancel()"></em>
 				确认订单
 		</header>
 		<div id="main">
 				<div class="goods2-con">
-			<div class="addAdress-con" @click="go_address()">
+			<div class="addAdress-con" tapmode @click="go_address()">
 				<p class="addAdress-top hide">
 					<span class="fl">收货人:{{consignee}}</span>
 					<span class="fr" style="text-align:right">电话:{{tel}}</span>
@@ -98,7 +98,7 @@
 				</div>
 			</div>
 			<img src="../../image/line01.png" alt="">
-			<div class="free-con hide" @click="go_goodsDetail()">
+			<div class="free-con hide" tapmode @click="go_goodsDetail()">
 				<span class="fl circle"><img :src="imgurl" alt=""></span>
 				<div class="fl free-right">
 					<h6 class="single">{{goods_name}}</h6>
@@ -109,14 +109,14 @@
 			<div class="num-con hide">
 				<span class="fl">兑换数量</span>
 				<ul class="fr num-ul hide">
-					<li class="one" onclick="minus()">&#45;</li>
+					<li class="one" tapmode onclick="minus()">&#45;</li>
 					<li class="two">
 							<input type="number" value="1" id="num" onkeyup="check()" oninput="changeNum()" onporpertychange="changeNum()">
 					</li>
-					<li class="three" onclick="add()">&#43;</li>
+					<li class="three" tapmode onclick="add()">&#43;</li>
 				</ul>
 			</div>
-			<div class="way-con hide" onclick="sel_delivery()">
+			<div class="way-con hide" tapmode onclick="sel_delivery()">
 				<span class="fl">配送方式</span>
 				<p class="fr express">
 					<span>快递&nbsp;免邮</span>
@@ -132,7 +132,7 @@
 					<i class="iconfont icon-weixinzhifu1 icon-wechat"></i>
 					<span>微信支付</span>
 				</p>
-				<p class="fr money" onclick="sel_wechat_pay()">
+				<p class="fr money" tapmode onclick="sel_wechat_pay()">
 					<span id="money">¥{{total * 0.2}}</span>
 					<i class="iconfont icon-xuanzhongon weChat" id="weChat"></i>
 				</p>
@@ -147,16 +147,16 @@
 				</p>
 
 				<!-- 学分充足 -->
-				<p class="fr money" id="creditfull" onclick="sel_credit_Pay()">
+				<p class="fr money" id="creditfull" tapmode onclick="sel_credit_Pay()">
 					<span style="color:#fcb068;" id="totalone">{{total}}学分</span>
 					<i class="iconfont icon-xuanzhongon" id="credit"></i>
 				</p>
 
 				<!-- 学分不足 -->
-				<div class="Recharge" style="display:none">
+				<!-- <div class="Recharge" style="display:none">
 						学分不足
-						<button onclick="Recharge()">充值</button>
-				</div>
+						<button tapmode onclick="Recharge()">充值</button>
+				</div> -->
 			</div>
 		</div>
 		</div>
@@ -167,7 +167,7 @@
 					<label class="credit" id="money_total" style="color:#58b64b">¥{{total * 0.2}}</label>
 				</li>
 				<!-- 分别有确认兑换、确认支付状态 -->
-				<li class="submit-btn" style="width:35%" onclick="ConExchange()">确认兑换</li>
+				<li class="submit-btn" style="width:35%" tapmode onclick="ConExchange()">确认兑换</li>
 		</ul>
 		</footer>
 	</div>
@@ -175,7 +175,7 @@
 	<div class="fu-body" style="display:none">
 		<div class="fu-delivery">
 			<h6>配送方式</h6>
-			<p class="hide code-con" onclick="confirm()">
+			<p class="hide code-con" tapmode onclick="confirm()">
 				<span class="fl">快递&nbsp;&nbsp;免邮</span>
 				<i class="iconfont icon-xuanzhongon icon-check fr" id="icon1"></i>
 			</p>
@@ -185,7 +185,7 @@
 				<i class="iconfont icon-weixuanzhongxianxing icon-check fr" id="icon2"></i>
 			</p> -->
 
-			<p class="sure-btn"><button onclick="confirm()">确认</button></p>
+			<p class="sure-btn"><button tapmode onclick="confirm()">确认</button></p>
 		</div>
 	</div>
 
@@ -259,7 +259,9 @@
 
 
 									  if (ret) {
-												if (ret.status == '0') {
+											  if(ret.status == '5'){
+														ExitLogin();
+												}else if (ret.status == '0') {
 
 														setTimeout(function(){
 																vm.go_address();
@@ -294,9 +296,14 @@
 								},function(ret, err){
 
 								    if (ret) {
-								        vm.consignee = ret.consignee;
-												vm.tel = ret.tel;
-												vm.address = ret.address;
+											  if (ret.status == '5') {
+													ExitLogin();
+											  }else {
+													vm.consignee = ret.consignee;
+													vm.tel = ret.tel;
+													vm.address = ret.address;
+											  }
+
 								    } else {
 								        api.toast({
 								            msg: '网络错误',
@@ -355,8 +362,11 @@
 								},function(ret, err){
 
 										if (ret) {
-											  vm.winmoney = ret.winmoney;
-
+											  if (ret.status == '5') {
+														ExitLogin();
+											  }else {
+											  		vm.winmoney = ret.winmoney;
+											  }
 										} else {
 												api.toast({
 														msg: '网络错误',
@@ -426,7 +436,8 @@
 				    url: './7credit_Recharge.html',
 				    pageParam: {
 				        name: 'test'
-				    }
+				    },
+						reload:true
 				});
 		}
 
@@ -500,7 +511,7 @@
 				});
 				return false;
 	    }else{
-	        document.getElementById("num").value--;
+	      document.getElementById("num").value--;
 	    }
 			changeNum();
 	}
@@ -619,7 +630,9 @@
 				  $api.css($api.byId('loading'), 'display:none');
 
 					if (ret) {
-							if (ret.status == '1') {
+						  if (ret.status == '5') {
+								 ExitLogin();
+						  }else if (ret.status == '1') {
 
 								if (vm.payMethod == 1) {//payMethod,1微信支付，2学分支付
 									get_weiChat(vm.goods_name,goods_amount,ret.order_sn);//获取微信签名
@@ -627,7 +640,7 @@
 										UpdateOrder(goods_amount);
 								}
 
-							}
+						 }
 					} else {
 						  $api.css($api.byId('loading'), 'display:none');
 							api.toast({
@@ -660,7 +673,9 @@
 				  $api.css($api.byId('loading'), 'display:none');
 
 			    if (ret) {
-							if (ret.status == '1') {
+						  if (ret.status == '5') {
+									ExitLogin();
+						  }else if (ret.status == '1') {
 									api.openWin({
 											name: 'success',
 											url: './success.html',
@@ -722,8 +737,12 @@
 			},function(ret, err){
 
 			    if (ret) {
+              if (ret.status == '5') {
+									ExitLogin();
+              }else {
+              		goPay(ret,order_sn);
+              }
 
-							goPay(ret,order_sn);
 			    } else {
 
 							api.toast({
@@ -775,8 +794,9 @@
 				}
 		},function(ret, err){
 				if (ret) {
-
-						if (ret.status == '1') {
+            if (ret.status == '5') {
+            		ExitLogin();
+            }else if (ret.status == '1') {
 							api.openWin({
 									name: 'success',
 									url: './success.html',

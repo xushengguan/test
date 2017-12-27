@@ -43,14 +43,14 @@
         <span class="fr">总价:<label>{{v.goods_amount}}学分</label></span>
 			</div>
 			<div class="dispich-con">
-				<div class="purchase-top" @click="goLoglist(v.logistics_company,v.tracking_number)" v-if="v.shipping_status == '1' && v.status">
+				<div class="purchase-top" tapmode @click="goLoglist(v.logistics_company,v.tracking_number)" v-if="v.shipping_status == '1' && v.status">
 					<p class="adds">{{v.status.status}}</p>
 					<p class="time">{{v.status.time}}</p>
 					<i class="iconfont icon-gengduo1 icon-more"></i>
 				</div>
 				<div class="taste-con hide" style="position:relative;">
 
-					<img class="fl square" :src="v.imgurl" alt="" @click="goDetail(v.order_id)">
+					<img class="fl square" tapmode :src="v.imgurl" alt="" @click="goDetail(v.order_id)">
 					<div class="fl" style="width:45%" @click="goDetail(v.order_id)">
 						<h6 class="free single">{{v.goods_name}}</h6>
 						<h6 class="chicken more2">{{v.abs}}</h6>
@@ -58,9 +58,9 @@
 					</div>
 
 					<!-- 配送中状态添加 -->
-					<span class="fr sure" style="z-index:99" v-if="v.shipping_status == '1'" @click="confirmReceipt(v.order_id)">确认收货</span>
+					<span class="fr sure" tapmode v-if="v.shipping_status == '1'" @click="confirmReceipt(v.order_id)">确认收货</span>
 					<!-- pay_status 支付状态;0未付款;1付款中;2已付款 -->
-					<span class="fr sure" style="z-index:99" v-if="v.pay_status == '0'" @click="get_weiChat(v)">付款</span>
+					<span class="fr sure" tapmode v-if="v.pay_status == '0'" @click="get_weiChat(v)">付款</span>
 				</div>
 			</div>
 		</div>
@@ -129,7 +129,11 @@
 					$api.css($api.dom('#loading'), 'display:none');
 
 					if (ret) {
-						vm.data = ret;
+						if(ret.status == '5'){
+								ExitLogin();
+						}else {
+								vm.data = ret;
+						}
 
 					} else {
 						api.toast({
@@ -187,8 +191,9 @@
 							$api.css($api.dom('#loading'), 'display:none');
 
 							if (ret) {
-
-								if (ret.status == '1') {
+                if (ret.status == '5') {
+									ExitLogin();
+                }else if (ret.status == '1') {
 									vm.get_orderLis();
 									api.sendEvent({
 									    name: 'isConfirm',
@@ -235,11 +240,14 @@
 									},
 							}
 					},function(ret, err){
-              console.log(JSON.stringify(ret));
-							console.log(JSON.stringify(err));
-							if (ret) {
 
-									goPay(ret,content.order_sn);
+							if (ret) {
+                  if (ret.status == '5') {
+											ExitLogin();
+                  }else {
+                  		goPay(ret,content.order_sn);
+                  }
+
 							} else {
 
 									api.toast({
@@ -297,15 +305,17 @@
 				}
 		},function(ret, err){
 				if (ret) {
+            if (ret.status == '5') {
 
-						if (ret.status == '1') {
+            }else if (ret.status == '1') {
 							api.openWin({
 									name: 'success',
 									url: './success.html',
 									pageParam: {
 											time: add_time,
 											goods_name:vm.goods_name
-									}
+									},
+									reload:true
 							});
 						}else {
 								api.toast({

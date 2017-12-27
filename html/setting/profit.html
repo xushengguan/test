@@ -125,7 +125,11 @@
                   },function(ret, err){
 
                       if (ret) {
-                          vm.ret = ret;
+                          if(ret.status == '5'){
+                              ExitLogin();
+                          }else {
+                              vm.ret = ret;
+                          }
                       }else {
                           api.toast({
                               msg: '网络错误',

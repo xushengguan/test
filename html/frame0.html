@@ -234,12 +234,7 @@
                       if (ret.status == '1') {
                           vm.data = ret.data;
                       }else if (ret.status == '5') {
-                         $api.clearStorage();//清除localStorage的所有数据，慎用
-                         setTimeout(function(){
-                           api.closeToWin({
-                               name: 'root'
-                           });
-                         },500);
+                         ExitLogin();
                       }else {
                           api.toast({
                               msg: '网络错误',
@@ -266,14 +261,11 @@
                   },function(ret, err){
 
                       if (ret) {
-                          vm.Info = ret;
-                      }else if (ret.status == '5') {
-                        $api.clearStorage();//清除localStorage的所有数据，慎用
-                        setTimeout(function(){
-                          api.closeToWin({
-                              name: 'root'
-                          });
-                        },500);
+                          if (ret.status == '5') {
+                              ExitLogin();
+                          }else {
+                              vm.Info = ret;
+                          }
                       }else {
                           api.toast({
                               msg: '网络错误',
@@ -312,6 +304,7 @@
           api.openWin({
               name: 'stuLis_title',
               url: './setting/stuLis_title.html',
+              reload:true
           });
       }
 
@@ -320,6 +313,7 @@
         api.openWin({
             name: 'stuAll_title',
             url: './setting/stuAll_title.html',
+            reload:true
         });
       }
 
@@ -328,6 +322,7 @@
         api.openWin({
             name: 'activeProduct_title',
             url: './setting/activeProduct_title.html',
+            reload:true
         });
       }
 
@@ -348,7 +343,8 @@
               url: './setting/profit_title.html',
               pageParam: {
                   index: index
-              }
+              },
+              reload:true
           });
 
       }
@@ -425,12 +421,7 @@
                       $api.text($api.dom('.week'+form),0);
                   }
               }else if (ret.status == '5') {
-                  $api.clearStorage();//清除localStorage的所有数据，慎用
-                  setTimeout(function(){
-                    api.closeToWin({
-                        name: 'root'
-                    });
-                  },500);
+                  ExitLogin();
               } else {
 
                   api.toast({
@@ -450,6 +441,7 @@
           api.openWin({
               name: 'invite',
               url: './setting/invite.html',
+              reload:true
           });
 
       }

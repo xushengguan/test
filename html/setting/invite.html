@@ -36,7 +36,7 @@
   <body>
     <div id="wrap">
         <header>
-            <em onclick="go_back()"></em> 邀请注册
+            <em tapmode onclick="go_back()"></em> 邀请注册
         </header>
         <div id="main">
             <div class="cardBox">
@@ -51,8 +51,8 @@
         </div>
         <footer>
             <span>分享推广链接</span>
-            <em class="icon1" onclick="goShare(0)"></em>
-            <em class="icon2" onclick="goShare(1)"></em>
+            <em class="icon1" tapmode onclick="goShare(0)"></em>
+            <em class="icon2" tapmode onclick="goShare(1)"></em>
         </footer>
     </div>
   </body>
@@ -91,14 +91,19 @@
           },function(ret, err){
               $api.css($api.byId('loading'), 'display:none');
 
-              if (ret.status == '1') {
-                if (ret.data.headimgurl) {
-                    $api.attr($api.dom('.headImg'), 'src', ret.data.headimgurl);
+              if (ret) {
+                if (ret.status == '5') {
+                   ExitLogin();
+                }else if (ret.status == '1') {
+                  if (ret.data.headimgurl) {
+                      $api.attr($api.dom('.headImg'), 'src', ret.data.headimgurl);
+                  }
+
+                  $api.text($api.dom('.nickname'), ret.data.nickname);
+
+                  $api.css($api.byId('main'), 'display:block');
                 }
 
-                $api.text($api.dom('.nickname'), ret.data.nickname);
-
-                $api.css($api.byId('main'), 'display:block');
               }else {
                   api.toast({
                       msg: '网络错误',
@@ -112,7 +117,6 @@
 
       // 分享推广
       function goShare(index){
-
         if (index == 0) {
             weiShare('timeline');
         }else if (index == 1) {

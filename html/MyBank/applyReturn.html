@@ -38,9 +38,9 @@
   <body>
     <div id="wrap">
       <header>
-          <em onclick="go_back()"></em>
+          <em tapmode onclick="go_back()"></em>
           申请退款
-          <span onclick="Submit()">提交</span>
+          <span tapmode onclick="Submit()">提交</span>
       </header>
       <div id="main">
           <div class="line">
@@ -110,17 +110,17 @@
                       },
                   }
               },function(ret, err){
-                
-                  if (ret) {
 
-                      if (ret.status == '1') {
+                  if (ret) {
+                      if (ret.status == '5') {
+                          ExitLogin();
+                      }else if (ret.status == '1') {
                           api.alert({
                               title: '退款通知',
                               msg: '提交成功，我们将会在几天内以短信形式通知您处理结果',
                               buttons:["我知道了"]
                           }, function(ret, err){
                               if( ret ){
-
                                    go_back();
                               }else{
                                    console.log( JSON.stringify( err ) );

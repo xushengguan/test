@@ -18,7 +18,7 @@
 <body>
 	<div class="goods3" id="app" v-cloak>
 		<header>
-				<em onclick="go_back()"></em>
+				<em tapmode onclick="go_back()"></em>
 				物流信息
 		</header>
 		<div class="goods3-con">
@@ -90,7 +90,7 @@
 											},
 									}
 							},function(ret, err){
-							
+
 									if (ret) {
 											vm.data = ret.result;
 									} else {

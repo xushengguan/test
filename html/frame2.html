@@ -200,20 +200,6 @@
             font-size: 10px;
         }
 
-        /*.pic {
-            width: 100%;
-            height: 150px;
-        }
-
-        .pic img {
-            display: block;
-            width: 100%;
-        }
-
-        #app{
-            height: 100%;
-        }*/
-
         .swiper-container {
            width: 100%;
            height: 150px;
@@ -260,7 +246,7 @@
         </div>
         <!-- 功能图标区 -->
         <div class="credit_icon clearfix" v-if="ClassInfo">
-            <a href="javascript:;" class="credit_icon_btn" v-for="v in ClassInfo" @click="go_clsLis(v.id,v.tname)">
+            <a href="javascript:;" class="credit_icon_btn" tapmode v-for="v in ClassInfo" @click="go_clsLis(v.id,v.tname)">
                 <span class="icon1" v-bind:style="{background:v.color}">
                   <i class="icon iconfont" v-bind:class="v.fonticon" style="font-size: 20px; color:#fff;"></i>
                 </span>
@@ -274,7 +260,7 @@
                 <i class="icon iconfont icon-remen" style="font-size: 15px; color: #ff5252"></i> 热门商品
             </div>
             <div class="good_box clearfix" id="hot_goods">
-                <a href="javascript:;" class="goodLink" v-for="v in hotInfo" @click="go_goodsDetail(v.id)">
+                <a href="javascript:;" class="goodLink" tapmode v-for="v in hotInfo" @click="go_goodsDetail(v.id)">
                     <div class="good_img">
                         <img :src="v.imgurl" alt="">
                     </div>
@@ -295,7 +281,7 @@
                 <i class="icon iconfont icon-xinpin" style="font-size: 15px;"></i> 新品优惠
             </div>
             <div class="good_box clearfix">
-                <a href="javascript:;" class="goodLink" v-for="v in newInfo" @click="go_goodsDetail(v.id)">
+                <a href="javascript:;" class="goodLink" tapmode v-for="v in newInfo" @click="go_goodsDetail(v.id)">
                     <div class="good_img">
                         <img :src="v.imgurl" alt="">
                     </div>
@@ -429,7 +415,8 @@
                   url: './mall/credit_goodDetail.html',
                   pageParam: {
                       goods_id: goods_id
-                  }
+                  },
+                  reload:true
               });
             },
 
@@ -440,7 +427,8 @@
                   pageParam: {
                       clsid: clsid,
                       tname:tname
-                  }
+                  },
+                  reload:true
               });
             }
         }

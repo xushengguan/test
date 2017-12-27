@@ -89,8 +89,13 @@
                       $api.css($api.byId('loading'),'display:none');
 
                       if (ret) {
-                          vm.data = ret;
-                          $api.css($api.byId('app'),'display:block');
+                          if (ret.status == '5') {
+                              ExitLogin();
+                          }else {
+                              vm.data = ret;
+                              $api.css($api.byId('app'),'display:block');
+                          }
+
                       }else {
                           api.toast({
                               msg: '网络错误',

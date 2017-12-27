@@ -81,7 +81,7 @@
 	<div class="pro_catalog" id="app" v-cloak>
 		<div class="NoAct" v-if="info == '' || info == null">抱歉，该分类暂时还没有商品！</div>
 		<div v-else>
-			<div class="pro_1" v-for="v in info" @click="go_goodsDetail(v.id)">
+			<div class="pro_1" tapmode v-for="v in info" @click="go_goodsDetail(v.id)">
 				<div class="pro_pic"><img :src="v.imgurl" alt=""></div>
 				<div class="pro_con">
 					<p class="subtitle single">{{v.goods_name}}</p>

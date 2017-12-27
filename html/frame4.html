@@ -44,12 +44,12 @@
 <body>
     <div class="top_bg">
         <div class="nav">
-            <span onclick="braceletMsg()">我的手环</span>
-            <span onclick="MyAccount()">我的设置</span>
+            <span tapmode onclick="braceletMsg()">我的手环</span>
+            <span tapmode onclick="MyAccount()">我的设置</span>
         </div>
 
         <div class="pic">
-            <img src="../image/pic.png" alt="" id="img" onclick="viewPicture()">
+            <img src="../image/pic.png" alt="" id="img" tapmode onclick="viewPicture()">
             <span></span>
         </div>
         <div class="nickname"></div>
@@ -60,19 +60,19 @@
 
     <div class="main">
 
-        <div class="card" onclick="goActadmin()">
+        <div class="card" tapmode onclick="goActadmin()">
             <img src="../image/join.jpg" alt="">
         </div>
         <div class="title">
             控制中心
         </div>
         <ul class="navMenu">
-            <li onclick="MyOrder()">我的订单</li>
-            <li onclick="goAddress()">收货地址</li>
-            <li onclick="MyNews()">系统消息</li>
-            <li onclick="MyCircle()">我的学客圈</li>
-            <li onclick="BillDetail()">收支明细</li>
-            <li onclick="Rating()">信用评级</li>
+            <li tapmode onclick="MyOrder()">我的订单</li>
+            <li tapmode onclick="goAddress()">收货地址</li>
+            <li tapmode onclick="MyNews()">系统消息</li>
+            <li tapmode onclick="MyCircle()">我的学客圈</li>
+            <li tapmode onclick="BillDetail()">收支明细</li>
+            <li tapmode onclick="Rating()">信用评级</li>
         </ul>
         <!-- <div class="help">
             规则与帮助
@@ -110,7 +110,6 @@ apiready = function(){
         name: 'ExInfo'
     }, function(ret, err){
         if( ret ){
-
              getUser();
         }else{
              console.log( JSON.stringify( err ) );
@@ -124,7 +123,8 @@ function MyCircle(){
         url: './circle/CircleIndex.html',
         pageParam: {
             id: id
-        }
+        },
+        reload:true
     });
 
 }
@@ -134,6 +134,7 @@ function MyOrder(){
   api.openWin({
       name: 'order_title',
       url: './mall/order_title.html',
+      reload:true
   });
 }
 
@@ -142,6 +143,7 @@ function MyNews() {
     api.openWin({
         name: 'MyNews_title',
         url: './setting/MyNews_title.html',
+        reload:true
     });
 }
 
@@ -150,6 +152,7 @@ function BillDetail(){
     api.openWin({
         name: 'BillDetail',
         url: './setting/BillDetail_title.html',
+        reload:true
     });
 }
 
@@ -158,6 +161,7 @@ function Rating(){
     api.openWin({
         name: 'Rating_title',
         url: './setting/Rating_title.html',
+        reload:true
     });
 }
 
@@ -166,6 +170,7 @@ function MyAccount() {
     api.openWin({
         name: '7account',
         url: './setting/7account.html',
+        reload:true
     });
 }
 
@@ -174,6 +179,7 @@ function goActadmin(){
   api.openWin({
       name: 'Actadmin_title',
       url: './activity/Actadmin_title.html',
+      reload:true
   });
 }
 
@@ -190,8 +196,9 @@ function braceletMsg(){
 							},
 					}
 			},function(ret, err){
-
-					if (ret.data) {
+          if(ret.status == '5'){
+              ExitLogin();
+          }else if (ret.data) {
             api.openWin({
                 name: 'braceletMsg',
                 url: './setting/braceletMsg.html',
@@ -225,7 +232,9 @@ function getUser(){
     },function(ret, err){
 
         if (ret) {
-            if (ret.status == '1') {
+            if (ret.status == '5') {
+                ExitLogin();
+            }else if (ret.status == '1') {
               if (ret.data.headimgurl) {
                   $api.attr($api.dom('.pic img'), 'src', ret.data.headimgurl);
               }

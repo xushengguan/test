@@ -43,7 +43,7 @@
 <body>
     <div id="wrap">
         <header>
-            <em onclick="go_back()"></em>
+            <em tapmode onclick="go_back()"></em>
             活动分享
         </header>
         <div id="main">
@@ -51,7 +51,7 @@
                 <textarea name="name" rows="8" cols="80" placeholder="分享您的精彩"></textarea>
             </div>
             <div class="img">
-                <div class="item on" onclick="sel_channel()" id="uploader">
+                <div class="item on" tapmode onclick="sel_channel()" id="uploader">
                     <em></em>
                 </div>
                 <!-- <div class="item">
@@ -61,15 +61,15 @@
             </div>
 
             <div class="btn">
-                <button onclick="SendOut()">发送</button>
+                <button tapmode onclick="SendOut()">发送</button>
             </div>
         </div>
     </div>
 
     <div class="flexed" style="display:none">
         <ul>
-            <li onclick="camera()">拍照</li>
-            <li onclick="album()">从相册选择</li>
+            <li tapmode onclick="camera()">拍照</li>
+            <li tapmode onclick="album()">从相册选择</li>
         </ul>
     </div>
 </body>
@@ -343,7 +343,9 @@
             $api.css($api.dom('#loading'), 'display:none');
 
             if (ret) {
-                if (ret.status == '1') {
+                if (ret.status == '5') {
+                    ExitLogin();
+                }else if (ret.status == '1') {
                     var role = $api.getStorage('role');
                     api.sendEvent({
                         name: 'Publish',

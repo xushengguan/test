@@ -70,7 +70,7 @@
             <div class="input_box">
                 <div class="bg">
                   <input type="text" placeholder="请输入您想要搜索的内容" id="text">
-                  <em @click="search()"></em>
+                  <em tapmode @click="search()"></em>
                 </div>
             </div>
           </header>
@@ -82,7 +82,7 @@
                       <!-- Swiper -->
                       <div class="swiper-container">
                         <div class="swiper-wrapper">
-                          <div class="swiper-slide" v-for="(v,index) in user" v-if="index < count" @click="goCircel(v.uid)">
+                          <div class="swiper-slide" tapmode v-for="(v,index) in user" v-if="index < count" @click="goCircel(v.uid)">
                               <div class="pic">
                                   <em></em>
                                   <img :src="v.headimgurl+'?x-oss-process=image/resize,p_50'" v-if="v.headimgurl">
@@ -90,7 +90,7 @@
                               </div>
                               <span class="name">{{v.nickname}}</span>
                           </div>
-                          <div class="swiper-slide" id="showAll" @click="showAll()" v-show="count < user.length">
+                          <div class="swiper-slide" id="showAll" tapmode @click="showAll()" v-show="count < user.length">
                               <div class="pic">
                                   <em></em>
                                   <img src="../../image/more1.png" alt="">
@@ -105,7 +105,7 @@
                   <div class="activity" v-show="act != ''">
                       <div class="title">相关活动</div>
                       <ul class="ActLis">
-                          <li v-for="v in act" @click="goActDetail(v.act_id)">
+                          <li tapmode v-for="v in act" @click="goActDetail(v.act_id)">
                               <img :src="v.actimgurl+'?x-oss-process=image/resize,p_50'" alt="">
                               <div class="rt">
                                   <p class="act_title single">{{v.title}}</p>
@@ -199,11 +199,16 @@
                         }
                     },function(ret, err){
                         $api.css($api.dom('#loading'),'display:none');
-                      
+
                         if (ret) {
-                            vm.user = ret.user;
-                            vm.act = ret.act;
-                            vm.count = 4;
+                            if (ret.status == '5') {
+                              ExitLogin();
+                            }else {
+                              vm.user = ret.user;
+                              vm.act = ret.act;
+                              vm.count = 4;
+                            }
+
                         } else {
 
                             api.toast({
@@ -238,7 +243,8 @@
                     url: '../circle/CircleIndex.html',
                     pageParam: {
                         id: id
-                    }
+                    },
+                    reload:true
                 });
             }
 

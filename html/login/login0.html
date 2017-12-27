@@ -31,7 +31,7 @@
           <header>
             <div class="title">
                 账号登录
-                <span onclick="register()">注册账户</span>
+                <span tapmode onclick="register()">注册账户</span>
             </div>
           </header>
 
@@ -40,11 +40,11 @@
           </div>
           <div class="line">
               <input class="password" type="password" placeholder="请输入密码" oninput="checkValue()" onpropertychange="checkValue()">
-              <em class="on" onclick="change(this)"></em>
+              <em class="on" tapmode onclick="change(this)"></em>
           </div>
-          <button class="login" disabled="disabled" onclick="login()">登录</button>
+          <button class="login" disabled="disabled" tapmode onclick="login()">登录</button>
 
-          <span class="forget" onclick="FindPassword()">忘记密码?</span>
+          <span class="forget" tapmode onclick="FindPassword()">忘记密码?</span>
       </div>
   </body>
   <script type="text/javascript" src="../../script/api.js"></script>
@@ -85,21 +85,15 @@
           })
 
           api.addEventListener({name:'appintent'}, function(ret,err) {
-  
-              if (ret.appParam.ajpush.content.indexOf("重新登陆") > 0) {
-                  $api.clearStorage();//清除localStorage的所有数据，慎用
 
-                  setTimeout(function(){
-                    api.closeToWin({
-                        name: 'root'
-                    });
-                  },500);
+              if (ret.appParam.ajpush.content.indexOf("重新登陆") > 0) {
+                  ExitLogin();
               }else {
                   api.openWin({
                       name: 'circleNews',
                       url: '../circle/circleNews.html',
                       reload:true,
-                      allowEdit:true
+                      allowEdit:true,
                   });
               }
 
@@ -117,13 +111,15 @@
                 api.openWin({
                     name: 'index',
                     url: '../../index.html',
-                    reload:true
+                    reload:true,
+                    slidBackEnabled:false
                 });
               }else if(role == '1'){
                 api.openWin({
                     name: 'index',
                     url: '../../index1.html',
-                    reload:true
+                    reload:true,
+                    slidBackEnabled:false
                 });
               }
           }
@@ -210,7 +206,7 @@
           api.openWin({
               name: 'login6',
               url: './login6.html',
-              reload:true
+              reload:true,
           });
 
       }
@@ -312,14 +308,14 @@
                                     role:ret.data.role,
                                     update_status:ret.data.activate_status//是否激活学令牌 支教老师 0:不是 1：是
                                 },
-                                reload:true
+                                reload:true,
                             });
 
                         }else if (ret.data.role == '2' && ret.data.activate_status == '0') {
                             api.openWin({
                                 name: 'login5',
                                 url: './login5.html',
-                                reload:true
+                                reload:true,
                             });
 
                         }else{
@@ -329,7 +325,8 @@
                                 api.openWin({
                                     name: 'index',
                                     url: '../../index.html',
-                                    reload:true
+                                    reload:true,
+                                    slidBackEnabled:false
                                 });
 
                             }else {
@@ -337,7 +334,8 @@
                                 api.openWin({
                                     name: 'index',
                                     url: '../../index1.html',
-                                    reload:true
+                                    reload:true,
+                                    slidBackEnabled:false
                                 });
 
                             }

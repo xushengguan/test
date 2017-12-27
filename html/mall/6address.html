@@ -29,7 +29,7 @@
 		<div class="address-con hide" id="app">
 			<div class="NoAddress" v-if="data.status == '0'">暂无收货地址</div>
 			<div v-for="v in data" v-else>
-					<div class="address1-con" @click="go_order(v.address_id)">
+					<div class="address1-con" tapmode @click="go_order(v.address_id)">
 						<div class="address1-top hide">
 							<p class="address1-left fl">收货人:{{v.consignee}}</p>
 							<p class="address1-right fr">电话:{{v.tel}}</p>
@@ -45,17 +45,17 @@
 							<span style="bottom: 4px;">默认地址</span>
 						</p>
 
-						<p class="edit-left fl" style="position: relative;right:10px;" @click="set_default(v.address_id)" v-else>
+						<p class="edit-left fl" style="position: relative;right:10px;" tapmode @click="set_default(v.address_id)" v-else>
 							<i class="iconfont icon-square icon-choice" style="color:#757575;"></i>
 							<span style="right:10px;bottom: 4px;">默认地址</span>
 						</p>
 
 						<div class="edit-right fr">
-							<p class="right-con edit-left" style="padding-right:45px;" @click="edit_address(v.address_id)">
+							<p class="right-con edit-left" style="padding-right:45px;" tapmode @click="edit_address(v.address_id)">
 								<i class="iconfont icon-bianji icon-edit"></i>
 								<span>编辑</span>
 							</p>
-							<p class="right-con edit-left" @click="del_address(v.address_id)">
+							<p class="right-con edit-left" tapmode @click="del_address(v.address_id)">
 								<i class="iconfont icon-shanchu3 icon-edit"></i>
 								<span>删除</span>
 							</p>
@@ -115,9 +115,14 @@
 								}, function(ret, err) {
 
 										$api.css($api.byId('loading'),'display:none');
-                
+
                   	if (ret) {
-												vm.data = ret;
+											  if (ret.status == '5') {
+														ExitLogin();
+											  }else {
+											  		vm.data = ret;
+											  }
+
 										} else {
 												api.toast({
 														msg: '网络错误',
@@ -147,8 +152,9 @@
 									$api.css($api.byId('loading'),'display:none');
 
 									if (ret) {
-
-											if (ret.status == '1') {
+                      if (ret.status == '5') {
+													ExitLogin();
+                      }else if (ret.status == '1') {
 													vm.getAdress();
 											}
 
@@ -179,8 +185,9 @@
 									$api.css($api.byId('loading'),'display:none');
 
 									if (ret) {
-
-											if (ret.status == '1') {
+                      if (ret.status == '5') {
+													ExitLogin();
+                      }else if (ret.status == '1') {
 													vm.getAdress();
 											}
 

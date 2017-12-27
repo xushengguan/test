@@ -90,9 +90,9 @@
   <body>
     <div id="wrap">
         <header>
-            <em onclick="go_back()"></em>
+            <em tapmode onclick="go_back()"></em>
             为他打分
-            <span onclick="confirmMark(1)">确认并退出</span>
+            <span tapmode onclick="confirmMark(1)">确认并退出</span>
         </header>
         <div id="main">
             <div class="box">
@@ -117,26 +117,26 @@
                     <p class="remark"></p>
                 </div>
                 <div class="rt">
-                    <p class="btn" onclick="ResetName()">修改备注名</p>
+                    <p class="btn" tapmode onclick="ResetName()">修改备注名</p>
                     <p class="times"></p>
                 </div>
             </div>
             <div class="flexed">
                 <ul class="spuared">
-                    <li onclick="goScore(this)">1</li>
-                    <li onclick="goScore(this)">2</li>
-                    <li onclick="goScore(this)">3</li>
-                    <li onclick="goScore(this)">4</li>
-                    <li onclick="goScore(this)">5</li>
-                    <li onclick="goScore(this)">6</li>
-                    <li onclick="goScore(this)">7</li>
-                    <li onclick="goScore(this)">8</li>
-                    <li onclick="goScore(this)">9</li>
-                    <li onclick="goScore(this)">0</li>
+                    <li tapmode onclick="goScore(this)">1</li>
+                    <li tapmode onclick="goScore(this)">2</li>
+                    <li tapmode onclick="goScore(this)">3</li>
+                    <li tapmode onclick="goScore(this)">4</li>
+                    <li tapmode onclick="goScore(this)">5</li>
+                    <li tapmode onclick="goScore(this)">6</li>
+                    <li tapmode onclick="goScore(this)">7</li>
+                    <li tapmode onclick="goScore(this)">8</li>
+                    <li tapmode onclick="goScore(this)">9</li>
+                    <li tapmode onclick="goScore(this)">0</li>
                 </ul>
                 <div class="rightBtn">
-                    <div class="del" onclick="Del()"></div>
-                    <div class="confirm" onclick="confirmMark()">
+                    <div class="del" tapmode onclick="Del()"></div>
+                    <div class="confirm" tapmode onclick="confirmMark()">
                         <p>确认</p>
                         并继续扫码打分
                     </div>
@@ -149,7 +149,7 @@
     <div class="popup" style="display:none">
         <div class="infoBox">
             <div class="msg">
-                <img id="img" src="../../image/uploader.png" alt="" onclick="getPicture()">
+                <img id="img" src="../../image/uploader.png" alt="" tapmode onclick="getPicture()">
                 <div class="rtmsg">
                     <p class="prompt">请填写信息后再进行打分</p>
                     <p class="name">姓名</p>
@@ -161,7 +161,7 @@
               <em></em>
             </div>
             <textarea name="name" rows="8" cols="80" placeholder="添加备注" id="log"></textarea>
-            <button class="Sumbit" disabled="disabled" onclick="perfectInfo()">提交信息</button>
+            <button class="Sumbit" disabled="disabled" tapmode onclick="perfectInfo()">提交信息</button>
         </div>
     </div>
   </body>
@@ -208,7 +208,9 @@
           },function(ret, err){
 
               if (ret) {
-                  if (ret.status == '0') {
+                  if (ret.status == '5') {
+                      ExitLogin();
+                  }else if (ret.status == '0') {
                       $api.attr($api.dom('#img'), 'src', '../../image/uploader.png');
                       $api.val($api.dom('#name'), '');
 
@@ -254,14 +256,18 @@
         },function(ret, err){
 
             if (ret) {
-                if (ret.data) {
-                     $api.attr($api.dom('#img2'), 'src',ret.data.stu_img);
-                     $api.text($api.dom('.info .name'),ret.data.stu_name);
-                     $api.text($api.dom('.remark'), ret.data.log);
-                     $api.text($api.dom('.times'),ret.count + '次');
-                     bracelet_id = ret.data.id;
+                if (ret.status == '5') {
+                    ExitLogin();
                 }else {
-                    $api.css($api.dom('.top'), 'display:none');
+                    if (ret.data) {
+                         $api.attr($api.dom('#img2'), 'src',ret.data.stu_img);
+                         $api.text($api.dom('.info .name'),ret.data.stu_name);
+                         $api.text($api.dom('.remark'), ret.data.log);
+                         $api.text($api.dom('.times'),ret.count + '次');
+                         bracelet_id = ret.data.id;
+                    }else {
+                        $api.css($api.dom('.top'), 'display:none');
+                    }
                 }
             } else {
 
@@ -315,7 +321,9 @@
                   $api.css($api.byId('loading'), 'display:none');
 
                   if (ret) {
-                      if (ret.status == '1') {
+                      if (ret.status == '5') {
+                          ExitLogin();
+                      }else if (ret.status == '1') {
                           api.toast({
                               msg: '提交成功',
                               duration: 2000,
@@ -504,11 +512,11 @@
               },function(ret, err){
 
                   $api.css($api.dom('#loading'), 'display:none');
-                   console.log(JSON.stringify(ret));
-                   console.log(JSON.stringify(err));
+          
                   if (ret) {
-
-                      if (ret.status == '1') {
+                      if (ret.status == '5') {
+                          ExitLogin();
+                      }else if (ret.status == '1') {
                           api.toast({
                               msg: '打分成功',
                               duration: 2000,
@@ -533,7 +541,7 @@
 
                       }else if (ret.status == '4') {
                           api.toast({
-                              msg: '24小时内不允许超过100分',
+                              msg: '一场活动不能超过240分',
                               duration: 2000,
                               location: 'middle'
                           });
@@ -631,8 +639,9 @@
           }
       },function(ret, err){
           if (ret) {
-
-              if (ret.status == '1') {
+              if (ret.status == '5') {
+                  ExitLogin();
+              }else if (ret.status == '1') {
                   api.toast({
                       msg: '修改成功',
                       duration: 2000,

@@ -96,17 +96,17 @@
 <body>
 	<div class="7account">
 		<header>
-        <em onclick="go_back()"></em> 账户设置
+        <em tapmode onclick="go_back()"></em> 账户设置
     </header>
 		<div class="account-con">
 			<div class="account-top hide">
 				<img class="circle fl" src="../../image/pic.png" id="img">
-				<p class="fr choice" onclick="sel_pic()">
+				<p class="fr choice" tapmode onclick="sel_pic()">
 					<span>选择头像</span>
 					<i class="iconfont icon-gengduo1 icon-more"></i>
 				</p>
 			</div>
-			<div class="msg-con hide" onclick="changeName()">
+			<div class="msg-con hide" tapmode onclick="changeName()">
 				<span class="fl">用户名</span>
 				<p class="fr">
 					<span style="color:#fca958;" id="nickname"></span>
@@ -119,7 +119,7 @@
 					<i class="iconfont icon-gengduo1 icon-more"></i>
 				</p>
 			</div> -->
-			<div class="msg-con hide" onclick="changePassword()">
+			<div class="msg-con hide" tapmode onclick="changePassword()">
 				<span class="fl">更改密码</span>
 				<i class="iconfont icon-gengduo1 icon-more fr"></i>
 			</div>
@@ -157,8 +157,9 @@
 							},
 					}
 			},function(ret, err){
-
-					if (ret.status == '1') {
+          if (ret.status == '5') {
+						ExitLogin();
+          }else if (ret.status == '1') {
 						if (ret.data.headimgurl) {
 								$api.attr($api.dom('#img'), 'src', ret.data.headimgurl);
 						}
@@ -236,12 +237,7 @@
 
 						 if (ret) {
 								 if (ret.status == '1') {
-									 $api.clearStorage();//清除localStorage的所有数据，慎用
-									 setTimeout(function(){
-										 api.closeToWin({
-	                       name: 'root'
-	                   });
-									 },500);
+									 	ExitLogin();
 								 }
 						 } else {
 								 api.toast({
@@ -344,7 +340,9 @@
 				  $api.css($api.dom('#loading'), 'display:none');
 
 			    if (ret) {
-			        if (ret.status == '1') {
+						  if (ret.status == '5') {
+									ExitLogin();
+						  }else if (ret.status == '1') {
 									$api.attr($api.dom('#img'), 'src', headimgurl);
 									api.sendEvent({
 									    name: 'ExInfo',
@@ -398,7 +396,7 @@
 
  }
 
-function Cname(nickname){
+function Cname(nickname){//修改用户名
 	api.ajax({
 		 url: serverurl,
 		 method: 'get',
@@ -413,7 +411,9 @@ function Cname(nickname){
  },function(ret, err){
 
 		 if (ret) {
-				 if (ret.status == '1') {
+			   if (ret.status == '5') {
+							ExitLogin();
+			   }else if (ret.status == '1') {
 						 $api.text($api.byId('nickname'), nickname);
 						 api.sendEvent({
 								 name: 'ExInfo',
@@ -442,6 +442,7 @@ function goAddress(){
 		api.openWin({
 		    name: '6address_title',
 		    url: '../mall/6address_title.html',
+				reload:true
 		});
 
 }

@@ -100,17 +100,17 @@
 <body>
 	<div class="7account">
 		<header>
-        <em onclick="go_back()"></em> 账户设置
+        <em tapmode onclick="go_back()"></em> 账户设置
     </header>
 		<div class="account-con">
 			<div class="account-top hide">
 				<img class="circle fl" src="../../image/pic.png" id="img">
-				<p class="fr choice" onclick="sel_pic()">
+				<p class="fr choice" tapmode onclick="sel_pic()">
 					<span>选择头像</span>
 					<i class="iconfont icon-gengduo1 icon-more"></i>
 				</p>
 			</div>
-			<div class="msg-con hide" onclick="changeName()">
+			<div class="msg-con hide" tapmode onclick="changeName()">
 				<span class="fl">学生姓名</span>
 				<p class="fr">
 					<span style="color:#fca958;" id="nickname"></span>
@@ -156,12 +156,17 @@
 					}
 			},function(ret, err){
 
-					if (!ret.status) {
-						var img = 'http://www.gbtags.com/gb/qrcode?t=https://123win.com.cn/xlp/reg/'+ret.data.id;
-						$api.attr($api.dom('#img'), 'src', ret.data.stu_img);//学生头像
-						$api.attr($api.dom('#codeImg'), 'src', img);//二维码图片
-						$api.text($api.dom('#nickname'), ret.data.stu_name);
-						$api.text($api.dom('.ID em'), ret.data.id);
+					if (ret) {
+						if (ret.status == '5') {
+								ExitLogin();
+						}else if (!ret.status) {
+								var img = 'http://www.gbtags.com/gb/qrcode?t=https://123win.com.cn/xlp/reg/'+ret.data.id;
+								$api.attr($api.dom('#img'), 'src', ret.data.stu_img);//学生头像
+								$api.attr($api.dom('#codeImg'), 'src', img);//二维码图片
+								$api.text($api.dom('#nickname'), ret.data.stu_name);
+								$api.text($api.dom('.ID em'), ret.data.id);
+						}
+
 					}else {
 							api.toast({
 									msg: '网络错误',
@@ -320,9 +325,11 @@ function ResetBracelet(stu_name,stu_img){
 		 }
  },function(ret, err){
 	   $api.css($api.dom('#loading'), 'display:none');
-		
+
 		 if (ret) {
-				 if (ret.status == '1') {
+			   if (ret.status == '5') {
+						ExitLogin();
+			   }else if (ret.status == '1') {
 						 if (stu_name) {
 								$api.text($api.dom('#nickname'),stu_name);
 						 }else if (stu_img) {

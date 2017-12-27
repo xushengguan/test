@@ -39,22 +39,22 @@
 						<span class="fr">总价:<label>{{v.goods_amount}}学分</label></span>
 					</div>
 					<div class="dispich-con">
-						<div class="purchase-top" @click="goLoglist(v.logistics_company,v.tracking_number)" v-if="v.status">
+						<div class="purchase-top" tapmode @click="goLoglist(v.logistics_company,v.tracking_number)" v-if="v.status">
 							<p class="adds">{{v.status.status}}</p>
 							<p class="time">{{v.status.time}}</p>
 							<i class="iconfont icon-gengduo1 icon-more"></i>
 						</div>
 						<div class="taste-con hide" style="position:relative;">
 
-							<img class="fl square" :src="v.imgurl" alt="" @click="goDetail(v.order_id)">
-							<div class="fl" style="width:45%" @click="goDetail(v.order_id)">
+							<img class="fl square" tapmode :src="v.imgurl" alt="" @click="goDetail(v.order_id)">
+							<div class="fl" style="width:45%" tapmode @click="goDetail(v.order_id)">
 								<h6 class="free single">{{v.goods_name}}</h6>
 								<h6 class="chicken more2">{{v.abs}}</h6>
 								<span class="paper">购买数量:{{v.goods_number}}件</span>
 							</div>
 
 							<!-- 配送中状态添加 -->
-							<span class="fr sure" style="z-index:99" @click="confirmReceipt(v.order_id)">确认收货</span>
+							<span class="fr sure" tapmode @click="confirmReceipt(v.order_id)">确认收货</span>
 						</div>
 					</div>
 		  </div>
@@ -124,7 +124,11 @@
                     $api.css($api.dom('#loading'),'display:none');
 
 								    if (ret) {
-												vm.data = ret;
+											  if (ret.status == '5') {
+														ExitLogin();
+											  }else {
+											  		vm.data = ret;
+											  }
 
 								    } else {
 								        api.toast({
@@ -144,7 +148,8 @@
 										pageParam: {
 												logistics_company: logistics_company,
 												tracking_number:tracking_number
-										}
+										},
+										reload:true
 								});
 						},
 
@@ -154,7 +159,8 @@
 								    url: './6orderDatail_title.html',
 								    pageParam: {
 								        order_id: order_id
-								    }
+								    },
+										reload:true
 								});
 						},
 
@@ -180,8 +186,9 @@
 									}, function(ret, err) {
 										$api.css($api.dom('#loading'), 'display:none');
 										if (ret) {
-
-											if (ret.status == '1') {
+                      if (ret.status == '5') {
+												ExitLogin();
+                      }else if (ret.status == '1') {
 												vm.get_notOrder();
 											}else{
 												api.toast({

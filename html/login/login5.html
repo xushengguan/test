@@ -69,15 +69,14 @@
     <!-- 支教老师 -->
     <div class="content">
         <header>
-            <em onclick="go_back()"></em>
+            <em tapmode onclick="go_back()"></em>
             关联学令牌
-
         </header>
 
         <div class="code"></div>
         <div class="txt">请扫描学令牌包装上的二维码完成绑定</div>
 
-        <button class="next on" onclick="scan()">开始扫码绑定</button>
+        <button class="next on" tapmode onclick="scan()">开始扫码绑定</button>
 
     </div>
   </body>
@@ -136,7 +135,7 @@
                   },
               }
           },function(ret, err){
-            
+
               if (ret) {
 
                   if (ret.status == '1') {
@@ -156,6 +155,8 @@
                           duration: 2000,
                           location: 'middle'
                       });
+                  }else if (ret.status == '5') {
+                      ExitLogin();
                   }else {
                       api.toast({
                           msg: '关联失败',

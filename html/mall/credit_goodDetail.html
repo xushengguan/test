@@ -130,7 +130,7 @@
 
       <div id="wrap" v-cloak>
         <header>
-            <em onclick="go_back()"></em>
+            <em tapmode onclick="go_back()"></em>
             商品详情
         </header>
     		<div id="main">
@@ -191,7 +191,7 @@
     			<div class="fo_left">
     				<span class="lf_txt">单价：<em>{{goodsInfo.total}}学分</em></span>
     			</div>
-    			<div class="btn_pay submit" @click="PlaceOrder()">提交订单</div>
+    			<div class="btn_pay submit" tapmode @click="PlaceOrder()">提交订单</div>
     		</div>
 
     	</div>

@@ -162,12 +162,12 @@
     <div id="app" v-cloak>
         <div class="top">
             <header>
-                <em onclick="go_back()"></em>
+                <em tapmode onclick="go_back()"></em>
             </header>
             <div class="title">
                 <div class="ch_title">创建活动</div>
                 <div class="eg_title">Post Activity</div>
-                <em class="on" onclick="creatAct()"></em>
+                <em class="on" tapmode onclick="creatAct()"></em>
             </div>
         </div>
         <ul class="ActLis">
@@ -180,7 +180,7 @@
             <li>
                 <div class="box box1">
                     <div class="name">学科</div>
-                    <input type="button" id="sub" value="请选择学科" onclick="subject()">
+                    <input type="button" id="sub" value="请选择学科" tapmode onclick="subject()">
                 </div>
             </li>
             <li>
@@ -192,7 +192,7 @@
             <li>
                 <div class="box box3">
                     <div class="name">活动时间</div>
-                    <input type="button" value="点击选择活动时间" id="dateTime" onclick="sel_time()">
+                    <input type="button" value="点击选择活动时间" id="dateTime" tapmode onclick="sel_time()">
                 </div>
             </li>
             <li>
@@ -210,13 +210,13 @@
             <li>
                 <div class="box box6">
                     <div class="name">活动头图</div>
-                    <input type="button" id="img" value="选择活动顶部图片" onclick="selImg()">
+                    <input type="button" id="img" value="选择活动顶部图片" tapmode onclick="selImg()">
                 </div>
             </li>
             <li>
                 <div class="box box7">
                     <div class="name">活动详情</div>
-                    <input type="button" id="ActDetail" value="点击此处添加活动介绍" onclick="EditDetail()">
+                    <input type="button" id="ActDetail" value="点击此处添加活动介绍" tapmode onclick="EditDetail()">
                 </div>
             </li>
         </ul>
@@ -227,7 +227,7 @@
               <div v-if="data.status !== '0'">
                   <div class="title">选择科目</div>
                   <div class="content">
-                    <div class="section" onclick="sel_cls(this)" v-for="v in data">{{v.subject}}</div>
+                    <div class="section" tapmode onclick="sel_cls(this)" v-for="v in data">{{v.subject}}</div>
                   </div>
               </div>
               <div class="section" v-else>暂无学科</div>
@@ -249,7 +249,7 @@
                 <em onclick="closeFlexd(this)"></em>
                 <div class="pic_box" v-if="dataImg.status !== '0'">
                     <div class="img" v-for="v in dataImg">
-                        <span class="sel" onclick="selected(this)"></span>
+                        <span class="sel" tapmode onclick="selected(this)"></span>
                         <img :src="v.imgurl" alt="">
                     </div>
                 </div>

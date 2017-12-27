@@ -286,7 +286,7 @@
 <body>
     <div id="wrap">
         <header>
-            <em onclick="go_back()"></em> 详情
+            <em tapmode onclick="go_back()"></em> 详情
         </header>
         <div id="main" v-cloak>
             <div class="box">
@@ -307,29 +307,29 @@
                     <!-- 一张图片 -->
                     <div class="cell" v-if="data.thumb.length == 1">
                         <div class="item" v-for="item in data.thumb">
-                            <img :src="item.url+'?x-oss-process=image/resize,p_50'" alt="" @click="viewPicture(data.thumb)">
+                            <img :src="item.url+'?x-oss-process=image/resize,p_50'" alt="" tapmode @click="viewPicture(data.thumb)">
                         </div>
                     </div>
 
                     <!-- 九张图片，当为4张图片时加样式名cell4 -->
                     <div class="cell9 cell4" v-else-if="data.thumb.length == 4">
                         <div class="item" v-for="(item,index) in data.thumb">
-                            <img :src="item.url+'?x-oss-process=image/resize,p_50'" alt="" @click="viewPicture(index,data.thumb)">
+                            <img :src="item.url+'?x-oss-process=image/resize,p_50'" alt="" tapmode @click="viewPicture(index,data.thumb)">
                         </div>
                     </div>
 
                     <!-- 九张图片，当为4张图片时加样式名cell4 -->
                     <div class="cell9" v-else>
                         <div class="item" v-for="(item,index) in data.thumb">
-                            <img :src="item.url+'?x-oss-process=image/resize,p_50'" alt="" @click="viewPicture(index,data.thumb)">
+                            <img :src="item.url+'?x-oss-process=image/resize,p_50'" alt="" tapmode @click="viewPicture(index,data.thumb)">
                         </div>
                     </div>
                 </div>
 
                 <div class="nav">
-                    <div class="share" @click="Share(data.content,data.id)"></div>
-                    <div class="love" :class="{on:data.is_like == '1'}" @click="givePoint()">{{data.like}}</div>
-                    <div class="comment" @click="comment()">{{data.rew}}</div>
+                    <div class="share" tapmode @click="Share(data.content,data.id)"></div>
+                    <div class="love" :class="{on:data.is_like == '1'}" tapmode @click="givePoint()">{{data.like}}</div>
+                    <div class="comment" tapmode @click="comment()">{{data.rew}}</div>
                 </div>
 
                 <div class="reply" v-if="data.like_member || data.rewlist">
@@ -339,18 +339,18 @@
                     </div>
                     <ul class="reply_box" v-if="data.rewlist">
                         <li v-for="v in data.rewlist">
-                            <div @click="Reply(v.replier.id,v.replier.nickname,v.rew_id)" v-if="v.replier">
+                            <div tapmode @click="Reply(v.replier.id,v.replier.nickname,v.rew_id)" v-if="v.replier">
                                 <div class="lf">
                                     <span class="name">{{v.replier.nickname}}</span> 回复
                                     <span class="name">{{v.nickname}}:</span>
                                 </div>
-                                <div class="lf" style="max-width:70%;">{{v.content}}</div>
+                                <div class="lf">{{v.content}}</div>
                             </div>
-                            <div @click="Reply(v.uid,v.nickname,v.rew_id)" v-else>
+                            <div tapmode @click="Reply(v.uid,v.nickname,v.rew_id)" v-else>
                                 <div class="lf">
                                     <span class="name">{{v.nickname}}:</span>
                                 </div>
-                                <div class="lf" style="max-width:70%;">{{v.content}}</div>
+                                <div class="lf">{{v.content}}</div>
                             </div>
 
                         </li>
@@ -676,12 +676,17 @@
        },function(ret, err){
 
            if (ret) {
-               vm.data.rewlist = ret.data;
-               $api.val($api.byId('reply_txt'),'');
-               $api.attr($api.dom('.footer button'), 'disabled', 'true');
-               $api.removeCls($api.dom('.footer button'), 'on');
-               $api.attr($api.dom('#reply_txt'), 'placeholder', '');
-               $api.css($api.dom('footer'), 'display:none');
+               if (ret.status == '5') {
+                   ExitLogin();
+               }else {
+                   vm.data.rewlist = ret.data;
+                   $api.val($api.byId('reply_txt'),'');
+                   $api.attr($api.dom('.footer button'), 'disabled', 'true');
+                   $api.removeCls($api.dom('.footer button'), 'on');
+                   $api.attr($api.dom('#reply_txt'), 'placeholder', '');
+                   $api.css($api.dom('footer'), 'display:none');
+               }
+
            } else {
                api.toast({
                    msg: '网络错误',
@@ -717,9 +722,13 @@
            },function(ret, err){
 
                if (ret) {
-                    $api.css($api.dom('.del'),'display:none');
-                    vm.data.rewlist = ret.data;
-                    vm.data.rew = ret.count;
+                   if (ret.status == '5') {
+                       ExitLogin();
+                   }else {
+                      $api.css($api.dom('.del'),'display:none');
+                      vm.data.rewlist = ret.data;
+                      vm.data.rew = ret.count;
+                  }
                } else {
 
                    api.toast({

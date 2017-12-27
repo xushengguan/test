@@ -328,9 +328,6 @@
                         w: api.winWidth,
                         h: api.frameHeight - $api.dom('header').offsetHeight - 50
                     },
-                    pageParam: {
-                        name: 'test'
-                    },
                     bounces: true,
                     reload:true,
                     bgColor: 'rgba(0,0,0,0)',
@@ -356,9 +353,6 @@
                         w: api.winWidth,
                         h: api.frameHeight - $api.dom('header').offsetHeight - 50
                     },
-                    pageParam: {
-                        name: 'test'
-                    },
                     bounces: true,
                     bgColor: 'rgba(0,0,0,0)',
                     vScrollBarEnabled: true,
@@ -378,9 +372,6 @@
                         y: 0,
                         w: api.winWidth,
                         h: api.frameHeight - 50
-                    },
-                    pageParam: {
-                        name: 'test'
                     },
                     bounces: true,
                     bgColor: 'rgba(0,0,0,0)',
@@ -430,9 +421,6 @@
         api.openWin({
             name: 'circlePublish',
             url: './html/circle/circlePublish.html',
-            pageParam: {
-
-            },
             reload:true
         });
 
@@ -460,9 +448,7 @@
         api.openWin({
             name: 'circleNews',
             url: './html/circle/circleNews.html',
-            pageParam: {
-
-            }
+            reload:true
         });
     }
 
@@ -612,7 +598,9 @@
         },function(ret, err){
 
             if (ret) {
-                if (ret.status == '0') {
+                if (ret.status == '5') {
+                    ExitLogin();
+                }else if (ret.status == '0') {
                     api.toast({
                         msg: '抱歉，没有手环信息',
                         duration: 2000,
@@ -651,7 +639,8 @@
               },
           }
       },function(ret, err){
-
+          console.log(JSON.stringify(ret));
+          console.log(JSON.stringify(err));
           if (ret) {
               if (ret.status == '1') {
                   api.toast({
@@ -685,6 +674,8 @@
                     location: 'middle'
                 });
 
+              }else if (ret.status == '5') {
+                  ExitLogin();
               }else{
                   api.toast({
                       msg: '领取失败',
@@ -710,13 +701,13 @@
     // 搜索
     function goSearch(e){
         var text = $api.val($api.prev(e));
-
         api.openWin({
             name: 'search',
             url: './html/setting/search.html',
             pageParam: {
                 text: text
-            }
+            },
+            reload:true
         });
 
     }

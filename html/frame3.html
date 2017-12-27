@@ -46,26 +46,26 @@
 <body>
     <header class="top_bg">
         <div class="pic">
-            <img src="../image/pic3.png" alt="" id="img" onclick="viewPicture()">
+            <img src="../image/pic3.png" alt="" id="img" tapmode onclick="viewPicture()">
             <em></em>
         </div>
         <div class="msg">
             <p class="name"></p>
             <p class="id"></p>
         </div>
-        <span class="switch" onclick="exitLogin()"></span>
+        <span class="switch" tapmode onclick="exitLogin()"></span>
     </header>
     <ul class="nav">
-        <li class="nav1" onclick="MyCircle()">我的动态</li>
-        <li class="nav2" onclick="BillDetail()">账单明细</li>
-        <li class="nav3" onclick="MyOrder()">我的订单</li>
+        <li class="nav1" tapmode onclick="MyCircle()">我的动态</li>
+        <li class="nav2" tapmode onclick="BillDetail()">账单明细</li>
+        <li class="nav3" tapmode onclick="MyOrder()">我的订单</li>
     </ul>
 
     <ul class="navMenu" id="app">
         <!-- <li>成长记录<em></em></li> -->
-        <li onclick="Address()">收货地址<em></em></li>
-        <li onclick="Rating()">信用评级<em id="star"></em></li>
-        <li onclick="goBindCard()">绑定银行卡<em class="isBind"></em></li>
+        <li tapmode onclick="Address()">收货地址<em></em></li>
+        <li tapmode onclick="Rating()">信用评级<em id="star"></em></li>
+        <li tapmode onclick="goBindCard()">绑定银行卡<em class="isBind"></em></li>
         <li>规则与帮助<em></em></li>
     </ul>
 
@@ -119,8 +119,9 @@ apiready = function(){
                 },
             }
         },function(ret, err){
-
-            if (ret.status == '1') {
+            if (ret.status == '5') {
+              ExitLogin();
+            }else if (ret.status == '1') {
               if (!ret.data.headimgurl) {
                   $api.attr($api.dom('#img'), 'src', '../image/pic3.png');
               }else {
@@ -157,14 +158,18 @@ apiready = function(){
                 },
             }
         },function(ret, err){
-
-            if (ret.data) {
-                $api.text($api.dom('.isBind'), '已绑定');
-                index = 1;
-            }else{
-                index = 2;
-                $api.text($api.dom('.isBind'), '未绑定');
+            if (ret.status == '5') {
+              ExitLogin();
+            }else {
+              if (ret.data) {
+                  $api.text($api.dom('.isBind'), '已绑定');
+                  index = 1;
+              }else{
+                  index = 2;
+                  $api.text($api.dom('.isBind'), '未绑定');
+              }
             }
+
         });
 
     }
@@ -184,7 +189,11 @@ apiready = function(){
         }
     },function(ret, err){
           if (ret) {
-              $api.html($api.byId('star'), ret.credit+'星');
+              if (ret.status == '5') {
+                  ExitLogin();
+              }else {
+                  $api.html($api.byId('star'), ret.credit+'星');
+              }
           }
     });
   };
@@ -281,14 +290,10 @@ function exitLogin() {
                },
            }
        },function(ret, err){
+           
            if (ret) {
                if (ret.status == '1') {
-                   $api.clearStorage();//清除localStorage的所有数据，慎用
-                   setTimeout(function(){
-										 api.closeToWin({
-	                       name: 'root'
-	                   });
-									 },500);
+                   ExitLogin();
                }
            } else {
                api.toast({

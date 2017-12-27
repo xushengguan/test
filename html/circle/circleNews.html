@@ -31,13 +31,13 @@
   <body>
     <div id="wrap">
         <header>
-            <em onclick="go_back()"></em>
+            <em tapmode onclick="go_back()"></em>
             消息
-            <span onclick="clearNews()">清空</span>
+            <span tapmode onclick="clearNews()">清空</span>
         </header>
         <div id="main" v-cloak>
             <ul class="newsLis" v-if="like || rew">
-                <li v-for="v in like" v-if="like" @click="goDetail(v.id)">
+                <li tapmode v-for="v in like" v-if="like" @click="goDetail(v.id)">
                     <img class="img" :src="v.headimgurl" alt="" v-if="v.headimgurl">
                     <img class="img" src="../../image/pic3.png" alt="" v-else>
                     <div class="txt">
@@ -49,7 +49,7 @@
                         <p class="love" v-if="v.status == 1"></p>
                     </div>
                 </li>
-                <li v-for="vv in rew" v-if="rew" @click="goDetail(vv.id)">
+                <li tapmode v-for="vv in rew" v-if="rew" @click="goDetail(vv.id)">
                     <img class="img" :src="vv.headimgurl" alt="" v-if="vv.headimgurl">
                     <img class="img" src="../../image/pic3.png" alt="" v-else>
                     <div class="txt">
@@ -118,9 +118,13 @@
                       $api.css($api.byId('loading'), 'display:none');
 
                       if (ret) {
+                          if (ret.status == '5') {
+                            ExitLogin();
+                          }else {
+                            vm.rew = ret.rew;
+                            vm.like = ret.like;
+                          }
 
-                          vm.rew = ret.rew;
-                          vm.like = ret.like;
 
                       } else {
 
@@ -171,10 +175,11 @@
               }
           },function(ret, err){
               $api.css($api.byId('loading'), 'display:none');
-            
-              if (ret) {
 
-                  if (ret.status == '1') {
+              if (ret) {
+                  if (ret.status == '5') {
+                      ExitLogin();
+                  }else if (ret.status == '1') {
                       vm.getReplyUser();
                   }else {
                       api.toast({

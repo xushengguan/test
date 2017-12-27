@@ -36,7 +36,7 @@
   <body>
       <div class="content">
           <header>
-              <em onclick="go_back()"></em>
+              <em tapmode onclick="go_back()"></em>
               找回密码
           </header>
 
@@ -45,16 +45,16 @@
           </div>
           <div class="line">
               <input class="code" type="number" placeholder="请输入验证码" oninput="checkValue()" onpropertychange="checkValue()">
-              <input type="button" class="lf_name" value="获取验证码" onclick="getCode(this)">
+              <input type="button" class="lf_name" value="获取验证码" tapmode onclick="getCode(this)">
           </div>
           <div class="line">
               <input class="tel" id="password1" type="password" placeholder="请输入密码" oninput="checkValue()" onpropertychange="checkValue()">
           </div>
           <div class="line">
               <input class="tel" id="password2" type="password" placeholder="请确认密码" oninput="checkValue()" onpropertychange="checkValue()">
-              <em class="on" onclick="change(this)"></em>
+              <em class="on" tapmode onclick="change(this)"></em>
           </div>
-          <button class="next" disabled="disabled" onclick="checkRole()">确定</button>
+          <button class="next" disabled="disabled" tapmode onclick="checkRole()">确定</button>
 
       </div>
 
@@ -164,7 +164,7 @@
 
                   }else {
                       var index = ret[0].role;
-                    
+
                       ChangePwd(index,tel,code,password1,password2);
                   }
               } else {

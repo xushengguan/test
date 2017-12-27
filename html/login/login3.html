@@ -41,7 +41,7 @@
   <body>
       <div class="content">
           <header>
-              <em onclick="go_back()"></em>
+              <em tapmode onclick="go_back()"></em>
               注册账户
           </header>
 
@@ -57,10 +57,10 @@
           </div>
           <div class="line">
               <input class="password password2" type="password" placeholder="请确认密码" oninput="checkValue()" onpropertychange="checkValue()">
-              <em class="eye on" onclick="change(this)"></em>
+              <em class="eye on" tapmode onclick="change(this)"></em>
           </div>
 
-          <button class="next" disabled="disabled" onclick="register()">注册</button>
+          <button class="next" disabled="disabled" tapmode onclick="register()">注册</button>
 
       </div>
       <!-- 老师加class on,学生家长则去掉 -->
@@ -204,6 +204,8 @@
                       duration: 2000,
                       location: 'middle'
                   });
+                }else if (ret.status == '5') {
+                   ExitLogin();
                 }else {
                   api.toast({
                       msg: '注册失败',
@@ -285,6 +287,8 @@
                           duration: 2000,
                           location: 'middle'
                       });
+                   }else if (ret.status == '5') {
+                      ExitLogin();
                    }else{
                      api.toast({
                          msg: '账号未注册',

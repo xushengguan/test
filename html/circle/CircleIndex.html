@@ -40,14 +40,14 @@
 	<div class="homePage" id="wrap" v-cloak>
 		<header>
 			<div class="header">
-				<em onclick="go_back()"></em> 我的学客圈
+				<em tapmode onclick="go_back()"></em> 我的学客圈
 			</div>
 		</header>
 
 		<div id="main">
 				<div class="header-msg">
 					<div class="msg-con hide">
-						<img class="fl msg-pic" :src="data.headimgurl+'?x-oss-process=image/resize,p_50'" alt="" v-if="data.headimgurl" @click="viewPicture(data.headimgurl)">
+						<img class="fl msg-pic" tapmode :src="data.headimgurl+'?x-oss-process=image/resize,p_50'" alt="" v-if="data.headimgurl" @click="viewPicture(data.headimgurl)">
 						<img class="fl msg-pic" src="../../image/pic.png" alt="" v-else>
 						<p class="fl msg-name">
 							<span class="rank">{{data.nickname}}</span>
@@ -63,8 +63,8 @@
 			</div>
 			<div class="publish-contents" v-if="!data.list">暂无动态，快去分享自己的心情吧！</div>
 			<div class="publish-contents" v-for="v in data.list" v-else>
-				<h6>{{v.last_reply_at | formatDate}}<span @click="DelCircle(v.id)" v-if="oneself == 1">删除</span></h6>
-				<div @click="goDatail(v.id)">
+				<h6>{{v.last_reply_at | formatDate}}<span tapmode @click="DelCircle(v.id)" v-if="oneself == 1">删除</span></h6>
+				<div tapmode @click="goDatail(v.id)">
 						<p class="more2" v-if="v.content">{{v.content}}</p>
 						<ul class="publish-ul hide" v-if="v.thumb != ''">
 							<li v-for="item in v.thumb">
@@ -127,14 +127,18 @@
 										$api.css($api.byId('loading'), 'display:none');
 
 								    if (ret) {
-
-												vm.data = ret;
-												var uid = $api.getStorage('id');
-
-                        if (uid == api.pageParam.id) {
-														vm.oneself = 1;
+                        if (ret.status == '5') {
+														ExitLogin();
                         }else {
-                        		vm.oneself = 0;
+														vm.data = ret;
+														var uid = $api.getStorage('id');
+
+														if (uid == api.pageParam.id) {
+																vm.oneself = 1;
+														}else {
+																vm.oneself = 0;
+														}
+
                         }
 
 								    } else {
@@ -162,7 +166,9 @@
 								},function(ret, err){
 
 								    if (ret) {
-												if (ret.status == '1') {
+											  if (ret.status == '5') {
+														ExitLogin();
+											  }else if (ret.status == '1') {
 														vm.getMyCircle();
 												}
 								    } else {

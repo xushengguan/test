@@ -106,15 +106,15 @@
                   $api.css($api.byId('loading'),'display:none');
 
                   if (ret) {
-                      $api.css($api.byId('app'),'display:block');
-                      if(ret.status == '0'){
+                      if (ret.status == '5') {
+                          ExitLogin();
+                      }else if(ret.status == '0'){
                           vm.status = ret.status;
                       }else{
-
-                        vm.Info = ret.data;
-                        vm.count = ret.count;
+                          vm.Info = ret.data;
+                          vm.count = ret.count;
                       }
-
+                      $api.css($api.byId('app'),'display:block');
                   } else {
 
                       api.toast({

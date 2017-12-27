@@ -71,10 +71,12 @@
                       }
                   },function(ret, err){
                       if (ret) {
-                          
+                          if (ret.status == '5') {
+                              ExitLogin();
+                          }
                           vm.data = ret;
                       } else {
-                          
+
                           api.toast({
                               msg: '网络错误',
                               duration: 2000,

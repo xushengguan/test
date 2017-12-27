@@ -76,7 +76,7 @@
 	<!-- 兑换成功 -->
 
 		<header>
-				<em onclick="go_back()"></em>
+				<em tapmode onclick="go_back()"></em>
 				兑换成功
 		</header>
 		<div class="convert-con">
@@ -85,8 +85,8 @@
 			<h6></h6>
 			<p class="times"></p>
 			<p class="check-btns">
-				<button onclick="viewsGoods()">查看商品</button>
-				<button onclick="go_index()">返回首页</button>
+				<button tapmode onclick="viewsGoods()">查看商品</button>
+				<button tapmode onclick="go_index()">返回首页</button>
 			</p>
 		</div>
 
@@ -114,9 +114,7 @@
 			api.openWin({
 					name: 'order_title',
 					url: './order_title.html',
-					pageParam: {
-							name: 'test'
-					}
+					reload:true
 			});
 		}
 

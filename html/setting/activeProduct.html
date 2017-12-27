@@ -52,7 +52,7 @@
                     <span style="color:#ffb300;" v-if="v.status == '0'">处理中</span>
                     <span style="color:#006400;" v-else-if="v.status == '1'">同意退款</span>
                     <span style="color:#B22222;" v-else-if="v.status == '2'">不允许退款</span>
-                    <span @click="applyReturn(v.key)" v-else>申请退款>></span>
+                    <span tapmode @click="applyReturn(v.key)" v-else>申请退款>></span>
                 </div>
             </li>
           </ul>
@@ -101,9 +101,7 @@
       },
       methods:{
           actProduct(){//激活产品列表
-
               $api.css($api.byId('loading'),'display:block');
-
               api.ajax({
                   url: serverurl,
                   method: 'get',
@@ -119,11 +117,11 @@
                   $api.css($api.byId('loading'),'display:none');
 
                   if (ret) {
-
-                      if(ret.status == '0'){
+                      if (ret.status == '5') {
+                          ExitLogin();
+                      }else if(ret.status == '0'){
                           vm.status = ret.status;
                       }else{
-
                         vm.Info = ret.data;//status0:处理中 1:同意退款 2:不允许退款    为空时申请退款
                         vm.count = ret.count;
                       }
@@ -146,11 +144,11 @@
                   url: '../MyBank/applyReturn.html',
                   pageParam: {
                       key: key
-                  }
+                  },
+                  reload:true
               });
-
-          }
-
+          },
+          
       }
   })
   </script>

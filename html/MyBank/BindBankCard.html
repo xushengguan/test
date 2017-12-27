@@ -51,7 +51,7 @@
   <body>
       <div id="wrap">
         <header>
-            <em onclick="go_back()"></em> 绑定银行卡
+            <em tapmode onclick="go_back()"></em> 绑定银行卡
         </header>
         <div id="main">
             <div class="Btop">
@@ -60,7 +60,7 @@
                     卡号
                     <div class="entry">
                         <input type="text" name="" value="" id="cardNum" oninput="checkValue()" onpropertychange="checkValue()">
-                        <em onclick="clearCard()"></em>
+                        <em tapmode onclick="clearCard()"></em>
                     </div>
                 </div>
                 <div class="prompt">此卡会作为默认收款银行卡</div>
@@ -78,7 +78,7 @@
                   </li>
                 </ul>
             </div>
-            <button class="confirm" disabled="disabled" onclick="BindCard()">完成绑定</button>
+            <button class="confirm" disabled="disabled" tapmode onclick="BindCard()">完成绑定</button>
         </div>
       </div>
   </body>
@@ -110,13 +110,18 @@
                 $api.css($api.byId('loading'), 'display:none');
 
                   if (ret) {
-                      $api.css($api.byId('main'), 'display:block');
-                      if (!ret.status) {
-                          $api.text($api.byId('name'), ret.name);
-                          $api.text($api.byId('IdCard'), ret.id_card);
+                      if (ret.status == '5') {
+                          ExitLogin();
                       }else {
-                          $api.css($api.dom('.Info'), 'display:none');
+                          $api.css($api.byId('main'), 'display:block');
+                          if (!ret.status) {
+                              $api.text($api.byId('name'), ret.name);
+                              $api.text($api.byId('IdCard'), ret.id_card);
+                          }else {
+                              $api.css($api.dom('.Info'), 'display:none');
+                          }
                       }
+
                   } else {
 
                       api.toast({
@@ -167,8 +172,9 @@
                 $api.css($api.byId('loading'), 'display:none');
               
                 if (ret) {
-
-                    if (ret.status == '1') {
+                    if (ret.status == '5') {
+                        ExitLogin();
+                    }else if (ret.status == '1') {
 
                         api.toast({
                             msg: '绑定成功',

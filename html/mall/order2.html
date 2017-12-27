@@ -40,7 +40,7 @@
 						</span>
 						<span class="fr">总价:<label>{{v.goods_amount}}学分</label></span>
 					</div>
-					<div class="dispich-con" @click="goDetail(v.order_id)">
+					<div class="dispich-con" tapmode @click="goDetail(v.order_id)">
 
 						<div class="taste-con hide" style="position:relative;">
 
@@ -105,7 +105,11 @@
 								},function(ret, err){
 									  $api.css($api.dom('#loading'),'display:none');
 								    if (ret) {
-												vm.data = ret;
+											  if (ret.status == '5') {
+														ExitLogin();
+											  }else {
+											  		vm.data = ret;
+											  }
 								    } else {
 								        api.toast({
 								            msg: '网络错误',
@@ -124,7 +128,8 @@
 										pageParam: {
 												logistics_company: logistics_company,
 												tracking_number:tracking_number
-										}
+										},
+										reload:true
 								});
 						},
 
@@ -134,7 +139,8 @@
 								    url: './6orderDatail_title.html',
 								    pageParam: {
 								        order_id: order_id
-								    }
+								    },
+										reload:true
 								});
 						}
 

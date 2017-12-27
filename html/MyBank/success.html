@@ -33,12 +33,12 @@
   <body>
       <div id="wrap">
         <header>
-            <em onclick="go_back()"></em> 提现成功
+            <em tapmode onclick="go_back()"></em> 提现成功
         </header>
         <div id="main">
             <div class="icon"></div>
             <div class="prompt">已提现<em>50</em>元，预计本月10日到账</div>
-            <button class="confirm" onclick="goIndex()">返回首页</button>
+            <button class="confirm" tapmode onclick="goIndex()">返回首页</button>
         </div>
       </div>
   </body>
@@ -57,14 +57,11 @@
 
       // 返回首页
       function goIndex(){
-
-
           var role = $api.getStorage('role');
           var NVTabBar = api.require('NVTabBar');
           NVTabBar.close();
 
           if (role == '2') {
-
               api.openWin({
                   name: 'index',
                   url: '../../index.html',
