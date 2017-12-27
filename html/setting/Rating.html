@@ -17,9 +17,12 @@
           .msg{font-size: 18px; color: #333; text-align: center; margin-top: 23px;}
           .msg em{font-size: 20px; color: #ffb300; margin-left: 2px;}
 
-          .explain{padding: 29px 15px; background-color: #fff; min-height: calc(100% - 228px);
-            background: url(../../image/txt.png) no-repeat top center; background-size: contain;}
-          #app{height: 100%; overflow: auto;}
+          .explain{min-height: calc(100% - 349px); padding: 0 15px; background: #fff; font-size: 15px; color: #212121;}
+          .explain .title{padding-top: 29px; padding-bottom: 25px;}
+          .title .titleName{color: #ccc; padding-bottom: 6px;}
+          .title .txt{color: #999; font-size: 13px;}
+          .starLis li{padding-bottom: 25px;}
+          .starLis li .gradeName{color: #ffb300; padding-bottom: 6px;}
       </style>
   </head>
   <body>
@@ -35,7 +38,34 @@
                 </div>
             </div>
         </div>
-        <div class="explain"></div>
+        <div class="explain">
+            <div class="title">
+                <p class="titleName">星级说明</p>
+                <p class="txt">出现作弊或虚假数据事件后，会扣除相应星级。</p>
+            </div>
+            <ul class="starLis">
+                <li>
+                    <p class="gradeName">5星</p>
+                    <p>您的信用优秀，不受任何限制。</p>
+                </li>
+                <li>
+                    <p class="gradeName">4星</p>
+                    <p>支教老师没收保证金学员限制参加大型赛事。</p>
+                </li>
+                <li>
+                    <p class="gradeName">3星</p>
+                    <p>支教老师取消资格，未结算的学分及未提的	现金全部罚没，拒绝提现。限制学员的家长晋级，取消家长申请合作伙伴的资格。</p>
+                </li>
+                <li>
+                    <p class="gradeName">2星</p>
+                    <p>限制学分兑换功能。</p>
+                </li>
+                <li>
+                    <p class="gradeName">1星</p>
+                    <p>冻结账户。</p>
+                </li>
+            </ul>
+        </div>
       </div>
   </body>
   <script type="text/javascript" src="../../script/api.js"></script>
@@ -58,7 +88,7 @@
               num:''
           },
           methods:{
-              getRating(){//查看用户账单
+              getRating(){//查看用户等级
                   $api.css($api.byId('loading'),'display:block');
                   $api.css($api.byId('app'),'display:none');
                   api.ajax({
