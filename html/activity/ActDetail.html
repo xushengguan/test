@@ -66,7 +66,7 @@
 			.content{background: #fff; padding: 15px 15px 65px 15px; font-size: 16px; color: #999; line-height: 20px;}
 
 			.ActStaus{height: 40px; line-height: 40px; font-size: 15px; color: #fff; padding-left: 18px; background: #ffb300;
-			position: relative; margin-bottom: 20px;}
+			position: relative; margin-top: 10px;}
 			.ActStaus.on{background: #09bb07;}
 			.ActStaus em{width: 50px; height: 40px; background: url(../../image/more.png) center no-repeat; background-size: 14px;
 			position: absolute; top: 0; right: 0; display: block;}
@@ -102,7 +102,7 @@
 <body>
 	  <div id="wrap" v-cloak>
 				<header>
-						<em onclick="go_back()"></em> 活动详情
+						<em tapmode onclick="go_back()"></em> 活动详情
 				</header>
 			  <div id="main">
 					<div class="swiper" v-if="data.actimgurl">
@@ -121,24 +121,19 @@
 
 							<div class="SignUp">
 								  <!-- 加class on 进行中为状态，on1则为已结束状态,否则为等待开始状态-->
-									<button onclick="changeState(1)" v-show="data.actsta == 2 && role == '2'">开始活动</button>
-									<button onclick="changeState(0)" class="on" v-show="data.actsta == 1 && role == '2'">结束活动</button>
+									<button tapmode onclick="changeState(1)" v-show="data.actsta == 2 && role == '2'">开始活动</button>
+									<button tapmode onclick="changeState(0)" class="on" v-show="data.actsta == 1 && role == '2'">结束活动</button>
 									<button class="on1" v-show="data.actsta == 0">已结束</button>
-									<button onclick="joinAct()" v-show="status == '0' && data.actsta == 2 ">报名参加</button>
+									<button tapmode onclick="joinAct()" v-show="status == '0' && data.actsta == 2 ">报名参加</button>
 									<button class="on" v-show="status == '1' && role == '1' && data.actsta != 0">已报名</button>
 									<!-- <div class="places">剩余名额:20人</div> -->
 							</div>
 
 							<!-- 活动状态 -->
-							<div class="ActStaus" v-if="data.actsta == 1 || data.actsta == 0 && role == '2'">
+							<div class="ActStaus" tapmode v-if="data.actsta == 1 || data.actsta == 0 && role == '2'" @click="goMarkPage(data.id)">
 								查看打分记录
 								<em></em>
 							</div>
-
-							<!-- <div class="ActStaus on">
-								进入管理员房间
-								<em></em>
-							</div> -->
 
 							<!-- Swiper -->
 						  <div class="swiper-container" v-if="!rank.status">
@@ -277,8 +272,7 @@
 								},function(ret, err){
 									  $api.css($api.byId('loading'), 'display:none');
                     $api.css($api.byId('main'), 'display:block');
-                    console.log(JSON.stringify(ret));
-										console.log(JSON.stringify(err));
+
 								    if (ret) {
 
 												vm.data = ret;
@@ -372,6 +366,18 @@
 										imageUrls: url
 								});
             },
+
+						goMarkPage(actid){
+								api.openWin({
+								    name: 'markPage_title',
+								    url: './markPage_title.html',
+								    pageParam: {
+								        actid: actid
+								    },
+										reload:true
+								});
+
+						}
 
 				},
 

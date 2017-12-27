@@ -110,7 +110,7 @@ function SendCode(obj, tel, wait) {
             },
         }
     }, function(ret, err) {
-      
+
         switch (ret.status) {
             case '1':
                 api.toast({
@@ -165,7 +165,6 @@ function toPercent(point){
 }
 
 
-
 //解决键盘弹出底部导航被顶上来的bug
 function focus_footer(){
 
@@ -185,4 +184,14 @@ function LimitNumber(txt,idName) {
     str = str.substr(0,20) + '...' ;
     var id=document.getElementById(idName);
     id.innerText=str;
+}
+
+// 退出登录
+function ExitLogin(){
+  $api.clearStorage();//清除localStorage的所有数据，慎用
+  setTimeout(function(){
+    api.closeToWin({
+        name: 'root'
+    });
+  },500);
 }

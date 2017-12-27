@@ -40,8 +40,7 @@
 							<label v-else-if="v.shipping_status == '5'">退货处理中</label>
 							<label v-else-if="v.shipping_status == '6'">退货完成</label>
 				</span>
-        <span class="fr" v-if="role == '2'">总价:<label>¥{{v.goods_amount}}</label></span>
-				<span class="fr" v-else>总价:<label>{{v.goods_amount}}学分</label></span>
+        <span class="fr">总价:<label>{{v.goods_amount}}学分</label></span>
 			</div>
 			<div class="dispich-con">
 				<div class="purchase-top" @click="goLoglist(v.logistics_company,v.tracking_number)" v-if="v.shipping_status == '1' && v.status">
@@ -60,6 +59,8 @@
 
 					<!-- 配送中状态添加 -->
 					<span class="fr sure" style="z-index:99" v-if="v.shipping_status == '1'" @click="confirmReceipt(v.order_id)">确认收货</span>
+					<!-- pay_status 支付状态;0未付款;1付款中;2已付款 -->
+					<span class="fr sure" style="z-index:99" v-if="v.pay_status == '0'" @click="get_weiChat(v)">付款</span>
 				</div>
 			</div>
 		</div>
@@ -109,7 +110,6 @@
 		el: '#app',
 		data: {
 			data: [],
-			role:''
 		},
 		methods: {
 			get_orderLis() { //查看订单
@@ -127,8 +127,7 @@
 					}
 				}, function(ret, err) {
 					$api.css($api.dom('#loading'), 'display:none');
-					vm.role = $api.getStorage('role');
-        
+
 					if (ret) {
 						vm.data = ret;
 
@@ -217,9 +216,115 @@
 						});
 					};
 				});
+			},
+
+			// 获取微信签名
+			get_weiChat(content){
+					var order_total = content.goods_amount * 0.2;
+					api.ajax({
+							url: serverurl,
+							method: 'post',
+							data: {
+									values: {
+											type: '10029',
+											token:token,
+											uid:id,
+											goods_name:content.goods_name,
+											order_total:order_total,
+											order_sn:content.order_sn
+									},
+							}
+					},function(ret, err){
+              console.log(JSON.stringify(ret));
+							console.log(JSON.stringify(err));
+							if (ret) {
+
+									goPay(ret,content.order_sn);
+							} else {
+
+									api.toast({
+											msg: '网络错误',
+											duration: 2000,
+											location: 'bottom'
+									});
+
+							}
+					});
+
 			}
+
 
 
 		}
 	})
+
+
+	// 微信支付
+	function goPay(content,order_sn){
+			var wxPay = api.require('wxPay');
+			wxPay.payOrder({
+				apiKey: content.appid,//从微信开放平台获取的 appid
+				orderId: content.prepayid,//获取的订单号 （prepay_id）
+				mchId: content.partnerid,//商家和微信合作的 id 号，审核通过后微信服务器会发送到商家邮箱
+				nonceStr: content.noncestr,//随机字符串，防重发
+				timeStamp: content.timestamp,//时间戳，防重发
+				sign: content.sign//商家根据微信开放平台文档对数据做的签名
+			}, function(ret, err) {
+
+				if (ret.status) {
+					//支付成功
+					getweiPay(order_sn);
+
+				} else {
+						console.log(err.code);
+				}
+
+			});
+	}
+
+	// 微信支付成功更新订单
+	function getweiPay(order_sn){
+
+		api.ajax({
+				url: serverurl,
+				method: 'post',
+				data: {
+						values: {
+								type: '10190',
+								token:token,
+								order_sn:order_sn
+						},
+				}
+		},function(ret, err){
+				if (ret) {
+
+						if (ret.status == '1') {
+							api.openWin({
+									name: 'success',
+									url: './success.html',
+									pageParam: {
+											time: add_time,
+											goods_name:vm.goods_name
+									}
+							});
+						}else {
+								api.toast({
+								    msg: '兑换失败',
+								    duration: 2000,
+								    location: 'middle'
+								});
+
+						}
+
+				} else {
+
+						api.toast({
+						    msg: '网络错误',
+						    duration: 2000,
+						    location: 'bottom'
+						});
+
+				}
+		});
+	}
 </script>

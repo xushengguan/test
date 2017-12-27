@@ -86,7 +86,6 @@
 
           api.addEventListener({name:'appintent'}, function(ret,err) {
   
-              alert(ret.appParam.ajpush.content);
               if (ret.appParam.ajpush.content.indexOf("重新登陆") > 0) {
                   $api.clearStorage();//清除localStorage的所有数据，慎用
 

@@ -7,16 +7,53 @@
       <title>分数记录</title>
       <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
       <style>
+          header {
+              height: 50px;
+              line-height: 50px;
+              background: #ffb300;
+              color: #fff;
+              font-size: 18px;
+              position: relative;
+          }
 
+          header em {
+              width: 50px;
+              height: 50px;
+              background: url(../../image/back.png) no-repeat center;
+              background-size: 20px;
+              float: left;
+          }
       </style>
   </head>
   <body>
-
+    <header>
+        <em onclick="go_back()"></em>
+        分数记录
+    </header>
   </body>
   <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/my.js"></script>
   <script type="text/javascript">
+      var header = $api.dom('header');
+      fixStatusBar_API(header);
       apiready = function(){
-          
+          api.openFrame({
+              name: 'markPage',
+              url: './markPage.html',
+              rect: {
+                  x: 0,
+                  y: $api.dom('header').offsetHeight,
+                  w: api.winWidth,
+                  h: 'auto'
+              },
+              pageParam: {
+                  actid: api.pageParam.actid
+              },
+              bounces: true,
+              bgColor: 'rgba(0,0,0,0)',
+              vScrollBarEnabled: true,
+              hScrollBarEnabled: true
+          });
       };
   </script>
   </html>

@@ -59,8 +59,7 @@
 				<span class="num-adds fl">{{data.address}}</span>
 			</p>
 			<p>收货人:<span style="width: 80%;">{{data.consignee}}&nbsp;{{data.tel}}</span></p>
-			<p v-if="role == '2'">商品金额:<span>¥{{data.goods_amount}}</span></p>
-			<p v-else>商品金额:<span>{{data.goods_amount}}学分</span></p>
+			<p>商品金额:<span>{{data.goods_amount}}学分</span></p>
 			<p>配送方式:<span>{{data.logistics_company}}(免邮)</span></p>
 		</div>
 		<div class="taste-con hide" @click="buyAgain(data.id)">
@@ -69,8 +68,7 @@
 			<p class="fl">
 				<h6 class="free single">{{data.goods_name}}</h6>
 				<h6 class="chicken more2">{{data.abs}}</h6>
-				<span class="credit" v-if="role == '2'">¥{{data.total * 0.25}}</span>
-				<span class="credit" v-else>{{data.total}}学分</span>
+				<span class="credit">{{data.total}}学分</span>
 			</p>
 			<span class="paper">{{data.goods_number}}件</span>
 		</div>
@@ -118,7 +116,6 @@
 			data: {
 				data: [],
 				status: [],
-				role:''
 			},
 			filters: {
 				formatDate(time) {
@@ -149,7 +146,6 @@
 
 							vm.data = ret;
 							vm.status = ret.status;
-							vm.role = $api.getStorage('role');
               $api.css($api.dom('#app'), 'display:block');
 						} else {
 							api.toast({
@@ -251,7 +247,7 @@
 						    }
 						},function(ret, err){
 							  $api.css($api.dom('#loading'), 'display:none');
-								
+
 						    if (ret) {
 
 										if (ret.status == '1') {

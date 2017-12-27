@@ -106,7 +106,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="total">一次最高可打<em>100</em>分</p>
+                <p class="total">温馨提示:一次最高可打<em>100</em>分，用户学分上限为750分，24小时内不允许超过100分</p>
             </div>
         </div>
         <div class="markBox">
@@ -480,7 +480,7 @@
               return false;
           }else if (result > 100) {
               api.toast({
-                  msg: '抱歉，所打分数不能超过最高可打分数',
+                  msg: '抱歉，一次不能超过100',
                   duration: 2000,
                   location: 'middle'
               });
@@ -504,7 +504,8 @@
               },function(ret, err){
 
                   $api.css($api.dom('#loading'), 'display:none');
-                
+                   console.log(JSON.stringify(ret));
+                   console.log(JSON.stringify(err));
                   if (ret) {
 
                       if (ret.status == '1') {
@@ -530,6 +531,12 @@
                               location: 'middle'
                           });
 
+                      }else if (ret.status == '4') {
+                          api.toast({
+                              msg: '24小时内不允许超过100分',
+                              duration: 2000,
+                              location: 'middle'
+                          });
                       }else{
                           api.toast({
                               msg: '打分失败',

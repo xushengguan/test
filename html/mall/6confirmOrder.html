@@ -458,7 +458,7 @@
 
 		vm.money = (num * vm.total) * 0.2;
 		var str1 = '¥' + vm.money;
-		
+
 		vm.totalone = num * vm.total;
 		var str = vm.totalone + '学分';
 
@@ -560,7 +560,7 @@
 			}
       add_time = Math.round(new Date().getTime()/1000);
       var message = $api.val($api.byId('input-box'));
-			var goods_amount,price;
+			var goods_amount,price,pay_type;
 			var weiChatNum = $api.text($api.dom('#money_total'));
 
 			var creditNum = $api.text($api.dom('#total'));
@@ -568,7 +568,7 @@
 			if (vm.payMethod == 2) {//payMethod,1微信支付，2学分支付
 					var value2 = creditNum.replace(/[^0-9]/ig,"");//提取数字，学分支付
 
-					if (vm.total > parseInt(vm.winmoney) ) {
+					if (parseInt(value2) > parseInt(vm.winmoney) ) {
 							api.toast({
 									msg: '学分不足',
 									duration: 2000,
@@ -578,15 +578,17 @@
 					}
 					goods_amount = value2;
 					price = vm.total;
-
+          pay_type = 1;//pay_type,支付类型 1:学分支付 0:微信支付
 
 			}else{
 
 					var value1 = weiChatNum.replace(/[^0-9]/ig,"");//提取数字，微信支付
 					goods_amount = value1;
 					price = vm.total * 0.2;
+					pay_type = 0;//pay_type,支付类型 1:学分支付 0:微信支付
 			}
       $api.css($api.byId('loading'), 'display:block');
+
 			api.ajax({
 					url: serverurl,
 					method: 'post',
@@ -598,6 +600,7 @@
 									order_status:'1',//订单状态
 									shipping_status:'0',
 									pay_status:'0',//支付状态
+									pay_type:pay_type,//支付类型 1:学分支付 0:微信支付
 									consignee:vm.consignee,//收货人姓名
 									tel:vm.tel,//收货人电话
 									address:vm.address,//收货人详细地址
@@ -671,7 +674,7 @@
 									api.toast({
 									    msg: '学分不足',
 									    duration: 2000,
-									    location: 'bottom'
+									    location: 'middle'
 									});
 							}
 			    } else {

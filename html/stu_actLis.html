@@ -137,7 +137,7 @@
                               <span class="fl img-pic08"><img :src="v.actimgurl" alt=""></span>
                               <div class="content fl">
                                   <h6 class="single">{{v.title}}</h6>
-                                  <p class="sites">{{v.address}}</p>
+                                  <p class="sites single">{{v.address}}</p>
                                   <p class="sites">活动时间:{{v.actstarttime | formatDate}}</p>
                               </div>
                               <span class="peoples sites">{{v.userlimit}}人</span>
@@ -250,7 +250,7 @@
                         }, function(ret, err) {
 
                             $api.css($api.dom('#loading'), 'display:none');
-                          
+
                             if (lon && lat) {
                                 if (ret) {
                                     vm.ActInfo = ret;

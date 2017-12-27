@@ -71,16 +71,16 @@
                     <em v-else>0</em>
                     学分
                 </div>
-                <button onclick="ApplyFor()">申请提现</button>
+                <button tapmode onclick="ApplyFor()">申请提现</button>
             </div>
             <ul class="menu">
-                <li onclick="isActive()">
+                <li tapmode onclick="isActive()">
                   <p class="menu_title">已激活产品(套)</p>
                   <p class="num" v-if="Info.count_actvate_product">{{Info.count_actvate_product}}</p>
                   <p class="num" v-else>0</p>
                   <em></em>
                 </li>
-                <li onclick="goStudentAll()">
+                <li tapmode onclick="goStudentAll()">
                   <p class="menu_title">已激活学员(人)</p>
                   <p class="num" v-if="Info.count_actvate">{{Info.count_actvate}}</p>
                   <p class="num" v-else>0</p>
@@ -91,7 +91,7 @@
                   <p class="num" v-if="Info.money">{{Info.money}}</p>
                   <p class="num" v-else>0</p>
                 </li>
-                <li onclick="goStudent()">
+                <li tapmode onclick="goStudent()">
                   <p class="menu_title">待激活学员(人)</p>
                   <p class="num" v-if="Info.count_not_actvate">{{Info.count_not_actvate}}</p>
                   <p class="num" v-else>0</p>
@@ -100,13 +100,13 @@
             </ul>
         </header>
         <ul class="nav">
-          <li onclick="creatAct()">发起活动</li>
-          <li onclick="goAdmin()">管理活动</li>
-          <li onclick="isActive()">产品激活</li>
-          <li onclick="inviteToreg()">邀请注册</li>
+          <li tapmode onclick="creatAct()">发起活动</li>
+          <li tapmode onclick="goAdmin()">管理活动</li>
+          <li tapmode onclick="isActive()">产品激活</li>
+          <li tapmode onclick="inviteToreg()">邀请注册</li>
         </ul>
         <div class="box">
-            <div class="top" onclick="goProfit(2)">
+            <div class="top" tapmode onclick="goProfit(2)">
                 <div class="awardName">参与奖</div>
                 <p class="explain">参与奖说明</p>
                 <em></em>
@@ -128,7 +128,7 @@
         </div>
 
         <div class="box">
-            <div class="top" onclick="goProfit(1)">
+            <div class="top" tapmode onclick="goProfit(1)">
                 <div class="awardName">生源奖</div>
                 <p class="explain">参与奖说明</p>
                 <em></em>
@@ -150,7 +150,7 @@
         </div>
 
         <div class="box">
-            <div class="top" onclick="goProfit(3)">
+            <div class="top" tapmode onclick="goProfit(3)">
                 <div class="awardName">下线收益</div>
                 <p class="explain">参与奖说明</p>
                 <em></em>
@@ -233,6 +233,13 @@
 
                       if (ret.status == '1') {
                           vm.data = ret.data;
+                      }else if (ret.status == '5') {
+                         $api.clearStorage();//清除localStorage的所有数据，慎用
+                         setTimeout(function(){
+                           api.closeToWin({
+                               name: 'root'
+                           });
+                         },500);
                       }else {
                           api.toast({
                               msg: '网络错误',
@@ -257,9 +264,16 @@
                           },
                       }
                   },function(ret, err){
-                  
+
                       if (ret) {
                           vm.Info = ret;
+                      }else if (ret.status == '5') {
+                        $api.clearStorage();//清除localStorage的所有数据，慎用
+                        setTimeout(function(){
+                          api.closeToWin({
+                              name: 'root'
+                          });
+                        },500);
                       }else {
                           api.toast({
                               msg: '网络错误',
@@ -410,6 +424,13 @@
                       $api.text($api.dom('.total'+form),0);
                       $api.text($api.dom('.week'+form),0);
                   }
+              }else if (ret.status == '5') {
+                  $api.clearStorage();//清除localStorage的所有数据，慎用
+                  setTimeout(function(){
+                    api.closeToWin({
+                        name: 'root'
+                    });
+                  },500);
               } else {
 
                   api.toast({

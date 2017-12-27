@@ -26,7 +26,7 @@
                   {{v.log}}
               </div>
               <div class="money">
-                <em>{{v.shouzhi}}</em>元
+                <em>{{v.shouzhi}}</em>学分
                 <span>{{v.log_time | formatDate}}</span>
               </div>
           </li>
@@ -87,7 +87,7 @@
                       }
                   },function(ret, err){
                       $api.css($api.byId('loading'),'display:none');
-                    
+
                       if (ret) {
                           vm.data = ret;
                           $api.css($api.byId('app'),'display:block');

@@ -230,7 +230,8 @@
         				}
         			}
         		}, function(ret, err) {
-
+              console.log(JSON.stringify(ret));
+              console.log(JSON.stringify(err));
         			if (ret) {
         				// 在回调函数里面调用
         				var dom = parseXML(ret);
@@ -240,7 +241,6 @@
                 arr.push(url);
 
                 if (arr.length == arrSrc.length) {
-
                     Finish();
                 }
 
@@ -276,7 +276,8 @@
               }
           },function(ret, err){
               $api.css($api.dom('#loading'), 'display:none');
-
+              console.log(JSON.stringify(ret));
+              console.log(JSON.stringify(err));
               if (ret && ret.status == '1') {
                   if (role == '2' && update_status == '0') {
                       api.openWin({

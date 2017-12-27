@@ -123,7 +123,7 @@
 				<span class="fl">更改密码</span>
 				<i class="iconfont icon-gengduo1 icon-more fr"></i>
 			</div>
-			<p class="msg-con" onclick="exitLogin()"><span style="color:#757575;">退出登录</span></p>
+			<p class="msg-con" tapmode onclick="exitLogin()"><span style="color:#757575;">退出登录</span></p>
 		</div>
 	</div>
 
@@ -237,7 +237,6 @@
 						 if (ret) {
 								 if (ret.status == '1') {
 									 $api.clearStorage();//清除localStorage的所有数据，慎用
-
 									 setTimeout(function(){
 										 api.closeToWin({
 	                       name: 'root'

@@ -36,8 +36,7 @@
 						<span class="fl">状态:
 							<label style="color:#fcb068;">配送中</label>
 						</span>
-            <span class="fr" v-if="role == '2'">总价:<label>¥{{v.goods_amount}}</label></span>
-						<span class="fr" v-else>总价:<label>{{v.goods_amount}}学分</label></span>
+						<span class="fr">总价:<label>{{v.goods_amount}}学分</label></span>
 					</div>
 					<div class="dispich-con">
 						<div class="purchase-top" @click="goLoglist(v.logistics_company,v.tracking_number)" v-if="v.status">
@@ -56,7 +55,6 @@
 
 							<!-- 配送中状态添加 -->
 							<span class="fr sure" style="z-index:99" @click="confirmReceipt(v.order_id)">确认收货</span>
-
 						</div>
 					</div>
 		  </div>
@@ -106,7 +104,6 @@
 				el:'#app',
 				data:{
 						data:[],
-						role:''
 				},
 				methods:{
 						get_notOrder(token,id){//获取未收货的订单
@@ -128,7 +125,6 @@
 
 								    if (ret) {
 												vm.data = ret;
-												vm.role = $api.getStorage('role');
 
 								    } else {
 								        api.toast({
@@ -206,7 +202,7 @@
 									});
 								};
 							});
-						}
+						},
 
 				}
 		})

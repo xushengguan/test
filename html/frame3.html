@@ -196,7 +196,8 @@ function MyCircle(){
         url: './circle/CircleIndex.html',
         pageParam: {
             id: id
-        }
+        },
+        reload:true
     });
 
 }
@@ -208,7 +209,8 @@ function MyOrder(){
       url: './mall/order_title.html',
       pageParam: {
           name: 'test'
-      }
+      },
+      reload:true
   });
 }
 
@@ -217,6 +219,7 @@ function Rating(){
     api.openWin({
         name: 'Rating_title',
         url: './setting/Rating_title.html',
+        reload:true
     });
 }
 
@@ -225,6 +228,7 @@ function Address(){
     api.openWin({
         name: '6address_title',
         url: './mall/6address_title.html',
+        reload:true
     });
 }
 
@@ -233,6 +237,7 @@ function BillDetail(){
     api.openWin({
         name: 'BillDetail',
         url: './setting/BillDetail_title.html',
+        reload:true
     });
 }
 
