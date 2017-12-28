@@ -164,7 +164,7 @@
     					<span class="before"></span>
     					<span class="text">商品介绍</span>
     					<div class="box_main">
-    						<p class="introduce" v-html="goodsInfo.abs">
+    						<p class="introduce">
     							{{goodsInfo.abs}}
     						</p>
     					</div>
@@ -179,8 +179,8 @@
     					<span class="text">商品详情</span>
     				</div>
     				<div class="box_main">
-    					<p class="introduce">
-    						{{content.content}}
+    					<p class="introduce" v-html="content.content">
+    						<!-- {{content.content}} -->
     					</p>
     				</div>
     			</div>
@@ -263,7 +263,8 @@
   								    url: './6confirmOrder.html',
   								    pageParam: {
   								        goods_id: goodsid
-  								    }
+  								    },
+                      reload:true
   								});
 
   						}

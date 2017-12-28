@@ -110,8 +110,10 @@
         <li id="header1">
           <div class="input_box">
               <div class="bg">
-                <input type="text" placeholder="请输入您想要搜索的内容">
-                <em tapmode onclick="goSearch(this)"></em>
+                <form action="javascript:submitInputContent(1);">
+                      <input class="search1" type="search" placeholder="请输入您想要搜索的内容">
+                      <em tapmode onclick="goSearch(1)"></em>
+                </form>
               </div>
           </div>
 
@@ -119,8 +121,10 @@
         <li id="header2">
           <div class="input_box">
               <div class="bg">
-                <input type="text" placeholder="请输入您想要搜索的内容">
-                <em tapmode onclick="goSearch(this)"></em>
+                <form action="javascript:submitInputContent(2);">
+                      <input class="search2" type="search" placeholder="请输入您想要搜索的内容">
+                      <em tapmode onclick="goSearch(2)"></em>
+                </form>
               </div>
           </div>
         </li>
@@ -160,6 +164,19 @@
         fixStatusBar_API(header);
 
         focus_input();
+
+        //监听学客圈刷新
+        api.addEventListener({
+            name: 'clearTxt'
+        }, function(ret, err){
+
+            if( ret ){
+                 $api.val($api.dom('.search1'), '');
+                 $api.val($api.dom('.search2'), '');
+            }else{
+                 console.log( JSON.stringify( err ) );
+            }
+        });
 
         //监听返回
         api.addEventListener({
@@ -354,6 +371,7 @@
                         h: api.frameHeight - $api.dom('header').offsetHeight - 50
                     },
                     bounces: true,
+                    reload:true,
                     bgColor: 'rgba(0,0,0,0)',
                     vScrollBarEnabled: true,
                     hScrollBarEnabled: true
@@ -374,6 +392,7 @@
                         h: api.frameHeight - 50
                     },
                     bounces: true,
+                    reload:true,
                     bgColor: 'rgba(0,0,0,0)',
                     vScrollBarEnabled: true,
                     hScrollBarEnabled: true
@@ -443,6 +462,9 @@
         };
     }
 
+    function submitInputContent(index){
+        goSearch(index);
+    }
     //  跳到消息列表
     function goNews(){
         api.openWin({
@@ -462,9 +484,6 @@
                 y: $api.dom('header').offsetHeight,
                 w: api.winWidth,
                 h: api.frameHeight - $api.dom('header').offsetHeight - 50
-            },
-            pageParam: {
-                name: 'test'
             },
             reload: true,
             allowEdit:true,
@@ -602,11 +621,17 @@
                     ExitLogin();
                 }else if (ret.status == '0') {
                     api.toast({
-                        msg: '抱歉，没有手环信息',
+                        msg: '抱歉，没有可领取的学分',
                         duration: 2000,
                         location: 'middle'
                     });
 
+                }else if (ret.status == '3') {
+                    api.toast({
+                        msg: '抱歉，没有手环信息',
+                        duration: 2000,
+                        location: 'middle'
+                    });
                 }else {
                     flexed(ret.score);
                 }
@@ -639,8 +664,7 @@
               },
           }
       },function(ret, err){
-          console.log(JSON.stringify(ret));
-          console.log(JSON.stringify(err));
+
           if (ret) {
               if (ret.status == '1') {
                   api.toast({
@@ -699,16 +723,26 @@
     }
 
     // 搜索
-    function goSearch(e){
-        var text = $api.val($api.prev(e));
-        api.openWin({
-            name: 'search',
-            url: './html/setting/search.html',
-            pageParam: {
-                text: text
-            },
-            reload:true
-        });
+    function goSearch(index){
+        var text = $api.val($api.dom('.search'+index));
+        if (!text) {
+            api.toast({
+                msg: '请输入搜索内容',
+                duration: 2000,
+                location: 'middle'
+            });
+            return false;
+        }else {
+          api.openWin({
+              name: 'search',
+              url: './html/setting/search.html',
+              pageParam: {
+                  text: text
+              },
+              reload:true
+          });
+          $api.val($api.dom('.search'+index),"");
+        }
 
     }
 </script>

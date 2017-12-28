@@ -195,3 +195,6 @@ function ExitLogin(){
     });
   },500);
 }
+
+// 去掉首尾空格
+function trimStr(str){return str.replace(/(^\s*)|(\s*$)/g,"");}

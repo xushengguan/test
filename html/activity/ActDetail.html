@@ -152,7 +152,7 @@
 			        <!-- Swiper 活动结束排名-->
 
 							<!-- actsta='1' 进行中，actsta='0' 结束 -->
-							<div class="img" v-show="data.actsta == '1' && role == '2'">
+							<div class="img" v-if="data.actsta == '1' && role == '2'">
 								  <div class="title">上传活动照片</div>
 									<div class="prompt">注意：请至少上传3张活动照片，照片中需要包含有参赛者</div>
 									<div class="item" tapmode onclick="UploadPic(this,'start_img')">
@@ -169,7 +169,7 @@
 									</div>
 							</div>
 
-							<div class="img" v-show="data.actsta == '0' && data.start_img || data.underway_img || data.end_img">
+							<div class="img" v-if="data.actsta == '0' && data.start_img || data.actsta == '0' && data.underway_img || data.actsta == '0' && data.end_img">
 									<div class="item">
 	                    <img :src="data.start_img+'?x-oss-process=image/resize,p_50'" alt=""  @click="viewPicture(data.start_img)" v-if="data.start_img">
 									</div>
@@ -274,7 +274,7 @@
 								},function(ret, err){
 									  $api.css($api.byId('loading'), 'display:none');
                     $api.css($api.byId('main'), 'display:block');
-
+                
 								    if (ret) {
                         if (ret.status == '5') {
 														ExitLogin();

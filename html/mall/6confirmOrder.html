@@ -380,11 +380,12 @@
 
 						go_goodsDetail(){
 								api.openWin({
-								    name: 'credit_goodDetail_title',
-								    url: './credit_goodDetail_title.html',
+								    name: 'credit_goodDetail',
+								    url: './credit_goodDetail.html',
 								    pageParam: {
 								        goods_id: goods_id
-								    }
+								    },
+										reload:true
 								});
 						},
 
@@ -682,7 +683,8 @@
 											pageParam: {
 													time: add_time,
 													goods_name:vm.goods_name
-											}
+											},
+											reload:true
 									});
 
 							}else if (ret.status == '0') {
@@ -793,6 +795,7 @@
 						},
 				}
 		},function(ret, err){
+
 				if (ret) {
             if (ret.status == '5') {
             		ExitLogin();

@@ -69,8 +69,10 @@
           <header>
             <div class="input_box">
                 <div class="bg">
-                  <input type="text" placeholder="请输入您想要搜索的内容" id="text">
-                  <em tapmode @click="search()"></em>
+                  <form action="javascript:submitInputContent();">
+                        <input id="text" type="search" placeholder="请输入您想要搜索的内容">
+                        <em tapmode @click="search()"></em>
+                  </form>
                 </div>
             </div>
           </header>
@@ -105,7 +107,7 @@
                   <div class="activity" v-show="act != ''">
                       <div class="title">相关活动</div>
                       <ul class="ActLis">
-                          <li tapmode v-for="v in act" @click="goActDetail(v.act_id)">
+                          <li tapmode v-for="v in act" @click="goActDetail(v.id)">
                               <img :src="v.actimgurl+'?x-oss-process=image/resize,p_50'" alt="">
                               <div class="rt">
                                   <p class="act_title single">{{v.title}}</p>
@@ -176,13 +178,14 @@
           methods:{
             search(){// 用户搜索
                 var text = $api.val($api.byId('text'));
+                var content = trimStr(text);
                 var token = $api.getStorage('token');
 
-                if (!text) {
+                if (!content) {
                     api.toast({
                         msg: '请输入搜索内容',
                         duration: 2000,
-                        location: 'bottom'
+                        location: 'middle'
                     });
                     return false;
                 }else{
@@ -194,7 +197,7 @@
                             values: {
                                 type: '10140',
                                 token: token,
-                                 name:text
+                                 name:content
                             },
                         }
                     },function(ret, err){
@@ -223,12 +226,15 @@
             },
 
             goActDetail(actid){
+
                 api.openWin({
                     name: 'ActDetail',
                     url: '../activity/ActDetail.html',
                     pageParam: {
                         actid: actid
-                    }
+                    },
+                    reload:true,
+                    allowEdit:true
                 });
 
             },
@@ -251,5 +257,8 @@
           }
       })
 
+      function submitInputContent(){
+          vm.search();
+      }
   </script>
   </html>

@@ -172,6 +172,12 @@
         }, function(ret, err) {
             //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
             btn_list(vm.Lisindex);
+            api.sendEvent({
+                name: 'clearTxt',
+                extra: {
+                    key: 0,
+                }
+            });
             api.refreshHeaderLoadDone();
         });
     };
@@ -311,7 +317,7 @@
 
     function btn_list(index) {
         vm.Lisindex = index;
-
+    
         if (index == 1) {
             $api.removeCls($api.dom('.ActLis .Lis0'), 'addColor');
             $api.addCls($api.dom('.ActLis .Lis1'), 'addColor');

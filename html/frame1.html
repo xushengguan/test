@@ -472,6 +472,13 @@
         }, function(ret, err) {
             //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
             vm.getCircle();
+            api.sendEvent({
+                name: 'clearTxt',
+                extra: {
+                    key: 0,
+                }
+            });
+
             api.refreshHeaderLoadDone();
         });
 

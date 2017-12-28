@@ -142,8 +142,12 @@
                 </li>
                 <li>
                     <div class="input_box">
-                        <input type="text" placeholder="请输入您想要搜索的内容">
-                        <em tapmode onclick="goSearch(this)"></em>
+                        <form action="javascript:submitInputContent();">
+                              <input id="text" type="search" placeholder="请输入您想要搜索的内容">
+                              <em tapmode onclick="goSearch()"></em>
+                        </form>
+                        <!-- <input type="text" placeholder="请输入您想要搜索的内容">
+                        <em tapmode onclick="goSearch(this)"></em> -->
                     </div>
                 </li>
                 <li>
@@ -201,6 +205,17 @@
         } else {
             randomSwitchBtn(0); //默认打开第一个组
         }
+
+        //监听学客圈刷新
+        api.addEventListener({
+            name: 'clearTxt'
+        }, function(ret, err){
+            if( ret ){
+                 $api.val($api.dom('.input_box input'), '');
+            }else{
+                 console.log( JSON.stringify( err ) );
+            }
+        });
 
         //监听返回
         api.addEventListener({
@@ -303,16 +318,29 @@
     }
 
     // 搜索
-    function goSearch(e){
-        var text = $api.val($api.prev(e));
-
-        api.openWin({
-            name: 'search',
-            url: './html/setting/search.html',
-            pageParam: {
-                text: text
-            }
-        });
+    function submitInputContent(){
+        goSearch();
+    }
+    function goSearch(){
+        var text = $api.val($api.dom('#text'));
+        if (!text) {
+            api.toast({
+                msg: '请输入搜索内容',
+                duration: 2000,
+                location: 'middle'
+            });
+            return false;
+        }else {
+          api.openWin({
+              name: 'search',
+              url: './html/setting/search.html',
+              pageParam: {
+                  text: text
+              },
+              reload:true
+          });
+          $api.val($api.dom('#text'),"");
+        }
 
     }
 </script>

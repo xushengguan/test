@@ -406,6 +406,7 @@
             getCircleDetail() { //读取学客圈详情
                 $api.css($api.dom('#main'), 'display:none');
                 $api.css($api.dom('#loading'), 'display:block');
+                
                 api.ajax({
                     url: serverurl,
                     method: 'get',

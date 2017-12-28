@@ -56,6 +56,8 @@
           var uid = $api.getStorage('id');
           var token = $api.getStorage('token');
           var role = $api.getStorage('role');
+          var complete_info = $api.getStorage('complete_info');
+          var activate_status = $api.getStorage('activate_status');
 
           // 静默修复
           api.addEventListener({
@@ -106,7 +108,21 @@
               onResume();//监听应用恢复到前台，通知jpush恢复事件
           })
 
-          if (uid && token) {
+          if (complete_info == '0' && role == '1') {//角色代号 1：学生家长，2：班主任,complete_info是否实名认证 0:不是 1：是
+
+              api.openWin({
+                  name: 'login4',
+                  url: './login4.html',
+                  reload:true,
+              });
+
+          }else if (role == '2' && activate_status == '0') {
+              api.openWin({
+                  name: 'login5',
+                  url: './login5.html',
+                  reload:true,
+              });
+         }else if (uid && token) {
               if (role == '2') {//角色代号 1：学生家长，2：班主任
                 api.openWin({
                     name: 'index',
@@ -292,6 +308,8 @@
                          $api.setStorage('id', ret.data.id);
                          $api.setStorage('tel',ret.data.tel);
                          $api.setStorage('role',ret.data.role);
+                         $api.setStorage('complete_info',ret.data.complete_info);
+                         $api.setStorage('activate_status',ret.data.activate_status);//是否激活学令牌 支教老师 0:不是 1：是
                           api.toast({
                               msg: '登录成功',
                               duration: 2000,
@@ -303,11 +321,6 @@
                             api.openWin({
                                 name: 'login4',
                                 url: './login4.html',
-                                pageParam: {
-                                    // id: ret.data.id,
-                                    role:ret.data.role,
-                                    update_status:ret.data.activate_status//是否激活学令牌 支教老师 0:不是 1：是
-                                },
                                 reload:true,
                             });
 

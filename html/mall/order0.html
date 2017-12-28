@@ -153,7 +153,8 @@
 					pageParam: {
 						logistics_company: logistics_company,
 						tracking_number: tracking_number
-					}
+					},
+					reload:true
 				});
 			},
 
@@ -164,7 +165,8 @@
 					url: './6orderDatail_title.html',
 					pageParam: {
 						order_id: order_id
-					}
+					},
+					reload:true
 				});
 			},
 
@@ -304,22 +306,15 @@
 						},
 				}
 		},function(ret, err){
+
 				if (ret) {
             if (ret.status == '5') {
-
+								ExitLogin();
             }else if (ret.status == '1') {
-							api.openWin({
-									name: 'success',
-									url: './success.html',
-									pageParam: {
-											time: add_time,
-											goods_name:vm.goods_name
-									},
-									reload:true
-							});
+							vm.get_orderLis();
 						}else {
 								api.toast({
-								    msg: '兑换失败',
+								    msg: '获取订单失败',
 								    duration: 2000,
 								    location: 'middle'
 								});

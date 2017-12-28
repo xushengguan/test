@@ -249,16 +249,14 @@
                       $api.setStorage('token', ret.token);
                       $api.setStorage('id', ret.data.id);
                       $api.setStorage('role', ret.data.role);
+                      $api.setStorage('tel',ret.data.tel);
+                      $api.setStorage('complete_info',ret.data.complete_info);
+                      $api.setStorage('activate_status',ret.data.activate_status);//是否激活学令牌 支教老师 0:不是 1：是
                       if (ret.data.role !== '2' && ret.data.complete_info == '0') {//角色代号 1：学生家长，2：班主任,complete_info是否实名认证 0:不是 1：是
 
                           api.openWin({
                               name: 'login4',
                               url: './login4.html',
-                              pageParam: {
-                                  // id: ret.data.id,
-                                  role:ret.data.role,
-                                  update_status:ret.data.activate_status//是否激活学令牌 支教老师 0:不是 1：是
-                              },
                               reload:true,
                         			allowEdit:true
                           });

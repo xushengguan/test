@@ -37,7 +37,7 @@
         </header>
         <div id="main" v-cloak>
             <ul class="newsLis" v-if="like || rew">
-                <li tapmode v-for="v in like" v-if="like" @click="goDetail(v.id)">
+                <li tapmode v-for="v in like" v-if="like" @click="goDetail(v.ccl_id)">
                     <img class="img" :src="v.headimgurl" alt="" v-if="v.headimgurl">
                     <img class="img" src="../../image/pic3.png" alt="" v-else>
                     <div class="txt">
@@ -49,7 +49,7 @@
                         <p class="love" v-if="v.status == 1"></p>
                     </div>
                 </li>
-                <li tapmode v-for="vv in rew" v-if="rew" @click="goDetail(vv.id)">
+                <li tapmode v-for="vv in rew" v-if="rew" @click="goDetail(vv.ccl_id)">
                     <img class="img" :src="vv.headimgurl" alt="" v-if="vv.headimgurl">
                     <img class="img" src="../../image/pic3.png" alt="" v-else>
                     <div class="txt">
@@ -145,7 +145,8 @@
                       url: './circleDetail.html',
                       pageParam: {
                           circle_id: id
-                      }
+                      },
+                      reload:true
                   });
 
               }

@@ -85,8 +85,8 @@
           loading();
           id = $api.getStorage('id');
           token = $api.getStorage('token');
-          role = api.pageParam.role;//角色代号 1：学生家长，2：支教老师
-          update_status = api.pageParam.update_status;//是否激活学令牌 支教老师 0:不是 1：是
+          role = $api.getStorage('role');//角色代号 1：学生家长，2：支教老师
+          update_status = $api.getStorage('update_status');//是否激活学令牌 支教老师 0:不是 1：是
 
 
       };
