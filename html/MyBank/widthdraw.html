@@ -73,7 +73,7 @@
             <ul class="inputBox">
                 <li>
                   <span class="inputName">提现金额</span>
-                  <input class="moneyNum" type="number" name="" value="" placeholder="请输入提现金额" oninput="checkValue()" onpropertychange="checkValue()">
+                  <input class="moneyNum" type="number" name="" value="" placeholder="请输入提现学分" oninput="checkValue()" onpropertychange="checkValue()">
                 </li>
                 <li>
                   <span class="inputName">短信验证码</span>
@@ -227,7 +227,7 @@
                 }
             },function(ret, err){
                 $api.css($api.byId('loading'), 'display:none');
-                
+
                 if (ret) {
 
                     if (ret.status == '1') {

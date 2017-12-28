@@ -92,7 +92,7 @@
         .credit_icon {
             background: #fff;
             padding: 15px 0;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
 
         .credit_icon .credit_icon_btn {
@@ -132,73 +132,6 @@
             font-size: 10px;
             padding-top: 6px;
         }
-        /*热门商品区*/
-
-        .hot_goods {
-            margin-bottom: 5px;
-        }
-
-        .hot_goods .hot_title {
-            height: 28px;
-            line-height: 28px;
-            margin-bottom: 1px;
-            text-align: center;
-            color: #ff5252;
-            font-size: 12px;
-            background: #fff;
-        }
-
-        .hot_goods .hot_title.discount {
-            color: #2196f3;
-            font-size: 12PX;
-        }
-
-        .hot_goods .good_box {
-            background: #fff;
-            padding: 0 0 25px 0;
-        }
-
-        .good_box .goodLink {
-            display: block;
-            width: 33.33%;
-            height: 33.33%;
-            float: left;
-            padding-top: 12px;
-        }
-
-        .good_box .goodLink .good_img {
-            width: 80px;
-            height: 80px;
-            overflow: hidden;
-            margin: 0 auto;
-        }
-
-        .good_box .goodLink .good_img img {
-            display: block;
-            width: 100%;
-            height: 100%;
-        }
-
-        .goodLink .mg_txt {
-            margin: 0 auto;
-            line-height: 16px;
-            width: 80px;
-        }
-
-        .goodLink .mg_txt .shop {
-            font-size: 12px;
-            color: #999;
-        }
-
-        .goodLink .mg_txt .good_name {
-            color: #5c5c5c;
-            font-size: 12px;
-        }
-
-        .goodLink .mg_txt .credit {
-            color: #ff5252;
-            font-size: 10px;
-        }
 
         .swiper-container {
            width: 100%;
@@ -225,6 +158,27 @@
          }
 
          .swiper-slide img{width: 100%; height: 100%; display: block;}
+
+         .title{height: 35px; line-height: 35px; border-bottom: 1px solid #f2f2f2; color: #ffa000; font-size: 14px;
+         background: url(../image/new.png) no-repeat 15px center; background-size: 13px; background-color: #fff; padding-left: 32px; padding-top: 3px;}
+         .title.groom{background: url(../image/groom.png) no-repeat 15px center; background-size: 13px; background-color: #fff;}
+         .lfgoods{width: calc(50% - 1px); border-right: 1px solid #f2f2f2; float: left; height: 200px;}
+         .lfgoods img{width: 100%; min-height: 200px;}
+         .rtgoods{float: left; width: 50%;}
+         .rtgoods .img{height: 100px; width: 100%; height: 100px;}
+         .rtgoods .img:first-child{border-bottom: 1px solid #f2f2f2; height: 99px;}
+         .rtgoods .img img{height: 100px; width: 100%; min-height: 100px;}
+         .rtgoods .img:first-child img{border-bottom: 1px solid #f2f2f2; min-height: 99px;}
+
+         .goods_card{overflow: hidden;}
+         .goods_card li{float: left; width: calc(50% - 1px); background: #fff; margin-bottom: 2px;}
+         .goods_card li:nth-child(odd){margin-right: 1px;}
+         .goods_card li:nth-child(even){margin-left: 1px;}
+         .goods_card li img{width: 100%; height: 145px;}
+         .goods_card .txt{background: #fff; padding: 8px; text-align: center;}
+         .goods_card .txt .name{font-size: 14px; color: #212121; padding-bottom: 4px;}
+         .goods_card .txt .abs{font-size: 12px; color: #999; padding-bottom: 4px;}
+         .goods_card .txt .total{font-size: 14px; color: #f44336;}
     </style>
 </head>
 
@@ -234,11 +188,8 @@
         <!-- Swiper -->
         <div class="swiper-container">
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img src="../image/pic10.jpg" alt="">
-            </div>
-            <div class="swiper-slide">
-                <img src="../image/pic10.jpg" alt="">
+            <div class="swiper-slide" v-for="v in swipe">
+                <img :src="v.imgurl" alt="广告">
             </div>
           </div>
           <!-- Add Pagination -->
@@ -254,47 +205,35 @@
             </a>
         </div>
 
-        <!-- 热门商品区 -->
-        <div class="hot_goods" v-if="hotInfo">
-            <div class="hot_title">
-                <i class="icon iconfont icon-remen" style="font-size: 15px; color: #ff5252"></i> 热门商品
+        <!-- 热门商品 -->
+        <div class="title">热门商品</div>
+        <div class="box clearfix" style="margin-bottom:10px;">
+            <div class="lfgoods" tapmode @click="go_goodsDetail(hotid1)">
+                <img :src="hot1" alt="左边热门商品图">
             </div>
-            <div class="good_box clearfix" id="hot_goods">
-                <a href="javascript:;" class="goodLink" tapmode v-for="v in hotInfo" @click="go_goodsDetail(v.id)">
-                    <div class="good_img">
-                        <img :src="v.imgurl" alt="">
-                    </div>
-                    <div class="mg_txt">
-                        <div class="shop single">
-                            {{v.goods_name}}
-                        </div>
-                        <div class="good_name single">{{v.abs}}</div>
-                        <div class="credit">{{v.total}}学分</div>
-                    </div>
-                </a>
+            <div class="rtgoods">
+                <div class="img" tapmode @click="go_goodsDetail(hotid2)">
+                    <img :src="hot2" alt="右边热门商品图">
+                </div>
+
+                <div class="img" tapmode @click="go_goodsDetail(hotid3)">
+                    <img :src="hot3" alt="右边热门商品图">
+                </div>
             </div>
         </div>
 
-        <!-- 新品优惠 -->
-        <div class="hot_goods" v-if="newInfo">
-            <div class="hot_title" style="color:#2196f3">
-                <i class="icon iconfont icon-xinpin" style="font-size: 15px;"></i> 新品优惠
-            </div>
-            <div class="good_box clearfix">
-                <a href="javascript:;" class="goodLink" tapmode v-for="v in newInfo" @click="go_goodsDetail(v.id)">
-                    <div class="good_img">
-                        <img :src="v.imgurl" alt="">
-                    </div>
-                    <div class="mg_txt">
-                        <div class="shop single">
-                            {{v.goods_name}}
-                        </div>
-                        <div class="good_name single">{{v.abs}}</div>
-                        <div class="credit">{{v.total}}学分</div>
-                    </div>
-                </a>
-            </div>
-        </div>
+        <!-- 热门商品 -->
+        <div class="title groom">推荐商品</div>
+        <ul class="goods_card">
+            <li tapmode v-for="v in newInfo" @click="go_goodsDetail(v.id)">
+                <img :src="v.imgurl" alt="推荐商品">
+                <div class="txt">
+                    <p class="name single">{{v.goods_name}}</p>
+                    <p class="abs single">{{v.abs}}</p>
+                    <p class="total">{{v.total}}学分</p>
+                </div>
+            </li>
+        </ul>
     </div>
 
 </body>
@@ -309,6 +248,7 @@
         fnInitSwipe();
 
         $api.css($api.dom('#loading'), 'display:block');
+        vm.getSwipe();
         vm.getClass();
         vm.get_hotgoods();
         vm.get_Newsgoods();
@@ -320,10 +260,41 @@
         el: '#app',
         data: {
             ClassInfo: [],
-            hotInfo: [],
+            hot1: '',
+            hot2: '',
+            hot3: '',
+            hotid1: '',
+            hotid2: '',
+            hotid3: '',
             newInfo: [],
+            swipe:[]
         },
         methods: {
+            getSwipe() { //读取商品分类
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    cache:true,
+                    dataType: 'json',
+                    data: {
+                        values: {
+                            type: '10026',
+                            ad_type:'1'//广告分类0公众号1app
+                        }
+                    }
+                }, function(ret, err) {
+                    if (ret) {
+                        vm.swipe = ret;
+                    } else {
+                        api.toast({
+                            msg: '网络错误',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+
+                    }
+                });
+            },
             getClass() { //读取商品分类
                 api.ajax({
                     url: serverurl,
@@ -365,10 +336,15 @@
                         }
                     }
                 }, function(ret, err) {
-
+                    console.log(JSON.stringify(ret));
+                    console.log(JSON.stringify(err));
                     if (ret) {
-                        vm.hotInfo = ret;
-
+                        vm.hot1 = ret[0].imgurl;
+                        vm.hot2 = ret[1].imgurl;
+                        vm.hot3 = ret[2].imgurl;
+                        vm.hotid1 = ret[0].id;
+                        vm.hotid2 = ret[1].id;
+                        vm.hotid3 = ret[2].id;
                     } else {
                         api.toast({
                             msg: '网络错误',
@@ -390,7 +366,7 @@
                         values: {
                             type: '10031',
                             gtype: 'new',
-                            num: '6'
+                            num: '2'
                         }
                     }
                 }, function(ret, err) {
