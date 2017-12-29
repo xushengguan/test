@@ -56,13 +56,13 @@
 
             <!-- 未绑定银行卡 -->
             <div class="top" v-if="!data">
-                <div class="money">可提现金额:<em>{{winmoney}}</em>学分</div>
+                <div class="money">可提现学分:<em>{{winmoney}}</em>学分</div>
                 <button class="bind" tapmode onclick="BindBankCard()">绑定银行卡</button>
             </div>
 
             <!-- 已绑定银行卡 -->
             <div class="top" v-else>
-                <div class="money">可提现金额:<em>{{winmoney}}</em>学分</div>
+                <div class="money">可提现学分:<em>{{winmoney}}</em>学分</div>
                 <div class="cardNum">{{card_number}}</div>
                 <div class="remove">
                     <span class="" tapmode onclick="RemoveBind()">解除当前绑定银行卡</span>
@@ -72,7 +72,7 @@
 
             <ul class="inputBox">
                 <li>
-                  <span class="inputName">提现金额</span>
+                  <span class="inputName">提现学分</span>
                   <input class="moneyNum" type="number" name="" value="" placeholder="请输入提现学分" oninput="checkValue()" onpropertychange="checkValue()">
                 </li>
                 <li>
@@ -197,7 +197,7 @@
         }
         else if (!moneyNum) {
             api.toast({
-                msg: '请输入提现金额',
+                msg: '请输入提现学分',
                 duration: 2000,
                 location: 'middle'
             });
@@ -220,7 +220,7 @@
                         type: '10127',
                       user_id:uid,
                       token:token,
-                       money:moneyNum * 0.2,
+                       money:parseInt(moneyNum * 0.2),
                         w_id:vm.w_id,
                          code:code
                     },
@@ -241,7 +241,7 @@
                             name: 'success',
                             url: './success.html',
                             pageParam: {
-                                moneyNum: moneyNum
+                                moneyNum: parseInt(moneyNum * 0.2)
                             }
                         });
 

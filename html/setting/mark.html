@@ -442,7 +442,7 @@
         		api.ajax({
         			url: host,
         			method: 'post',
-        			dataType: 'xml',
+        			dataType: 'text',
         			data: {
         				values: {
         					OSSAccessKeyId: accessid,
@@ -512,7 +512,7 @@
               },function(ret, err){
 
                   $api.css($api.dom('#loading'), 'display:none');
-          
+
                   if (ret) {
                       if (ret.status == '5') {
                           ExitLogin();

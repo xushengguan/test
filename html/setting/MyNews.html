@@ -17,8 +17,8 @@
   </head>
   <body>
       <ul class="NewsLis" id="app" v-cloak>
-          <li v-if="status">暂无消息~</li>
-          <li v-for="v in data">
+          <li v-if="status == '0'">暂无消息~</li>
+          <li v-for="v in data" v-else>
             <div class="line1">
                 <p class="title">{{v.title}}</p>
                 <span class="time">{{v.time | formatDate}}</span>

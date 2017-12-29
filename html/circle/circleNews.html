@@ -90,7 +90,7 @@
           el:'#main',
           data:{
               rew:[],
-              like:[]
+              like:[],
           },
           filters:{
               getInfoDate(time) {
@@ -116,7 +116,6 @@
                   },function(ret, err){
 
                       $api.css($api.byId('loading'), 'display:none');
-
                       if (ret) {
                           if (ret.status == '5') {
                             ExitLogin();
@@ -155,49 +154,57 @@
 
       // 清空消息
       function clearNews(){
-          $api.css($api.byId('loading'), 'display:block');
+          if (vm.rew || vm.like) {
+              $api.css($api.byId('loading'), 'display:block');
 
-          if (vm.rew) {
-            var idArr = [];
-            vm.rew.forEach(function(item){
-                idArr.push(item.id);
-            })
-          }
-          api.ajax({
-              url: serverurl,
-              method: 'get',
-              data: {
-                  values: {
-                      type: '10146',
-                      token:token,
-                      uid:uid,
-                      id:idArr
-                  },
+              if (vm.rew) {
+                var idArr = [];
+                vm.rew.forEach(function(item){
+                    idArr.push(item.id);
+                })
               }
-          },function(ret, err){
-              $api.css($api.byId('loading'), 'display:none');
-
-              if (ret) {
-                  if (ret.status == '5') {
-                      ExitLogin();
-                  }else if (ret.status == '1') {
-                      vm.getReplyUser();
-                  }else {
+              api.ajax({
+                  url: serverurl,
+                  method: 'get',
+                  data: {
+                      values: {
+                          type: '10146',
+                          token:token,
+                          uid:uid,
+                          id:idArr
+                      },
+                  }
+              },function(ret, err){
+                  $api.css($api.byId('loading'), 'display:none');
+                  if (ret) {
+                      if (ret.status == '5') {
+                          ExitLogin();
+                      }else if (ret.status == '1') {
+                          vm.getReplyUser();
+                      }else {
+                          api.toast({
+                              msg: '网络错误',
+                              duration: 2000,
+                              location: 'bottom'
+                          });
+                      }
+                  } else {
                       api.toast({
                           msg: '网络错误',
                           duration: 2000,
                           location: 'bottom'
                       });
-                  }
-              } else {
-                  api.toast({
-                      msg: '网络错误',
-                      duration: 2000,
-                      location: 'bottom'
-                  });
 
-              }
-          });
+                  }
+              });
+          }else {
+              api.toast({
+                  msg: '没有消息可清空哦',
+                  duration: 2000,
+                  location: 'middle'
+              });
+
+          }
 
       }
   </script>

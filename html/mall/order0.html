@@ -33,12 +33,15 @@
 			<div class="sign-con hide">
 				<!-- shipping_status商品配送情况;0未发货,1已发货,2已收货,4申请退货;5处理中;6退货完成 -->
 				<span class="fl">状态:
-					    <label v-if="v.shipping_status == '0'">未发货</label>
-							<label style="color:#fcb068;" v-else-if="v.shipping_status == '1'">配送中</label>
-							<label v-else-if="v.shipping_status == '2'">已签收</label>
-							<label v-else-if="v.shipping_status == '4'">退换货完成</label>
-							<label v-else-if="v.shipping_status == '5'">退货处理中</label>
-							<label v-else-if="v.shipping_status == '6'">退货完成</label>
+					    <label v-if="v.pay_status == '0'">未付款</label>
+					    <span v-else>
+						    <label v-if="v.shipping_status == '0'">未发货</label>
+								<label style="color:#fcb068;" v-else-if="v.shipping_status == '1'">配送中</label>
+								<label v-else-if="v.shipping_status == '2'">已签收</label>
+								<label v-else-if="v.shipping_status == '4'">退换货完成</label>
+								<label v-else-if="v.shipping_status == '5'">退货处理中</label>
+								<label v-else-if="v.shipping_status == '6'">退货完成</label>
+					 	 </span>
 				</span>
         <span class="fr">总价:<label>{{v.goods_amount}}学分</label></span>
 			</div>

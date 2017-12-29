@@ -214,7 +214,7 @@
         		api.ajax({
         			url: host,
         			method: 'post',
-        			dataType: 'xml',
+        			dataType: 'text',
         			data: {
         				values: {
         					OSSAccessKeyId: accessid,
@@ -255,7 +255,7 @@
 
       // 完成完善资料提交
       function Finish(){
-      
+
           api.ajax({
               url: serverurl,
               method: 'get',
