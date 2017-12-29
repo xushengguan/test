@@ -180,7 +180,8 @@
                 var text = $api.val($api.byId('text'));
                 var content = trimStr(text);
                 var token = $api.getStorage('token');
-
+                var role = $api.getStorage('role');
+                var uid = $api.getStorage('id');
                 if (!content) {
                     api.toast({
                         msg: '请输入搜索内容',
@@ -197,7 +198,9 @@
                             values: {
                                 type: '10140',
                                 token: token,
-                                 name:content
+                                 name:content,
+                                 role:role,
+                                 uid:uid
                             },
                         }
                     },function(ret, err){
