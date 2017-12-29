@@ -345,11 +345,11 @@
                         w: api.winWidth,
                         h: api.frameHeight - $api.dom('header').offsetHeight - 50
                     },
-                    bounces: true,
+                    bounces: false,
                     reload:true,
                     bgColor: 'rgba(0,0,0,0)',
-                    vScrollBarEnabled: true,
-                    hScrollBarEnabled: true
+                    vScrollBarEnabled: false,
+                    hScrollBarEnabled: false,
                 });
 
 
@@ -370,11 +370,11 @@
                         w: api.winWidth,
                         h: api.frameHeight - $api.dom('header').offsetHeight - 50
                     },
-                    bounces: true,
+                    bounces: false,
                     reload:true,
                     bgColor: 'rgba(0,0,0,0)',
-                    vScrollBarEnabled: true,
-                    hScrollBarEnabled: true
+                    vScrollBarEnabled: false,
+                    hScrollBarEnabled: false,
                 });
 
 
@@ -391,11 +391,11 @@
                         w: api.winWidth,
                         h: api.frameHeight - 50
                     },
-                    bounces: true,
+                    bounces: false,
                     reload:true,
                     bgColor: 'rgba(0,0,0,0)',
-                    vScrollBarEnabled: true,
-                    hScrollBarEnabled: true
+                    vScrollBarEnabled: false,
+                    hScrollBarEnabled: false,
                 });
 
 
@@ -488,10 +488,10 @@
             reload: true,
             allowEdit:true,
             softInputMode:'resize',
-            bounces: true,
+            bounces: false,
             bgColor: 'rgba(0,0,0,0)',
-            vScrollBarEnabled: true,
-            hScrollBarEnabled: true
+            vScrollBarEnabled: false,
+            hScrollBarEnabled: false,
         });
     }
 
@@ -724,7 +724,7 @@
 
     // 搜索
     function goSearch(index){
-        var text = $api.val($api.dom('.search'+index));
+        var text = trimStr($api.val($api.dom('.search'+index)));
         if (!text) {
             api.toast({
                 msg: '请输入搜索内容',

@@ -6,6 +6,7 @@
       <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
       <title>关联</title>
       <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+      <link rel="stylesheet" type="text/css" href="../../css/loading.css"/>
       <style>
           .content{height: 100%; background: #fff; padding: 0 25px;}
           header{padding: 70px 0 45px 0; text-align: center; position: relative; font-size: 25px; font-weight: bold; color: #212121;}
@@ -152,10 +153,9 @@
                   },
               }
           },function(ret, err){
-              
               if (ret) {
-
                   if (ret.status == '1') {
+                      $api.setStorage('activate_status','1');//是否激活学令牌 支教老师 0:不是 1：是
                       api.toast({
                           msg: '关联成功',
                           duration: 2000,

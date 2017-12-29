@@ -53,7 +53,7 @@
               <input class="tel name" type="text" placeholder="填写您的姓名">
           </div>
           <div class="line">
-              <input class="tel id" type="number" style="ime-mode:disabled" placeholder="身份证号码">
+              <input class="tel id" type="text" style="ime-mode:disabled" placeholder="身份证号码">
           </div>
           <div class="line address" tapmode onclick="sel_address()">
               <em></em>
@@ -75,7 +75,7 @@
   <script type="text/javascript" src="../../script/api.js"></script>
   <script type="text/javascript" src="../../script/my.js"></script>
   <script type="text/javascript">
-      var id,role,update_status,address,name,
+      var id,role,address,name,
       idCard,pic1,pic2,token;
       var imgUrl = [];
       var arr = [];
@@ -86,8 +86,6 @@
           id = $api.getStorage('id');
           token = $api.getStorage('token');
           role = $api.getStorage('role');//角色代号 1：学生家长，2：支教老师
-          update_status = $api.getStorage('update_status');//是否激活学令牌 支教老师 0:不是 1：是
-
 
       };
 
@@ -257,7 +255,7 @@
 
       // 完成完善资料提交
       function Finish(){
-
+      
           api.ajax({
               url: serverurl,
               method: 'get',
@@ -280,29 +278,21 @@
                   if (ret.status == '5') {
                       ExitLogin();
                   }else if (ret.status == '1') {
-                      if (role == '2' && update_status == '0') {
-                          api.openWin({
-                              name: 'login5',
-                              url: './login5.html',
-                              reload:true,
-                              allowEdit:true
-                          });
-                      }else{
-                          if (role == '2') {
-                            api.openWin({
-                                name: 'index',
-                                url: '../../index.html',
-                                reload:true
-                            });
-                          }else {
-                            api.openWin({
-                                name: 'index1',
-                                url: '../../index1.html',
-                                reload:true
-                            });
-                          }
-                      }
-                }
+                      $api.setStorage('complete_info','1');
+                      api.openWin({
+                          name: 'index1',
+                          url: '../../index1.html',
+                          reload:true
+                      });
+
+                  }else {
+                      api.toast({
+                          msg: '提交失败',
+                          duration: 2000,
+                          location: 'middle'
+                      });
+
+                  }
 
               } else {
 

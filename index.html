@@ -91,7 +91,6 @@
             color: #ccc;
             font-size: 16px;
             padding-left: 15px;
-            padding-right: 40px;
             text-align: left;
         }
 
@@ -136,18 +135,13 @@
     <div id="wrap">
         <header id="header">
             <ul>
-                <li class="active">
-
-
-                </li>
+                <li class="active"></li>
                 <li>
-                    <div class="input_box">
+                    <div class="input_box active">
                         <form action="javascript:submitInputContent();">
                               <input id="text" type="search" placeholder="请输入您想要搜索的内容">
                               <em tapmode onclick="goSearch()"></em>
                         </form>
-                        <!-- <input type="text" placeholder="请输入您想要搜索的内容">
-                        <em tapmode onclick="goSearch(this)"></em> -->
                     </div>
                 </li>
                 <li>
@@ -289,9 +283,7 @@
         api.openWin({
             name: 'MyNews_title',
             url: './html/setting/MyNews_title.html',
-            pageParam: {
-                // name: 'test'
-            }
+            reload:true
         });
     }
 
@@ -300,9 +292,7 @@
         api.openWin({
             name: '7account',
             url: './html/setting/7account.html',
-            pageParam: {
-                // name: 'test'
-            }
+            reload:true
         });
     }
 
@@ -322,7 +312,7 @@
         goSearch();
     }
     function goSearch(){
-        var text = $api.val($api.dom('#text'));
+        var text = trimStr($api.val($api.dom('#text')));
         if (!text) {
             api.toast({
                 msg: '请输入搜索内容',

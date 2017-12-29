@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-	<title>账户设置</title>
+	<title>手环设置</title>
 	<link rel="stylesheet" href="../../css/api.css">
 	<link rel="stylesheet" href="../../css/common.css">
 	<link rel="stylesheet" href="../../icon/iconfonts/iconfont.css">
@@ -100,7 +100,7 @@
 <body>
 	<div class="7account">
 		<header>
-        <em tapmode onclick="go_back()"></em> 账户设置
+        <em tapmode onclick="go_back()"></em> 手环设置
     </header>
 		<div class="account-con">
 			<div class="account-top hide">
@@ -119,7 +119,6 @@
 			</div>
       <div class="bracelet">
 					<img src="../../image/code1.jpg" alt="" id="codeImg">
-					<p>手环二维码</p>
 					<P class="ID">手环ID:<em></em></P>
       </div>
 		</div>
@@ -155,7 +154,6 @@
 							},
 					}
 			},function(ret, err){
-
 					if (ret) {
 						if (ret.status == '5') {
 								ExitLogin();
@@ -186,21 +184,16 @@
 			mediaValue: 'pic',
 			destinationType: 'url',
 			allowEdit: true,
-			quality: 50,
-			targetWidth: 100,
-			targetHeight: 100,
+			quality: 100,
 			saveToPhotoAlbum: false
 		}, function(ret, err) {
 			if (ret) {
 				imgUrl = ret.data;
-
-				uploader();
+				if (ret.data) {
+						uploader();
+        }
 			} else {
-				api.toast({
-					msg: '网络错误',
-					duration: 2000,
-					location: 'middle'
-				});
+				console.log(JSON.stringify(err));
 			}
 		});
 	}
@@ -230,12 +223,12 @@
 				ALIcloud(host, policy, signature, accessid, dir, expire);
 
 			} else {
-
-				api.toast({
-					msg: '网络错误',
-					duration: 2000,
-					location: 'middle'
-				});
+          $api.css($api.dom('#loading'), 'display:none');
+					api.toast({
+						msg: '网络错误',
+						duration: 2000,
+						location: 'middle'
+					});
 			}
 		});
 	}
@@ -269,6 +262,7 @@
         ResetBracelet('',url);
 
 			} else {
+				$api.css($api.dom('#loading'), 'display:none');
 				api.toast({
 					msg: '网络错误',
 					duration: 2000,
@@ -325,7 +319,7 @@ function ResetBracelet(stu_name,stu_img){
 		 }
  },function(ret, err){
 	   $api.css($api.dom('#loading'), 'display:none');
-
+  
 		 if (ret) {
 			   if (ret.status == '5') {
 						ExitLogin();

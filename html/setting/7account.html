@@ -192,11 +192,7 @@
 						uploader();
         }
 			} else {
-				api.toast({
-					msg: '网络错误',
-					duration: 2000,
-					location: 'middle'
-				});
+				console.log(JSON.stringify(err));
 			}
 		});
 	}
