@@ -324,10 +324,10 @@
             selectedIndex: 0
         }, function(ret, err) {
 
-
+            var headerHeight = $api.dom('header').offsetHeight;
             if (ret.eventType == 'show') {
 
-              goScircle();
+              goScircle('frame1',headerHeight,'./html/frame1.html',api.frameHeight - headerHeight - 50);
 
             }else{
               $api.val($api.dom('#header1 input'),'');
@@ -336,23 +336,8 @@
                 $api.css($api.dom('#header1'), 'display:none');
                 $api.css($api.dom('#header3'), 'display:none');
                 $api.css($api.dom('#header2'), 'display:block');
-                api.openFrame({
-                    name: 'stu_actLis',
-                    url: './html/stu_actLis.html',
-                    rect: {
-                        x: 0,
-                        y: $api.dom('header').offsetHeight,
-                        w: api.winWidth,
-                        h: api.frameHeight - $api.dom('header').offsetHeight - 50
-                    },
-                    bounces: false,
-                    reload:true,
-                    bgColor: 'rgba(0,0,0,0)',
-                    vScrollBarEnabled: false,
-                    hScrollBarEnabled: false,
-                });
-
-
+                goScircle('stu_actLis',headerHeight,'./html/stu_actLis.html',api.frameHeight - headerHeight - 50);
+          
 
               }else if (ret.index == 2) {
                 ScanCode();
@@ -361,63 +346,31 @@
                 $api.css($api.dom('#header3'), 'display:block');
                 $api.css($api.dom('#header1'), 'display:none');
                 $api.css($api.dom('#header2'), 'display:none');
-                api.openFrame({
-                    name: 'frame2',
-                    url: './html/frame2.html',
-                    rect: {
-                        x: 0,
-                        y: $api.dom('header').offsetHeight,
-                        w: api.winWidth,
-                        h: api.frameHeight - $api.dom('header').offsetHeight - 50
-                    },
-                    bounces: false,
-                    reload:true,
-                    bgColor: 'rgba(0,0,0,0)',
-                    vScrollBarEnabled: false,
-                    hScrollBarEnabled: false,
-                });
-
-
-
+                goScircle('frame2',headerHeight,'./html/frame2.html',api.frameHeight - headerHeight - 50);
 
               }else if (ret.index == 4) {
-
-                api.openFrame({
-                    name: 'frame4',
-                    url: './html/frame4.html',
-                    rect: {
-                        x: 0,
-                        y: 0,
-                        w: api.winWidth,
-                        h: api.frameHeight - 50
-                    },
-                    bounces: false,
-                    reload:true,
-                    bgColor: 'rgba(0,0,0,0)',
-                    vScrollBarEnabled: false,
-                    hScrollBarEnabled: false,
-                });
-
+                goScircle('frame4',0,'./html/frame4.html',api.frameHeight - 50);
 
               }else{
                 $api.css($api.dom('#header1'), 'display:block');
                 $api.css($api.dom('#header2'), 'display:none');
                 $api.css($api.dom('#header3'), 'display:none');
-                goScircle();
+
+                goScircle('frame1',headerHeight,'./html/frame1.html',api.frameHeight - headerHeight - 50);
               }
+                var frames = ['frame1', 'stu_actLis','scan', 'frame2', 'frame4'];
+                for (var i = 0; i < frames.length; i++) {
+                    if (ret.index !== i && ret.index !== 2) {
+                      api.setFrameAttr({
+                          name: frames[i],
+                          hidden: true
+                      });
+                    }
+                }
 
                api.parseTapmode();
             }
 
-            var frames = ['frame1', 'stu_actLis','scan', 'frame2', 'frame4'];
-            for (var i = 0; i < frames.length; i++) {
-                if (ret.index !== i && ret.index !== 2) {
-                  api.setFrameAttr({
-                      name: frames[i],
-                      hidden: true
-                  });
-                }
-            }
             NVTabBar.bringToFront();
 
         });
@@ -475,15 +428,15 @@
     }
 
     // 打开学客圈
-    function goScircle(){
+    function goScircle(name,y,url,h){
         api.openFrame({
-            name: 'frame1',
-            url: './html/frame1.html',
+            name: name,
+            url: url,
             rect: {
                 x: 0,
-                y: $api.dom('header').offsetHeight,
+                y: y,
                 w: api.winWidth,
-                h: api.frameHeight - $api.dom('header').offsetHeight - 50
+                h: api.frameHeight - y - 50
             },
             reload: true,
             allowEdit:true,

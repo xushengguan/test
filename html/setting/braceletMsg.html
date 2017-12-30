@@ -184,7 +184,7 @@
 			mediaValue: 'pic',
 			destinationType: 'url',
 			allowEdit: true,
-			quality: 100,
+			quality: 50,
 			saveToPhotoAlbum: false
 		}, function(ret, err) {
 			if (ret) {
@@ -319,7 +319,7 @@ function ResetBracelet(stu_name,stu_img){
 		 }
  },function(ret, err){
 	   $api.css($api.dom('#loading'), 'display:none');
-  
+
 		 if (ret) {
 			   if (ret.status == '5') {
 						ExitLogin();
