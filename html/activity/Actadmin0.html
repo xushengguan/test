@@ -102,7 +102,26 @@
             right: 11px;
         }
 
+        .actLis{
+            position: relative;
+        }
 
+        .del {
+            width: 80px;
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 3px;
+            background: #fff;
+            text-align: center;
+            color: #333;
+            font-size: 16px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+            z-index: 99;
+            display: none;
+        }
 
 
     </style>
@@ -113,7 +132,7 @@
         <div class="box">
             <div class="Lis" v-if="ActInfo.status !== '0'">
                 <div class="actLis" v-for="v in ActInfo">
-                    <div class="enter-news" tapmode @click="goDatail(v.id)">
+                    <div class="enter-news" tapmode @click="goDatail(v.id)" v-if="role == '2'">
                         <div class="news-con hide">
                             <span class="fl img-pic08"><img :src="v.actimgurl" alt=""></span>
                             <div class="content fl">
@@ -124,6 +143,18 @@
                             <span class="peoples sites">{{v.userlimit}}人</span>
                         </div>
                     </div>
+                    <div class="enter-news" tapmode @click="goDatail(v.id)" @touchstart="goDel($event,v.apply_id)" @touchmove="Move" @touchend="touchEnd" v-else>
+                        <div class="news-con hide">
+                            <span class="fl img-pic08"><img :src="v.actimgurl" alt=""></span>
+                            <div class="content fl">
+                                <h6 class="single">{{v.title}}</h6>
+                                <p class="sites">{{v.address}}</p>
+                                <p class="sites">活动时间:{{v.actstarttime | formatDate}}</p>
+                            </div>
+                            <span class="peoples sites">{{v.userlimit}}人</span>
+                        </div>
+                    </div>
+                    <div class="del">删除</div>
                 </div>
             </div>
             <div class="NoAct" v-else>抱歉，您暂时还没有进行中的活动！</div>
@@ -161,6 +192,7 @@
         el: '#app',
         data: {
             ActInfo: [],
+            role:''
         },
         filters: {
             formatDate(time) {
@@ -177,6 +209,7 @@
                 }else {
                     var type = '10028';//获取用户报名活动列表（学生）
                 }
+                vm.role = role;
                 api.ajax({
                     url: serverurl,
                     method: 'get',
@@ -220,6 +253,88 @@
               });
             },
 
+            // 长按删除活动
+            goDel(e,actid){
+                var Del = $api.next(e.currentTarget);
+                timeOutEvent = setTimeout(function(e){
+                    $api.css(Del, 'display:block');
+                },500);
+
+                Del.onclick = function(e){
+                    api.confirm({
+                        title: '删除活动',
+                        msg: '您确定删除此活动？',
+                        buttons: ['确定', '取消']
+                    }, function(ret, err){
+                        if( ret ){
+                             if(ret.buttonIndex == 1){
+                                 vm.stuDelAct(actid);
+                             }
+                        }else{
+                             console.log( JSON.stringify( err ) );
+                        }
+                    });
+
+                };
+                document.onclick = function(e){
+                    $api.css(Del, 'display:none');
+                    e.stopPropagation();//阻止事件冒泡
+                };
+
+            },
+            Move(){
+                clearTimeout(timeOutEvent);
+            },
+            touchEnd(){
+                clearTimeout(timeOutEvent);
+                return false;
+            },
+
+            stuDelAct(apply_id){//学生家长用户删除自己已经报名的活动
+
+              api.ajax({
+                  url: serverurl,
+                  method: 'get',
+                  data: {
+                      values: {
+                          type: '10027',
+                          token:token,
+                          apply_id:apply_id
+                      },
+                  }
+              },function(ret, err){
+
+                  if (ret) {
+
+                      if (ret.status == '5') {
+                          ExitLogin();
+                      }else if (ret.status == '1') {
+                          api.toast({
+                              msg: '删除成功',
+                              duration: 2000,
+                              location: 'middle'
+                          });
+
+                          vm.get_ActLis();
+                      }else {
+                          api.toast({
+                              msg: '删除失败',
+                              duration: 2000,
+                              location: 'middle'
+                          });
+                      }
+
+                  } else {
+
+                      api.toast({
+                          msg: '网络错误',
+                          duration: 2000,
+                          location: 'bottom'
+                      });
+
+                  }
+              });
+            }
 
         }
     })

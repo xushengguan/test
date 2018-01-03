@@ -169,7 +169,7 @@
         }
 
         .box .reply {
-            padding: 8px 10px 10px 10px;
+            padding: 6px;
             background: #f2f2f2;
             border-radius: 2px;
             font-size: 14px;
@@ -177,17 +177,14 @@
 
         .reply .lovePerson {
             color: #343d66;
-            padding-bottom: 6px;
-            border-bottom: 1px solid #e4e2e2;
-            margin-bottom: 6px;
-            display: -webkit-box;
+            /*display: -webkit-box;
             display: -webkit-flex;
             display: -ms-flexbox;
             display: flex;
             -webkit-box-align: center;
             -webkit-align-items: center;
             -ms-flex-align: center;
-            align-items: center;
+            align-items: center;*/
         }
 
         .reply .lovePerson em {
@@ -195,17 +192,17 @@
             height: 14px;
             display: inline-block;
             background: url(../../image/love1.png) no-repeat center;
-            background-size: 14px;
+            background-size: contain;
         }
 
         .reply .lovePerson span {
-            margin-left: 2px;
+            word-wrap: break-word;
         }
 
         .reply li {
             margin-top: 6px;
             overflow: hidden;
-            line-height: 14px;
+            line-height: 16px;
         }
 
         .reply li .lf {
@@ -280,6 +277,9 @@
 
         .del{width: 80px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius:3px;
         background: #fff; color: #222; font-size: 16px; padding: 10px 20px; box-shadow: 0 0 10px rgba(0,0,0,.1); z-index: 99;}
+
+        .inline{word-wrap: normal; word-break: break-all;}
+        .reply_box li:first-child{border-top: 1px solid #e4e2e2; padding-top: 6px;}
     </style>
 </head>
 
@@ -314,14 +314,14 @@
                     <!-- 九张图片，当为4张图片时加样式名cell4 -->
                     <div class="cell9 cell4" v-else-if="data.thumb.length == 4">
                         <div class="item" v-for="(item,index) in data.thumb">
-                            <img :src="item.url+'?x-oss-process=image/resize,p_50'" alt="" tapmode @click="viewPicture(index,data.thumb)">
+                            <img :src="item.url+'?x-oss-process=image/resize,p_50'" alt="" tapmode @click="viewPicture(data.thumb,index)">
                         </div>
                     </div>
 
                     <!-- 九张图片，当为4张图片时加样式名cell4 -->
                     <div class="cell9" v-else>
                         <div class="item" v-for="(item,index) in data.thumb">
-                            <img :src="item.url+'?x-oss-process=image/resize,p_50'" alt="" tapmode @click="viewPicture(index,data.thumb)">
+                            <img :src="item.url+'?x-oss-process=image/resize,p_50'" alt="" tapmode @click="viewPicture(data.thumb,index)">
                         </div>
                     </div>
                 </div>
@@ -344,13 +344,13 @@
                                     <span class="name">{{v.replier.nickname}}</span> 回复
                                     <span class="name">{{v.nickname}}:</span>
                                 </div>
-                                <div class="lf">{{v.content}}</div>
+                                <div class="lf inline">{{v.content}}</div>
                             </div>
                             <div tapmode @click="Reply(v.uid,v.nickname,v.rew_id)" v-else>
                                 <div class="lf">
                                     <span class="name">{{v.nickname}}:</span>
                                 </div>
-                                <div class="lf">{{v.content}}</div>
+                                <div class="lf inline">{{v.content}}</div>
                             </div>
 
                         </li>
@@ -406,7 +406,7 @@
             getCircleDetail() { //读取学客圈详情
                 $api.css($api.dom('#main'), 'display:none');
                 $api.css($api.dom('#loading'), 'display:block');
-                
+
                 api.ajax({
                     url: serverurl,
                     method: 'get',
@@ -527,16 +527,19 @@
 
             },
 
-            viewPicture(index,data){
-              var url = [];
-              data.forEach(function(ret){
-                  url.push(ret.url);
-              })
-              var imageBrowser = api.require('imageBrowser');
-              imageBrowser.openImages({
-                  imageUrls: url,
-                  activeIndex:index
-              });
+            viewPicture(data,index){
+              if (data) {
+                var url = [];
+                data.forEach(function(ret){
+                    url.push(ret.url);
+                })
+                var imageBrowser = api.require('imageBrowser');
+                imageBrowser.openImages({
+                    imageUrls: url,
+                    activeIndex:index
+                });
+              }
+
             },
 
             Share(content,circle_id){

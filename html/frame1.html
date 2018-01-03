@@ -385,14 +385,14 @@
                       <!-- 九张图片，当为4张图片时加样式名cell4 -->
                       <div class="cell9 cell4" v-else-if="v.thumb.length == 4">
                           <div class="item" v-for="(item,index) in v.thumb">
-                              <img :src="item.url+'?x-oss-process=image/resize,p_50'" alt="" tapmode @click="viewPicture(index,v.thumb)">
+                              <img :src="item.url+'?x-oss-process=image/resize,p_50'" alt="" tapmode @click="viewPicture(v.thumb,index)">
                           </div>
                       </div>
 
                       <!-- 九张图片，当为4张图片时加样式名cell4 -->
                       <div class="cell9" v-else>
                           <div class="item" v-for="(item,index) in v.thumb">
-                              <img :src="item.url+'?x-oss-process=image/resize,p_50'" alt="" tapmode @click="viewPicture(index,v.thumb)">
+                              <img :src="item.url+'?x-oss-process=image/resize,p_50'" alt="" tapmode @click="viewPicture(v.thumb,index)">
                           </div>
                       </div>
                   </div>
@@ -682,16 +682,19 @@
                 });
             },
 
-            viewPicture(index,data){
-              var url = [];
-              data.forEach(function(ret){
-                  url.push(ret.url);
-              })
-              var imageBrowser = api.require('imageBrowser');
-              imageBrowser.openImages({
-                  imageUrls: url,
-                  activeIndex:index
-              });
+            viewPicture(data,index){
+              if (data) {
+                  var url = [];
+                  data.forEach(function(ret){
+                      url.push(ret.url);
+                  })
+                  var imageBrowser = api.require('imageBrowser');
+                  imageBrowser.openImages({
+                      imageUrls: url,
+                      activeIndex:index
+                  });
+              }
+
             },
 
             Share(content,circle_id){
