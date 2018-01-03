@@ -26,16 +26,16 @@
 				width: calc(65% - 25px);
 		    padding-left: 25px;
 		    color: #bdbdbd;
-		    font-size: 13px;
+		    font-size: 15px;
 			}
 			.credit {
 			    color: #fcb676;
-			    font-size: 15px;
+			    font-size: 18px;
 			}
 			.submit-btn {
 			    color: white;
-			    font-size: 15px;
-			    background: #fca958;
+			    font-size: 18px;
+			    background: #ffb300;
 			    text-align: center;
 			}
 
@@ -66,11 +66,11 @@
 					color: #fff;
 			}
 
-			header{height: 50px; line-height: 50px; background: #ffb300; color: #fff; font-size: 18px; position: relative;}
+			header{height: 50px; line-height: 50px; background: #ffb300; color: #fff; font-size: 20px; position: relative;}
 			header em{width: 50px; height: 50px; background: url(../../image/back.png) no-repeat center;
-				background-size: 20px; float: left;}
+				background-size: 18px; float: left;}
 
-			.leaveMsg-con input{height: 45px; float: left; color: #757575;width: calc(100% - 64px);}
+			.leaveMsg-con input{height: 100%; float: left; color: #757575;width: calc(100% - 72px);}
 			#num{width: 100%; height: 100%; text-align: center;}
 			.free-con .circle img{width: 100%;}
 	</style>
@@ -88,8 +88,8 @@
 				<div class="goods2-con">
 			<div class="addAdress-con" tapmode @click="go_address()">
 				<p class="addAdress-top hide">
-					<span class="fl">收货人:{{consignee}}</span>
-					<span class="fr" style="text-align:right">电话:{{tel}}</span>
+					<span class="fl">收货人：{{consignee}}</span>
+					<span class="fr" style="text-align:right">电话：{{tel}}</span>
 				</p>
 				<div class="addres-msg">
 					<i class="iconfont icon-dingwei icon-location"></i>
@@ -119,7 +119,7 @@
 			<div class="way-con hide" tapmode onclick="sel_delivery()">
 				<span class="fl">配送方式</span>
 				<p class="fr express">
-					<span>快递&nbsp;免邮</span>
+					<span style="font-size:15px;">快递&nbsp;免邮</span>
 					<i class="iconfont icon-gengduo1 icon-more"></i>
 				</p>
 			</div>
@@ -449,7 +449,7 @@
 
 		numMax = parseInt(vm.goods_number);//最大值
 		var num = document.getElementById("num").value;
-		if (num == numMin || num < numMin) {
+		if (num < numMin) {
 
 				api.toast({
 						msg: '不能少于最小购买量',
@@ -458,7 +458,7 @@
 				});
 
 
-		}else if (num == numMax || num > numMax) {
+		}else if (num > numMax) {
 
 				api.toast({
 						msg: '已超过最大购买量',
@@ -566,7 +566,7 @@
 					api.toast({
 					    msg: '抱歉，购买数量已超出商家库存,请重新选购',
 					    duration: 2000,
-					    location: 'bottom'
+					    location: 'middle'
 					});
 					return false;
 			}
