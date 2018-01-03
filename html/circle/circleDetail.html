@@ -421,7 +421,7 @@
                 }, function(ret, err) {
 
                     $api.css($api.dom('#loading'), 'display:none');
-
+                  
                     if (ret) {
                         vm.data = ret.data;
                         $api.css($api.dom('#main'), 'display:block');
@@ -453,23 +453,12 @@
                     $api.css($api.dom('#loading'), 'display:none');
                     if (ret) {
 
-                        if (ret.state == '1') {
-
-                            if (vm.data.like_member == '') {
-
-                                vm.data.like_member += ret.like_member;
-
-                            } else {
-                                vm.data.like_member += ',' + ret.like_member;
-                            }
-
+                        if (ret.status == '1') {
                             vm.data.is_like = '1';
                         } else {
-
-                            vm.data.like_member = ret.like_member;
                             vm.data.is_like = '0';
                         }
-
+                        vm.data.like_member = ret.like_member;
                         vm.data.like = ret.count;
                     } else {
 

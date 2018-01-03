@@ -11,11 +11,12 @@
     <style>
         header {
             background: #ffb300;
+            box-shadow: 0 2px 2px 0 rgba(0,0,0,.2);
         }
 
         header ul li {
             display: none;
-            height: 50px;
+            height: 54px;
             background: #ffb300;
         }
 
@@ -76,10 +77,11 @@
         }
 
         .input_box {
-            margin: 5px 10px;
+            margin: 8px 10px;
             position: relative;
             background: #fff;
             border-radius: 2px;
+            box-shadow: 0 2px 1px 0 rgba(0,0,0,0.1);
         }
 
         .input_box input {
@@ -88,7 +90,7 @@
             line-height: 40px;
             background: #fff;
             border-radius: 2px;
-            color: #ccc;
+            color: #212121;
             font-size: 16px;
             padding-left: 15px;
             text-align: left;
@@ -96,8 +98,8 @@
 
         .input_box em {
             display: block;
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             background: url(./image/search.png) no-repeat center;
             background-size: 16px;
             position: absolute;
@@ -145,7 +147,7 @@
                     </div>
                 </li>
                 <li>
-                    <div class="title">学分商城</div>
+                    <!-- <div class="title">学分商城</div> -->
                 </li>
                 <li>
                     <span class="msg" tapmode onclick="MyNews()">消息</span>
@@ -241,8 +243,14 @@
         var eheaderLis = $api.domAll('#header li');
         for (var i = 0, len = eFootLis.length; i < len; i++) {
             if (index == i) {
-                var y = 0 == index ? 0 : headerHeight;
-                // var y = headerHeight;
+                // var y = 0 == index ? 0 : headerHeight;
+
+                if (index == 0 || index == 2) {
+                    var y = 0;
+
+                }else {
+                    var y = headerHeight;
+                }
                 $api.addCls(eFootLis[i], 'active');
                 $api.addCls(eheaderLis[i], 'active');
                 api.openFrame({

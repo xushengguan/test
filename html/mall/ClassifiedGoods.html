@@ -10,60 +10,6 @@
 </head>
 
 <style>
-	.pro_catalog{
-		background-color: #fff;
-		width: 100%;
-	}
-
-	.pro_catalog .pro_1{
-		width: 50%;
-		box-sizing:border-box;
-		-webkit-box-sizing:border-box;
-		border-right: 0.5px solid #eeeeee;
-		border-bottom: 0.5px solid #eeeeee;
-		overflow: hidden;
-		float: left;
-		background-color: #fff;
-		text-align: center;
-		padding: 20px 0;
-	}
-
-	.pro_catalog .pro_1:nth-child(even){
-		border-right:none;
-	}
-
-	.pro_pic{
-		width: 115px;
-		height: 115px;
-		margin: 0 auto;
-	}
-	.pro_pic img{
-		display: block;
-		width: 100%;
-		height: 100%;
-	}
-	.pro_con{
-		width: 115px;
-		margin: 0 auto;
-		text-align: left;
-	}
-	.pro_con .subtitle{
-    font-size: 14px;
-    color: #999999;
-    margin:2px 0px;
-	}
-	.pro_con .title{
-   	 	font-size: 14px;
-   	 	color: #5c5c5c;
-    	margin-bottom:7px;
-	}
-	.pro_con .pay{
-    	font-size: 14px;
-    	color: #5c5c5c;
-	}
-	.pay span{
-   		 color: #fd6767;
-	}
 
 	.NoAct {
 			width: 100%;
@@ -74,6 +20,17 @@
 			color: #333;
 			font-size: 16px;
 	}
+
+
+	.goods_card{overflow: hidden;}
+	.goods_card li{float: left; width: calc(50% - 2px); background: #fff; margin-bottom: 4px;}
+	.goods_card li:nth-child(odd){margin-right: 2px;}
+	.goods_card li:nth-child(even){margin-left: 2px;}
+	.goods_card li img{width: 100%; height: 145px;}
+	.goods_card .txt{background: #fff; padding: 8px; text-align: center;}
+	.goods_card .txt .name{font-size: 14px; color: #212121; padding-bottom: 4px; font-weight: bold;}
+	.goods_card .txt .abs{font-size: 12px; color: #999; padding-bottom: 4px;}
+	.goods_card .txt .total{font-size: 14px; color: #f44336; font-weight: bold;}
 </style>
 
 <body>
@@ -81,14 +38,19 @@
 	<div class="pro_catalog" id="app" v-cloak>
 		<div class="NoAct" v-if="info == '' || info == null">抱歉，该分类暂时还没有商品！</div>
 		<div v-else>
-			<div class="pro_1" tapmode v-for="v in info" @click="go_goodsDetail(v.id)">
-				<div class="pro_pic"><img :src="v.imgurl" alt=""></div>
-				<div class="pro_con">
-					<p class="subtitle single">{{v.goods_name}}</p>
-					<p class="title more2">{{v.abs}}</p>
-					<p class="pay"><span>{{v.total}}</span>学分</p>
-				</div>
+			<div class="mallBox">
+					<ul class="goods_card">
+							<li tapmode v-for="v in info" @click="go_goodsDetail(v.id)">
+									<img :src="v.imgurl" alt="分类商品">
+									<div class="txt">
+											<p class="name single">{{v.goods_name}}</p>
+											<p class="abs single">{{v.abs}}</p>
+											<p class="total">{{v.total}}学分</p>
+									</div>
+							</li>
+					</ul>
 			</div>
+
 		</div>
 	</div>
 </body>
@@ -147,7 +109,9 @@
 	                  url: './credit_goodDetail.html',
 	                  pageParam: {
 	                      goods_id: goods_id
-	                  }
+	                  },
+										reload:true,
+										allowEdit:true
 	              });
 	            },
 

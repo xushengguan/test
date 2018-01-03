@@ -10,42 +10,42 @@
       <style>
           header{background: #ffb300; padding: 15px; }
           .info{padding-bottom: 20px; display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;
-          -webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;}
-          .info img{width: 26px; height: 26px; border-radius: 50%;}
+          -webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center; margin-top: 4px;}
+          .info img{width: 35px; height: 35px; border-radius: 50%;}
           .info span{font-size: 15px; color: #fff; padding-left: 10px; padding-right: 5px;}
           .info em{width: 12px; height: 26px; background: url(../image/ident.png) no-repeat center; background-size: contain;}
-          .assets{font-size: 14px; color: #fff1cf; padding-bottom: 14px;}
+          .assets{font-size: 14px; color: #fff1cf; padding-bottom: 10px;}
           .money{overflow: hidden; margin-bottom: 18px; display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;
           -webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;}
           .money .num{font-size: 18px; color: #ffebbf; width: 70%; float: left;}
-          .money .num em{font-size: 29px; font-weight: bold; color: #fff; }
-          .money button{display: block; position: absolute; right: 15px; width: 75px; height: 25px; border-radius: 25px; border: 2px solid #ffd876;
-            background-color: #ffcc4e; color: #fff; font-size: 14px;}
+          .money .num em{font-size: 29px; font-weight: bold; color: #fff;}
+          .money button{display: block; position: absolute; right: 15px; width: 80px; height: 26px; border-radius: 25px; border: 1px solid #ffd876;
+            background-color: #ffcc4e; color: #fff; font-size: 14px; font-weight: bold; line-height: 26px;}
           .menu{width: 100%; overflow: hidden;}
           .menu li{float: left; position: relative; width: 50%; margin-top: 18px;}
           .menu li .menu_title{font-size: 13px; color: #fff1cf; line-height: 14px;}
-          .menu li .num{font-size: 15px; color: #fff; line-height: 14px; padding-top: 5px;}
-          .menu li em{position: absolute; right: 23px; top: 50%; transform: translateY(-50%); background: url(../image/rt.png) no-repeat center;
+          .menu li .num{font-size: 15px; color: #fff; line-height: 14px; padding-top: 5px; font-weight: bold;}
+          .menu li em{position: absolute; right: 50px; top: 50%; transform: translateY(-50%); background: url(../image/rt.png) no-repeat center;
           background-size: 6px 10px; width: 6px; height: 10px;}
 
           .nav{background: #fff; display: -webkit-flex; display: -webkit-box; display: flex; padding: 5px 0;
-          box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15); margin-bottom: 8px;}
+          box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2); margin-bottom: 8px;}
           .nav li{flex: 1; -webkit-box-flex:1; -webkit-flex:1; border-right: 1px solid #f2f2f2; padding-top: 56px; padding-bottom: 14px;
-          background: url() no-repeat center 20px; background-size: auto 23px; text-align: center; font-size: 15px; color: #000;}
-          .nav li:nth-child(1){background: url(../image/nav_bar1.png) no-repeat center 20px; background-size: auto 23px;}
-          .nav li:nth-child(2){background: url(../image/nav_bar2.png) no-repeat center 20px; background-size: auto 23px;}
-          .nav li:nth-child(3){background: url(../image/nav_bar3.png) no-repeat center 20px; background-size: auto 23px;}
-          .nav li:nth-child(4){background: url(../image/nav_bar4.png) no-repeat center 20px; background-size: auto 23px;}
+          background: url() no-repeat center 20px; background-size: auto 25px; text-align: center; font-size: 15px; color: #000;}
+          .nav li:nth-child(1){background: url(../image/nav_bar1.png) no-repeat center 20px; background-size: auto 25px;}
+          .nav li:nth-child(2){background: url(../image/nav_bar2.png) no-repeat center 20px; background-size: auto 25px;}
+          .nav li:nth-child(3){background: url(../image/nav_bar3.png) no-repeat center 20px; background-size: auto 25px;}
+          .nav li:nth-child(4){background: url(../image/nav_bar4.png) no-repeat center 20px; background-size: auto 25px;}
           .nav li:last-child{border-right: none;}
 
-          .box{margin-bottom: 8px; box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15); background: #fff;}
+          .box{margin-bottom: 8px; box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2); background: #fff;}
           .box .top{padding: 10px 25px 10px 15px; position: relative; border-bottom: 1px solid #f2f2f2;}
           .top .awardName{font-size: 15px; color: #212121; font-weight: bold;}
-          .top .explain{font-size: 13px; color: #999; margin-top: 10px;}
+          .top .explain{font-size: 13px; color: #999; margin-top: 2px;}
           .top em{position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: url(../image/rt.png) no-repeat center;
           background-size: 7px 11px; width: 7px; height: 11px;}
           .income{display: -webkit-box; display: -webkit-flex; display: flex; border-bottom: 1px solid #f2f2f2;}
-          .income .num{font-size: 15px; flex: 1; -webkit-flex:1; -webkit-box-flex:1; border-right: 1px solid #f2f2f2; padding: 15px;}
+          .income .num{font-size: 15px; flex: 1; -webkit-flex:1; -webkit-box-flex:1; border-right: 1px solid #f2f2f2; padding: 10px 15px;}
           .income .num:last-child{border-right: none;}
           .income .num .txt{color: #999; padding-bottom: 10px;}
           .income .num .total{color: #ffb300; font-weight: bold;}
@@ -230,7 +230,7 @@
                           },
                       }
                   },function(ret, err){
-                  
+
                       if (ret.status == '1') {
                           vm.data = ret.data;
                       }else if (ret.status == '5') {

@@ -11,12 +11,12 @@
     <style>
         header {
             padding: 5px 0;
-            height: 35px;
-            line-height: 35px;
+            height: 40px;
+            line-height: 40px;
             background: #fff;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 3px 3px rgba(0, 0, 0, .1);
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
         }
 
         header .public {
@@ -60,13 +60,13 @@
 
         .box {
             background: #fff;
-            margin-top: 5px;
+            margin-top: 10px;
             padding: 15px;
-            box-shadow: 0 3px 3px rgba(0, 0, 0, .1);
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
         }
 
         .box:last-child {
-            box-shadow: 0 3px 3px rgba(0, 0, 0, .1);
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .2);
             margin-bottom: 0;
         }
 
@@ -85,7 +85,8 @@
 
         .box .PerInfo .info {
             float: left;
-            margin-left: 15px;
+            margin-left: 10px;
+            margin-top: 2px;
         }
 
         .PerInfo .info p {
@@ -93,40 +94,41 @@
         }
 
         .PerInfo .info p:first-child {
-            font-size: 15px;
-            color: #343d66;
+            font-size: 13px;
+            font-weight: bold;
+            color: #336699;
         }
 
         .PerInfo .info p:nth-child(2) {
             font-size: 12px;
-            color: #757575;
+            color: #aaa;
         }
 
         .box .msg {
-            font-size: 14px;
+            font-size: 15px;
             color: #212121;
             margin-bottom: 5px;
             word-wrap: normal;
             word-break: break-all;
+            line-height: 22px;
         }
 
         .box .show {
             font-size: 15px;
-            color: #343d66;
+            color: #336699;
             margin-bottom: 4px;
         }
 
         .box .cell {
             width: 210px;
-            max-height: 210px;
+            height: 210px;
             overflow: hidden;
-
+            margin-bottom: 10px;
         }
 
         .box .cell img {
             width: 100%;
-
-
+            height: 100%;
         }
 
         .box .cell9 {
@@ -172,17 +174,16 @@
         .box .nav {
             height: 30px;
             line-height: 30px;
-            font-size: 13px;
+            font-size: 14px;
             color: #7e7e7e;
             overflow: hidden;
-            margin-bottom: 5px;
         }
 
         .box .nav .share {
             height: 30px;
             width: 30px;
             background: url(../image/share.png) no-repeat left center;
-            background-size: 15px;
+            background-size: 14px;
             float: left;
         }
 
@@ -190,22 +191,22 @@
         .box .nav .love {
             height: 30px;
             float: right;
-            padding-left: 36px;
+            padding-left: 40px;
         }
 
         .box .nav .comment {
             background: url(../image/comment.png) no-repeat center;
-            background-size: 15px 14px;
+            background-size: 16px;
         }
 
         .box .nav .love {
-            background: url(../image/love1.png) no-repeat center 5px;
-            background-size: 15px;
+            background: url(../image/love1.png) no-repeat center 4px;
+            background-size: 16px;
         }
 
         .box .nav .love.on {
-            background: url(../image/love.png) no-repeat center 5px;
-            background-size: 15px;
+            background: url(../image/love.png) no-repeat center 4px;
+            background-size: 16px;
         }
 
         .box .reply {
@@ -213,6 +214,7 @@
             background: #f2f2f2;
             border-radius: 2px;
             font-size: 14px;
+            margin-top: 5px;
         }
 
         .reply .lovePerson {
@@ -260,6 +262,7 @@
         .reply .checkAll {
             font-size: 14px;
             color: #343d66;
+            margin-top: 4px;
         }
 
         footer {
@@ -360,7 +363,7 @@
             <div v-if="data">
                 <div class="box" v-for="v in data">
                   <div class="PerInfo">
-                      <img src="../image/pic.png" alt="" v-if="v.headimgurl == '' || v.headimgurl == null || v.headimgurl == undefined" @click="goCircel(v.uid)">
+                      <img src="../image/pic3.png" alt="" v-if="v.headimgurl == '' || v.headimgurl == null || v.headimgurl == undefined" @click="goCircel(v.uid)">
                       <img :src="v.headimgurl" alt="" v-else @click="goCircel(v.uid)">
                       <div class="info">
                           <p>{{v.nickname}}</p>
@@ -534,7 +537,8 @@
                     data: {
                         values: {
                             type: '10115',
-                            token: token
+                            token: token,
+                            uid:id
                         },
                     }
                 }, function(ret, err) {
@@ -580,24 +584,17 @@
                     }
                 }, function(ret, err) {
                     $api.css($api.dom('#loading'), 'display:none');
-
+                    console.log(JSON.stringify(ret));
                     if (ret) {
                         if (ret.status == '5') {
                             ExitLogin();
                         }else {
-                            if (ret.state == '1') {
-
-                                if (item.like_member == '') {
-                                    item.like_member += ret.like_member;
-                                } else {
-                                    item.like_member += ',' + ret.like_member;
-                                }
+                            if (ret.status == '1') {
                                 item.is_like = '1';
                             } else {
-
-                                item.like_member = ret.like_member;
                                 item.is_like = '0';
                             }
+                            item.like_member = ret.like_member;
                             item.like = ret.count;
                         }
                     } else {

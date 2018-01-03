@@ -19,14 +19,14 @@
         .msg .name{font-size: 17px; font-weight: bold; color: #fff; margin-bottom: 5px;}
         .msg .id{font-size: 14px; color: #ffeaba;}
         .nav{height: 60px; background: #fff;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;
-        margin-bottom: 7px; box-shadow: -2px 1px 2px rgba(0,0,0,.1);}
+        margin-bottom: 7px; box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);}
         .nav li{-webkit-box-flex: 1;-webkit-flex: 1;flex: 1;background: url() no-repeat center 10px; background-size:24px;
         text-align: center; font-size: 13px; color: #999; padding-top: 36px;}
         .nav li.nav1{background: url(../image/nav1.png) no-repeat center 10px; background-size:24px;}
         .nav li.nav2{background: url(../image/nav2.png) no-repeat center 10px; background-size:24px;}
         .nav li.nav3{background: url(../image/nav3.png) no-repeat center 10px; background-size:24px;}
 
-        .navMenu{background: #fff; box-shadow: 0 2px 5px #d4d4d4; border-radius: 3px;}
+        .navMenu{background: #fff; box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2); border-radius: 3px;}
         .navMenu li{height: 50px; line-height: 50px; border-bottom: 1px solid #efeff4; padding-right: 15px; padding-left: 43px;
           background: url() no-repeat 15px center; font-size: 15px; color: #333; position: relative;}
         .navMenu li:last-child{border-bottom: none;}
@@ -76,6 +76,7 @@
 <script type="text/javascript">
 var id,token,index;
 apiready = function(){
+
   id = $api.getStorage('id');
   token = $api.getStorage('token');
 
@@ -119,6 +120,7 @@ apiready = function(){
                 },
             }
         },function(ret, err){
+
             if (ret.status == '5') {
               ExitLogin();
             }else if (ret.status == '1') {
@@ -290,7 +292,7 @@ function exitLogin() {
                },
            }
        },function(ret, err){
-           
+
            if (ret) {
                if (ret.status == '1') {
                    ExitLogin();
