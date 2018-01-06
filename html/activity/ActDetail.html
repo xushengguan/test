@@ -17,40 +17,38 @@
 				header {
 						height: 50px;
 						line-height: 50px;
-						background: #ffb300;
 						color: #fff;
-						font-size: 18px;
-						position: relative;
+						font-size: 20px;
+						position: absolute;
+						/*padding-left: 45px;*/
 				}
-
 				header em {
-						width: 50px;
-						height: 50px;
-						background: url(../../image/back.png) no-repeat center;
-						background-size: 20px;
-						float: left;
-				}
-
+            width: 50px;
+            height: 50px;
+            background: url(../../image/back.png) no-repeat center;
+            background-size: 18px;
+            float: left;
+        }
 			.swiper{width: 100%; position: relative;}
-			.swiper img{display: block; width: 100%; height: 200px;}
-			.swiper em{width: 20px; height: 20px; background: url(../../image/back.png) no-repeat top;
-				background-size: cover; position: absolute; top: 35px; left: 15px;}
+			.swiper img{display: block; width: 100%; height: 235px;}
+			/*.swiper em{width: 20px; height: 20px; background: url(../../image/back.png) no-repeat top;
+				background-size: cover; position: absolute; top: 35px; left: 15px;}*/
 
-			.main{padding-top: 15px; background: #f2f2f2;}
+			.main{background: #f2f2f2;}
 			.userInfo{overflow: hidden; padding: 15px 15px 0;}
-			.userInfo img{float: left; width: 63px; height: 63px;}
-			.userInfo .msg{margin-left: 12px; float: left; width: calc(100% - 75px)}
-			.userInfo .msg .title{color: #000; font-size: 18px; font-weight: bold;}
-			.userInfo .msg .userId{color: #666; font-size: 15px;}
+			.userInfo img{float: left; width: 70px; height: 70px;}
+			.userInfo .msg{margin-left: 12px; float: left; width: calc(100% - 82px); position: relative;}
+			.userInfo .title{color: #000; font-size: 18px; font-weight: bold; width: calc(100% - 90px); padding-left: 12px;}
+			.userInfo .msg .userId{color: #666; font-size: 13px; width: calc(100% - 90px);}
 
-			.SignUp{padding: 15px; overflow: hidden; text-align: right;}
-			.SignUp button{width: 90px; height: 32px; line-height: 32px; border-radius: 3px; color: #fff;
+			.SignUp{overflow: hidden; text-align: right; width: 90px; position: absolute; right: 0; bottom: 0;}
+			.SignUp button{width: 100%; height: 32px; line-height: 32px; border-radius: 3px; color: #fff;
 				text-align: center; font-size: 14px; background: #09bb07;}
 			.SignUp button.on{background: #e85324;}
 			.SignUp button.on1{background: #3e53f2;}
 			.SignUp .places{color: #666; font-size: 12px; margin-top: 5px;}
 
-			.Actinfo{padding: 25px 15px; }
+			.Actinfo{padding: 25px 0; border-top: 1px solid #ddd; margin: 0 15px;}
 			.Actinfo .timeAndtel{width: 100%; overflow: hidden;}
 			.Actinfo .timeAndtel .half{width: calc(50% - 35px); height: 32px; background: url(../../image/time.png) no-repeat left center;
 				 background-size: 25px; padding-left: 35px; float: left;}
@@ -73,11 +71,10 @@
 			position: absolute; top: 0; right: 0; display: block;}
 
 			footer{height:50px; width: 100%; overflow: hidden; box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.2); position: fixed; bottom: 0;
-				background-color: #ffb300; line-height: 50px; font-size: 16px; color: #fff; display:-webkit-box;
-				display:-webkit-flex;display:-ms-flexbox;display:flex; -webkit-box-pack:center;-webkit-justify-content:center;
-				-ms-flex-pack:center;justify-content:center;}
-      footer em{width: 16px; height: 50px; background: url(../../image/scan.png) no-repeat left center;
-			background-size: 16px; padding-left: 5px;}
+				line-height: 50px; font-size: 16px; color: #fff; display:-webkit-box;
+				display:-webkit-flex;display:-ms-flexbox;display:flex;}
+      footer em{width: 16px; height: 50px; background: url(../../image/scan.png) no-repeat 0 center;
+			background-size: 16px;}
 
 			.img{height: calc(100% - 60px); padding:15px 6px 15px 6px; overflow: hidden; background: #fff;}
 			.img .title{padding:5px 6px 10px 6px; font-size: 15px; color: #292929; font-weight: bold;}
@@ -87,7 +84,7 @@
 			.img .item img{position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block;}
 
       /*swiper begin*/
-			.swiper-container {width: 100%;  box-shadow: 0 1px 2px rgba(0,0,0,.1); padding:15px 0;}
+			.swiper-container {width: 100%; padding:15px 0;}
 	    .swiper-slide {text-align: center;font-size: 18px;}
 			.swiper-slide .pic{height: 65px; position: relative;}
 			.swiper-slide .pic em{width: 19px; height: 22px; background: url() no-repeat center; background-size: contain; position: absolute;
@@ -97,44 +94,52 @@
 			.swiper-slide:nth-child(3) .pic em{display: block; background: url(../../image/3st.png) no-repeat center; background-size: contain;}
 	    .swiper-slide .pic img{width: 63px; height: 63px;  border-radius: 50%; border:2px solid #fff;}
 	    .swiper-slide .name{font-size: 14px; color: #212121; display: block; padding-top: 8px;}
+
+			.halffooter{-webkit-box-flex: 1; -webkit-flex: 1; flex: 1; height: 100%; background-color: #ffb300;}
+			.halffooter span{position: absolute; margin-left: 5px;}
+			.halffooter.on{background: #fff; text-align: center; color:#333;}
+			.fbox{margin: auto; width: 80px;}
 	</style>
 </head>
 
 <body>
 	  <div id="wrap" v-cloak>
-				<header>
+				<!-- <header>
 						<em tapmode onclick="go_back()"></em> 活动详情
-				</header>
+				</header> -->
 			  <div id="main">
 					<div class="swiper" v-if="data.actimgurl">
+							<header>
+									<em tapmode onclick="go_back()"></em> 活动详情
+							</header>
 							<img :src="data.actimgurl" alt="">
 					</div>
 					<div class="main">
 							<div class="userInfo">
 									<img :src="data.headimgurl" alt="" v-if="data.headimgurl">
 									<img src="../../image/pic3.png" alt="" v-else>
+									<div class="title more2">{{data.title}}</div>
 									<div class="msg">
-											<div class="title">{{data.title}}</div>
-											<div class="userId">活动ID:{{data.id}}</div>
+											<div class="userId" style="padding-top:5px;">活动ID:{{data.id}}</div>
 											<div class="userId" v-if="data.join_num">报名人数:{{data.join_num}}</div>
+											<div class="SignUp">
+												  <!-- 加class on 进行中为状态，on1则为已结束状态,否则为等待开始状态-->
+													<button tapmode onclick="changeState(1)" v-show="data.actsta == 2 && role == '2'">开始活动</button>
+													<button tapmode onclick="changeState(0)" class="on" v-show="data.actsta == 1 && role == '2'">结束活动</button>
+													<button class="on1" v-show="data.actsta == 0">已结束</button>
+													<button tapmode onclick="joinAct()" v-show="status == '0' && data.actsta == 2 ">报名参加</button>
+													<button class="on" v-show="status == '1' && role == '1' && data.actsta != 0">已报名</button>
+													<!-- <div class="places">剩余名额:20人</div> -->
+											</div>
 									</div>
-							</div>
 
-							<div class="SignUp">
-								  <!-- 加class on 进行中为状态，on1则为已结束状态,否则为等待开始状态-->
-									<button tapmode onclick="changeState(1)" v-show="data.actsta == 2 && role == '2'">开始活动</button>
-									<button tapmode onclick="changeState(0)" class="on" v-show="data.actsta == 1 && role == '2'">结束活动</button>
-									<button class="on1" v-show="data.actsta == 0">已结束</button>
-									<button tapmode onclick="joinAct()" v-show="status == '0' && data.actsta == 2 ">报名参加</button>
-									<button class="on" v-show="status == '1' && role == '1' && data.actsta != 0">已报名</button>
-									<!-- <div class="places">剩余名额:20人</div> -->
 							</div>
 
 							<!-- 活动状态 -->
-							<div class="ActStaus" tapmode v-if="data.actsta == 1 && role == '2' || data.actsta == 0 && role == '2'" @click="goMarkPage(data.id)">
+							<!-- <div class="ActStaus" tapmode v-if="data.actsta == 1 && role == '2' || data.actsta == 0 && role == '2'" @click="goMarkPage(data.id)">
 								查看打分记录
 								<em></em>
-							</div>
+							</div> -->
 
 							<!-- Swiper -->
 						  <div class="swiper-container" v-if="!rank.status">
@@ -169,7 +174,7 @@
 									</div>
 							</div>
 
-							<div class="img" v-if="data.actsta == '0' && data.start_img || data.actsta == '0' && data.underway_img || data.actsta == '0' && data.end_img">
+							<div class="img" style="margin-top:15px;" v-if="data.actsta == '0' && data.start_img || data.actsta == '0' && data.underway_img || data.actsta == '0' && data.end_img">
 									<div class="item">
 	                    <img :src="data.start_img+'?x-oss-process=image/resize,p_50'" alt=""  @click="viewPicture(data.start_img)" v-if="data.start_img">
 									</div>
@@ -200,8 +205,17 @@
 							{{data.content}}
 					</div>
 				</div>
-				<footer v-show="data.actsta == 1 && role == '2'" tapmode onclick="scan()">
-					    <em></em>点击扫码 为他打分
+
+				<footer v-show="data.actsta == 1 && role == '2'">
+							<div class="halffooter on" tapmode @click="goMarkPage(data.id)">
+									打分记录
+					    </div>
+							<div class="halffooter" tapmode onclick="scan()">
+								  <div class="fbox">
+											<em></em>
+											<span>扫码打分</span>
+								  </div>
+					    </div>
 				</footer>
 		</div>
 
@@ -237,163 +251,163 @@
 		}
 
 		var vm = new Vue({
-				el:'#wrap',
-				data:{
-						data:[],
-						role:'',
-						status:'',
-						rank:[]
+				el: '#wrap',
+				data: {
+						data: [],
+						role: '',
+						status: '',
+						rank: []
 				},
 				filters: {
-            formatDate(time) {
-                var date = new Date(time * 1000);
-                return formatDate(date, 'yyyy-MM-dd');
-            },
-						formatDate1(time){
+						formatDate: function (_formatDate) {
+								function formatDate(_x) {
+										return _formatDate.apply(this, arguments);
+								}
+
+								formatDate.toString = function () {
+										return _formatDate.toString();
+								};
+
+								return formatDate;
+						}(function (time) {
+								var date = new Date(time * 1000);
+								return formatDate(date, 'yyyy-MM-dd');
+						}),
+						formatDate1: function formatDate1(time) {
 								var date = new Date(time * 1000);
 								return formatDate(date, 'hh:mm:ss');
 						}
-        },
-				methods:{
-						getDetail(){//获取活动详情
-                vm.role = role;
+				},
+				methods: {
+						getDetail: function getDetail() {
+								//获取活动详情
+								vm.role = role;
 
-                $api.css($api.byId('loading'), 'display:block');
+								$api.css($api.byId('loading'), 'display:block');
 								$api.css($api.byId('main'), 'display:none');
 								api.ajax({
-								    url: serverurl,
-								    method: 'get',
-										cache:true,
-								    data: {
-								        values: {
-								             type: '10018',
-														  id: actid,
-														token:token
-								        },
-								    }
-								},function(ret, err){
-									  $api.css($api.byId('loading'), 'display:none');
-                    $api.css($api.byId('main'), 'display:block');
+										url: serverurl,
+										method: 'get',
+										cache: true,
+										data: {
+												values: {
+														type: '10018',
+														id: actid,
+														token: token
+												}
+										}
+								}, function (ret, err) {
+										$api.css($api.byId('loading'), 'display:none');
+										$api.css($api.byId('main'), 'display:block');
 
-								    if (ret) {
-                        if (ret.status == '5') {
+										if (ret) {
+												if (ret.status == '5') {
 														ExitLogin();
-                        }
+												}
 												vm.data = ret;
 
-											  if (ret.actsta == 0) {//活动状态 0 已结束 1 活动进行中 2活动未开始
+												if (ret.actsta == 0) {
+														//活动状态 0 已结束 1 活动进行中 2活动未开始
 														vm.getRank();
-											  }
-
-								    }else {
+												}
+										} else {
 
 												api.toast({
-												    msg: '网络错误',
-												    duration: 2000,
-												    location: 'bottom'
+														msg: '网络错误',
+														duration: 2000,
+														location: 'bottom'
 												});
-
-								    }
+										}
 								});
 						},
-
-						checkSignUp(){//查询用户是否报名
+						checkSignUp: function checkSignUp() {
+								//查询用户是否报名
 								api.ajax({
-								    url: serverurl,
-								    method: 'get',
-								    data: {
-								        values: {
-								             type: '10177',
-														 uid:uid,
-														actid:actid,
-														token:token
-								        },
-								    }
-								},function(ret, err){
+										url: serverurl,
+										method: 'get',
+										data: {
+												values: {
+														type: '10177',
+														uid: uid,
+														actid: actid,
+														token: token
+												}
+										}
+								}, function (ret, err) {
 
-								    if (ret) {
-                        if (ret.status == '5') {
-                        		ExitLogin();
-                        }
+										if (ret) {
+												if (ret.status == '5') {
+														ExitLogin();
+												}
 												vm.status = ret.status;
-								    }else {
+										} else {
 
 												api.toast({
-												    msg: '网络错误',
-												    duration: 2000,
-												    location: 'bottom'
+														msg: '网络错误',
+														duration: 2000,
+														location: 'bottom'
 												});
-
-								    }
+										}
 								});
 						},
-
-						getRank(){//活动结束时显示排名
+						getRank: function getRank() {
+								//活动结束时显示排名
 
 								api.ajax({
-								    url: serverurl,
-								    method: 'get',
-								    data: {
-								        values: {
-								             type: '10156',
+										url: serverurl,
+										method: 'get',
+										data: {
+												values: {
+														type: '10156',
 														token: token,
-														actid:actid
-								        },
-								    }
-								},function(ret, err){
+														actid: actid
+												}
+										}
+								}, function (ret, err) {
 
-								    if (ret) {
+										if (ret) {
 
-											if (ret.status == '5') {
-													ExitLogin();
-											}
-											vm.rank = ret;
-
-								    }else {
+												if (ret.status == '5') {
+														ExitLogin();
+												}
+												vm.rank = ret;
+										} else {
 
 												api.toast({
-												    msg: '网络错误',
-												    duration: 2000,
-												    location: 'bottom'
+														msg: '网络错误',
+														duration: 2000,
+														location: 'bottom'
 												});
-
-								    }
+										}
 								});
 						},
-
-						goCall(tel){
+						goCall: function goCall(tel) {
 								api.call({
-								    type: 'tel_prompt',
-								    number: tel
+										type: 'tel_prompt',
+										number: tel
 								});
 						},
-
-						viewPicture(data){
+						viewPicture: function viewPicture(data) {
 								var url = [];
 								url.push(data);
 								var imageBrowser = api.require('imageBrowser');
 								imageBrowser.openImages({
 										imageUrls: url
 								});
-            },
-
-						goMarkPage(actid){
+						},
+						goMarkPage: function goMarkPage(actid) {
 								api.openWin({
-								    name: 'markPage_title',
-								    url: './markPage_title.html',
-								    pageParam: {
-								        actid: actid
-								    },
-										reload:true
+										name: 'markPage_title',
+										url: './markPage_title.html',
+										pageParam: {
+												actid: actid
+										},
+										reload: true
 								});
-
 						}
+				}
 
-				},
-
-
-		})
-
+		});
 		// swiper
 		function fnInitSwipe(){
 			var swiper = new Swiper('.swiper-container', {
@@ -408,30 +422,32 @@
 		}
 
 		// 上传活动照片
-    function UploadPic(e,num){
-				getPicture('album',function(ret){
-						if (ret.data) {
-							 uploader(e,num,ret.data);
-						}
-				})
+		function UploadPic(e, num) {
+		  getPicture('album', function (ret) {
+		    if (ret.data) {
+
+		      uploader(e, num, ret.data);
+		    }
+		  });
 		}
 
 		//获取图片
-		function getPicture(type,callback){
-      api.getPicture({
-        sourceType: type,
-        encodingType: 'jpg',
-        mediaValue: 'pic',
-        destinationType: 'url',
-        allowEdit: true,
-        quality: 100,
-        saveToPhotoAlbum: false
-      }, function(ret, err) {
-        if (ret.data) {
-            callback(ret);
-        }
-      });
-    }
+		function getPicture(type, callback) {
+		  api.getPicture({
+		    sourceType: type,
+		    encodingType: 'jpg',
+		    mediaValue: 'pic',
+		    destinationType: 'url',
+		    allowEdit: true,
+		    quality: 100,
+		    saveToPhotoAlbum: false
+		  }, function (ret, err) {
+
+		    if (ret) {
+		      callback(ret);
+		    }
+		  });
+		}
 
 		//获取阿里云签名
   	function uploader(e,num,src) {
@@ -475,6 +491,7 @@
       			url: host,
       			method: 'post',
       			dataType: 'text',
+						headers:'json',
       			data: {
       				values: {
       					OSSAccessKeyId: accessid,
@@ -490,11 +507,20 @@
       		}, function(ret, err) {
 
       			if (ret) {
-      				// 在回调函数里面调用
-      				var dom = parseXML(ret);
-      				// location 标签的内容使用DOM选择器进行查找
-      				var url = dom.querySelector('Location').innerHTML;
+      				// // 在回调函数里面调用
+      				// var dom = parseXML(ret);
+							// console.log(JSON.stringify(dom));
+      				// // location 标签的内容使用DOM选择器进行查找
+      				// var url = dom.querySelector('Location').innerHTML;
+							// console.log("url---"+url);
+							var div=document.createElement('div');
+					    div.style.display = 'none';
+					    div.innerHTML=ret;
+					    document.body.insertBefore(div, document.body.firstChild);
+							var url = div.getElementsByTagName('Location')[0].innerHTML;
+
  							if (url) {
+
  									postPic(e,num,url);
  							}
       			} else {
@@ -525,6 +551,7 @@
 				    }
 				},function(ret, err){
 					  $api.css($api.dom('#loading'), 'display:none');
+
 				    if (ret) {
 
 								if (ret.status == '5') {
@@ -589,22 +616,22 @@
               if (ret.status == '5') {
 									ExitLogin();
               }else if (ret.status == '1') {
-								if (num == 0) {
-										index = 0;
-										api.toast({
-												msg: '活动已结束',
-												duration: 2000,
-												location: 'middle'
-										});
-								}else if (num == 1) {
-										index = 1;
-										api.toast({
-												msg: '活动已开始',
-												duration: 2000,
-												location: 'middle'
-										});
-								}
-								vm.getDetail();
+									if (num == 0) {
+											index = 0;
+											api.toast({
+													msg: '活动已结束',
+													duration: 2000,
+													location: 'middle'
+											});
+									}else if (num == 1) {
+											index = 1;
+											api.toast({
+													msg: '活动已开始',
+													duration: 2000,
+													location: 'middle'
+											});
+									}
+									vm.getDetail();
 							}else {
 									api.toast({
 											msg: '操作失败',

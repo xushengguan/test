@@ -50,13 +50,13 @@
       };
 
       var vm = new Vue({
-          el:'#app',
-          data:{
-              data:[]
+          el: '#app',
+          data: {
+              data: []
           },
-          methods:{
+          methods: {
               //显示打分记录
-              getMark(){
+              getMark: function getMark() {
                   var token = $api.getStorage('token');
                   var actid = api.pageParam.actid;
                   api.ajax({
@@ -64,12 +64,12 @@
                       method: 'get',
                       data: {
                           values: {
-                               type:'10046',
+                              type: '10046',
                               token: token,
-                              actid: actid,
-                          },
+                              actid: actid
+                          }
                       }
-                  },function(ret, err){
+                  }, function (ret, err) {
                       if (ret) {
                           if (ret.status == '5') {
                               ExitLogin();
@@ -82,12 +82,10 @@
                               duration: 2000,
                               location: 'bottom'
                           });
-
                       }
                   });
-
               }
           }
-      })
+      });
   </script>
   </html>
