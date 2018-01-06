@@ -56,40 +56,40 @@
       }
 
       var vm = new Vue({
-          el:'#app',
-          data:{
-              Info:[],
-              status:''
+          el: '#app',
+          data: {
+              Info: [],
+              status: ''
           },
-          methods:{
-              getWaitAct(){
-                  $api.css($api.byId('app'),'display:none');
-                  $api.css($api.byId('loading'),'display:block');
+          methods: {
+              getWaitAct: function getWaitAct() {
+                  $api.css($api.byId('app'), 'display:none');
+                  $api.css($api.byId('loading'), 'display:block');
 
-                  api.ajax({//未激活学员列表
+                  api.ajax({ //未激活学员列表
                       url: serverurl,
                       method: 'get',
-                      cache:true,
+                      cache: true,
                       data: {
                           values: {
                               type: '10169',
                               token: token,
-                              uid:uid
-                          },
+                              uid: uid
+                          }
                       }
-                  },function(ret, err){
+                  }, function (ret, err) {
 
-                      $api.css($api.byId('loading'),'display:none');
-                      
+                      $api.css($api.byId('loading'), 'display:none');
+
                       if (ret) {
                           if (ret.status == '5') {
                               ExitLogin();
-                          }else if(ret.status == '0'){
+                          } else if (ret.status == '0') {
                               vm.status = ret.status;
-                          }else{
+                          } else {
                               vm.Info = ret.data;
                           }
-                          $api.css($api.byId('app'),'display:block');
+                          $api.css($api.byId('app'), 'display:block');
                       } else {
 
                           api.toast({
@@ -97,12 +97,10 @@
                               duration: 2000,
                               location: 'bottom'
                           });
-
                       }
                   });
-
               }
           }
-      })
+      });
   </script>
   </html>

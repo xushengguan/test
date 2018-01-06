@@ -18,7 +18,7 @@
           .money{overflow: hidden; margin-bottom: 18px; display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;
           -webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;}
           .money .num{font-size: 18px; color: #ffebbf; width: 70%; float: left;}
-          .money .num em{font-size: 29px; font-weight: bold; color: #fff;}
+          .money .num em{font-size: 29px; font-weight: bold; color: #fff; }
           .money button{display: block; position: absolute; right: 15px; width: 80px; height: 26px; border-radius: 25px; border: 1px solid #ffd876;
             background-color: #ffcc4e; color: #fff; font-size: 14px; font-weight: bold; line-height: 26px;}
           .menu{width: 100%; overflow: hidden;}
@@ -180,8 +180,8 @@
       var header = $api.dom('header');
       fixStatusBar_API(header);
       var uid,token;
-      apiready = function(){
 
+      apiready = function(){
         uid = $api.getStorage('id');
         token = $api.getStorage('token');
         loading();
@@ -217,7 +217,7 @@
               Info:[]
           },
           methods:{
-              getUser(){
+              getUser:function(){
                   api.ajax({//获取用户基本信息
                       url: serverurl,
                       method: 'get',
@@ -246,7 +246,7 @@
                   });
               },
 
-              getInfo(){
+              getInfo:function(){
                   api.ajax({//个人中心
                       url: serverurl,
                       method: 'get',

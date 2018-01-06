@@ -65,6 +65,7 @@
         .ActLis{
             background: #fff;
         }
+
         .ActLis li {
             padding: 18px 0;
             border-bottom: 1px solid #ddd;
@@ -135,16 +136,16 @@
             left: 0;
             z-index: 30;
             background: rgba(0,0,0,0.6);
-            overflow: auto;
+            overflow-y: auto;
         }
 
-        .fixbox{width: 250px; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
-        border-radius: 5px;}
+        .fixbox{width: 250px; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); border-radius: 5px;
+          -webkit-transform:translate(-50%,-50%);}
         .fixbox .title{padding: 15px 0; color: #212121; font-weight: bold; background: #fbce56; text-align: center;}
         .fixbox .section{padding: 15px; background: #fff; text-align: center; border-bottom: 1px solid #f2f2f2;}
         .fixbox .content{min-height: 47px; max-height: 300px; overflow: auto;}
 
-        .fu-body .main{position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+        .fu-body .main{position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); -webkit-transform:translate(-50%,-50%);
         border-radius: 5px; width: 80%; height: 80%; background: #fff; padding: 19px;}
         .fu-body .main em{width: 20px; height: 19px; background: url(../../image/close.png) no-repeat center; background-size: contain;}
         .main .txt{width: 100%; margin-top: 35px; height: calc(100% - 120px); resize: none; overflow-y: auto; font-size: 15px; color: #999;}
@@ -162,7 +163,7 @@
 </head>
 
 <body>
-    <div id="app" v-cloak>
+    <div id="app">
         <div class="top">
             <header>
                 <em tapmode onclick="go_back()"></em>
@@ -183,7 +184,7 @@
             <li>
                 <div class="box box1">
                     <div class="name">学科</div>
-                    <input type="button" id="sub" value="请选择学科" tapmode onclick="subject()">
+                    <input type="button" id="sub" value="请选择学科" onclick="subject()">
                 </div>
             </li>
             <li>
@@ -280,13 +281,14 @@
     };
 
     var vm = new Vue({
-        el:'#app',
-        data:{
-            data:[],
-            dataImg:[]
+        el: '#app',
+        data: {
+            data: [],
+            dataImg: []
         },
-        methods:{
-            getSubject(){//活动学科
+        methods: {
+            getSubject: function getSubject() {
+                //活动学科
 
                 api.ajax({
                     url: serverurl,
@@ -294,62 +296,54 @@
                     data: {
                         values: {
                             type: '10162',
-                            token:token
-                        },
+                            token: token
+                        }
                     }
-                },function(ret, err){
-                    if(ret){
-                        if(ret.status == '5'){
+                }, function (ret, err) {
+                    if (ret) {
+                        if (ret.status == '5') {
                             ExitLogin();
-                        }else {
+                        } else {
                             vm.data = ret;
                         }
-
-                    }else {
+                    } else {
                         api.toast({
                             msg: '网络错误',
                             duration: 2000,
                             location: 'bottom'
                         });
-
                     }
-
                 });
-
             },
-
-            getImg(){//活动图片
+            getImg: function getImg() {
+                //活动图片
                 api.ajax({
                     url: serverurl,
                     method: 'get',
                     data: {
                         values: {
                             type: '10168',
-                            token:token
-                        },
+                            token: token
+                        }
                     }
-                },function(ret, err){
+                }, function (ret, err) {
                     if (ret) {
                         if (ret.status == '5') {
                             ExitLogin();
-                        }else {
+                        } else {
                             vm.dataImg = ret;
                         }
-
-                    }else {
+                    } else {
                         api.toast({
                             msg: '网络错误',
                             duration: 2000,
                             location: 'bottom'
                         });
-
                     }
-
                 });
-
             }
         }
-    })
+    });
     // 选择时间
     function sel_time() {
         var year,month,day,hour,minute;
@@ -504,7 +498,7 @@
         });
         return false;
       }
-
+      
       var map = api.require('bMap');
       map.getCoordsFromName({//lon经度，lat纬度
           city: address,
@@ -538,6 +532,7 @@
               },function(ret, err){
 
                   $api.css($api.byId('loading'),'display:none');
+
                   if (ret) {
                       if (ret.status == '1') {
                           api.toast({

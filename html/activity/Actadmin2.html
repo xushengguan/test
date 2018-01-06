@@ -179,23 +179,34 @@ var vm = new Vue({
     el: '#app',
     data: {
         ActInfo: [],
-        role:''
+        role: ''
     },
     filters: {
-        formatDate(time) {
+        formatDate: function (_formatDate) {
+            function formatDate(_x) {
+                return _formatDate.apply(this, arguments);
+            }
+
+            formatDate.toString = function () {
+                return _formatDate.toString();
+            };
+
+            return formatDate;
+        }(function (time) {
             var date = new Date(time * 1000);
             return formatDate(date, 'yyyy-MM-dd');
-        }
+        })
     },
     methods: {
-        get_ActLis() { //获取活动列表（支教老师）
+        get_ActLis: function get_ActLis() {
+            //获取活动列表（支教老师）
 
             $api.css($api.dom('#loading'), 'display:block');
             var role = $api.getStorage('role');
             if (role == '2') {
-                var type = '10151';//获取活动列表（支教老师）
-            }else {
-                var type = '10028';//获取用户报名活动列表（学生）
+                var type = '10151'; //获取活动列表（支教老师）
+            } else {
+                var type = '10028'; //获取用户报名活动列表（学生）
             }
             vm.role = role;
             api.ajax({
@@ -210,105 +221,100 @@ var vm = new Vue({
                         status: '0' //活动状态.0已结束，1活动进行中，2活动未开始
                     }
                 }
-            }, function(ret, err) {
+            }, function (ret, err) {
                 $api.css($api.dom('#loading'), 'display:none');
 
                 if (ret) {
                     vm.ActInfo = ret;
-                }else if (ret.status == '5') {
+                } else if (ret.status == '5') {
                     ExitLogin();
-                }else {
+                } else {
                     api.toast({
                         msg: '网络错误',
                         duration: 2000,
                         location: 'bottom'
                     });
-
                 }
-
-
             });
         },
-
-        goDatail(actid) { //跳到活动详情
+        goDatail: function goDatail(actid) {
+            //跳到活动详情
 
             api.openWin({
                 name: 'ActDetail',
                 url: './ActDetail.html',
                 pageParam: {
-                    actid: actid,
+                    actid: actid
                 }
             });
         },
 
-        // 长按删除活动
-        goDel(e,actid){
-            var Del = $api.next(e.currentTarget);
-            timeOutEvent = setTimeout(function(e){
-                $api.css(Del, 'display:block');
-            },500);
 
-            Del.onclick = function(e){
+        // 长按删除活动
+        goDel: function goDel(e, actid) {
+            var Del = $api.next(e.currentTarget);
+            timeOutEvent = setTimeout(function (e) {
+                $api.css(Del, 'display:block');
+            }, 500);
+
+            Del.onclick = function (e) {
 
                 api.confirm({
                     title: '删除活动',
                     msg: '您确定删除此活动？',
                     buttons: ['确定', '取消']
-                }, function(ret, err){
-                    if( ret ){
+                }, function (ret, err) {
+                    if (ret) {
 
-                         if(ret.buttonIndex == 1){
+                        if (ret.buttonIndex == 1) {
                             if (vm.role == '2') {
                                 vm.Delact(actid);
-                            }else {
+                            } else {
                                 vm.stuDelAct(actid);
                             }
-
-                         }
-                    }else{
-                         console.log( JSON.stringify( err ) );
+                        }
+                    } else {
+                        console.log(JSON.stringify(err));
                     }
                 });
-
             };
-            document.onclick = function(e){
+            document.onclick = function (e) {
                 $api.css(Del, 'display:none');
-                e.stopPropagation();//阻止事件冒泡
+                e.stopPropagation(); //阻止事件冒泡
             };
-
         },
-        Move(){
+        Move: function Move() {
             clearTimeout(timeOutEvent);
         },
-        touchEnd(){
+        touchEnd: function touchEnd() {
             clearTimeout(timeOutEvent);
             return false;
         },
-
-        Delact(actid){//支教老师删除活动
+        Delact: function Delact(actid) {
+            //支教老师删除活动
             api.ajax({
                 url: serverurl,
                 method: 'get',
                 data: {
                     values: {
                         type: '10154',
-                        token:token,
-                        id:actid
-                    },
+                        token: token,
+                        id: actid
+                    }
                 }
-            },function(ret, err){
+            }, function (ret, err) {
                 if (ret) {
 
                     if (ret.status == '5') {
                         ExitLogin();
-                    }else if (ret.status == '1') {
+                    } else if (ret.status == '1') {
                         api.toast({
                             msg: '删除成功',
                             duration: 2000,
                             location: 'middle'
                         });
                         vm.get_ActLis();
-                    }else {
+                    } else {
                         api.toast({
                             msg: '删除失败',
                             duration: 2000,
@@ -322,57 +328,53 @@ var vm = new Vue({
                         duration: 2000,
                         location: 'bottom'
                     });
-
                 }
             });
-
         },
+        stuDelAct: function stuDelAct(apply_id) {
+            //学生家长用户删除自己已经报名的活动
+            api.ajax({
+                url: serverurl,
+                method: 'get',
+                data: {
+                    values: {
+                        type: '10027',
+                        token: token,
+                        apply_id: apply_id
+                    }
+                }
+            }, function (ret, err) {
+                if (ret) {
 
-        stuDelAct(apply_id){//学生家长用户删除自己已经报名的活动
-          api.ajax({
-              url: serverurl,
-              method: 'get',
-              data: {
-                  values: {
-                      type: '10027',
-                      token:token,
-                      apply_id:apply_id
-                  },
-              }
-          },function(ret, err){
-              if (ret) {
+                    if (ret.status == '5') {
+                        ExitLogin();
+                    } else if (ret.status == '1') {
+                        api.toast({
+                            msg: '删除成功',
+                            duration: 2000,
+                            location: 'middle'
+                        });
 
-                  if (ret.status == '5') {
-                      ExitLogin();
-                  }else if (ret.status == '1') {
-                      api.toast({
-                          msg: '删除成功',
-                          duration: 2000,
-                          location: 'middle'
-                      });
+                        vm.get_ActLis();
+                    } else {
+                        api.toast({
+                            msg: '删除失败',
+                            duration: 2000,
+                            location: 'middle'
+                        });
+                    }
+                } else {
 
-                      vm.get_ActLis();
-                  }else {
-                      api.toast({
-                          msg: '删除失败',
-                          duration: 2000,
-                          location: 'middle'
-                      });
-                  }
-              } else {
-
-                  api.toast({
-                      msg: '网络错误',
-                      duration: 2000,
-                      location: 'bottom'
-                  });
-
-              }
-          });
+                    api.toast({
+                        msg: '网络错误',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+                }
+            });
         }
-
     }
-})
+});
 </script>
 
 </html>

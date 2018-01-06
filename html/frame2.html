@@ -252,7 +252,6 @@
     apiready = function() {
         loading();
         fnInitSwipe();
-
         $api.css($api.dom('#loading'), 'display:block');
         vm.getSwipe();
         vm.getClass();
@@ -276,7 +275,7 @@
             swipe:[]
         },
         methods: {
-            getSwipe() { //读取商品分类
+            getSwipe:function() { //读取商品分类
                 api.ajax({
                     url: serverurl,
                     method: 'get',
@@ -301,7 +300,7 @@
                     }
                 });
             },
-            getClass() { //读取商品分类
+            getClass:function() { //读取商品分类
                 api.ajax({
                     url: serverurl,
                     method: 'get',
@@ -328,7 +327,7 @@
                 });
             },
 
-            get_hotgoods() { //读取热门商品
+            get_hotgoods:function() { //读取热门商品
                 api.ajax({
                     url: serverurl,
                     method: 'get',
@@ -360,7 +359,7 @@
                 });
             },
 
-            get_Newsgoods() { //读取新品商品
+            get_Newsgoods:function() { //读取新品商品
                 api.ajax({
                     url: serverurl,
                     method: 'get',
@@ -389,7 +388,7 @@
                 });
             },
 
-            go_goodsDetail(goods_id){
+            go_goodsDetail:function(goods_id){
               api.openWin({
                   name: 'credit_goodDetail',
                   url: './mall/credit_goodDetail.html',
@@ -400,7 +399,7 @@
               });
             },
 
-            go_clsLis(clsid,tname){
+            go_clsLis:function(clsid,tname){
               api.openWin({
                   name: 'ClassifiedGoods_title',
                   url: './mall/ClassifiedGoods_title.html',
@@ -429,7 +428,6 @@
           disableOnInteraction: false,
         },
       });
-      
     }
 </script>
 

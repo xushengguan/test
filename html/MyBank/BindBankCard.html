@@ -65,7 +65,7 @@
                 </div>
                 <div class="prompt">此卡会作为默认收款银行卡</div>
             </div>
-            <div class="Info">
+            <div class="Info" style="display:none;">
                 <div class="title">个人信息</div>
                 <ul class="form">
                   <li>
@@ -92,51 +92,50 @@
           uid = $api.getStorage('id');
           token = $api.getStorage('token');
           loading();
-          (function(){
-              $api.css($api.byId('main'), 'display:none');
-              $api.css($api.byId('loading'), 'display:block');
-              api.ajax({//显示认证资料
-                  url: serverurl,
-                  method: 'get',
-                  data: {
-                      values: {
-                          type: '10173',
-                         token: token,
-                          uid: uid
-                      },
-                  }
-              },function(ret, err){
-
-                $api.css($api.byId('loading'), 'display:none');
-
-                  if (ret) {
-                      if (ret.status == '5') {
-                          ExitLogin();
-                      }else {
-                          $api.css($api.byId('main'), 'display:block');
-                          if (!ret.status) {
-                              $api.text($api.byId('name'), ret.name);
-                              $api.text($api.byId('IdCard'), ret.id_card);
-                          }else {
-                              $api.css($api.dom('.Info'), 'display:none');
-                          }
-                      }
-
-                  } else {
-
-                      api.toast({
-                          msg: '网络错误',
-                          duration: 2000,
-                          location: 'bottom'
-                      });
-
-                  }
-              });
-
-          }())
-
+          // getCard();
       };
 
+      function getCard(){
+
+          $api.css($api.byId('loading'), 'display:block');
+          api.ajax({//显示认证资料
+              url: serverurl,
+              method: 'get',
+              data: {
+                  values: {
+                      type: '10173',
+                     token: token,
+                      uid: uid
+                  },
+              }
+          },function(ret, err){
+
+            $api.css($api.byId('loading'), 'display:none');
+
+              if (ret) {
+                  if (ret.status == '5') {
+                      ExitLogin();
+                  }else {
+
+                      if (ret.status != '0') {
+                          $api.text($api.byId('name'), ret.name);
+                          $api.text($api.byId('IdCard'), ret.id_card);
+                          $api.css($api.dom('.Info'), 'display:block');
+                      }
+                  }
+
+              } else {
+
+                  api.toast({
+                      msg: '网络错误',
+                      duration: 2000,
+                      location: 'bottom'
+                  });
+
+              }
+          });
+
+      }
 
       // 绑定银行卡
       function BindCard(){
@@ -170,7 +169,7 @@
                 }
             },function(ret, err){
                 $api.css($api.byId('loading'), 'display:none');
-              
+
                 if (ret) {
                     if (ret.status == '5') {
                         ExitLogin();

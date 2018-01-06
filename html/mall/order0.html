@@ -28,7 +28,7 @@
 
 <body>
 	<div id="app" v-cloak>
-		<div class="NoAct" v-if="data.status">暂无任何订单！</div>
+		<div class="NoAct" v-if="data.status">暂无任何订单~</div>
 		<div v-for="v in data" v-else>
 			<div class="sign-con hide">
 				<!-- shipping_status商品配送情况;0未发货,1已发货,2已收货,4申请退货;5处理中;6退货完成 -->
@@ -110,167 +110,157 @@
 	}
 
 	var vm = new Vue({
-		el: '#app',
-		data: {
-			data: [],
-		},
-		methods: {
-			get_orderLis() { //查看订单
-
-				$api.css($api.dom('#loading'), 'display:block');
-				api.ajax({
-					url: serverurl,
-					method: 'get',
-					data: {
-						values: {
-							type: '10108',
-							token: token,
-							uid: id
-						},
-					}
-				}, function(ret, err) {
-					$api.css($api.dom('#loading'), 'display:none');
-
-					if (ret) {
-						if(ret.status == '5'){
-								ExitLogin();
-						}else {
-								vm.data = ret;
-						}
-
-					} else {
-						api.toast({
-							msg: '网络错误',
-							duration: 2000,
-							location: 'bottom'
-						});
-
-					}
-				});
+			el: '#app',
+			data: {
+				data: []
 			},
+			methods: {
+				get_orderLis: function get_orderLis() {
+					//查看订单
 
-			goLoglist(logistics_company, tracking_number) { //物流信息
-				api.openWin({
-					name: '6Logistics_info_title',
-					url: './6Logistics_info_title.html',
-					pageParam: {
-						logistics_company: logistics_company,
-						tracking_number: tracking_number
-					},
-					reload:true
-				});
-			},
-
-
-			goDetail(order_id) { //跳到订单详情
-				api.openWin({
-					name: '6orderDatail_title',
-					url: './6orderDatail_title.html',
-					pageParam: {
-						order_id: order_id
-					},
-					reload:true
-				});
-			},
-
-			confirmReceipt(order_id) { //确认收货
-				api.confirm({
-					title: '确认收货',
-					msg: '请确认收到货后，再进行确认操作',
-					buttons: ['确定', '取消']
-				}, function(ret, err) {
-					var index = ret.buttonIndex;
-					if (index == '1') {
-						$api.css($api.dom('#loading'), 'display:block');
-						api.ajax({
-							url: serverurl,
-							method: 'get',
-							data: {
-								values: {
-									type: '10131',
-									token: token,
-									order_id: order_id
-								},
-							}
-						}, function(ret, err) {
-							$api.css($api.dom('#loading'), 'display:none');
-
-							if (ret) {
-                if (ret.status == '5') {
-									ExitLogin();
-                }else if (ret.status == '1') {
-									vm.get_orderLis();
-									api.sendEvent({
-									    name: 'isConfirm',
-									    extra: {
-									        key: 1,
-									    }
-									});
-
-								}else{
-									api.toast({
-									    msg: '确认收货失败',
-									    duration: 2000,
-									    location: 'bottom'
-									});
-
-								}
-							} else {
-
-								api.toast({
-									msg: '网络错误',
-									duration: 2000,
-									location: 'bottom'
-								});
-							}
-						});
-					};
-				});
-			},
-
-			// 获取微信签名
-			get_weiChat(content){
-					var order_total = content.goods_amount * 0.2;
+					$api.css($api.dom('#loading'), 'display:block');
 					api.ajax({
-							url: serverurl,
-							method: 'post',
-							data: {
-									values: {
-											type: '10029',
-											token:token,
-											uid:id,
-											goods_name:content.goods_name,
-											order_total:order_total,
-											order_sn:content.order_sn
-									},
+						url: serverurl,
+						method: 'get',
+						data: {
+							values: {
+								type: '10108',
+								token: token,
+								uid: id
 							}
-					},function(ret, err){
+						}
+					}, function (ret, err) {
+						$api.css($api.dom('#loading'), 'display:none');
 
-							if (ret) {
-                  if (ret.status == '5') {
-											ExitLogin();
-                  }else {
-                  		goPay(ret,content.order_sn);
-                  }
-
+						if (ret) {
+							if (ret.status == '5') {
+								ExitLogin();
 							} else {
+								vm.data = ret;
+							}
+						} else {
+							api.toast({
+								msg: '网络错误',
+								duration: 2000,
+								location: 'bottom'
+							});
+						}
+					});
+				},
+				goLoglist: function goLoglist(logistics_company, tracking_number) {
+					//物流信息
+					api.openWin({
+						name: '6Logistics_info_title',
+						url: './6Logistics_info_title.html',
+						pageParam: {
+							logistics_company: logistics_company,
+							tracking_number: tracking_number
+						},
+						reload: true
+					});
+				},
+				goDetail: function goDetail(order_id) {
+					//跳到订单详情
+					api.openWin({
+						name: '6orderDatail_title',
+						url: './6orderDatail_title.html',
+						pageParam: {
+							order_id: order_id
+						},
+						reload: true
+					});
+				},
+				confirmReceipt: function confirmReceipt(order_id) {
+					//确认收货
+					api.confirm({
+						title: '确认收货',
+						msg: '请确认收到货后，再进行确认操作',
+						buttons: ['确定', '取消']
+					}, function (ret, err) {
+						var index = ret.buttonIndex;
+						if (index == '1') {
+							$api.css($api.dom('#loading'), 'display:block');
+							api.ajax({
+								url: serverurl,
+								method: 'get',
+								data: {
+									values: {
+										type: '10131',
+										token: token,
+										order_id: order_id
+									}
+								}
+							}, function (ret, err) {
+								$api.css($api.dom('#loading'), 'display:none');
 
-									api.toast({
-											msg: '网络错误',
+								if (ret) {
+									if (ret.status == '5') {
+										ExitLogin();
+									} else if (ret.status == '1') {
+										vm.get_orderLis();
+										api.sendEvent({
+											name: 'isConfirm',
+											extra: {
+												key: 1
+											}
+										});
+									} else {
+										api.toast({
+											msg: '确认收货失败',
 											duration: 2000,
 											location: 'bottom'
+										});
+									}
+								} else {
+
+									api.toast({
+										msg: '网络错误',
+										duration: 2000,
+										location: 'bottom'
 									});
-
-							}
+								}
+							});
+						};
 					});
+				},
 
+
+				// 获取微信签名
+				get_weiChat: function get_weiChat(content) {
+					var order_total = content.goods_amount * 0.2;
+					api.ajax({
+						url: serverurl,
+						method: 'post',
+						data: {
+							values: {
+								type: '10029',
+								token: token,
+								uid: id,
+								goods_name: content.goods_name,
+								order_total: order_total,
+								order_sn: content.order_sn
+							}
+						}
+					}, function (ret, err) {
+
+						if (ret) {
+							if (ret.status == '5') {
+								ExitLogin();
+							} else {
+								goPay(ret, content.order_sn);
+							}
+						} else {
+
+							api.toast({
+								msg: '网络错误',
+								duration: 2000,
+								location: 'bottom'
+							});
+						}
+					});
+				}
 			}
-
-
-
-		}
-	})
-
+		});
 
 	// 微信支付
 	function goPay(content,order_sn){

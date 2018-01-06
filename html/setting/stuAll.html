@@ -28,28 +28,18 @@
   </head>
   <body>
     <div id="app" v-cloak>
-        <!-- <div class="top">
-            <p class="title">已激活学员(人)</p>
-            <div class="numBox">
-              <em v-if="status == '0'">0</em>
-              <em v-else>{{count}}</em> -->
-              <!-- <div class="rt">
-                <span>已激活:47</span>
-                <span>待激活:27</span>
-              </div> -->
-            <!-- </div>
-        </div> -->
+
          <div v-if="status !== '0'">
-            <!-- <div class="titleName">学员列表</div> -->
+
             <ul class="Lis">
                 <li v-for="v in Info">
                   <img :src="v.stu_img" alt="">
                   <div class="name">{{v.stu_name}}</div>
-                  <!-- <div class="date">2017/7/5</div> -->
+
                 </li>
             </ul>
         </div>
-        <div class="noStudent" v-else>暂无已激活学员~</div>
+        <div class="noStudent" v-else>暂无激活学员~</div>
     </div>
   </body>
   <script type="text/javascript" src="../../script/api.js"></script>
@@ -78,43 +68,44 @@
       });
   }
 
-  var vm = new Vue({
-      el:'#app',
-      data:{
-          Info:[],
-          status:'',
-          count:''
+   var vm = new Vue({
+      el: '#app',
+      data: {
+          Info: [],
+          status: '',
+          count: ''
       },
-      methods:{
-          getStuAll(){//激活学员列表
-              $api.css($api.byId('app'),'display:none');
-              $api.css($api.byId('loading'),'display:block');
+      methods: {
+          getStuAll: function getStuAll() {
+              //激活学员列表
+              $api.css($api.byId('app'), 'display:none');
+              $api.css($api.byId('loading'), 'display:block');
 
               api.ajax({
                   url: serverurl,
                   method: 'get',
-                  cache:true,
+                  cache: true,
                   data: {
                       values: {
                           type: '10170',
                           token: token,
-                          uid:uid
-                      },
+                          uid: uid
+                      }
                   }
-              },function(ret, err){
+              }, function (ret, err) {
 
-                  $api.css($api.byId('loading'),'display:none');
+                  $api.css($api.byId('loading'), 'display:none');
 
                   if (ret) {
                       if (ret.status == '5') {
                           ExitLogin();
-                      }else if(ret.status == '0'){
+                      } else if (ret.status == '0') {
                           vm.status = ret.status;
-                      }else{
+                      } else {
                           vm.Info = ret.data;
                           vm.count = ret.count;
                       }
-                      $api.css($api.byId('app'),'display:block');
+                      $api.css($api.byId('app'), 'display:block');
                   } else {
 
                       api.toast({
@@ -122,12 +113,10 @@
                           duration: 2000,
                           location: 'bottom'
                       });
-
                   }
               });
-
           }
       }
-  })
+  });
   </script>
   </html>

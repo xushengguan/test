@@ -21,12 +21,12 @@
 			padding: 14px 20px;
 			border-bottom: 1px solid #f4f4f4;
 			position: relative;
+			font-size: 13px;
 		}
 
 		.edit_main li label {
 			width: 15%;
 			color: #5c5c5c;
-			font-size: 13px;
 			vertical-align: top;
 		}
 
@@ -34,14 +34,14 @@
 			width: 85%;
 			float: right;
 			color: #5c5c5c;
-			font-size: 13px;
-			padding: 2px 0;
+			font-size: 14px;
 		}
 
 		.edit_main li span {
 			color: #5c5c5c;
 			font-size: 13px;
 			padding-left: 20px;
+			font-size: 14px;
 		}
 
 		.empty {
@@ -81,7 +81,7 @@
 			line-height: 50px;
 			background: #ffb300;
 			color: #fff;
-			font-size: 18px;
+			font-size: 20px;
 			position: relative;
 		}
 
@@ -89,7 +89,7 @@
 			width: 50px;
 			height: 50px;
 			background: url(../../image/back.png) no-repeat center;
-			background-size: 20px;
+			background-size: 18px;
 			float: left;
 		}
 	</style>
@@ -107,7 +107,7 @@
 			</li>
 			<li>
 				<label for="">电话</label>
-				<input type="text" placeholder="请输入您的联系方式" v-model="form.tel">
+				<input type="tel" placeholder="请输入您的联系方式" v-model="form.tel">
 			</li>
 			<li>
 				<label for="">地址</label>
@@ -115,10 +115,10 @@
 			</li>
 			<li>
 				<i class="iconfont icon-fangxingxuanzetianchong" style="color: #fca958; font-size: 20px; position: absolute;
-		left: 15px; top:12px;" tapmode v-if="form.def == '1'" @click="del_def()"></i>
+		left: 15px; top:9px;" tapmode v-if="form.def == '1'" @click="del_def()"></i>
 
 				<i class="iconfont icon-square" style="color: #5c5c5c; font-size: 20px; position: absolute;
-    left: 10px; top:12px;" tapmode v-else @click="set_def()"></i>
+    left: 10px; top:9px;" tapmode v-else @click="set_def()"></i>
 
 				<span>设为默认地址</span>
 			</li>

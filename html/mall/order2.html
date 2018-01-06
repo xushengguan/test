@@ -29,7 +29,7 @@
 
 <body>
   <div id="app" v-cloak>
-		  <div class="NoAct" v-if="data.status">暂无退货订单！</div>
+		  <div class="NoAct" v-if="data.status">暂无退货订单~</div>
 			<div v-for="v in data" v-else>
 					<div class="sign-con hide">
 		        <!-- shipping_status商品配送情况;0未发货,1已发货,2已收货,4申请退货;5处理中;6退货完成 -->
@@ -84,68 +84,66 @@
 		}
 
 		var vm = new Vue({
-				el:'#app',
-				data:{
-						data:[],
+				el: '#app',
+				data: {
+						data: []
 				},
-				methods:{
-						get_ReturnOrder(token,id){//获取退换货的订单
-								$api.css($api.dom('#loading'),'display:block');
+				methods: {
+						get_ReturnOrder: function get_ReturnOrder(token, id) {
+								//获取退换货的订单
+								$api.css($api.dom('#loading'), 'display:block');
 
 								api.ajax({
-								    url: serverurl,
-								    method: 'get',
-								    data: {
-								        values: {
-								            type: '10111',
-														token:token,
-														uid:id
-								        },
-								    }
-								},function(ret, err){
-									  $api.css($api.dom('#loading'),'display:none');
-								    if (ret) {
-											  if (ret.status == '5') {
+										url: serverurl,
+										method: 'get',
+										data: {
+												values: {
+														type: '10111',
+														token: token,
+														uid: id
+												}
+										}
+								}, function (ret, err) {
+										$api.css($api.dom('#loading'), 'display:none');
+										if (ret) {
+												if (ret.status == '5') {
 														ExitLogin();
-											  }else {
-											  		vm.data = ret;
-											  }
-								    } else {
-								        api.toast({
-								            msg: '网络错误',
-								            duration: 2000,
-								            location: 'bottom'
-								        });
-
-								    }
+												} else {
+														vm.data = ret;
+												}
+										} else {
+												api.toast({
+														msg: '网络错误',
+														duration: 2000,
+														location: 'bottom'
+												});
+										}
 								});
 						},
-
-						goLoglist(logistics_company,tracking_number){//物流信息
+						goLoglist: function goLoglist(logistics_company, tracking_number) {
+								//物流信息
 								api.openWin({
 										name: '6Logistics_info_title',
 										url: './6Logistics_info_title.html',
 										pageParam: {
 												logistics_company: logistics_company,
-												tracking_number:tracking_number
+												tracking_number: tracking_number
 										},
-										reload:true
+										reload: true
 								});
 						},
-
-						goDetail(order_id){//跳到订单详情
+						goDetail: function goDetail(order_id) {
+								//跳到订单详情
 								api.openWin({
-								    name: '6orderDatail_title',
-								    url: './6orderDatail_title.html',
-								    pageParam: {
-								        order_id: order_id
-								    },
-										reload:true
+										name: '6orderDatail_title',
+										url: './6orderDatail_title.html',
+										pageParam: {
+												order_id: order_id
+										},
+										reload: true
 								});
 						}
-
 				}
-		})
-
+		});
 
 </script>

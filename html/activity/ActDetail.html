@@ -274,7 +274,7 @@
 								},function(ret, err){
 									  $api.css($api.byId('loading'), 'display:none');
                     $api.css($api.byId('main'), 'display:block');
-                
+
 								    if (ret) {
                         if (ret.status == '5') {
 														ExitLogin();
@@ -427,7 +427,6 @@
         quality: 100,
         saveToPhotoAlbum: false
       }, function(ret, err) {
-
         if (ret.data) {
             callback(ret);
         }
@@ -458,7 +457,7 @@
 
           ALIcloud(e,num,src,host, policy, signature, accessid, dir, expire);
   			} else {
-
+          $api.css($api.dom('#loading'), 'display:none');
   				api.toast({
   					msg: '网络错误',
   					duration: 2000,
@@ -475,7 +474,7 @@
       		api.ajax({
       			url: host,
       			method: 'post',
-      			dataType: 'xml',
+      			dataType: 'text',
       			data: {
       				values: {
       					OSSAccessKeyId: accessid,
@@ -499,6 +498,7 @@
  									postPic(e,num,url);
  							}
       			} else {
+							$api.css($api.dom('#loading'), 'display:none');
       				api.toast({
       					msg: '网络错误',
       					duration: 2000,
@@ -589,17 +589,22 @@
               if (ret.status == '5') {
 									ExitLogin();
               }else if (ret.status == '1') {
-									api.toast({
-											msg: '操作成功',
-											duration: 2000,
-											location: 'bottom'
-									});
-									if (num == 0) {
-											index = 0;
-									}else if (num == 1) {
-											index = 1;
-									}
-									vm.getDetail();
+								if (num == 0) {
+										index = 0;
+										api.toast({
+												msg: '活动已结束',
+												duration: 2000,
+												location: 'middle'
+										});
+								}else if (num == 1) {
+										index = 1;
+										api.toast({
+												msg: '活动已开始',
+												duration: 2000,
+												location: 'middle'
+										});
+								}
+								vm.getDetail();
 							}else {
 									api.toast({
 											msg: '操作失败',

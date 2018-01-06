@@ -13,7 +13,7 @@
               line-height: 50px;
               background: #ffb300;
               color: #fff;
-              font-size: 18px;
+              font-size: 20px;
               position: relative;
           }
 
@@ -21,7 +21,7 @@
               width: 50px;
               height: 50px;
               background: url(../../image/back.png) no-repeat center;
-              background-size: 20px;
+              background-size: 18px;
               float: left;
           }
 
@@ -36,11 +36,12 @@
           .remove span{float: right;}
 
           .inputBox{background: #fff; margin-top: 15px;}
-          .inputBox li{padding: 15px 10px; border-bottom: 1px solid #f2f2f2; overflow: hidden; font-size: 15px; position: relative;}
-          .inputBox li .inputName{padding-right: 10px; color: #34302d; line-height: 20px;}
-          .inputBox li .moneyNum{width: calc(100% - 79px); height: 20px; }
-          .inputBox li .code{width: calc(100% - 183px); height: 20px; margin-right: 10px;}
-          .inputBox li .btn{width: 80px; height: 33px; background: #ffb300; border-radius: 3px; font-size: 13px; color: #fff;}
+          .inputBox li{padding: 15px 10px; border-bottom: 1px solid #f2f2f2; overflow: hidden; font-size: 15px; position: relative;
+            height: 33px; line-height: 30px;}
+          .inputBox li .inputName{padding-right: 10px; color: #34302d; height: 33px; line-height: 33px; }
+          .inputBox li .moneyNum{width: calc(100% - 79px); height: 33px; line-height: 33px; }
+          .inputBox li .code{width: calc(100% - 183px); height: 33px; line-height: 33px; margin-right: 10px;}
+          .inputBox li .btn{width: 80px; height: 33px; line-height: 33px; background: #ffb300; border-radius: 3px; font-size: 13px; color: #fff; float: right;}
           .prompt{margin: 10px; font-size: 13px;}
           .confirm{width: 92%; height: 44px; background-color: #c5c5c5; border-radius: 5px; margin: 37px 4%; font-size: 18px;
           color: #fff;}
@@ -48,25 +49,23 @@
       </style>
   </head>
   <body>
-      <div id="wrap" v-cloak>
+      <div id="wrap">
         <header>
             <em tapmode onclick="go_back()"></em> 提现
         </header>
-        <div id="main">
+        <div id="main" v-cloak>
 
-            <!-- 未绑定银行卡 -->
-            <div class="top" v-if="!data">
+            <div class="top">
                 <div class="money">可提现学分:<em>{{winmoney}}</em>学分</div>
-                <button class="bind" tapmode onclick="BindBankCard()">绑定银行卡</button>
-            </div>
-
-            <!-- 已绑定银行卡 -->
-            <div class="top" v-else>
-                <div class="money">可提现学分:<em>{{winmoney}}</em>学分</div>
-                <div class="cardNum">{{card_number}}</div>
-                <div class="remove">
-                    <span class="" tapmode onclick="RemoveBind()">解除当前绑定银行卡</span>
+                <!-- 已绑定银行卡 -->
+                <div v-if="data">
+                    <div class="cardNum">{{card_number}}</div>
+                    <div class="remove">
+                        <span class="" tapmode onclick="RemoveBind()">解除当前绑定银行卡</span>
+                    </div>
                 </div>
+                <!-- 未绑定银行卡 -->
+                <button class="bind" tapmode onclick="BindBankCard()" v-else>绑定银行卡</button>
             </div>
 
 
@@ -93,57 +92,69 @@
   <script type="text/javascript" src="../../script/my.js"></script>
   <script type="text/javascript" src="../../script/vue.js"></script>
   <script type="text/javascript">
-  var header = $api.dom('header');
-  fixStatusBar_API(header);
+      var header = $api.dom('header');
+      fixStatusBar_API(header);
       var uid,token,wait;
       apiready = function(){
            loading();
+
            uid = $api.getStorage('id');
            token = $api.getStorage('token');
            vm.getWidthDraw();
       };
 
       var vm = new Vue({
-            el:'#wrap',
-            data:{
-                winmoney:'',
-                card_number:'',
-                data:[],
-                w_id: ''
-            },
-            methods:{
-                getWidthDraw(){//用户银行卡列表
-                    $api.css($api.byId('loading'), 'display:block');
-                    $api.css($api.byId('main'), 'display:none');
-                    api.ajax({
-                        url: serverurl,
-                        method: 'get',
-                        data: {
-                            values: {
-                                type: '10128',
-                               token:	token,
-                                 uid:uid
-                            },
-                        }
-                    },function(ret, err){
-                        $api.css($api.byId('loading'), 'display:none');
-                        if (ret.status == '5') {
-                          ExitLogin();
-                        }else {
-                          vm.winmoney = ret.winmoney;
-                          vm.data = ret.data;
-                          if (ret.data) {
-                              vm.card_number = ret.data.card_number;
-                              vm.w_id = ret.data.id;
+          el: '#main',
+          data: {
+              winmoney: '',
+              card_number: '',
+              data: '',
+              w_id: ''
+          },
+          methods: {
+              getWidthDraw: function getWidthDraw() {
+                  //用户银行卡列表
+                  $api.css($api.byId('loading'), 'display:block');
+
+                  api.ajax({
+                      url: serverurl,
+                      method: 'get',
+                      dataType:'json',
+                      data: {
+                          values: {
+                              type: '10128',
+                              token: token,
+                              uid: uid
                           }
-                          $api.css($api.byId('main'), 'display:block');
-                        }
+                      }
+                  }, function (ret, err) {
+                      $api.css($api.byId('loading'), 'display:none');
 
-                    });
+                      if (ret) {
+                          if (ret.status == '5') {
+                              ExitLogin();
+                          } else {
+                            vm.winmoney = ret.winmoney;
+                            vm.data = ret.data;
 
-                }
-            }
-      })
+                            if (ret.data) {
+                                vm.card_number = ret.data.card_number;
+                                vm.w_id = ret.data.id;
+                            }
+                          }
+                      }else {
+                          api.toast({
+                              msg: '网络错误',
+                              duration: 2000,
+                              location: 'bottom'
+                          });
+
+                      }
+
+                  });
+              }
+          }
+      });
 
       //实时监测输入框输入事件
       function checkValue(){

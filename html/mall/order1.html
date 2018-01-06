@@ -29,7 +29,7 @@
 
 <body>
   <div id="app" v-cloak>
-		  <div class="NoAct" v-if="data.status">暂无收货订单！</div>
+		  <div class="NoAct" v-if="data.status">暂无待收货订单~</div>
 			<div v-for="v in data" v-else>
 					<div class="sign-con hide">
 		        <!-- 已签收状态（已签收）、配送中（配送中）、退换货处理中（退换处理中）、退换货完成（退换货完成） -->
@@ -101,119 +101,115 @@
 		}
 
 		var vm = new Vue({
-				el:'#app',
-				data:{
-						data:[],
-				},
-				methods:{
-						get_notOrder(token,id){//获取未收货的订单
+			el: '#app',
+			data: {
+				data: []
+			},
+			methods: {
+				get_notOrder: function get_notOrder(token, id) {
+					//获取未收货的订单
 
-								$api.css($api.dom('#loading'),'display:block');
-								api.ajax({
-								    url: serverurl,
-								    method: 'get',
-								    data: {
-								        values: {
-								            type: '10110',
-														token:token,
-														uid:id
-								        },
-								    }
-								},function(ret, err){
+					$api.css($api.dom('#loading'), 'display:block');
+					api.ajax({
+						url: serverurl,
+						method: 'get',
+						data: {
+							values: {
+								type: '10110',
+								token: token,
+								uid: id
+							}
+						}
+					}, function (ret, err) {
 
-                    $api.css($api.dom('#loading'),'display:none');
+						$api.css($api.dom('#loading'), 'display:none');
 
-								    if (ret) {
-											  if (ret.status == '5') {
-														ExitLogin();
-											  }else {
-											  		vm.data = ret;
-											  }
-
-								    } else {
-								        api.toast({
-								            msg: '网络错误',
-								            duration: 2000,
-								            location: 'bottom'
-								        });
-
-								    }
-								});
-						},
-
-						goLoglist(logistics_company,tracking_number){//物流信息
-								api.openWin({
-										name: '6Logistics_info_title',
-										url: './6Logistics_info_title.html',
-										pageParam: {
-												logistics_company: logistics_company,
-												tracking_number:tracking_number
-										},
-										reload:true
-								});
-						},
-
-						goDetail(order_id){//跳到订单详情
-								api.openWin({
-								    name: '6orderDatail_title',
-								    url: './6orderDatail_title.html',
-								    pageParam: {
-								        order_id: order_id
-								    },
-										reload:true
-								});
-						},
-
-						confirmReceipt(order_id) { //确认收货
-							api.confirm({
-								title: '确认收货',
-								msg: '请确认收到货后，再进行确认操作',
-								buttons: ['确定', '取消']
-							}, function(ret, err) {
-								var index = ret.buttonIndex;
-								if (index == '1') {
-									$api.css($api.dom('#loading'), 'display:block');
-									api.ajax({
-										url: serverurl,
-										method: 'get',
-										data: {
-											values: {
-												type: '10131',
-												token: token,
-												order_id: order_id
-											},
-										}
-									}, function(ret, err) {
-										$api.css($api.dom('#loading'), 'display:none');
-										if (ret) {
-                      if (ret.status == '5') {
-												ExitLogin();
-                      }else if (ret.status == '1') {
-												vm.get_notOrder();
-											}else{
-												api.toast({
-												    msg: '确认收货失败',
-												    duration: 2000,
-												    location: 'bottom'
-												});
-
-											}
-										} else {
-
-											api.toast({
-												msg: '网络错误',
-												duration: 2000,
-												location: 'bottom'
-											});
-										}
-									});
-								};
+						if (ret) {
+							if (ret.status == '5') {
+								ExitLogin();
+							} else {
+								vm.data = ret;
+							}
+						} else {
+							api.toast({
+								msg: '网络错误',
+								duration: 2000,
+								location: 'bottom'
 							});
+						}
+					});
+				},
+				goLoglist: function goLoglist(logistics_company, tracking_number) {
+					//物流信息
+					api.openWin({
+						name: '6Logistics_info_title',
+						url: './6Logistics_info_title.html',
+						pageParam: {
+							logistics_company: logistics_company,
+							tracking_number: tracking_number
 						},
+						reload: true
+					});
+				},
+				goDetail: function goDetail(order_id) {
+					//跳到订单详情
+					api.openWin({
+						name: '6orderDatail_title',
+						url: './6orderDatail_title.html',
+						pageParam: {
+							order_id: order_id
+						},
+						reload: true
+					});
+				},
+				confirmReceipt: function confirmReceipt(order_id) {
+					//确认收货
+					api.confirm({
+						title: '确认收货',
+						msg: '请确认收到货后，再进行确认操作',
+						buttons: ['确定', '取消']
+					}, function (ret, err) {
+						var index = ret.buttonIndex;
+						if (index == '1') {
+							$api.css($api.dom('#loading'), 'display:block');
+							api.ajax({
+								url: serverurl,
+								method: 'get',
+								data: {
+									values: {
+										type: '10131',
+										token: token,
+										order_id: order_id
+									}
+								}
+							}, function (ret, err) {
+								$api.css($api.dom('#loading'), 'display:none');
+								if (ret) {
+									if (ret.status == '5') {
+										ExitLogin();
+									} else if (ret.status == '1') {
+										vm.get_notOrder();
+									} else {
+										api.toast({
+											msg: '确认收货失败',
+											duration: 2000,
+											location: 'bottom'
+										});
+									}
+								} else {
 
+									api.toast({
+										msg: '网络错误',
+										duration: 2000,
+										location: 'bottom'
+									});
+								}
+							});
+						};
+					});
 				}
-		})
-
+			}
+		});
 
 
 </script>
