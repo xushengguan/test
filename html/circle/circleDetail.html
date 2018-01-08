@@ -303,21 +303,21 @@
                     <!-- 一张图片 -->
                     <div class="cell" v-if="data.thumb.length == 1">
                         <div class="item" v-for="item in data.thumb">
-                            <img :src="item.url+'?x-oss-process=image/resize,p_50'" alt="" tapmode @click="viewPicture(data.thumb)">
+                            <img :src="item.url+'?x-oss-process=image/resize,m_fill,h_210,w_210'" alt="" tapmode @click="viewPicture(data.thumb)">
                         </div>
                     </div>
 
                     <!-- 九张图片，当为4张图片时加样式名cell4 -->
                     <div class="cell9 cell4" v-else-if="data.thumb.length == 4">
                         <div class="item" v-for="(item,index) in data.thumb">
-                            <img :src="item.url+'?x-oss-process=image/resize,p_50'" alt="" tapmode @click="viewPicture(data.thumb,index)">
+                            <img :src="item.url+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="" tapmode @click="viewPicture(data.thumb,index)">
                         </div>
                     </div>
 
                     <!-- 九张图片，当为4张图片时加样式名cell4 -->
                     <div class="cell9" v-else>
                         <div class="item" v-for="(item,index) in data.thumb">
-                            <img :src="item.url+'?x-oss-process=image/resize,p_50'" alt="" tapmode @click="viewPicture(data.thumb,index)">
+                            <img :src="item.url+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="" tapmode @click="viewPicture(data.thumb,index)">
                         </div>
                     </div>
                 </div>
@@ -521,6 +521,7 @@
                 var imageBrowser = api.require('imageBrowser');
                 imageBrowser.openImages({
                     imageUrls: url,
+                    showList:false,
                     activeIndex:index
                 });
               }

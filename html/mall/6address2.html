@@ -21,20 +21,22 @@
 			padding: 14px 20px;
 			border-bottom: 1px solid #f4f4f4;
 			position: relative;
-			font-size: 13px;
+      font-size: 14px;
+			line-height: 15px;
 		}
 
 		.edit_main li label {
 			width: 15%;
 			color: #5c5c5c;
 			vertical-align: top;
+
 		}
 
 		.edit_main li input {
 			width: 85%;
 			float: right;
 			color: #5c5c5c;
-			font-size: 14px;
+
 		}
 
 		.edit_main li span {
@@ -115,10 +117,10 @@
 			</li>
 			<li>
 				<i class="iconfont icon-fangxingxuanzetianchong" style="color: #fca958; font-size: 20px; position: absolute;
-		left: 15px; top:9px;" tapmode v-if="form.def == '1'" @click="del_def()"></i>
+		left: 15px; top:13px;" tapmode v-if="form.def == '1'" @click="del_def()"></i>
 
 				<i class="iconfont icon-square" style="color: #5c5c5c; font-size: 20px; position: absolute;
-    left: 10px; top:9px;" tapmode v-else @click="set_def()"></i>
+    left: 10px; top:13px;" tapmode v-else @click="set_def()"></i>
 
 				<span>设为默认地址</span>
 			</li>
@@ -155,210 +157,224 @@
 	}
 
 	var vm = new Vue({
-		el: '#app',
-		data: {
-			address_id:'',
-			form: {
-				name: '',
-				tel: '',
-				address: '',
-				def: '1'
-			}
-		},
-		methods: {
-			save_address() { //添加收货地址
-				var myreg = /^1[0-9]{10}$/;//验证手机号码
-				if (vm.form.name == '') {
+			el: '#app',
+			data: {
+				address_id: '',
+				form: {
+					name: '',
+					tel: '',
+					address: '',
+					def: '1'
+				}
+			},
+			methods: {
+				save_address: function save_address() {
+
+					//添加收货地址
+					var myreg = /^1[0-9]{10}$/; //验证手机号码
+					if (vm.form.name == '') {
 						api.toast({
-						    msg: '收货人不能为空',
-						    duration: 2000,
-						    location: 'middle'
+							msg: '收货人不能为空',
+							duration: 2000,
+							location: 'middle'
 						});
 						return false;
-				}else if (vm.form.tel == '' || !myreg.test(vm.form.tel)) {
-					api.toast({
+					} else if (vm.form.tel == '' || !myreg.test(vm.form.tel)) {
+						api.toast({
 							msg: '请输入正确的手机号码',
 							duration: 2000,
 							location: 'middle'
-					});
-					return false;
-				}else if (vm.form.address == '') {
-					api.toast({
+						});
+						return false;
+					} else if (vm.form.address == '') {
+						api.toast({
 							msg: '收货地址不能为空',
 							duration: 2000,
 							location: 'middle'
-					});
-					return false;
-				}
-				$api.css($api.dom('#loading'), 'display:block');
-				api.ajax({
-					url: serverurl,
-					method: 'get',
-					data: {
-						values: {
-							type: '10102',
-							token: token,
-							uid: id,
-							consignee: vm.form.name,
-							address: vm.form.address,
-							tel: vm.form.tel,
-							default: vm.form.def
-						},
+						});
+						return false;
 					}
-				}, function(ret, err) {
-					$api.css($api.dom('#loading'), 'display:none');
+					$api.css($api.dom('#loading'), 'display:block');
+					api.ajax({
+						url: serverurl,
+						method: 'get',
+						data: {
+							values: {
+								type: '10102',
+								token: token,
+								uid: id,
+								consignee: vm.form.name,
+								address: vm.form.address,
+								tel: vm.form.tel,
+								default: vm.form.def
+							}
+						}
+					}, function (ret, err) {
+						$api.css($api.dom('#loading'), 'display:none');
 
-					if (ret) {
-						if (ret.status == '5') {
+						if (ret) {
+							if (ret.status == '5') {
 								ExitLogin();
-						}else if (ret.status == '1') {
+							} else if (ret.status == '1') {
 								api.toast({
-								    msg: '操作成功',
-								    duration: 2000,
-								    location: 'middle'
+									msg: '操作成功',
+									duration: 2000,
+									location: 'middle'
 								});
 								vm.form = {};
-								api.openWin({
-								    name: '6address_title',
-								    url: './6address_title.html',
-								    reload:true
-								});
-						}else {
-							api.toast({
-									msg: '操作失败',
-									duration: 2000,
-									location: 'middle'
-							});
-						}
-					} else {
-						api.toast({
-						    msg: '网络错误',
-						    duration: 2000,
-						    location: 'bottom'
-						});
-					}
-				});
-			},
 
-			del_def(){//取消默认地址
-					vm.form.def = '0';
-			},
+                if (api.pageParam.goods_id) {
+									api.openWin({
+											name: '6confirmOrder',
+											url: './6confirmOrder.html',
+											pageParam: {
+													goods_id: api.pageParam.goods_id
+											},
+											reload: true
+									});
 
-			set_def(){//设为默认地址
-					vm.form.def = '1';
-			},
+                }else{
 
-			get_address(){//读取单条地址
-				  $api.css($api.dom('#loading'), 'display:block');
-					api.ajax({
-					    url: serverurl,
-					    method: 'get',
-					    data: {
-					        values: {
-					            type: '10114',
-											token:token,
-											id:vm.address_id
-					        }
-					    }
-					},function(ret, err){
-						  $api.css($api.dom('#loading'), 'display:none');
-					    if (ret) {
-								  if (ret.status == '5') {
-										ExitLogin();
-								  }else {
-										vm.form.name = ret.consignee;
-										vm.form.address = ret.address;
-										vm.form.tel = ret.tel;
-										vm.form.def = ret.default;
-								  }
-
-					    } else {
-					        api.toast({
-					            msg: '网络错误',
-					            duration: 2000,
-					            location: 'bottom'
-					        });
-
-					    }
-					});
-			},
-
-			edit_address(){//编辑收货地址
-
-				var myreg = /^1[0-9]{10}$/;//验证手机号码
-				if (vm.form.name == '') {
-						api.toast({
-								msg: '收货人不能为空',
-								duration: 2000,
-								location: 'middle'
-						});
-						return false;
-				}else if (vm.form.tel == '' || !myreg.test(vm.form.tel)) {
-					api.toast({
-							msg: '请输入正确的手机号码',
-							duration: 2000,
-							location: 'middle'
-					});
-					return false;
-				}else if (vm.form.address == '') {
-					api.toast({
-							msg: '收货地址不能为空',
-							duration: 2000,
-							location: 'middle'
-					});
-					return false;
-				}
-				$api.css($api.dom('#loading'), 'display:block');
-
-				api.ajax({
-					url: serverurl,
-					method: 'get',
-					data: {
-						values: {
-							type: '10103',
-							token: token,
-							uid: id,
-							address_id:vm.address_id,
-							consignee: vm.form.name,
-							address: vm.form.address,
-							tel: vm.form.tel,
-							default: vm.form.def
-						},
-					}
-				}, function(ret, err) {
-					$api.css($api.dom('#loading'), 'display:none');
-
-					if (ret) {
-						if (ret.status == '5') {
-								ExitLogin();
-						}else if (ret.status == '1') {
+										api.openWin({
+											name: '6address_title',
+											url: './6address_title.html',
+											reload: true
+										});
+								}
+							} else {
 								api.toast({
-										msg: '操作成功',
-										duration: 2000,
-										location: 'middle'
-								});
-                vm.form = {};
-								api.openWin({
-										name: '6address_title',
-										url: './6address_title.html',
-										reload:true
-								});
-						}else {
-							api.toast({
 									msg: '操作失败',
 									duration: 2000,
 									location: 'middle'
-							});
-						}
-					} else {
-						api.toast({
+								});
+							}
+						} else {
+							api.toast({
 								msg: '网络错误',
 								duration: 2000,
 								location: 'bottom'
+							});
+						}
+					});
+				},
+				del_def: function del_def() {
+					//取消默认地址
+					vm.form.def = '0';
+				},
+				set_def: function set_def() {
+					//设为默认地址
+					vm.form.def = '1';
+				},
+				get_address: function get_address() {
+					//读取单条地址
+					$api.css($api.dom('#loading'), 'display:block');
+					api.ajax({
+						url: serverurl,
+						method: 'get',
+						data: {
+							values: {
+								type: '10114',
+								token: token,
+								id: vm.address_id
+							}
+						}
+					}, function (ret, err) {
+						$api.css($api.dom('#loading'), 'display:none');
+						if (ret) {
+							if (ret.status == '5') {
+								ExitLogin();
+							} else {
+								vm.form.name = ret.consignee;
+								vm.form.address = ret.address;
+								vm.form.tel = ret.tel;
+								vm.form.def = ret.default;
+							}
+						} else {
+							api.toast({
+								msg: '网络错误',
+								duration: 2000,
+								location: 'bottom'
+							});
+						}
+					});
+				},
+				edit_address: function edit_address() {
+					//编辑收货地址
+
+					var myreg = /^1[0-9]{10}$/; //验证手机号码
+					if (vm.form.name == '') {
+						api.toast({
+							msg: '收货人不能为空',
+							duration: 2000,
+							location: 'middle'
 						});
+						return false;
+					} else if (vm.form.tel == '' || !myreg.test(vm.form.tel)) {
+						api.toast({
+							msg: '请输入正确的手机号码',
+							duration: 2000,
+							location: 'middle'
+						});
+						return false;
+					} else if (vm.form.address == '') {
+						api.toast({
+							msg: '收货地址不能为空',
+							duration: 2000,
+							location: 'middle'
+						});
+						return false;
 					}
-				});
+					$api.css($api.dom('#loading'), 'display:block');
+
+					api.ajax({
+						url: serverurl,
+						method: 'get',
+						data: {
+							values: {
+								type: '10103',
+								token: token,
+								uid: id,
+								address_id: vm.address_id,
+								consignee: vm.form.name,
+								address: vm.form.address,
+								tel: vm.form.tel,
+								default: vm.form.def
+							}
+						}
+					}, function (ret, err) {
+						$api.css($api.dom('#loading'), 'display:none');
+
+						if (ret) {
+							if (ret.status == '5') {
+								ExitLogin();
+							} else if (ret.status == '1') {
+								api.toast({
+									msg: '操作成功',
+									duration: 2000,
+									location: 'middle'
+								});
+								vm.form = {};
+								api.openWin({
+									name: '6address_title',
+									url: './6address_title.html',
+									reload: true
+								});
+							} else {
+								api.toast({
+									msg: '操作失败',
+									duration: 2000,
+									location: 'middle'
+								});
+							}
+						} else {
+							api.toast({
+								msg: '网络错误',
+								duration: 2000,
+								location: 'bottom'
+							});
+						}
+					});
+				}
 			}
-		}
-	})
+		});
 </script>

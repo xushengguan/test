@@ -217,36 +217,36 @@
       var vm = new Vue({
           el: '#wrap',
           data: {
-              goodsInfo:[],
-  						content:[],
-              img:[],
+              goodsInfo: [],
+              content: [],
+              img: []
           },
           methods: {
-              get_Defaddress(){//读取收货地址列表(默认地址：is_default:'1')
+              get_Defaddress: function get_Defaddress() {
+                  //读取收货地址列表(默认地址：is_default:'1')
                   var token = $api.getStorage('token');
                   var id = $api.getStorage('id');
                   api.ajax({
                       url: serverurl,
                       method: 'get',
-                      cache:true,
-                      dataType:'json',
+                      cache: true,
+                      dataType: 'json',
                       data: {
                           values: {
                               type: '10113',
-                              token:token,
-                              uid:id,
-                              is_default:'1'
+                              token: token,
+                              uid: id,
+                              is_default: '1'
                           }
                       }
-                  },function(ret, err){
-
+                  }, function (ret, err) {
 
                       if (ret) {
-                          if(ret.status == '5'){
+                          if (ret.status == '5') {
                               ExitLogin();
-                          }else if (ret.status == '0') {
+                          } else if (ret.status == '0') {
                               vm.go_address();
-                          }else {
+                          } else {
                               vm.PlaceOrder();
                           }
                       } else {
@@ -258,58 +258,57 @@
                       }
                   });
               },
-  						getGoodsInfo(){//读取商品详情
+              getGoodsInfo: function getGoodsInfo() {
+                  //读取商品详情
 
-                $api.css($api.byId('loading'), 'display:block');
+                  $api.css($api.byId('loading'), 'display:block');
 
-                vm.role = role;
-  							api.ajax({
-  							    url: serverurl,
-  							    method: 'get',
-                    cache:true,
-  									dataType:'json',
-  							    data: {
-  							        values: {
-  							          	type: '10032',
-  													goodsid:goodsid
-  							        },
-  							    }
-  							},function(ret, err){
-                    $api.css($api.byId('loading'), 'display:none');
+                  vm.role = role;
+                  api.ajax({
+                      url: serverurl,
+                      method: 'get',
+                      cache: true,
+                      dataType: 'json',
+                      data: {
+                          values: {
+                              type: '10032',
+                              goodsid: goodsid
+                          }
+                      }
+                  }, function (ret, err) {
+                      $api.css($api.byId('loading'), 'display:none');
 
-  							    if (ret) {
-  							        vm.goodsInfo = ret.data.info;
-  											vm.content = ret.data.content;
-                        vm.img = ret.data.img;
+                      if (ret) {
+                          vm.goodsInfo = ret.data.info;
+                          vm.content = ret.data.content;
+                          vm.img = ret.data.img;
+                      } else {
+                          api.toast({
+                              msg: '网络错误',
+                              duration: 2000,
+                              location: 'bottom'
+                          });
+                      }
+                  });
+              },
+              PlaceOrder: function PlaceOrder() {
+                  api.openWin({
+                      name: '6confirmOrder',
+                      url: './6confirmOrder.html',
+                      pageParam: {
+                          goods_id: goodsid
+                      },
+                      reload: true
+                  });
+              },
 
-  							    } else {
-  							        api.toast({
-  							            msg: '网络错误',
-  							            duration: 2000,
-  							            location: 'bottom'
-  							        });
-
-  							    }
-  							});
-  						},
-
-  						PlaceOrder(){
-  								api.openWin({
-  								    name: '6confirmOrder',
-  								    url: './6confirmOrder.html',
-  								    pageParam: {
-  								        goods_id: goodsid
-  								    },
-                      reload:true
-  								});
-  						},
 
               //跳到地址页面
-              go_address(){
+              go_address: function go_address() {
 
                 api.openWin({
-                    name: '6address_title',
-                    url: './6address_title.html',
+                    name: '6address2',
+                    url: './6address2.html',
                     pageParam: {
                         goods_id:goodsid
                     },
@@ -317,7 +316,7 @@
                 });
               }
           }
-      })
+      });
 
       // swiper
       function fnInitSwipe(){

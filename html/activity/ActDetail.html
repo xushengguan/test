@@ -48,7 +48,8 @@
 			.SignUp button.on1{background: #3e53f2;}
 			.SignUp .places{color: #666; font-size: 12px; margin-top: 5px;}
 
-			.Actinfo{padding: 25px 0; border-top: 1px solid #ddd; margin: 0 15px;}
+			.Actinfo{padding: 25px 0; margin: 0 15px;}
+			.addbdtop{border-top: 1px solid #ddd;}
 			.Actinfo .timeAndtel{width: 100%; overflow: hidden;}
 			.Actinfo .timeAndtel .half{width: calc(50% - 35px); height: 32px; background: url(../../image/time.png) no-repeat left center;
 				 background-size: 25px; padding-left: 35px; float: left;}
@@ -186,7 +187,7 @@
 									</div>
 							</div>
 
-							<div class="Actinfo">
+							<div class="Actinfo" :class="{addbdtop:data.actsta == 2}">
 									<div class="timeAndtel">
 											<div class="half">
 													<p class="tiem">{{data.actstarttime | formatDate}}</p>

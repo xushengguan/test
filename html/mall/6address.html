@@ -26,7 +26,7 @@
 		</style>
 </head>
 <body>
-		<div class="address-con hide" id="app">
+		<div class="address-con hide" id="app" v-cloak>
 			<div class="NoAddress" v-if="data.status == '0'">暂无收货地址~</div>
 			<div v-for="v in data" v-else>
 					<div class="address1-con" tapmode @click="go_order(v.address_id)">
@@ -95,140 +95,133 @@
 		var vm = new Vue({
 				el: '#app',
 				data: {
-						data:[]
+						data: []
 				},
 				methods: {
-						getAdress() { //读取收货地址列表
-								$api.css($api.byId('loading'),'display:block');
+						getAdress: function getAdress() {
+								//读取收货地址列表
+								$api.css($api.byId('loading'), 'display:block');
 								api.ajax({
 										url: serverurl,
 										method: 'get',
-										cache:true,
+										cache: true,
 										dataType: 'json',
 										data: {
 												values: {
 														type: '10113',
-														token:token,
-														uid:id
+														token: token,
+														uid: id
 												}
 										}
-								}, function(ret, err) {
+								}, function (ret, err) {
 
-										$api.css($api.byId('loading'),'display:none');
+										$api.css($api.byId('loading'), 'display:none');
 
-                  	if (ret) {
-											  if (ret.status == '5') {
+										if (ret) {
+												if (ret.status == '5') {
 														ExitLogin();
-											  }else {
-											  		vm.data = ret;
-											  }
-
+												} else {
+														vm.data = ret;
+												}
 										} else {
 												api.toast({
 														msg: '网络错误',
 														duration: 2000,
 														location: 'middle'
 												});
-
 										}
 								});
 						},
+						set_default: function set_default(address_id) {
+								//更新默认地址
+								$api.css($api.byId('loading'), 'display:block');
+								api.ajax({
+										url: serverurl,
+										method: 'get',
+										dataType: 'json',
+										data: {
+												values: {
+														type: '10106',
+														token: token,
+														uid: id,
+														address_id: address_id
+												}
+										}
+								}, function (ret, err) {
+										$api.css($api.byId('loading'), 'display:none');
 
-						set_default(address_id){//更新默认地址
-							$api.css($api.byId('loading'),'display:block');
-							api.ajax({
-									url: serverurl,
-									method: 'get',
-									dataType: 'json',
-									data: {
-											values: {
-													type: '10106',
-													token:token,
-													uid:id,
-													address_id:address_id
-											}
-									}
-							}, function(ret, err) {
-									$api.css($api.byId('loading'),'display:none');
-
-									if (ret) {
-                      if (ret.status == '5') {
-													ExitLogin();
-                      }else if (ret.status == '1') {
-													vm.getAdress();
-											}
-
-									} else {
-											api.toast({
-													msg: '网络错误',
-													duration: 2000,
-													location: 'middle'
-											});
-									}
-							});
+										if (ret) {
+												if (ret.status == '5') {
+														ExitLogin();
+												} else if (ret.status == '1') {
+														vm.getAdress();
+												}
+										} else {
+												api.toast({
+														msg: '网络错误',
+														duration: 2000,
+														location: 'middle'
+												});
+										}
+								});
 						},
+						del_address: function del_address(address_id) {
+								//删除地址
+								$api.css($api.byId('loading'), 'display:block');
+								api.ajax({
+										url: serverurl,
+										method: 'get',
+										dataType: 'json',
+										data: {
+												values: {
+														type: '10104',
+														token: token,
+														id: address_id
+												}
+										}
+								}, function (ret, err) {
+										$api.css($api.byId('loading'), 'display:none');
 
-						del_address(address_id){//删除地址
-							$api.css($api.byId('loading'),'display:block');
-							api.ajax({
-									url: serverurl,
-									method: 'get',
-									dataType: 'json',
-									data: {
-											values: {
-													type: '10104',
-													token:token,
-													id:address_id
-											}
-									}
-							}, function(ret, err) {
-									$api.css($api.byId('loading'),'display:none');
-
-									if (ret) {
-                      if (ret.status == '5') {
-													ExitLogin();
-                      }else if (ret.status == '1') {
-													vm.getAdress();
-											}
-
-									} else {
-											api.toast({
-													msg: '网络错误',
-													duration: 2000,
-													location: 'middle'
-											});
-									}
-							});
+										if (ret) {
+												if (ret.status == '5') {
+														ExitLogin();
+												} else if (ret.status == '1') {
+														vm.getAdress();
+												}
+										} else {
+												api.toast({
+														msg: '网络错误',
+														duration: 2000,
+														location: 'middle'
+												});
+										}
+								});
 						},
+						edit_address: function edit_address(address_id) {
+								//编辑地址
 
-						edit_address(address_id){//编辑地址
-
-									api.openWin({
-									    name: '6address2',
-									    url: './6address2.html',
-									    pageParam: {
-									        address_id: address_id
-									    },
-											reload:true
-									});
-
+								api.openWin({
+										name: '6address2',
+										url: './6address2.html',
+										pageParam: {
+												address_id: address_id
+										},
+										reload: true
+								});
 						},
-
-						go_order(address_id){
-							
-							  if (api.pageParam.goods_id) {
-									  
+						go_order: function go_order(address_id) {
+								if (api.pageParam.goods_id) {
 										api.openWin({
 												name: '6confirmOrder',
 												url: './6confirmOrder.html',
 												pageParam: {
 														address_id: address_id,
-														goods_id:api.pageParam.goods_id
+														goods_id: api.pageParam.goods_id
 												},
-												reload:true
+												reload: true
 										});
-							  }
+								}
 						}
 				}
-		})
+		});
 </script>
