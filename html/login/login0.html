@@ -120,16 +120,24 @@
 
           api.addEventListener({name:'appintent'}, function(ret,err) {
 
-              if (ret.appParam.ajpush.content.indexOf("重新登陆") > 0) {
-                  ExitLogin();
-              }else {
-                  api.openWin({
-                      name: 'circleNews',
-                      url: '../circle/circleNews.html',
-                      reload:true,
-                      allowEdit:true,
-                  });
-              }
+            if (ret.appParam.ajpush.content.indexOf("重新登陆") > 0 || ret.appParam.ajpush.content.indexOf("信息审核") > 0) {
+                ExitLogin();
+            }else if (ret.appParam.ajpush.content.indexOf("系统消息") > 0) {
+                api.openWin({
+                    name: 'MyNews_title',
+                    url: '../setting/MyNews_title.html',
+                    reload:true,
+                    allowEdit:true
+                });
+
+            }else {
+                api.openWin({
+                    name: 'circleNews',
+                    url: '../circle/circleNews.html',
+                    reload:true,
+                    allowEdit:true
+                });
+            }
 
           })
           api.addEventListener({name:'pause'}, function(ret,err) {

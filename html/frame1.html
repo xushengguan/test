@@ -320,6 +320,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            -webkit-transform: translate(-50%, -50%);
             border-radius: 3px;
             background: #fff;
             color: #222;
@@ -377,20 +378,20 @@
                   <div v-if="v.thumb[0].url">
                       <!-- 一张图片 -->
                       <div class="cell" v-if="v.thumb.length == 1">
-                          <img :src="v.thumb[0].url+'?x-oss-process=image/resize,m_fill,h_210,w_210'" alt="" tapmode @click="viewPicture(v.thumb)">
+                          <img :src="v.thumb[0].url+'?x-oss-process=image/resize,m_fill,h_210,w_210'" alt="动态图" tapmode @click="viewPicture(v.thumb)">
                       </div>
 
                       <!-- 九张图片，当为4张图片时加样式名cell4 -->
                       <div class="cell9 cell4" v-else-if="v.thumb.length == 4">
                           <div class="item" v-for="(item,index) in v.thumb">
-                              <img :src="item.url+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="" tapmode @click="viewPicture(v.thumb,index)">
+                              <img :src="item.url+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="动态图" tapmode @click="viewPicture(v.thumb,index)">
                           </div>
                       </div>
 
                       <!-- 九张图片，当为4张图片时加样式名cell4 -->
                       <div class="cell9" v-else>
                           <div class="item" v-for="(item,index) in v.thumb">
-                              <img :src="item.url+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="" tapmode @click="viewPicture(v.thumb,index)">
+                              <img :src="item.url+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="动态图" tapmode @click="viewPicture(v.thumb,index)">
                           </div>
                       </div>
                   </div>
@@ -801,57 +802,73 @@
 
     //展示删除按钮删除评论
     function showDel(item,com_id,fid){
-
        event.stopPropagation();
        $api.css($api.dom('.del'),'display:block');
        $api.css($api.dom('footer'),'display:none');
        var del = $api.dom('.del');
-       del.onclick = function(e){
-         event.stopPropagation();
-          api.ajax({
-                url: serverurl,
-                method: 'get',
-                data: {
-                    values: {
-                        type: '10137',
-                        token:token,
-                        rew_id:com_id,
-                        id:fid
-                    }
-                }
-            },function(ret, err){
 
-                if (ret) {
-                    $api.css($api.dom('.del'),'display:none');
-                    if (ret.status == '5') {
-                        ExitLogin();
-                    }else if (ret.status == '0') {
-                       api.toast({
-                           msg: '删除失败',
-                           duration: 2000,
-                           location: 'middle'
-                       });
+      //兼容iphone6、ios8.1触摸屏幕
+      if ("ontouchstart" in document) {
+        del.ontouchstart = function(e){
+           e.stopPropagation();
+           delClick();
+        }
+        document.ontouchstart = function(e){
+            del.style.display = "none";
+        };
+      } else {
+          del.onclick = function(e){
+             e.stopPropagation();
+             delClick();
+          }
+          document.onclick = function(e){
+              del.style.display = "none";
+          };
+      }
 
-                    }else {
-                      item.rewlist = ret.data;
-                      item.rew = ret.count;
-                    }
+      function delClick(){
+        api.ajax({
+              url: serverurl,
+              method: 'get',
+              data: {
+                  values: {
+                      type: '10137',
+                      token:token,
+                      rew_id:com_id,
+                      id:fid
+                  }
+              }
+          },function(ret, err){
+            
+              if (ret) {
+                  $api.css($api.dom('.del'),'display:none');
+                  if (ret.status == '5') {
+                      ExitLogin();
+                  }else if (ret.status == '0') {
+                     api.toast({
+                         msg: '删除失败',
+                         duration: 2000,
+                         location: 'middle'
+                     });
 
-                } else {
+                  }else {
 
-                    api.toast({
-                        msg: '网络错误',
-                        duration: 2000,
-                        location: 'middle'
-                    });
+                    item.rewlist = ret.data;
+                    item.rew = ret.count;
+                  }
 
-                }
-            });
-       }
+              } else {
 
-       document.onclick = function(){
-         del.style.display = "none";
-       }
+                  api.toast({
+                      msg: '网络错误',
+                      duration: 2000,
+                      location: 'middle'
+                  });
+
+              }
+          });
+      }
+
     }
 
     //回复

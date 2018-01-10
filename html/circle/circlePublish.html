@@ -206,11 +206,7 @@
             callback(ret);
         } else {
 
-            api.toast({
-                msg: err,
-                duration: 2000,
-                location: 'bottom'
-            });
+            console.log(JSON.stringify(err));
 
         }
       });
@@ -301,11 +297,15 @@
       		}, function(ret, err) {
 
       			if (ret) {
-      				// 在回调函数里面调用
-      				var dom = parseXML(ret);
-      				// location 标签的内容使用DOM选择器进行查找
-      				var url = dom.querySelector('Location').innerHTML;
-
+      				// // 在回调函数里面调用
+      				// var dom = parseXML(ret);
+      				// // location 标签的内容使用DOM选择器进行查找
+      				// var url = dom.querySelector('Location').innerHTML;
+              var div=document.createElement('div');
+      				div.style.display = 'none';
+      				div.innerHTML=ret;
+      				document.body.insertBefore(div, document.body.firstChild);
+      				var url = div.getElementsByTagName('Location')[0].innerHTML;
               arr.push(url);
 
               if (arr.length == imgUrl.length) {

@@ -162,28 +162,28 @@
 								  <div class="title">上传活动照片</div>
 									<div class="prompt">注意：请至少上传3张活动照片，照片中需要包含有参赛者</div>
 									<div class="item" tapmode onclick="UploadPic(this,'start_img')">
-	                    <img :src="data.start_img+'?x-oss-process=image/resize,p_50'" alt="" v-if="data.start_img">
+	                    <img :src="data.start_img+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="" v-if="data.start_img">
 											<img id="img1" src="../../image/up1.png" alt="" v-else>
 									</div>
 									<div class="item" tapmode onclick="UploadPic(this,'underway_img')">
-	                    <img :src="data.underway_img+'?x-oss-process=image/resize,p_50'" alt="" v-if="data.underway_img">
+	                    <img :src="data.underway_img+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="" v-if="data.underway_img">
 											<img id="img2" src="../../image/up2.png" alt="" v-else>
 									</div>
 									<div class="item" tapmode onclick="UploadPic(this,'end_img')">
-	                    <img :src="data.end_img+'?x-oss-process=image/resize,p_50'" alt="" v-if="data.end_img">
+	                    <img :src="data.end_img+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="" v-if="data.end_img">
 											<img id="img3" src="../../image/up3.png" alt="" v-else>
 									</div>
 							</div>
 
 							<div class="img" style="margin-top:15px;" v-if="data.actsta == '0' && data.start_img || data.actsta == '0' && data.underway_img || data.actsta == '0' && data.end_img">
 									<div class="item">
-	                    <img :src="data.start_img+'?x-oss-process=image/resize,p_50'" alt=""  @click="viewPicture(data.start_img)" v-if="data.start_img">
+	                    <img :src="data.start_img+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt=""  @click="viewPicture(data.start_img)" v-if="data.start_img">
 									</div>
 									<div class="item">
-	                    <img :src="data.underway_img+'?x-oss-process=image/resize,p_50'" alt=""  @click="viewPicture(data.underway_img)" v-if="data.underway_img">
+	                    <img :src="data.underway_img+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt=""  @click="viewPicture(data.underway_img)" v-if="data.underway_img">
 									</div>
 									<div class="item">
-	                    <img :src="data.end_img+'?x-oss-process=image/resize,p_50'" alt=""  @click="viewPicture(data.end_img)" v-if="data.end_img">
+	                    <img :src="data.end_img+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt=""  @click="viewPicture(data.end_img)" v-if="data.end_img">
 									</div>
 							</div>
 
@@ -393,7 +393,8 @@
 								url.push(data);
 								var imageBrowser = api.require('imageBrowser');
 								imageBrowser.openImages({
-										imageUrls: url
+										imageUrls: url,
+										showList:false,
 								});
 						},
 						goMarkPage: function goMarkPage(actid) {
