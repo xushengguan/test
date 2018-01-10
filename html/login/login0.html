@@ -119,10 +119,11 @@
           })
 
           api.addEventListener({name:'appintent'}, function(ret,err) {
-
-            if (ret.appParam.ajpush.content.indexOf("重新登陆") > 0 || ret.appParam.ajpush.content.indexOf("信息审核") > 0) {
+            alert(JSON.stringify(ret.appParam.ajpush.content));
+            if (ret.appParam.ajpush.content.indexOf("重新登陆") > -1 || ret.appParam.ajpush.content.indexOf("信息审核") > 0) {
                 ExitLogin();
-            }else if (ret.appParam.ajpush.content.indexOf("系统消息") > 0) {
+            }else if (ret.appParam.ajpush.content.indexOf("系统消息") > -1) {
+                alert(1);
                 api.openWin({
                     name: 'MyNews_title',
                     url: '../setting/MyNews_title.html',
@@ -131,6 +132,7 @@
                 });
 
             }else {
+                alert(2);
                 api.openWin({
                     name: 'circleNews',
                     url: '../circle/circleNews.html',
