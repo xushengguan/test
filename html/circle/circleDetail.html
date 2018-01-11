@@ -272,7 +272,7 @@
             background: #fff;
         }
 
-        .del{width: 80px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); border-radius:3px;
+        .del{width: 80px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); -webkit-transform: translate(-50%, -50%); border-radius:3px;
         background: #fff; color: #222; font-size: 16px; padding: 10px 20px; box-shadow: 0 0 10px rgba(0,0,0,.1); z-index: 99;}
 
         .inline{word-wrap: normal; word-break: break-all;}
@@ -692,48 +692,66 @@
 
    //展示删除按钮删除评论
    function showDel(rew_id){
-      event.stopPropagation();
-      $api.css($api.dom('.del'),'display:block');
-      $api.css($api.dom('footer'),'display:none');
-      var del = $api.dom('.del');
-      del.onclick = function(e){
-        event.stopPropagation();
-         api.ajax({
-               url: serverurl,
-               method: 'get',
-               data: {
-                   values: {
-                       type: '10137',
-                       token:token,
-                       rew_id:rew_id,
-                       id:id
-                   }
-               }
-           },function(ret, err){
+     event.stopPropagation();
+     $api.css($api.dom('.del'),'display:block');
+     $api.css($api.dom('footer'),'display:none');
+     var del = $api.dom('.del');
 
-               if (ret) {
-                   if (ret.status == '5') {
-                       ExitLogin();
-                   }else {
-                      $api.css($api.dom('.del'),'display:none');
-                      vm.data.rewlist = ret.data;
-                      vm.data.rew = ret.count;
-                  }
-               } else {
-
-                   api.toast({
-                       msg: '网络错误',
-                       duration: 2000,
-                       location: 'bottom'
-                   });
-
-               }
-           });
+    //兼容iphone6、ios8.1触摸屏幕
+    if ("ontouchstart" in document) {
+      del.ontouchstart = function(e){
+         e.stopPropagation();
+         delClick();
       }
+      document.ontouchstart = function(e){
+          del.style.display = "none";
+      };
+    } else {
+        del.onclick = function(e){
+           e.stopPropagation();
+           delClick();
+        }
+        document.onclick = function(e){
+            del.style.display = "none";
+        };
+    }
 
-      document.onclick = function(){
-        del.style.display = "none";
-      }
+    function delClick(){
+      api.ajax({
+            url: serverurl,
+            method: 'get',
+            data: {
+                values: {
+                    type: '10137',
+                    token:token,
+                    rew_id:rew_id,
+                    id:id
+                }
+            }
+        },function(ret, err){
+
+            if (ret) {
+                if (ret.status == '5') {
+                    ExitLogin();
+                }else {
+                   $api.css($api.dom('.del'),'display:none');
+                   vm.data.rewlist = ret.data;
+                   vm.data.rew = ret.count;
+               }
+            } else {
+
+                api.toast({
+                    msg: '网络错误',
+                    duration: 2000,
+                    location: 'bottom'
+                });
+
+            }
+        });
+
+     };
+
+
    }
 
 </script>
