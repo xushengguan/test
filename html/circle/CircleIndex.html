@@ -40,19 +40,19 @@
 	<div class="homePage" id="wrap" v-cloak>
 		<header>
 			<div class="header">
-				<em tapmode onclick="go_back()"></em> 我的学客圈
+				<em tapmode onclick="go_back()"></em> 学客圈动态
 			</div>
 		</header>
 
 		<div id="main">
 				<div class="header-msg">
 					<div class="msg-con hide">
-						<img class="fl msg-pic" tapmode :src="data.headimgurl+'?x-oss-process=image/resize,p_50'" alt="" v-if="data.headimgurl" @click="viewPicture(data.headimgurl)">
+						<img class="fl msg-pic" tapmode :src="data.headimgurl+'?x-oss-process=image/resize,m_fill,h_80,w_80'" alt="" v-if="data.headimgurl" @click="viewPicture(data.headimgurl)">
 						<img class="fl msg-pic" src="../../image/pic.png" alt="" v-else>
 						<p class="fl msg-name">
 							<span class="rank">{{data.nickname}}</span>
-							<span class="follower" v-if="data.count">您已分享了{{data.count}}条动态</span>
-							<span class="follower" v-else>您还没有分享过动态</span>
+							<span class="follower" v-if="data.count">已分享了{{data.count}}条动态</span>
+							<span class="follower" v-else>暂时还没有分享过动态</span>
 						</p>
 					</div>
 				</div>
@@ -61,7 +61,7 @@
 				<i class="iconfont icon-feiji2 icon-flane fl"></i>
 				<h5>发表的动态</h5>
 			</div>
-			<div class="publish-contents" v-if="!data.list">暂无动态，快去分享自己的心情吧！</div>
+			<div class="publish-contents" v-if="!data.list">暂无动态~</div>
 			<div class="publish-contents" v-for="v in data.list" v-else>
 				<h6>{{v.last_reply_at | formatDate}}<span tapmode @click="DelCircle(v.id)" v-if="oneself == 1">删除</span></h6>
 				<div tapmode @click="goDatail(v.id)">
@@ -189,7 +189,9 @@
 								    url: './circleDetail.html',
 								    pageParam: {
 								        circle_id: circle_id
-								    }
+								    },
+										reload:true,
+										allowEdit:true
 								});
 						},
 

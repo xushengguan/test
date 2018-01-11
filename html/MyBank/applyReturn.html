@@ -115,13 +115,22 @@
                       if (ret.status == '5') {
                           ExitLogin();
                       }else if (ret.status == '1') {
+                          api.sendEvent({
+                               name: 'refund',
+                          });
                           api.alert({
                               title: '退款通知',
                               msg: '提交成功，我们将会在几天内以短信形式通知您处理结果',
                               buttons:["我知道了"]
                           }, function(ret, err){
                               if( ret ){
-                                   go_back();
+
+                                   api.openWin({
+                                       name: 'activeProduct_title',
+                                       url: './setting/activeProduct_title.html',
+                                       reload:true
+                                   });
+
                               }else{
                                    console.log( JSON.stringify( err ) );
                               }

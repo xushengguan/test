@@ -84,6 +84,13 @@
           vm.actProduct();
           api.refreshHeaderLoadDone();
       });
+
+      //监听提交申请退款
+      api.addEventListener({
+          name: 'refund'
+      }, function(ret, err){
+          vm.actProduct();
+      });
   }
 
   var vm = new Vue({

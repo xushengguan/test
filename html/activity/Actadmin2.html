@@ -98,9 +98,10 @@
         .del {
             width: 80px;
             position: absolute;
-            top: 10%;
+            top: 15%;
             left: 50%;
             transform: translateX(-50%);
+            -webkit-transform: translateX(-50%);
             border-radius: 3px;
             background: #fff;
             text-align: center;
@@ -252,13 +253,13 @@ var vm = new Vue({
 
         // 长按删除活动
         goDel: function goDel(e, actid) {
+            event.stopPropagation(); //阻止事件冒泡
             var Del = $api.next(e.currentTarget);
             timeOutEvent = setTimeout(function (e) {
                 $api.css(Del, 'display:block');
             }, 500);
 
-            Del.onclick = function (e) {
-
+            Del.ontouchstart = function (e) {
                 api.confirm({
                     title: '删除活动',
                     msg: '您确定删除此活动？',
@@ -278,7 +279,7 @@ var vm = new Vue({
                     }
                 });
             };
-            document.onclick = function (e) {
+            document.ontouchstart = function (e) {
                 $api.css(Del, 'display:none');
                 e.stopPropagation(); //阻止事件冒泡
             };
