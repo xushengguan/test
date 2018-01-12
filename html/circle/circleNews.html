@@ -163,6 +163,7 @@
                 vm.rew.forEach(function(item){
                     idArr.push(item.id);
                 })
+                var news_id = idArr.join(',');//数组转换成字符串，以逗号分割
               }
               api.ajax({
                   url: serverurl,
@@ -172,7 +173,7 @@
                           type: '10146',
                           token:token,
                           uid:uid,
-                          id:idArr
+                          id:news_id
                       },
                   }
               },function(ret, err){
