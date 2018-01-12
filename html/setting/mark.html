@@ -177,9 +177,14 @@
           uid = $api.getStorage('id');
           token = $api.getStorage('token');
           key = api.pageParam.key.substr(0,4);//提取字符串前四位
-          
+
           checkActive();
 
+           $api.dom('.popup').ontouchstart = function(event){
+               if(event.target == this){
+               	  $api.css($api.dom('.popup'), 'display:none');
+               }
+           }
       };
 
       //实时监测输入框输入事件
