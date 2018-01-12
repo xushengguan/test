@@ -128,9 +128,7 @@
               </div>
           </div>
         </li>
-        <li id="header3">
-            <div class="title">学分商城</div>
-        </li>
+
       </ul>
   </header>
 
@@ -334,7 +332,7 @@
               $api.val($api.dom('#header2 input'),'');
               if (ret.index == 1) {
                 $api.css($api.dom('#header1'), 'display:none');
-                $api.css($api.dom('#header3'), 'display:none');
+
                 $api.css($api.dom('#header2'), 'display:block');
                 goScircle('stu_actLis',headerHeight,'./html/stu_actLis.html',api.frameHeight - headerHeight - 50);
 
@@ -343,10 +341,10 @@
                 ScanCode();
 
               }else if (ret.index == 3) {
-                $api.css($api.dom('#header3'), 'display:block');
+
                 $api.css($api.dom('#header1'), 'display:none');
                 $api.css($api.dom('#header2'), 'display:none');
-                goScircle('frame2',headerHeight,'./html/frame2.html',api.frameHeight - headerHeight - 50);
+                goScircle('frame2',0,'./html/frame2.html',api.frameHeight - headerHeight - 50);
 
               }else if (ret.index == 4) {
                 goScircle('frame4',0,'./html/frame4.html',api.frameHeight - 50);
@@ -354,8 +352,7 @@
               }else{
                 $api.css($api.dom('#header1'), 'display:block');
                 $api.css($api.dom('#header2'), 'display:none');
-                $api.css($api.dom('#header3'), 'display:none');
-
+                
                 goScircle('frame1',headerHeight,'./html/frame1.html',api.frameHeight - headerHeight - 50);
               }
                 var frames = ['frame1', 'stu_actLis','scan', 'frame2', 'frame4'];
