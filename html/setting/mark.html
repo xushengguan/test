@@ -176,7 +176,8 @@
 
           uid = $api.getStorage('id');
           token = $api.getStorage('token');
-          key = api.pageParam.key.substr(-4);
+          key = api.pageParam.key.substr(0,4);//提取字符串前四位
+          
           checkActive();
 
       };

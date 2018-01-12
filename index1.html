@@ -337,7 +337,7 @@
                 $api.css($api.dom('#header3'), 'display:none');
                 $api.css($api.dom('#header2'), 'display:block');
                 goScircle('stu_actLis',headerHeight,'./html/stu_actLis.html',api.frameHeight - headerHeight - 50);
-          
+
 
               }else if (ret.index == 2) {
                 ScanCode();
@@ -458,9 +458,8 @@
           if (ret) {
 
               if (ret.eventType == 'success') {
-
-                  if (ret.content.indexOf("123win.com.cn/s/") >= 0) {
-                      key = ret.content.substr(-4);
+                  if (ret.content.indexOf("xly1.cn") >= 0) {
+                      key = ret.content.substr(0,4);//提取字符串前四位
                       getActInfo();
                   }else {
                       api.toast({
