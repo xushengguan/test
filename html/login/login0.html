@@ -297,9 +297,11 @@
       // 用户登录
       function userLogin(index,tel,password){
         $api.css($api.dom('#loading'), 'display:block');
-        var ajpush = api.require('ajpush');
-        ajpush.getRegistrationId(function(ret) {
-            var registrationId = ret.id;
+
+        // var ajpush = api.require('ajpush');
+        // ajpush.getRegistrationId(function(ret) {
+
+            // var registrationId = ret.id;
             api.ajax({
                 url: serverurl,
                 method: 'post',
@@ -309,7 +311,7 @@
                          tel: tel,
                          pwd:password,
                         role:index,	//角色代号 ：1.学生家长，2：班主任
-                        registrationid_id:registrationId
+                        // registrationid_id:registrationId
                     },
                 }
             },function(ret, err){
@@ -394,7 +396,7 @@
 
                 }
             });
-        });
+        // });
 
       }
 
