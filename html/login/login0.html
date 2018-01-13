@@ -110,11 +110,17 @@
 
           });
 
+
           // 极光推送
           ajpush = api.require('ajpush');
           ajpush.init(function(ret) {
               if (ret && ret.status){
                   //success
+                  console.log(ret.status);
+                  ajpush.getRegistrationId(function(ret) {
+                      alert('进来');
+                      var registrationId = ret.id;
+                  });
               }
           })
 
@@ -297,11 +303,11 @@
       // 用户登录
       function userLogin(index,tel,password){
         $api.css($api.dom('#loading'), 'display:block');
-
-        // var ajpush = api.require('ajpush');
-        // ajpush.getRegistrationId(function(ret) {
-
-            // var registrationId = ret.id;
+        alert(1);
+        var ajpush = api.require('ajpush');
+        ajpush.getRegistrationId(function(ret) {
+            alert(2);
+            var registrationId = ret.id;
             api.ajax({
                 url: serverurl,
                 method: 'post',
@@ -396,7 +402,7 @@
 
                 }
             });
-        // });
+        });
 
       }
 
