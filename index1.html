@@ -98,7 +98,7 @@
        background: #ffb300;
    }
     header{ background: #ffb300;}
-    header ul li:not(:first-child){display: none;}
+    /*header ul li:not(:first-child){display: none;}*/
 
 
     </style>
@@ -118,7 +118,7 @@
           </div>
 
         </li>
-        <li id="header2">
+        <!-- <li id="header2">
           <div class="input_box">
               <div class="bg">
                 <form action="javascript:submitInputContent(2);">
@@ -127,7 +127,7 @@
                 </form>
               </div>
           </div>
-        </li>
+        </li> -->
 
       </ul>
   </header>
@@ -322,39 +322,33 @@
             selectedIndex: 0
         }, function(ret, err) {
 
-            var headerHeight = $api.dom('header').offsetHeight;
             if (ret.eventType == 'show') {
-
+              var headerHeight = $api.dom('header').offsetHeight;
               goScircle('frame1',headerHeight,'./html/frame1.html',api.frameHeight - headerHeight - 50);
 
             }else{
               $api.val($api.dom('#header1 input'),'');
-              $api.val($api.dom('#header2 input'),'');
-              if (ret.index == 1) {
-                $api.css($api.dom('#header1'), 'display:none');
 
-                $api.css($api.dom('#header2'), 'display:block');
-                goScircle('stu_actLis',headerHeight,'./html/stu_actLis.html',api.frameHeight - headerHeight - 50);
-
-
-              }else if (ret.index == 2) {
-                ScanCode();
-
-              }else if (ret.index == 3) {
-
-                $api.css($api.dom('#header1'), 'display:none');
-                $api.css($api.dom('#header2'), 'display:none');
-                goScircle('frame2',0,'./html/frame2.html',api.frameHeight - headerHeight - 50);
-
-              }else if (ret.index == 4) {
-                goScircle('frame4',0,'./html/frame4.html',api.frameHeight - 50);
-
-              }else{
-                $api.css($api.dom('#header1'), 'display:block');
-                $api.css($api.dom('#header2'), 'display:none');
-                
-                goScircle('frame1',headerHeight,'./html/frame1.html',api.frameHeight - headerHeight - 50);
+              if(ret.index == 1 || ret.index == 0){
+                  $api.css($api.dom('#header1'), 'display:block');
+                  var y = $api.dom('header').offsetHeight;
+                  if (ret.index == 1) {
+                      goScircle('stu_actLis',y,'./html/stu_actLis.html',api.frameHeight - y - 50);
+                  }else if (ret.index == 0) {
+                      goScircle('frame1',y,'./html/frame1.html',api.frameHeight - y - 50);
+                  }
+              }else {
+                  $api.css($api.dom('#header1'), 'display:none');
+                  var y = 0;
+                  if (ret.index == 2) {
+                       ScanCode();
+                  }else if (ret.index == 3) {
+                       goScircle('frame2',y,'./html/frame2.html',api.frameHeight - y - 50);
+                  }else if (ret.index == 4) {
+                       goScircle('frame4',y,'./html/frame4.html',api.frameHeight - y - 50);
+                  }
               }
+
                 var frames = ['frame1', 'stu_actLis','scan', 'frame2', 'frame4'];
                 for (var i = 0; i < frames.length; i++) {
                     if (ret.index !== i && ret.index !== 2) {

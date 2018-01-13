@@ -1,113 +1,223 @@
 <!DOCTYPE html>
-  <html>
-  <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-      <title>我的消息</title>
-      <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
-      <link rel="stylesheet" type="text/css" href="../../css/loading.css"/>
-      <style>
-        .NewsLis li{padding: 15px; background: #fff; margin-bottom: 1px;}
-        .line1{padding-bottom: 10px; overflow: hidden; line-height: 18px;}
-        .line1 .title{width: 70%; color: #212121; float: left; font-size: 15px;}
-        .line1 .time{width: 30%; color: #999; float: left; font-size: 13px; text-align: right;}
-        .line2 {font-size: 13px; color: #999;}
-      </style>
-  </head>
-  <body>
-      <ul class="NewsLis" id="app" v-cloak>
-          <li v-if="status == '0'">暂无消息~</li>
-          <li v-for="v in data" v-else>
-            <div class="line1">
-                <p class="title">{{v.title}}</p>
-                <span class="time">{{v.time | formatDate}}</span>
-            </div>
-            <div class="line2">{{v.news}}</div>
-          </li>
-      </ul>
-  </body>
-  <script type="text/javascript" src="../../script/api.js"></script>
-  <script type="text/javascript" src="../../script/my.js"></script>
-  <script type="text/javascript" src="../../script/vue.js"></script>
-  <script type="text/javascript" src="../../script/date.js"></script>
-  <script type="text/javascript">
-  var token,uid;
-  apiready = function(){
-      loading();
-      token = $api.getStorage('token');
-      uid = $api.getStorage('id');
-      vm.getNews();
+<html>
 
-      //刷新
-      api.setRefreshHeaderInfo({
-          loadingImg: 'widget://image/refresh.png',
-          bgColor: '#444',
-          textColor: '#fff',
-          textUp: '释放立即刷新...',
-          textLoading: '加载中···',
-          showTime: false
-      }, function(ret, err) {
-          //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
-          vm.getNews();
-          api.refreshHeaderLoadDone();
-      });
-  }
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>我的消息</title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/loading.css" />
+    <style>
+        header {
+            height: 50px;
+            line-height: 50px;
+            background: #ffb300;
+            color: #fff;
+            font-size: 20px;
+            position: relative;
+        }
 
-  var vm = new Vue({
-      el:'#app',
-      data:{
-          data:[],
-          status:''
-      },
-      filters: {
-          formatDate(time) {
-              var date = new Date(time * 1000);
-              return formatDate(date, 'yyyy-MM-dd');
-          }
-      },
-      methods:{
-          getNews(){//用户消息
-              $api.css($api.byId('app'),'display:none');
-              $api.css($api.byId('loading'),'display:block');
+        header em {
+            width: 50px;
+            height: 50px;
+            background: url(../../image/back.png) no-repeat center;
+            background-size: 18px;
+            float: left;
+        }
 
-              api.ajax({
-                  url: serverurl,
-                  method: 'get',
-                  cache:true,
-                  data: {
-                      values: {
-                          type: '10167',
-                          token: token,
-                          uid:uid
-                      },
-                  }
-              },function(ret, err){
+        header span {
+            float: right;
+            margin-right: 15px;
+        }
 
-                  $api.css($api.byId('loading'),'display:none');
+        .NewsLis li {
+            padding: 15px;
+            background: #fff;
+            margin-bottom: 1px;
+        }
 
-                  if (ret) {
-                      if (ret.status == '5') {
-                          ExitLogin();
-                      }else if(ret.status == '0'){
-                          vm.status = ret.status;
-                      }else{
-                          vm.data = ret;
-                      }
-                      $api.css($api.byId('app'),'display:block');
-                  } else {
+        .line1 {
+            padding-bottom: 10px;
+            overflow: hidden;
+            line-height: 18px;
+        }
 
-                      api.toast({
-                          msg: '网络错误',
-                          duration: 2000,
-                          location: 'bottom'
-                      });
+        .line1 .title {
+            width: 70%;
+            color: #212121;
+            float: left;
+            font-size: 15px;
+        }
 
-                  }
-              });
+        .line1 .time {
+            width: 30%;
+            color: #999;
+            float: left;
+            font-size: 13px;
+            text-align: right;
+        }
 
-          }
-      }
-  })
-  </script>
-  </html>
+        .line2 {
+            font-size: 13px;
+            color: #999;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <header>
+            <em tapmode onclick="go_back()"></em> 我的消息
+            <span tapmode onclick="clearNews()">清空</span>
+        </header>
+        <div id="main" v-cloak>
+            <ul class="NewsLis">
+                <li v-if="status == '0'">暂无消息~</li>
+                <li v-for="v in data" v-else>
+                    <div class="line1">
+                        <p class="title">{{v.title}}</p>
+                        <span class="time">{{v.time | formatDate}}</span>
+                    </div>
+                    <div class="line2">{{v.news}}</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript" src="../../script/date.js"></script>
+<script type="text/javascript">
+    var header = $api.dom('header');
+    fixStatusBar_API(header);
+    var token, uid;
+    apiready = function() {
+        loading();
+        token = $api.getStorage('token');
+        uid = $api.getStorage('id');
+        vm.getNews();
+    }
+
+    var vm = new Vue({
+        el: '#main',
+        data: {
+            data: [],
+            status: ''
+        },
+        filters: {
+            formatDate: function(_formatDate) {
+                function formatDate(_x) {
+                    return _formatDate.apply(this, arguments);
+                }
+
+                formatDate.toString = function() {
+                    return _formatDate.toString();
+                };
+
+                return formatDate;
+            }(function(time) {
+                var date = new Date(time * 1000);
+                return formatDate(date, 'yyyy-MM-dd');
+            })
+        },
+        methods: {
+            getNews: function getNews() {
+                //用户消息
+
+                $api.css($api.byId('loading'), 'display:block');
+
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    cache: true,
+                    data: {
+                        values: {
+                            type: '10167',
+                            token: token,
+                            uid: uid
+                        }
+                    }
+                }, function(ret, err) {
+
+                    $api.css($api.byId('loading'), 'display:none');
+
+                    if (ret) {
+                        if (ret.status == '5') {
+                            ExitLogin();
+                        } else if (ret.status == '0') {
+                            vm.status = ret.status;
+                        } else {
+                            vm.data = ret;
+                        }
+                    } else {
+
+                        api.toast({
+                            msg: '网络错误',
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                    }
+                });
+            }
+        }
+    });
+
+    // 清空系统消息
+    function clearNews() {
+        if (vm.status != '0') {
+            $api.css($api.byId('loading'), 'display:block');
+            var idArr = [];
+            vm.data.forEach(function(item) {
+                idArr.push(item.id);
+            })
+            var news_id = idArr.join(','); //数组转换成字符串，以逗号分割
+
+            api.ajax({
+                url: serverurl,
+                method: 'get',
+                data: {
+                    values: {
+                        type: '10050',
+                        token: token,
+                        id: news_id
+                    },
+                }
+            }, function(ret, err) {
+                $api.css($api.byId('loading'), 'display:none');
+
+                if (ret) {
+                    if (ret.status == '5') {
+                        ExitLogin();
+                    } else if (ret.status == '1') {
+                        vm.getNews();
+                    } else {
+                        api.toast({
+                            msg: '网络错误',
+                            duration: 2000,
+                            location: 'bottom'
+                        });
+                    }
+                } else {
+                    api.toast({
+                        msg: '网络错误',
+                        duration: 2000,
+                        location: 'bottom'
+                    });
+
+                }
+            });
+        } else {
+            api.toast({
+                msg: '没有消息可清空哦',
+                duration: 2000,
+                location: 'middle'
+            });
+
+        }
+
+    }
+</script>
+
+</html>
