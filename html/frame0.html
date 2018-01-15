@@ -151,7 +151,7 @@
 
         <div class="box">
             <div class="top" tapmode onclick="goProfit(3)">
-                <div class="awardName">下线收益</div>
+                <div class="awardName">线下收益</div>
                 <p class="explain">参与奖说明</p>
                 <em></em>
             </div>
@@ -189,7 +189,7 @@
         $api.css($api.byId('loading'), 'display:block');
         vm.getUser();
         vm.getInfo();
-        getProfit(2);//form收益类型 1:生源奖 2:参与奖 3:下线收益
+        getProfit(2);//form收益类型 1:生源奖 2:参与奖 3:线下收益
         getProfit(1);
         getProfit(3);
         $api.css($api.byId('app'), 'display:block');
@@ -350,7 +350,7 @@
       }
 
       // 支教老师收益
-      function getProfit(form){//form收益类型 1:生源奖 2:参与奖 3:下线收益
+      function getProfit(form){//form收益类型 1:生源奖 2:参与奖 3:线下收益
           api.ajax({
               url: serverurl,
               method: 'get',

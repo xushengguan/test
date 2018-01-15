@@ -63,7 +63,7 @@
 				 background-size: 22px 29px; margin-right: 10px;}
 
 			.content{background: #fff; padding: 15px 15px 65px 15px; font-size: 16px; color: #999; line-height: 20px;
-				word-wrap: break-word; word-break: normal;}
+				word-wrap: break-word; word-break: normal; white-space: pre-wrap;}
 
 			.ActStaus{height: 40px; line-height: 40px; font-size: 15px; color: #fff; padding-left: 18px; background: #ffb300;
 			position: relative; margin-top: 10px;}
@@ -202,8 +202,8 @@
 							</div>
 					</div>
 
-					<div class="content" v-show="data.content">
-							{{data.content}}
+					<div class="content" v-show="data.content" v-html="data.content">
+							<!-- {{data.content}} -->
 					</div>
 				</div>
 

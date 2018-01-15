@@ -119,6 +119,13 @@
               }
           })
 
+          //JPush服务器给客户端返回一个唯一的该设备的标识RegistrationID
+          ajpush.getRegistrationId(function(ret) {
+              var registrationId = ret.id;
+              $api.setStorage('registrationId', registrationId);
+
+          });
+
           api.addEventListener({name:'appintent'}, function(ret,err) {
 
             if (ret.appParam.ajpush.content.indexOf("重新登陆") > -1 || ret.appParam.ajpush.content.indexOf("信息审核") > 0) {
@@ -175,7 +182,6 @@
               url: './login2.html',
               reload:true
           });
-
       }
 
       // 登录
@@ -298,10 +304,12 @@
       // 用户登录
       function userLogin(index,tel,password){
         $api.css($api.dom('#loading'), 'display:block');
-        var ajpush = api.require('ajpush');
-        ajpush.getRegistrationId(function(ret) {
-
-            var registrationId = ret.id;
+            var regId = $api.getStorage('registrationId');
+            if (regId) {
+                var registerId = regId;
+            }else {
+                var registerId = "";
+            }
             api.ajax({
                 url: serverurl,
                 method: 'post',
@@ -311,7 +319,7 @@
                          tel: tel,
                          pwd:password,
                         role:index,	//角色代号 ：1.学生家长，2：班主任
-                        registrationid_id:registrationId
+                        registrationid_id:registerId
                     },
                 }
             },function(ret, err){
@@ -396,7 +404,7 @@
 
                 }
             });
-        });
+
 
       }
 

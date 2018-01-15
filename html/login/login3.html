@@ -226,9 +226,12 @@
 
       // 登录
       function login(tel,pwd){
-        var ajpush = api.require('ajpush');
-        ajpush.getRegistrationId(function(ret) {
-          var registrationId = ret.id;
+          var regId = $api.getStorage('registrationId');
+          if (regId) {
+              var registerId = regId;
+          }else {
+              var registerId = "";
+          }
           api.ajax({
               url: serverurl,
               method: 'post',
@@ -238,7 +241,7 @@
                        tel: tel,
                        pwd:pwd,
                        role:index,
-                       registrationid_id:registrationId
+                       registrationid_id:registerId
                   },
               }
           },function(ret, err){
@@ -318,7 +321,7 @@
 
               }
           });
-        })
+
       }
   </script>
   </html>

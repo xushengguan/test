@@ -416,6 +416,7 @@
       var cid = document.getElementById("EditSure");
       cid.addEventListener('click',function(){
           var content = $api.val($api.dom('.txt'));
+
           $api.val($api.dom('#ActDetail'),content);
           $api.css($api.dom('#content'), 'display:none');
       });
@@ -437,6 +438,8 @@
       var address = $api.val($api.byId('address'));//活动地址
       var img = $api.attr($api.dom('.Actimg'), 'src');//活动图片
       var ActDetail = $api.val($api.byId('ActDetail'));//活动详情
+      ActDetail=ActDetail.replace(/[\r\n]/g,"<br/>");//保留回车符
+
       var myreg = /^1[0-9]{10}$/;//判断是否为手机号码,/^1[34578]\d{9}$/
       var myNum = /^\+?[1-9][0-9]*$///验证非零的正整数
 
@@ -498,7 +501,7 @@
         });
         return false;
       }
-      
+
       var map = api.require('bMap');
       map.getCoordsFromName({//lon经度，lat纬度
           city: address,
