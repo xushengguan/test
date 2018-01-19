@@ -36,8 +36,8 @@
 				//刷新
         api.setRefreshHeaderInfo({
             loadingImg: 'widget://image/refresh.png',
-            bgColor: '#444',
-            textColor: '#fff',
+						bgColor: '#efeff4',
+            textColor: '#333',
             textUp: '释放立即刷新...',
             textLoading: '加载中···',
             showTime: false
@@ -68,7 +68,7 @@
 								    }
 								},function(ret, err){
 									  $api.css($api.dom('#loading'), 'display:none');
-								
+
 								    if (ret) {
 
 												vm.data = ret.result.list;

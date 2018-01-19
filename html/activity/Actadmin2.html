@@ -165,11 +165,11 @@ apiready = function() {
     //刷新
     api.setRefreshHeaderInfo({
         loadingImg: 'widget://image/refresh.png',
-        bgColor: '#444',
-        textColor: '#fff',
+        bgColor: '#efeff4',
+        textColor: '#333',
         textUp: '释放立即刷新...',
         textLoading: '加载中···',
-        showTime: true
+        showTime: false
     }, function(ret, err) {
         //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
         window.location.reload();
