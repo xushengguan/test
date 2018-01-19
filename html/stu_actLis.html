@@ -161,25 +161,25 @@
         id = $api.getStorage('id');
         token = $api.getStorage('token');
         btn_list(0);
-        //刷新
-        api.setRefreshHeaderInfo({
-            loadingImg: 'widget://image/refresh.png',
-            bgColor: '#444',
-            textColor: '#fff',
-            textUp: '释放立即刷新...',
-            textLoading: '加载中···',
-            showTime: false
-        }, function(ret, err) {
-            //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
-            btn_list(vm.Lisindex);
-            api.sendEvent({
-                name: 'clearTxt',
-                extra: {
-                    key: 0,
-                }
-            });
-            api.refreshHeaderLoadDone();
-        });
+        // //刷新
+        // api.setRefreshHeaderInfo({
+        //     loadingImg: 'widget://image/refresh.png',
+        //     bgColor: '#444',
+        //     textColor: '#fff',
+        //     textUp: '释放立即刷新...',
+        //     textLoading: '加载中···',
+        //     showTime: false
+        // }, function(ret, err) {
+        //     //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
+        //     btn_list(vm.Lisindex);
+        //     api.sendEvent({
+        //         name: 'clearTxt',
+        //         extra: {
+        //             key: 0,
+        //         }
+        //     });
+        //     api.refreshHeaderLoadDone();
+        // });
     };
     var vm = new Vue({
         el: '#main',
@@ -211,6 +211,7 @@
                     }
                 }, function(ret, err) {
                     $api.css($api.dom('#loading'), 'display:none');
+
                     if (ret) {
                         if (ret.status == '5') {
                             ExitLogin();
@@ -231,7 +232,7 @@
 
             ActSignUpLis() { //获取附近活动列表
                 $api.css($api.dom('#loading'), 'display:block');
-                $api.css($api.dom('.box'), 'display:none');
+
                 var bMap = api.require('bMap');
                 bMap.getLocation({
                     accuracy: '100m',
@@ -263,7 +264,7 @@
                             if (lon && lat) {
                                 if (ret) {
                                     vm.ActInfo = ret;
-                                    $api.css($api.dom('.box'), 'display:block');
+
                                 } else {
                                     api.toast({
                                         msg: '网络错误',
@@ -286,7 +287,7 @@
                         $api.css($api.dom('#loading'), 'display:none');
                         if (err.code) {
                             api.toast({
-                                msg: '请授权获取定位权限',
+                                msg: '请允许您的设备定位获取附近活动',
                                 duration: 2000,
                                 location: 'middle'
                             });
@@ -317,7 +318,7 @@
 
     function btn_list(index) {
         vm.Lisindex = index;
-    
+
         if (index == 1) {
             $api.removeCls($api.dom('.ActLis .Lis0'), 'addColor');
             $api.addCls($api.dom('.ActLis .Lis1'), 'addColor');

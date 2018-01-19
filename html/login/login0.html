@@ -59,7 +59,6 @@
           var complete_info = $api.getStorage('complete_info');
           var activate_status = $api.getStorage('activate_status');
 
-
           if (uid && token) {
                 if (!complete_info && role == '1') {//角色代号 1：学生家长，2：班主任,complete_info是否实名认证 0:不是 1：是
                     api.openWin({
@@ -280,7 +279,7 @@
               optionDatas: [{
                   text: '学生家长'
               }, {
-                  text: '支教老师'
+                  text: '助教'
               }],
               tapClose:true
           }, function(ret, err) {
@@ -310,6 +309,7 @@
             }else {
                 var registerId = "";
             }
+
             api.ajax({
                 url: serverurl,
                 method: 'post',

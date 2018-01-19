@@ -1,4 +1,5 @@
-var serverurl = "https://x.sdp178.com/xlp_app/api.php"; //服务器地址
+// var serverurl = "https://x.sdp178.com/xlp_app/api.php"; //服务器地址
+var serverurl = "https://wechat.123win.com.cn/xlp_app/api.php"; //服务器地址
 // var serverurl = "http://192.168.110.2/xlp_app/api.php";//明军主机地址
 
 //返回

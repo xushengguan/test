@@ -24,36 +24,49 @@
 			font-size: 16px;
 	}
 
+	.orderMain{margin-top: 10px;}
+	.taste-con{padding: 0;}
+	.Orderinfo{width: 100%; overflow: hidden; display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;
+	-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center; background: #f4f4f4; padding: 10px;}
+	.rtinfo{width: calc(100% - 95px);}
+	.orderOperation{border-top: 1px solid #f2f2f2; padding: 10px; text-align: right;}
+	.sure.on{border: 1px solid #ddd; color: #333;}
 	</style>
 </head>
 
 <body>
-  <div id="app" v-cloak>
-		  <div class="NoAct" v-if="data.status">暂无退货订单~</div>
-			<div v-for="v in data" v-else>
-					<div class="sign-con hide">
-		        <!-- shipping_status商品配送情况;0未发货,1已发货,2已收货,4申请退货;5处理中;6退货完成 -->
-						<span class="fl">状态:
-							<label v-if="v.shipping_status == '5'">处理中</label>
-							<label v-else-if="v.shipping_status == '6'">退货完成</label>
-							<label v-else>申请退货</label>
-						</span>
-						<span class="fr">总价:<label>{{v.goods_amount}}学分</label></span>
-					</div>
-					<div class="dispich-con" tapmode @click="goDetail(v.order_id)">
 
-						<div class="taste-con hide" style="position:relative;">
+	<div id="app" v-cloak>
+		<div class="NoAct" v-if="data.status">暂无退货订单~</div>
+		<div class="orderMain" v-for="v in data" v-else>
+			<div class="sign-con hide">
+				<!-- shipping_status商品配送情况;0未发货,1已发货,2已收货,4申请退货;5处理中;6退货完成 -->
+				<span class="fl">状态:
+						<label v-if="v.shipping_status == '5'">处理中</label>
+						<label v-else-if="v.shipping_status == '6'">退货完成</label>
+						<label v-else>申请退货</label>
+				</span>
+        <span class="fr">总价:<label>{{v.goods_amount}}学分</label></span>
+			</div>
+			<div class="dispich-con">
 
-							<img class="fl square" :src="v.imgurl" alt="">
-							<div class="fl" style="width:45%">
-								<h6 class="free single">{{v.goods_name}}</h6>
-								<h6 class="chicken more2">{{v.abs}}</h6>
-								<span class="paper">购买数量:{{v.goods_number}}件</span>
-							</div>
+				<div class="taste-con hide" style="position:relative;">
 
+          <div class="Orderinfo">
+						<img class="fl square" tapmode :src="v.imgurl" alt="" @click="goDetail(v.order_id)">
+						<div class="fl rtinfo" @click="goDetail(v.order_id)">
+							<h6 class="free single">{{v.goods_name}}</h6>
+							<h6 class="chicken more2">{{v.abs}}</h6>
+							<span class="paper">购买数量:{{v.goods_number}}件</span>
 						</div>
-					</div>
-		  </div>
+          </div>
+          <div class="orderOperation">
+						  <!-- shipping_status商品配送情况;0未发货,1已发货,2已收货,4申请退货;5处理中;6退货完成 -->
+          		<span class="sure on" tapmode v-if="v.shipping_status == '6'" @click="DelOrder(v.order_sn)">删除</span>
+          </div>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>
@@ -61,23 +74,24 @@
 <script type="text/javascript" src="../../script/my.js"></script>
 <script type="text/javascript" src="../../script/vue.js"></script>
 <script type="text/javascript">
+    var token,id;
 		apiready = function(){
-				var token = $api.getStorage('token');
-				var id = $api.getStorage('id');
+				token = $api.getStorage('token');
+				id = $api.getStorage('id');
 				loading();
-				vm.get_ReturnOrder(token,id);
+				vm.get_ReturnOrder();
 
 				//刷新
         api.setRefreshHeaderInfo({
             loadingImg: 'widget://image/refresh.png',
-            bgColor: '#444',
-            textColor: '#fff',
+            bgColor: '#efeff4',
+            textColor: '#333',
             textUp: '释放立即刷新...',
             textLoading: '加载中···',
             showTime: false
         }, function(ret, err) {
             //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
-            vm.get_ReturnOrder(token,id);
+            vm.get_ReturnOrder();
             api.refreshHeaderLoadDone();
         });
 
@@ -89,7 +103,7 @@
 						data: []
 				},
 				methods: {
-						get_ReturnOrder: function get_ReturnOrder(token, id) {
+						get_ReturnOrder: function get_ReturnOrder() {
 								//获取退换货的订单
 								$api.css($api.dom('#loading'), 'display:block');
 
@@ -105,6 +119,7 @@
 										}
 								}, function (ret, err) {
 										$api.css($api.dom('#loading'), 'display:none');
+
 										if (ret) {
 												if (ret.status == '5') {
 														ExitLogin();
@@ -142,7 +157,59 @@
 										},
 										reload: true
 								});
+						},
+
+						// 删除订单
+						DelOrder: function DelOrder(order_sn){
+
+							api.confirm({
+								title: '删除订单',
+								msg: '确定删除此订单?',
+								buttons: ['确定', '取消']
+							}, function(ret, err) {
+								var index = ret.buttonIndex;
+
+								if (index == '1') {
+									$api.css($api.dom('#loading'), 'display:block');
+									api.ajax({
+										url: serverurl,
+										method: 'get',
+										data: {
+											values: {
+												type: '10052',
+												token: token,
+												order_sn: order_sn
+											},
+										}
+									}, function(ret, err) {
+										$api.css($api.dom('#loading'), 'display:none');
+
+										if (ret) {
+
+											if (ret.status == '1') {
+
+												api.toast({
+													msg: '已删除订单',
+													duration: 2000,
+													location: 'middle'
+												});
+
+												vm.get_ReturnOrder();
+											}
+										} else {
+
+											api.toast({
+												msg: '网络错误',
+												duration: 2000,
+												location: 'bottom'
+											});
+
+										}
+									});
+								}
+							});
 						}
+
 				}
 		});
 

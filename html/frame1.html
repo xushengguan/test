@@ -411,7 +411,7 @@
                           <li v-for="(vv, index) in v.rewlist" v-if="index < 5">
                               <div v-if="vv.replier">
                                   <div class="lf">
-                                      <span class="name" tapmode @click="goCircel(vv.rew_id)">{{vv.replier.nickname}}</span> 回复
+                                      <span class="name" tapmode @click="goCircel(vv.replier.id)">{{vv.replier.nickname}}</span> 回复
                                       <span class="name" tapmode @click="goCircel(vv.uid)">{{vv.nickname}}:</span>
                                   </div>
                                   <div class="lf inline" tapmode @click="CircleReply(v,v.id,vv.rew_id,vv.uid,vv.replier.id,vv.replier.nickname)">{{vv.content}}</div>
@@ -746,7 +746,7 @@
 
     // 微信分享网页
     function weiShare(scene,title,content,circle_id){
-        var contentUrl = 'https://x.sdp178.com/xlp/circleDetail.html?circle_id='+circle_id;
+        var contentUrl = 'https://wechat.123win.com.cn/xlp/circleDetail.html?circle_id='+circle_id;
 
         var wx = api.require('wx');
         wx.isInstalled(function(ret, err) {//判断当前设备是否已经安装微信
@@ -839,7 +839,7 @@
                   }
               }
           },function(ret, err){
-            
+
               if (ret) {
                   $api.css($api.dom('.del'),'display:none');
                   if (ret.status == '5') {

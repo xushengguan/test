@@ -23,17 +23,56 @@
 			color: #333;
 			font-size: 16px;
 		}
+
+		.orderMain {
+			margin-top: 10px;
+		}
+
+		.taste-con {
+			padding: 0;
+		}
+
+		.Orderinfo {
+			width: 100%;
+			overflow: hidden;
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: -ms-flexbox;
+			display: flex;
+			-webkit-box-align: center;
+			-webkit-align-items: center;
+			-ms-flex-align: center;
+			align-items: center;
+			background: #f4f4f4;
+			padding: 10px;
+		}
+
+		.rtinfo {
+			width: calc(100% - 95px);
+		}
+
+		.orderOperation {
+			border-top: 1px solid #f2f2f2;
+			padding: 10px;
+			text-align: right;
+		}
+
+		.sure.on {
+			border: 1px solid #ddd;
+			color: #333;
+		}
 	</style>
 </head>
 
 <body>
 	<div id="app" v-cloak>
 		<div class="NoAct" v-if="data.status">暂无任何订单~</div>
-		<div v-for="v in data" v-else>
+		<div class="orderMain" v-for="v in data" v-else>
 			<div class="sign-con hide">
 				<!-- shipping_status商品配送情况;0未发货,1已发货,2已收货,4申请退货;5处理中;6退货完成 -->
 				<span class="fl">状态:
-					    <label v-if="v.pay_status == '0'">未付款</label>
+					    <label v-if="v.order_status == '2'">已取消</label>
+					    <label v-else-if="v.pay_status == '0'">未付款</label>
 					    <span v-else>
 						    <label v-if="v.shipping_status == '0'">未发货</label>
 								<label style="color:#fcb068;" v-else-if="v.shipping_status == '1'">配送中</label>
@@ -43,7 +82,7 @@
 								<label v-else-if="v.shipping_status == '6'">退货完成</label>
 					 	 </span>
 				</span>
-        <span class="fr">总价:<label>{{v.goods_amount}}学分</label></span>
+				<span class="fr">总价:<label>{{v.goods_amount}}学分</label></span>
 			</div>
 			<div class="dispich-con">
 				<div class="purchase-top" tapmode @click="goLoglist(v.logistics_company,v.tracking_number)" v-if="v.shipping_status == '1' && v.status">
@@ -52,22 +91,35 @@
 					<i class="iconfont icon-gengduo1 icon-more"></i>
 				</div>
 				<div class="taste-con hide" style="position:relative;">
-
-					<img class="fl square" tapmode :src="v.imgurl" alt="" @click="goDetail(v.order_id)">
-					<div class="fl" style="width:45%" @click="goDetail(v.order_id)">
-						<h6 class="free single">{{v.goods_name}}</h6>
-						<h6 class="chicken more2">{{v.abs}}</h6>
-						<span class="paper">购买数量:{{v.goods_number}}件</span>
+					<div class="Orderinfo">
+						<img class="fl square" tapmode :src="v.imgurl" alt="" @click="goDetail(v.order_id)">
+						<div class="fl rtinfo" @click="goDetail(v.order_id)">
+							<h6 class="free single">{{v.goods_name}}</h6>
+							<h6 class="chicken more2">{{v.abs}}</h6>
+							<span class="paper">购买数量:{{v.goods_number}}件</span>
+						</div>
 					</div>
 
-					<!-- 配送中状态添加 -->
-					<span class="fr sure" tapmode v-if="v.shipping_status == '1'" @click="confirmReceipt(v.order_id)">确认收货</span>
-					<!-- pay_status 支付状态;0未付款;1付款中;2已付款 -->
-					<span class="fr sure" tapmode v-if="v.pay_status == '0'" @click="get_weiChat(v)">付款</span>
+					<div class="orderOperation">
+
+							<!-- 删除订单 当订单未支付，订单完成时方可删除订单-->
+							<span class="sure on" tapmode v-if="v.pay_status == '0' || v.shipping_status == '6' || v.shipping_status == '2'" @click="DelOrder(v.order_sn)">删除</span>
+							<!-- 当未付款时显示取消订单 -->
+							<span class="sure on" tapmode v-if="v.pay_status == '0' && v.order_status !== '2'" @click="cancelOrder(v.order_sn)">取消订单</span>
+							<!-- pay_status 支付状态;0未付款;1付款中;2已付款 -->
+							<span class="sure" tapmode v-if="v.pay_status == '0' && v.order_status !== '2'" @click="get_weiChat(v)">付款</span>
+							<!-- 配送中状态添加 -->
+							<span class="sure" tapmode v-if="v.shipping_status == '1' && v.pay_status !== '0' && v.order_status !== '2'" @click="confirmReceipt(v.order_id)">确认收货</span>
+
+					</div>
+
 				</div>
+
 			</div>
 		</div>
 	</div>
+
+
 </body>
 
 </html>
@@ -75,7 +127,7 @@
 <script type="text/javascript" src="../../script/my.js"></script>
 <script type="text/javascript" src="../../script/vue.js"></script>
 <script type="text/javascript">
-	var token,id;
+	var token, id;
 	apiready = function() {
 		token = $api.getStorage('token');
 		id = $api.getStorage('id');
@@ -86,8 +138,8 @@
 		//刷新
 		api.setRefreshHeaderInfo({
 			loadingImg: 'widget://image/refresh.png',
-			bgColor: '#444',
-			textColor: '#fff',
+			bgColor: '#efeff4',
+			textColor: '#333',
 			textUp: '释放立即刷新...',
 			textLoading: '加载中···',
 			showTime: false
@@ -98,231 +150,329 @@
 		});
 
 		api.addEventListener({
-				name: 'isConfirm'
-		}, function(ret, err){
-				if( ret ){
-						 vm.get_orderLis();
-				}else{
-						 console.log( JSON.stringify( err ) );
-				}
+			name: 'isConfirm'
+		}, function(ret, err) {
+			if (ret) {
+				vm.get_orderLis();
+			} else {
+				console.log(JSON.stringify(err));
+			}
 		});
 
 	}
 
 	var vm = new Vue({
-			el: '#app',
-			data: {
-				data: []
-			},
-			methods: {
-				get_orderLis: function get_orderLis() {
-					//查看订单
-
-					$api.css($api.dom('#loading'), 'display:block');
-					api.ajax({
-						url: serverurl,
-						method: 'get',
-						data: {
-							values: {
-								type: '10108',
-								token: token,
-								uid: id
-							}
+		el: '#app',
+		data: {
+			data: []
+		},
+		methods: {
+			get_orderLis: function get_orderLis() {
+				//查看订单
+				$api.css($api.dom('#loading'), 'display:block');
+				api.ajax({
+					url: serverurl,
+					method: 'get',
+					data: {
+						values: {
+							type: '10108',
+							token: token,
+							uid: id
 						}
-					}, function (ret, err) {
-						$api.css($api.dom('#loading'), 'display:none');
+					}
+				}, function(ret, err) {
+					$api.css($api.dom('#loading'), 'display:none');
 
-						if (ret) {
-							if (ret.status == '5') {
-								ExitLogin();
-							} else {
-								vm.data = ret;
-							}
+					if (ret) {
+						if (ret.status == '5') {
+							ExitLogin();
 						} else {
-							api.toast({
-								msg: '网络错误',
-								duration: 2000,
-								location: 'bottom'
-							});
+							vm.data = ret;
 						}
-					});
-				},
-				goLoglist: function goLoglist(logistics_company, tracking_number) {
-					//物流信息
-					api.openWin({
-						name: '6Logistics_info_title',
-						url: './6Logistics_info_title.html',
-						pageParam: {
-							logistics_company: logistics_company,
-							tracking_number: tracking_number
-						},
-						reload: true
-					});
-				},
-				goDetail: function goDetail(order_id) {
-					//跳到订单详情
-					api.openWin({
-						name: '6orderDatail_title',
-						url: './6orderDatail_title.html',
-						pageParam: {
-							order_id: order_id
-						},
-						reload: true
-					});
-				},
-				confirmReceipt: function confirmReceipt(order_id) {
-					//确认收货
-					api.confirm({
-						title: '确认收货',
-						msg: '请确认收到货后，再进行确认操作',
-						buttons: ['确定', '取消']
-					}, function (ret, err) {
-						var index = ret.buttonIndex;
-						if (index == '1') {
-							$api.css($api.dom('#loading'), 'display:block');
-							api.ajax({
-								url: serverurl,
-								method: 'get',
-								data: {
-									values: {
-										type: '10131',
-										token: token,
-										order_id: order_id
-									}
+					} else {
+						api.toast({
+							msg: '网络错误',
+							duration: 2000,
+							location: 'bottom'
+						});
+					}
+				});
+			},
+			goLoglist: function goLoglist(logistics_company, tracking_number) {
+				//物流信息
+				api.openWin({
+					name: '6Logistics_info_title',
+					url: './6Logistics_info_title.html',
+					pageParam: {
+						logistics_company: logistics_company,
+						tracking_number: tracking_number
+					},
+					reload: true
+				});
+			},
+			goDetail: function goDetail(order_id) {
+				//跳到订单详情
+				api.openWin({
+					name: '6orderDatail_title',
+					url: './6orderDatail_title.html',
+					pageParam: {
+						order_id: order_id
+					},
+					reload: true
+				});
+			},
+			confirmReceipt: function confirmReceipt(order_id) {
+				//确认收货
+				api.confirm({
+					title: '确认收货',
+					msg: '请确认收到货后，再进行确认操作',
+					buttons: ['确定', '取消']
+				}, function(ret, err) {
+					var index = ret.buttonIndex;
+					if (index == '1') {
+						$api.css($api.dom('#loading'), 'display:block');
+						api.ajax({
+							url: serverurl,
+							method: 'get',
+							data: {
+								values: {
+									type: '10131',
+									token: token,
+									order_id: order_id
 								}
-							}, function (ret, err) {
-								$api.css($api.dom('#loading'), 'display:none');
+							}
+						}, function(ret, err) {
+							$api.css($api.dom('#loading'), 'display:none');
 
-								if (ret) {
-									if (ret.status == '5') {
-										ExitLogin();
-									} else if (ret.status == '1') {
-										vm.get_orderLis();
-										api.sendEvent({
-											name: 'isConfirm',
-											extra: {
-												key: 1
-											}
-										});
-									} else {
-										api.toast({
-											msg: '确认收货失败',
-											duration: 2000,
-											location: 'bottom'
-										});
-									}
+							if (ret) {
+								if (ret.status == '5') {
+									ExitLogin();
+								} else if (ret.status == '1') {
+									vm.get_orderLis();
+									api.sendEvent({
+										name: 'isConfirm',
+										extra: {
+											key: 1
+										}
+									});
 								} else {
-
 									api.toast({
-										msg: '网络错误',
+										msg: '确认收货失败',
 										duration: 2000,
 										location: 'bottom'
 									});
 								}
-							});
-						};
-					});
-				},
-
-
-				// 获取微信签名
-				get_weiChat: function get_weiChat(content) {
-					var order_total = content.goods_amount * 0.2;
-					api.ajax({
-						url: serverurl,
-						method: 'post',
-						data: {
-							values: {
-								type: '10029',
-								token: token,
-								uid: id,
-								goods_name: content.goods_name,
-								order_total: order_total,
-								order_sn: content.order_sn
-							}
-						}
-					}, function (ret, err) {
-
-						if (ret) {
-							if (ret.status == '5') {
-								ExitLogin();
 							} else {
-								goPay(ret, content.order_sn);
-							}
-						} else {
 
-							api.toast({
-								msg: '网络错误',
-								duration: 2000,
-								location: 'bottom'
-							});
+								api.toast({
+									msg: '网络错误',
+									duration: 2000,
+									location: 'bottom'
+								});
+							}
+						});
+					};
+				});
+			},
+
+
+			// 获取微信签名
+			get_weiChat: function get_weiChat(content) {
+				var order_total = content.goods_amount * 0.2;
+				api.ajax({
+					url: serverurl,
+					method: 'post',
+					data: {
+						values: {
+							type: '10029',
+							token: token,
+							uid: id,
+							goods_name: content.goods_name,
+							order_total: order_total,
+							order_sn: content.order_sn
 						}
-					});
-				}
+					}
+				}, function(ret, err) {
+
+					if (ret) {
+						if (ret.status == '5') {
+							ExitLogin();
+						} else {
+							goPay(ret, content.order_sn);
+						}
+					} else {
+
+						api.toast({
+							msg: '网络错误',
+							duration: 2000,
+							location: 'bottom'
+						});
+					}
+				});
+			},
+			// 取消订单
+			cancelOrder: function cancelOrder(order_sn) {
+				api.confirm({
+					title: '取消订单',
+					msg: '确定取消此订单?',
+					buttons: ['确定', '取消']
+				}, function(ret, err) {
+					var index = ret.buttonIndex;
+
+					if (index == '1') {
+						$api.css($api.dom('#loading'), 'display:block');
+						api.ajax({
+							url: serverurl,
+							method: 'get',
+							data: {
+								values: {
+									type: '10051',
+									token: token,
+									order_sn: order_sn
+								},
+							}
+						}, function(ret, err) {
+							$api.css($api.dom('#loading'), 'display:none');
+
+							if (ret) {
+
+								if (ret.status == '1') {
+									api.toast({
+										msg: '已取消订单',
+										duration: 2000,
+										location: 'middle'
+									});
+									vm.get_orderLis();
+
+								}
+							} else {
+
+								api.toast({
+									msg: '网络错误',
+									duration: 2000,
+									location: 'bottom'
+								});
+
+							}
+						});
+					}
+				});
+			},
+      // 删除订单
+			DelOrder: function DelOrder(order_sn){
+
+				api.confirm({
+					title: '删除订单',
+					msg: '确定删除此订单?',
+					buttons: ['确定', '取消']
+				}, function(ret, err) {
+					var index = ret.buttonIndex;
+
+					if (index == '1') {
+						$api.css($api.dom('#loading'), 'display:block');
+						api.ajax({
+							url: serverurl,
+							method: 'get',
+							data: {
+								values: {
+									type: '10052',
+									token: token,
+									order_sn: order_sn
+								},
+							}
+						}, function(ret, err) {
+							$api.css($api.dom('#loading'), 'display:none');
+
+							if (ret) {
+
+								if (ret.status == '1') {
+
+									api.toast({
+										msg: '已删除订单',
+										duration: 2000,
+										location: 'middle'
+									});
+
+									vm.get_orderLis();
+								}
+							} else {
+
+								api.toast({
+									msg: '网络错误',
+									duration: 2000,
+									location: 'bottom'
+								});
+
+							}
+						});
+					}
+				});
 			}
-		});
+
+		}
+	});
 
 	// 微信支付
-	function goPay(content,order_sn){
-			var wxPay = api.require('wxPay');
-			wxPay.payOrder({
-				apiKey: content.appid,//从微信开放平台获取的 appid
-				orderId: content.prepayid,//获取的订单号 （prepay_id）
-				mchId: content.partnerid,//商家和微信合作的 id 号，审核通过后微信服务器会发送到商家邮箱
-				nonceStr: content.noncestr,//随机字符串，防重发
-				timeStamp: content.timestamp,//时间戳，防重发
-				sign: content.sign//商家根据微信开放平台文档对数据做的签名
-			}, function(ret, err) {
+	function goPay(content, order_sn) {
+		var wxPay = api.require('wxPay');
+		wxPay.payOrder({
+			apiKey: content.appid, //从微信开放平台获取的 appid
+			orderId: content.prepayid, //获取的订单号 （prepay_id）
+			mchId: content.partnerid, //商家和微信合作的 id 号，审核通过后微信服务器会发送到商家邮箱
+			nonceStr: content.noncestr, //随机字符串，防重发
+			timeStamp: content.timestamp, //时间戳，防重发
+			sign: content.sign //商家根据微信开放平台文档对数据做的签名
+		}, function(ret, err) {
 
-				if (ret.status) {
-					//支付成功
-					getweiPay(order_sn);
+			if (ret.status) {
+				//支付成功
+				getweiPay(order_sn);
 
-				} else {
-						console.log(err.code);
-				}
+			} else {
+				console.log(err.code);
+			}
 
-			});
+		});
 	}
 
 	// 微信支付成功更新订单
-	function getweiPay(order_sn){
+	function getweiPay(order_sn) {
 
 		api.ajax({
-				url: serverurl,
-				method: 'post',
-				data: {
-						values: {
-								type: '10190',
-								token:token,
-								order_sn:order_sn
-						},
-				}
-		},function(ret, err){
+			url: serverurl,
+			method: 'post',
+			data: {
+				values: {
+					type: '10190',
+					token: token,
+					order_sn: order_sn
+				},
+			}
+		}, function(ret, err) {
 
-				if (ret) {
-            if (ret.status == '5') {
-								ExitLogin();
-            }else if (ret.status == '1') {
-							vm.get_orderLis();
-						}else {
-								api.toast({
-								    msg: '获取订单失败',
-								    duration: 2000,
-								    location: 'middle'
-								});
-
-						}
-
+			if (ret) {
+				if (ret.status == '5') {
+					ExitLogin();
+				} else if (ret.status == '1') {
+					vm.get_orderLis();
 				} else {
-
-						api.toast({
-						    msg: '网络错误',
-						    duration: 2000,
-						    location: 'bottom'
-						});
+					api.toast({
+						msg: '获取订单失败',
+						duration: 2000,
+						location: 'middle'
+					});
 
 				}
+
+			} else {
+
+				api.toast({
+					msg: '网络错误',
+					duration: 2000,
+					location: 'bottom'
+				});
+
+			}
 		});
 	}
 </script>

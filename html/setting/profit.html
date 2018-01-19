@@ -110,7 +110,7 @@
           },
           methods:{
               getIncome(index){
-                  api.ajax({//显示支教老师详细收益
+                  api.ajax({//显示助教详细收益
                       url: serverurl,
                       method: 'get',
                       cache:true,
@@ -157,7 +157,7 @@
                   });
               },
 
-              // 支教老师收益
+              // 助教收益
               getProfit(index){//form收益类型 1:生源奖 2:参与奖 3:下线收益
 
                   api.ajax({

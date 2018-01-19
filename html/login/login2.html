@@ -32,7 +32,7 @@
           </header>
           <div class="degree">
               <div class="line" tapmode onclick="stuParent(this)">学生及家长<em id="icon1"></em></div>
-              <div class="line" tapmode onclick="teacher(this)">支教老师<em id="icon2" style="display:none"></em></div>
+              <div class="line" tapmode onclick="teacher(this)">助教<em id="icon2" style="display:none"></em></div>
           </div>
           <div class="btn">
               <button tapmode onclick="Next()">下一步</button>
@@ -55,7 +55,7 @@
           index = 1;
       }
 
-      // 选择支教老师
+      // 选择助教
       function teacher(e){
         $api.css($api.first(e,'em'), 'display:block');
         $api.css($api.dom('#icon1'), 'display:none');

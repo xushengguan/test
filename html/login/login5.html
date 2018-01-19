@@ -67,7 +67,7 @@
           <button class="next on">完成注册</button>
     </div> -->
 
-    <!-- 支教老师 -->
+    <!-- 助教 -->
     <div class="content">
         <header>
             <em tapmode onclick="go_back()"></em>
@@ -155,7 +155,7 @@
           },function(ret, err){
               if (ret) {
                   if (ret.status == '1') {
-                      $api.setStorage('activate_status','1');//是否激活学令牌 支教老师 0:不是 1：是
+                      $api.setStorage('activate_status','1');//是否激活学令牌 助教 0:不是 1：是
                       api.toast({
                           msg: '关联成功',
                           duration: 2000,

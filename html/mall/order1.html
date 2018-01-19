@@ -24,41 +24,53 @@
 			font-size: 16px;
 	}
 
+	.orderMain{margin-top: 10px;}
+	.taste-con{padding: 0;}
+	.Orderinfo{width: 100%; overflow: hidden; display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;
+	-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center; background: #f4f4f4; padding: 10px;}
+	.rtinfo{width: calc(100% - 95px);}
+	.orderOperation{border-top: 1px solid #f2f2f2; padding: 10px; text-align: right;}
+	.sure.on{border: 1px solid #ddd; color: #333;}
 	</style>
 </head>
 
 <body>
-  <div id="app" v-cloak>
-		  <div class="NoAct" v-if="data.status">暂无待收货订单~</div>
-			<div v-for="v in data" v-else>
-					<div class="sign-con hide">
-		        <!-- 已签收状态（已签收）、配送中（配送中）、退换货处理中（退换处理中）、退换货完成（退换货完成） -->
-						<span class="fl">状态:
-							<label style="color:#fcb068;">配送中</label>
-						</span>
-						<span class="fr">总价:<label>{{v.goods_amount}}学分</label></span>
-					</div>
-					<div class="dispich-con">
-						<div class="purchase-top" tapmode @click="goLoglist(v.logistics_company,v.tracking_number)" v-if="v.status">
-							<p class="adds">{{v.status.status}}</p>
-							<p class="time">{{v.status.time}}</p>
-							<i class="iconfont icon-gengduo1 icon-more"></i>
+
+	<div id="app" v-cloak>
+		<div class="NoAct" v-if="data.status">暂无待收货订单~</div>
+		<div class="orderMain" v-for="v in data" v-else>
+			<div class="sign-con hide">
+				<!-- shipping_status商品配送情况;0未发货,1已发货,2已收货,4申请退货;5处理中;6退货完成 -->
+				<span class="fl">状态:
+					    <label style="color:#fcb068;">配送中</label>
+				</span>
+        <span class="fr">总价:<label>{{v.goods_amount}}学分</label></span>
+			</div>
+			<div class="dispich-con">
+				<div class="purchase-top" tapmode @click="goLoglist(v.logistics_company,v.tracking_number)" v-if="v.status">
+					<p class="adds">{{v.status.status}}</p>
+					<p class="time">{{v.status.time}}</p>
+					<i class="iconfont icon-gengduo1 icon-more"></i>
+				</div>
+				<div class="taste-con hide" style="position:relative;">
+          <div class="Orderinfo">
+						<img class="fl square" tapmode :src="v.imgurl" alt="" @click="goDetail(v.order_id)">
+						<div class="fl rtinfo" @click="goDetail(v.order_id)">
+							<h6 class="free single">{{v.goods_name}}</h6>
+							<h6 class="chicken more2">{{v.abs}}</h6>
+							<span class="paper">购买数量:{{v.goods_number}}件</span>
 						</div>
-						<div class="taste-con hide" style="position:relative;">
-
-							<img class="fl square" tapmode :src="v.imgurl" alt="" @click="goDetail(v.order_id)">
-							<div class="fl" style="width:45%" tapmode @click="goDetail(v.order_id)">
-								<h6 class="free single">{{v.goods_name}}</h6>
-								<h6 class="chicken more2">{{v.abs}}</h6>
-								<span class="paper">购买数量:{{v.goods_number}}件</span>
-							</div>
-
+          </div>
+					<div class="orderOperation">
 							<!-- 配送中状态添加 -->
-							<span class="fr sure" tapmode @click="confirmReceipt(v.order_id)">确认收货</span>
-						</div>
+							<span class="sure" tapmode @click="confirmReceipt(v.order_id)">确认收货</span>
+
 					</div>
-		  </div>
+				</div>
+			</div>
+		</div>
 	</div>
+
 </body>
 </html>
 <script type="text/javascript" src="../../script/api.js"></script>
@@ -76,8 +88,8 @@
 				//刷新
         api.setRefreshHeaderInfo({
             loadingImg: 'widget://image/refresh.png',
-            bgColor: '#444',
-            textColor: '#fff',
+            bgColor: '#efeff4',
+            textColor: '#333',
             textUp: '释放立即刷新...',
             textLoading: '加载中···',
             showTime: false
@@ -123,7 +135,7 @@
 					}, function (ret, err) {
 
 						$api.css($api.dom('#loading'), 'display:none');
-
+          
 						if (ret) {
 							if (ret.status == '5') {
 								ExitLogin();

@@ -200,12 +200,12 @@ var vm = new Vue({
     },
     methods: {
         get_ActLis: function get_ActLis() {
-            //获取活动列表（支教老师）
+            //获取活动列表（助教）
 
             $api.css($api.dom('#loading'), 'display:block');
             var role = $api.getStorage('role');
             if (role == '2') {
-                var type = '10151'; //获取活动列表（支教老师）
+                var type = '10151'; //获取活动列表（助教）
             } else {
                 var type = '10028'; //获取用户报名活动列表（学生）
             }
@@ -260,6 +260,7 @@ var vm = new Vue({
             }, 500);
 
             Del.ontouchstart = function (e) {
+                e.stopPropagation(); //阻止事件冒泡
                 api.confirm({
                     title: '删除活动',
                     msg: '您确定删除此活动？',
@@ -292,7 +293,7 @@ var vm = new Vue({
             return false;
         },
         Delact: function Delact(actid) {
-            //支教老师删除活动
+            //助教删除活动
             api.ajax({
                 url: serverurl,
                 method: 'get',
