@@ -364,12 +364,22 @@
                   },
               }
           },function(ret, err){
-
+              
               if (ret) {
 
                   if (!ret.status) {
-                      $api.text($api.dom('.total'+form),ret.total);
-                      $api.text($api.dom('.week'+form),ret.week);
+                      if (ret.total) {
+                          $api.text($api.dom('.total'+form),ret.total);
+                      }else {
+                          $api.text($api.dom('.total'+form),0);
+                      }
+
+                      if (ret.week) {
+                          $api.text($api.dom('.week'+form),ret.week);
+                      }else {
+                          $api.text($api.dom('.week'+form),0);
+                      }
+
 
                       if (ret.data) {
                           $api.css($api.dom('.ebox'+form),'display:block');

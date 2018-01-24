@@ -14,7 +14,7 @@
           .half .txt{font-size: 14px; color: #fff1cf; padding-bottom: 10px;}
           .half .num{font-size: 18px; color: #ffebbf;}
           .half .num em{font-size: 29px; color: #fff; font-weight: bold; padding-left: 4px;}
-          .chart{width: 100%; height: 250px; margin: 0 auto;}
+          .chart{width: 100%; max-height: 250px; margin: 0 auto;}
           .head{font-size: 15px; color: #999; padding: 10px 15px;}
 
           .Lis{background: #fff;}
@@ -103,124 +103,119 @@
       };
 
       var vm = new Vue({
-          el:"#app",
-          data:{
-              ret:[],
-              profit:[]
+          el: "#app",
+          data: {
+              ret: [],
+              profit: []
           },
-          methods:{
-              getIncome(index){
-                  api.ajax({//显示助教详细收益
+          methods: {
+              getIncome: function getIncome(index) {
+                  api.ajax({ //显示助教详细收益
                       url: serverurl,
                       method: 'get',
-                      cache:true,
+                      cache: true,
                       data: {
                           values: {
                               type: '10176',
-                               uid: uid,
-                             token: token,
-                             form:index
-                          },
+                              uid: uid,
+                              token: token,
+                              form: index
+                          }
                       }
-                  },function(ret, err){
+                  }, function (ret, err) {
 
                       if (ret) {
-                          if(ret.status == '5'){
+                          if (ret.status == '5') {
                               ExitLogin();
-                          }else {
+                          } else {
                               vm.ret = ret;
                           }
-                      }else {
+                      } else {
                           api.toast({
                               msg: '网络错误',
                               duration: 2000,
                               location: 'bottom'
                           });
-
                       }
                   });
               },
-
-              getInfo(){
-                  api.ajax({//个人中心
+              getInfo: function getInfo() {
+                  api.ajax({ //个人中心
                       url: serverurl,
                       method: 'get',
                       data: {
                           values: {
                               type: '10171',
-                               uid: uid,
-                             token: token
-                          },
+                              uid: uid,
+                              token: token
+                          }
                       }
-                  },function(ret, err){
+                  }, function (ret, err) {
                       vm.Info = ret;
                   });
               },
 
-              // 助教收益
-              getProfit(index){//form收益类型 1:生源奖 2:参与奖 3:下线收益
 
+              // 助教收益
+              getProfit: function getProfit(index) {
+                  //form收益类型 1:生源奖 2:参与奖 3:线下收益
                   api.ajax({
                       url: serverurl,
                       method: 'get',
                       data: {
                           values: {
-                               type: '10174',
+                              type: '10174',
                               token: token,
-                               uid:uid,
-                              form:index
-                          },
+                              uid: uid,
+                              form: index
+                          }
                       }
-                  },function(ret, err){
+                  }, function (ret, err) {
 
                       vm.profit = ret;
                       if (ret) {
 
                           if (ret.data) {
 
-                            var data = [];
-                            var time = [];
-                            ret.data.forEach(function(e){
-                                data.push(e.count);
-                                time.push(e.time);
-                            })
-                            var myChart = echarts.init(document.getElementById('chart'));  // 基于准备好的dom，初始化echarts实例
-                            option = {
-                                      title: {
-                                          text: '近1周收益'
-                                      },
-                                      tooltip: {
-                                          trigger: 'axis'
-                                      },
+                              var data = [];
+                              var time = [];
+                              ret.data.forEach(function (e) {
+                                  data.push(e.count);
+                                  time.push(e.time);
+                              });
+                              var myChart = echarts.init(document.getElementById('chart')); // 基于准备好的dom，初始化echarts实例
+                              option = {
+                                  title: {
+                                      text: '近1周收益'
+                                  },
+                                  tooltip: {
+                                      trigger: 'axis'
+                                  },
 
-                                      grid: {
-                                          left: '3%',
-                                          right: '4%',
-                                          bottom: '3%',
-                                          containLabel: true
-                                      },
+                                  grid: {
+                                      left: '3%',
+                                      right: '4%',
+                                      bottom: '3%',
+                                      containLabel: true
+                                  },
 
-                                      xAxis: {
-                                          type: 'category',
-                                          boundaryGap: false,
-                                          data: time
-                                      },
-                                      yAxis: {
-                                          type: 'value'
-                                      },
-                                      series: [
-                                          {
-                                              name:'收益',
-                                              type:'line',
-                                              stack: '总量',
-                                              data:data
-                                          }
-                                      ]
-                                  };
-                          myChart.setOption(option);// 使用刚指定的配置项和数据显示图表。
-                        }
-
-
+                                  xAxis: {
+                                      type: 'category',
+                                      boundaryGap: false,
+                                      data: time
+                                  },
+                                  yAxis: {
+                                      type: 'value'
+                                  },
+                                  series: [{
+                                      name: '收益',
+                                      type: 'line',
+                                      stack: '总量',
+                                      data: data
+                                  }]
+                              };
+                              myChart.setOption(option); // 使用刚指定的配置项和数据显示图表。
+                          }
                       } else {
 
                           api.toast({
@@ -228,15 +223,11 @@
                               duration: 2000,
                               location: 'bottom'
                           });
-
                       }
                   });
-
               }
-
           }
-      })
-
+      });
 
   </script>
   </html>

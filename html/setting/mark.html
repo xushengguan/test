@@ -183,6 +183,7 @@
            $api.dom('.popup').ontouchstart = function(event){
                if(event.target == this){
                	  $api.css($api.dom('.popup'), 'display:none');
+                  getBracelet();
                }
            }
       };
@@ -220,7 +221,7 @@
                       $api.attr($api.dom('#img'), 'src', '../../image/uploader.png');
                       $api.val($api.dom('#name'), '');
 
-                      $api.css($api.dom('.popup'), 'display:block');
+                      getBracelet();
                   }else if (ret.status == '3') {
                     api.toast({
                         msg: '手环不存在',
@@ -230,9 +231,10 @@
                     setTimeout(function(){
                       go_back();
                     },2000)
-                  }else {
+                  }else{
                       getBracelet();
                   }
+
               } else {
                   $api.css($api.dom('.top'), 'display:none');
 
@@ -260,19 +262,23 @@
                 },
             }
         },function(ret, err){
-
+          
             if (ret) {
                 if (ret.status == '5') {
                     ExitLogin();
                 }else {
                     if (ret.data) {
-                         $api.attr($api.dom('#img2'), 'src',ret.data.stu_img);
+                         if (ret.data.stu_img) {
+                              $api.attr($api.dom('#img2'), 'src',ret.data.stu_img);
+                         }
+
                          $api.text($api.dom('.info .name'),ret.data.stu_name);
                          $api.text($api.dom('.remark'), ret.data.log);
                          $api.text($api.dom('.times'),ret.count + '次');
                          bracelet_id = ret.data.id;
                     }else {
-                        $api.css($api.dom('.top'), 'display:none');
+                        $api.css($api.dom('.popup'), 'display:block');
+                        // $api.css($api.dom('.top'), 'display:none');
                     }
                 }
             } else {
@@ -289,17 +295,11 @@
 
       // 完善手环信息
       function perfectInfo(){
-          var stu_img = $api.attr($api.dom('#img'), 'src');
+
           var stu_name = $api.val($api.dom('#name'));
           var log = $api.val($api.dom('#log'));
-          if (stu_img == '../../image/uploader.png') {
-              api.toast({
-                  msg: '请上传头像',
-                  duration: 2000,
-                  location: 'middle'
-              });
-              return false;
-          }else if (!stu_name) {
+
+          if (!stu_name) {
               api.toast({
                   msg: '请填写姓名',
                   duration: 2000,
@@ -308,6 +308,10 @@
               return false;
           }else {
               $api.css($api.byId('loading'), 'display:block');
+              var stu_img = $api.attr($api.dom('#img'), 'src');
+              if (stu_img == '../../image/uploader.png') {
+                  stu_img = '';
+              }
 
               api.ajax({
                   url: serverurl,
@@ -464,10 +468,16 @@
         		}, function(ret, err) {
 
         			if (ret) {
-        				// 在回调函数里面调用
-        				var dom = parseXML(ret);
-        				// location 标签的内容使用DOM选择器进行查找
-        				var url = dom.querySelector('Location').innerHTML;
+        				// // 在回调函数里面调用
+        				// var dom = parseXML(ret);
+        				// // location 标签的内容使用DOM选择器进行查找
+        				// var url = dom.querySelector('Location').innerHTML;
+
+                var div=document.createElement('div');
+                div.style.display = 'none';
+                div.innerHTML=ret;
+                document.body.insertBefore(div, document.body.firstChild);
+                var url = div.getElementsByTagName('Location')[0].innerHTML;
                 $api.attr($api.dom('#img'), 'src', url);
                 $api.css($api.dom('#loading'), 'display:none');
         			} else {
@@ -547,7 +557,7 @@
 
                       }else if (ret.status == '4') {
                           api.toast({
-                              msg: '一场活动一天只能打100分',
+                              msg: '每个学生一场活动一天只能打100分',
                               duration: 2000,
                               location: 'middle'
                           });
@@ -581,8 +591,9 @@
            if (ret) {
                if (ret.eventType == 'success') {
 
-                   if (ret.content.indexOf("123win.com.cn/s/") >= 0) {
-                        key = ret.content.substr(-4);
+                   if (ret.content.indexOf("xly1.cn") >= 0) {
+                        key = ret.content.substr(0,4);//提取字符串前四位
+
                         checkActive();
                    }else {
                        api.toast({
@@ -644,6 +655,7 @@
               },
           }
       },function(ret, err){
+
           if (ret) {
               if (ret.status == '5') {
                   ExitLogin();
