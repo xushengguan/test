@@ -186,12 +186,9 @@
 
             if (ret) {
                 if (ret.status == '1') {
-                    api.alert({
-                        title: '温馨提示',
-                        msg: '注册成功,本系统要实名认证才能使用',
-                    }, function(ret, err) {
-                        login(tel,password1);
-                    });
+
+                   login(tel,password1);
+
                 }else if (ret.status == '2') {
                   api.toast({
                       msg: '该号码已经注册',
@@ -254,16 +251,7 @@
                       $api.setStorage('role', ret.data.role);
                       $api.setStorage('tel',ret.data.tel);
 
-                      if (ret.data.role !== '2' && ret.data.complete_info == '0') {//角色代号 1：学生家长，2：班主任,complete_info是否实名认证 0:不是 1：是
-
-                          api.openWin({
-                              name: 'login4',
-                              url: './login4.html',
-                              reload:true,
-                        			allowEdit:true
-                          });
-
-                      }else if (ret.data.role == '2' && ret.data.activate_status == '0') {
+                      if (ret.data.role == '2' && ret.data.activate_status == '0') {//角色代号 1：学生家长，2：班主任,activate_status是否实名认证 0:不是 1：是
 
                           api.openWin({
                               name: 'login5',
@@ -274,7 +262,7 @@
 
                       }else{
                           if (ret.data.role == '2') {//角色代号 1：学生家长，2：班主任
-
+                              $api.setStorage('activate_status',ret.data.activate_status);
                               api.openWin({
                                   name: 'index',
                                   url: '../../index.html',

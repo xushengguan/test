@@ -60,34 +60,29 @@
           var activate_status = $api.getStorage('activate_status');
 
           if (uid && token) {
-                if (!complete_info && role == '1') {//角色代号 1：学生家长，2：班主任,complete_info是否实名认证 0:不是 1：是
-                    api.openWin({
-                        name: 'login4',
-                        url: './login4.html',
-                        reload:true,
-                    });
 
-                }else if (role == '2' && !activate_status) {
-                    api.openWin({
-                        name: 'login5',
-                        url: './login5.html',
-                        reload:true,
-                    });
-               }else if (role == '2') {//角色代号 1：学生家长，2：班主任
+              if (role == '2' && !activate_status) {
                   api.openWin({
-                      name: 'index',
-                      url: '../../index.html',
+                      name: 'login5',
+                      url: './login5.html',
                       reload:true,
-                      slidBackEnabled:false
                   });
-              }else if(role == '1'){
-                  api.openWin({
-                      name: 'index',
-                      url: '../../index1.html',
-                      reload:true,
-                      slidBackEnabled:false
-                  });
-              }
+             }else if (role == '2') {//角色代号 1：学生家长，2：班主任
+                api.openWin({
+                    name: 'index',
+                    url: '../../index.html',
+                    reload:true,
+                    slidBackEnabled:false
+                });
+            }else if(role == '1'){
+                api.openWin({
+                    name: 'index',
+                    url: '../../index1.html',
+                    reload:true,
+                    slidBackEnabled:false
+                });
+            }
+
           }
 
           // 静默修复
@@ -331,22 +326,13 @@
                          $api.setStorage('id', ret.data.id);
                          $api.setStorage('tel',ret.data.tel);
                          $api.setStorage('role',ret.data.role);
-                        api.toast({
-                            msg: '登录成功',
-                            duration: 2000,
-                            location: 'middle'
-                        });
+                          api.toast({
+                              msg: '登录成功',
+                              duration: 2000,
+                              location: 'middle'
+                          });
 
-                        if (ret.data.complete_info == '0' && ret.data.role !== '2') {//角色代号 1：学生家长，2：班主任,complete_info是否实名认证 0:不是 1：是
-
-                            api.openWin({
-                                name: 'login4',
-                                url: './login4.html',
-                                reload:true,
-                                allowEdit:true
-                            });
-
-                        }else if (ret.data.role == '2' && ret.data.activate_status == '0') {
+                        if (ret.data.role == '2' && ret.data.activate_status == '0') {
                             api.openWin({
                                 name: 'login5',
                                 url: './login5.html',
@@ -366,7 +352,7 @@
                                 });
 
                             }else {
-                                $api.setStorage('complete_info',ret.data.complete_info);
+
                                 api.openWin({
                                     name: 'index',
                                     url: '../../index1.html',
@@ -377,6 +363,8 @@
                             }
 
                         }
+
+
                         $api.val($api.dom('.tel'),"");
                         $api.val($api.dom('.password'),"");
                      }else if (ret.status == '0') {
