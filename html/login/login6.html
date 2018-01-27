@@ -254,9 +254,33 @@
             $api.css($api.dom('#loading'), 'display:none');
 
             if (ret) {
-                if (ret.status == '1') {
-                    go_back();
-                }
+              if (ret.status == '1') {
+                  api.toast({
+                      msg: '重置密码成功',
+                      duration: 2000,
+                      location: 'middle'
+                  });
+
+                  go_back();
+              }else if (ret.status == '2') {
+                api.toast({
+                    msg: '验证码不正确',
+                    duration: 2000,
+                    location: 'middle'
+                });
+              }else if (ret.status == '0') {
+                  api.toast({
+                      msg: '账号未注册',
+                      duration: 2000,
+                      location: 'middle'
+                  });
+              }else{
+                api.toast({
+                    msg: '重置密码失败',
+                    duration: 2000,
+                    location: 'middle'
+                });
+              }
             } else {
                 api.toast({
                     msg: '网络错误',

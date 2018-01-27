@@ -60,6 +60,10 @@
               <em class="eye on" tapmode onclick="change(this)"></em>
           </div>
 
+          <div class="line">
+              <input class="inviter" type="number" placeholder="邀请人ID,有则填写没有请忽略" oninput="checkValue()" onpropertychange="checkValue()">
+          </div>
+
           <button class="next" disabled="disabled" tapmode onclick="register()">注册</button>
 
       </div>
@@ -135,6 +139,7 @@
         var password1 = $api.val($api.dom('.password1'));
         var password2 = $api.val($api.dom('.password2'));
         var code = $api.val($api.dom('.code'));
+        var inviter = $api.val($api.dom('.inviter'));
         var myreg = /^1[0-9]{10}$/;//判断是否为手机号码,/^1[34578]\d{9}$/
         var mypatrn = /^[0-9A-Za-z]{6,}$/;//密码长度不少于6位,并且由数字和字符组成
         if (!myreg.test(tel)) {
@@ -178,7 +183,8 @@
                      	tel:tel,
                      code:code,
                       pwd: password1,
-                     role: index//角色代号 1：学生家长，2：助教
+                     role: index,//角色代号 1：学生家长，2：助教
+                    inviter:inviter
                 },
             }
         },function(ret, err){
@@ -203,6 +209,12 @@
                   });
                 }else if (ret.status == '5') {
                    ExitLogin();
+                }else if (ret.status == '6') {
+                    api.toast({
+                        msg: '邀请人不存在',
+                        duration: 2000,
+                        location: 'middle'
+                    });
                 }else {
                   api.toast({
                       msg: '注册失败',
