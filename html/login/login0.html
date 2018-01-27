@@ -409,10 +409,10 @@
                   },
               }
           },function(ret, err){
-
+          
               if (ret) {
 
-                  if (ret.length == 2) {
+                  if (ret.length > 1) {
                       selRole(tel,password);
                   }else if (ret.status == '0') {
                       api.toast({
