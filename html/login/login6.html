@@ -153,7 +153,7 @@
 
               if (ret) {
 
-                  if (ret.length == 2) {
+                  if (ret.length > 1) {
                       selRole(tel,code,password1,password2);
                   }else if (ret.status == '0') {
                       api.toast({
