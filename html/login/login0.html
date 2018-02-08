@@ -304,7 +304,7 @@
             }else {
                 var registerId = "";
             }
-
+            alert(registerId);
             api.ajax({
                 url: serverurl,
                 method: 'post',
@@ -409,7 +409,7 @@
                   },
               }
           },function(ret, err){
-          
+
               if (ret) {
 
                   if (ret.length > 1) {
