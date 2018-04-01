@@ -524,6 +524,9 @@
 						// 获取微信签名
 						get_weiChat: function get_weiChat(content) {
 							var order_total = content.goods_amount * 0.2;
+							console.log(content.goods_name);
+							console.log(order_total);
+							console.log(content.order_sn);
 							api.ajax({
 								url: serverurl,
 								method: 'post',
@@ -538,7 +541,8 @@
 									}
 								}
 							}, function(ret, err) {
-
+                console.log(JSON.stringify(ret));
+								console.log(JSON.stringify(err));
 								if (ret) {
 									if (ret.status == '5') {
 										ExitLogin();
