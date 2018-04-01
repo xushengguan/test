@@ -6,96 +6,67 @@
       <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
       <title>商品详情</title>
       <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
-      <link rel="stylesheet" type="text/css" href="../../css/loading.css"/>
       <link rel="stylesheet" type="text/css" href="../../css/swiper.min.css">
       <style>
-          header{height: 50px; line-height: 50px; background: #ffb300; color: #fff; font-size: 20px; position: relative;}
-          header em{width: 50px; height: 50px; background: url(../../image/back.png) no-repeat center;
-            background-size: 18px; float: left;}
+            header{position: relative; height: 44px; line-height: 44px; box-shadow: 0px 4px 4px 0px rgba(76, 81, 118, 0.15);
+            font-size: 18px; background-color: #fefefe;}
+            header em{height: 44px; background: url(../../image/back.png) no-repeat center 12px; background-size: 10px 17px;
+            padding-left: 14px; padding-right: 30px; float: left;}
+            header span{width: 18px; height: 44px; background: url(../../image/share3.png) no-repeat 0 14px; background-size: 18px;
+            float: right; margin-right: 14px;}
 
-          	.act_content {
-          		background: #fff;
-          		padding: 15px;
-          		margin-bottom: 5px;
-          	}
-
-          	.act_content .title {
-          		font-size: 15px;
-          		line-height: 14px;
-
-          	}
-
-            .act_content .title .text{
-          		font-size: 15px;
-          		line-height: 14px;
-              font-weight: bold;
-          	}
-          	/*==============边框===============*/
-
-          	.act_content .title .before {
-          		display: inline-block;
-          		width: 8px;
-          		height: 14px;
-          		background: url(../../image/lines.png)no-repeat center;
-          		background-size: 2px 10px;
-          		vertical-align: middle;
-
-          	}
-
-          	/*==============边框===============*/
-
-          	.act_content .box_main {
-          		padding: 10px 10px 0 10px;
-          	}
-
-          	.act_content .role_box_main {
-          		padding: 5px 10px 0 10px;
-
-          	}
           	/*========================底部========================*/
-          	/*学分不足*/
-
           	#nopay_footer {
           		width: 100%;
-          		height: 55px;
-          		line-height: 55px;
-          		background: #fff;
-          		overflow: hidden;
+          		background: #fefefe;
           		border-top: 1px solid #f2f2f2;
-
+              display: table;
           	}
 
           	#nopay_footer .fo_left {
-          		float: left;
+              display: table-cell;
           		width: 70%;
           	}
 
           	#nopay_footer .fo_left .lf_txt {
-          		font-size: 14px;
-          		color: #999;
-          		padding-left: 25px;
+          		font-size: 13px;
+          		padding-left: 14px;
           		padding-right: 2%;
+              padding-top: 14px;
+              padding-bottom: 14px;
+              color: #ffb300;
           	}
 
-          	#nopay_footer .fo_left .lf_txt em {
-          		font-size: 18px;
-          		color: #ffb300;
+          	#nopay_footer .total-credit {
+          		font-size: 16px;
           	}
+
+            #nopay_footer .total-cash {
+          		color: #999;
+          	}
+
 
           	#nopay_footer .btn_pay {
-          		float: right;
+          		display: table-cell;
           		width: 30%;
-          		height: 55px;
-          		line-height: 55px;
           		text-align: center;
           		color: #fff;
           		font-size: 18px;
           		background: #ff5252;
+              position: relative;
           	}
 
           	#nopay_footer .btn_pay.submit {
           		background: #ffb300;
           	}
+            .btn_txt{
+              position: absolute;
+              top: 50%;
+              width: 100%;
+              left: 50%;
+              transform: translate(-50%,-50%);
+              -webkit-transform: translate(-50%,-50%);
+            }
           	/*======================底部==========================*/
             .introduce{font-size: 14px;}
           	.introduce span{margin: 0 10px; color: #ffb300; font-size: 14px;}
@@ -107,7 +78,7 @@
              .swiper-slide {
                text-align: center;
                font-size: 18px;
-               background: #fff;
+               background: #fefefe;
 
                /* Center slide text vertically */
                display: -webkit-box;
@@ -123,95 +94,156 @@
                -webkit-align-items: center;
                align-items: center;
              }
-
              .swiper-slide img{width: 100%; height: 100%; display: block;}
+
+             .g-info{background-color: #fefefe; padding: 14px; margin-bottom: 10px;}
+             .g-namebox{line-height: 20px;}
+             .g-name{width: 80%; font-size: 17px; float: left;}
+             .g-num{width: 20%; text-align: right; color: #999; font-size: 13px; float: left;}
+             .g-des{font-size: 13px; line-height: 20px; color: #999; padding-top: 4px;}
+             .g-unitprice{margin-top: 12px; font-size: 13px;}
+             .unit-credit{color: #ffc708;}
+             .unit-credit em{font-size: 16px;}
+             .unit-cash{color: #999;}
+             .g-spec{margin-bottom: 10px; padding: 14px; color: #ced1d5; font-size: 16px; background-color: #fefefe;}
+             .g-content{padding: 14px; background-color: #fefefe; min-height: 150px;}
+             .g-ctitle{font-size: 13px; color: #ccc;}
+             .g-ctitle span{width: 60px;}
+             .g-ctitle em{width: calc(100% - 64px); height: 1px; background-color: #e4e4e4; vertical-align: bottom;}
+             .g-cotentinfo{color: #262829; font-size: 16px; line-height: 22px; padding: 12px 0;}
+
+             /*弹窗*/
+             .Popup{width: 100%; height: 100%; background: rgba(0,0,0,.6); position: absolute; top: 0;
+               left: 0; z-index: 99;}
+             .PopupBox{position: absolute; bottom: 0; background-color: #fefefe; padding: 14px; width: calc(100% - 28px);}
+             .sel-type{font-size: 13px; color: #ced1d5; margin-bottom: 10px;}
+             .sel-close{position: absolute; font-weight: bold; font-size: 28px; right: 14px; top: 10px; color: #ced1d5;}
+             .btn-type{margin-bottom: 20px;}
+             .btn-type a{min-width: 92px; text-align: center; background-color: #e8eaee; border-radius: 5px; padding: 10px 0;
+             font-size: 15px; color: #999; margin-right: 10px;}
+             .btn-type a.on{background-color: #ffc708; color: #fff;}
+             .g-numBox{text-align: center; font-size: 16px; font-weight: bold;}
+             .g-numBox span{float: left; line-height: 35px; display: block;}
+             .g-numBox .reduce{color: #e8eaee; width: 43px; font-size: 20px; border: 1px solid #999; border-radius: 5px 0px 0px 5px;}
+             .g-numBox .sel-nums{color: #ffc708; width: 65px; border-top: solid 1px #999999; border-bottom: solid 1px #999999;
+             height: 35px; float: left; text-align: center; border-radius: 0; -webkit-appearance: none;}
+             .g-numBox .add{color: #999; width: 43px; font-size: 20px; border: 1px solid #999; border-radius: 0px 5px 5px 0px;}
+             .sel-typebox{padding-right: 28px;}
+             .Popup-btn{width: 100%; height: 44px; line-height: 44px; border-radius: 3px; background-color: #ffc708; color: #fff;
+             text-align: center; margin-top: 20px; font-size: 18px;}
       </style>
   </head>
   <body>
-
       <div id="wrap" v-cloak>
         <header>
             <em tapmode onclick="go_back()"></em>
             商品详情
+            <span></span>
         </header>
     		<div id="main">
-
           <!-- Swiper -->
           <div class="swiper-container" v-if="img">
             <div class="swiper-wrapper">
               <div class="swiper-slide" v-for="v in img">
-                  <img :src="v" alt="">
+                  <img :src="v" alt="商品详情图">
               </div>
             </div>
             <!-- Add Pagination -->
             <div class="swiper-pagination"></div>
           </div>
 
-    			<div class="act_content">
-    				<div class="title">
-    					<span class="before"></span>
-    					<span class="text">商品名称</span>
-    				</div>
-    				<div class="box_main">
-    					<p class="introduce">
-    						{{goodsInfo.goods_name}}
-    						<span>库存:{{goodsInfo.goods_number}}</span>
-    					</p>
-    				</div>
-    			</div>
-
-    			<div class="act_content" v-if="goodsInfo.abs">
-    				<div class="title">
-    					<span class="before"></span>
-    					<span class="text">商品介绍</span>
-    				</div>
-            <div class="box_main">
-              <p class="introduce">
-                {{goodsInfo.abs}}
+          <div class="g-info">
+              <div class="g-namebox clearfix">
+                  <div class="g-name">{{goodsInfo.goods_name}}</div>
+                  <div class="g-num">库存:<em>{{goodsInfo.goods_number}}</em></div>
+              </div>
+              <p class="g-des">
+                  {{goodsInfo.abs}}
               </p>
-            </div>
-    			</div>
+              <div class="g-unitprice">
+                  <span class="unit-credit">单价:<em>{{goodsInfo.total}}</em>学分</span>
+                  <span class="unit-cash">(现金:<em>{{goodsInfo.total * 0.2}}</em>元)</span>
+              </div>
+          </div>
 
-    			<!-- 商品介绍 -->
-    			<div class="act_content" v-if="content.content">
-    				<div class="title">
-    					<span class="before"></span>
-    					<span class="text">商品详情</span>
-    				</div>
-    				<div class="box_main">
-    					<p class="introduce" v-html="content.content">
-    						<!-- {{content.content}} -->
-    					</p>
-    				</div>
-    			</div>
+          <div class="g-spec" tapmode onclick="SelGood()">
+              <span>请选择商品规格</span>
+          </div>
 
-    		</div>
-        <!-- 底部 -->
-    		<div id="nopay_footer">
-    			<div class="fo_left">
-    				<span class="lf_txt">单价：<em>{{goodsInfo.total}}学分</em></span>
-    			</div>
-    			<div class="btn_pay submit" tapmode @click="get_Defaddress()">提交订单</div>
-    		</div>
-
+          <div class="g-content">
+              <div class="g-ctitle">
+                <span>商品详情</span>
+                <em></em>
+                <div class="g-cotentinfo" v-html="content.content">
+                    这是乡情
+                </div>
+              </div>
+          </div>
     	</div>
+      <!-- 底部 -->
+      <div id="nopay_footer">
+        <div class="fo_left">
+          <span class="lf_txt">总价:
+            <em class="total-credit">{{total}}学分</em>
+            <em class="total-cash">(现金{{total * 0.2}}元)</em>
+          </span>
+        </div>
+        <div class="btn_pay submit" tapmode @click="goOrder()">
+            <span class="btn_txt">提交订单</span>
+        </div>
+      </div>
+
+      <!-- 弹窗 -->
+      <div class="Popup" style="display:none">
+          <div class="PopupBox">
+              <div class="sel-typebox" v-if="size">
+                <p class="sel-type">
+                    选择类型
+                </p>
+                <div class="btn-type">
+                    <a class="size" href="javascript:;" v-for="(type,index) in size" tapmode @click="selType($event,type.size,index)">{{type.size}}</a>
+                </div>
+              </div>
+              <em class="sel-close" tapmode onclick="closePopup()">&times;</em>
+              <p class="sel-type">选择数量</p>
+              <div class="g-numBox clearfix">
+                  <span class="reduce" tapmode onclick="minus()">&#45;</span>
+                  <input type="number" class="sel-nums" value="1" id="num" readonly="readonly">
+                  <span class="add" tapmode onclick="add()">&#43;</span>
+              </div>
+              <button class="Popup-btn" tapmode onclick="Selok()">确 定</button>
+          </div>
+      </div>
+    </div>
+
+
   </body>
   <script type="text/javascript" src="../../script/api.js"></script>
   <script type="text/javascript" src="../../script/my.js"></script>
   <script type="text/javascript" src="../../script/vue.js"></script>
   <script type="text/javascript" src="../../script/swiper.min.js"></script>
   <script type="text/javascript">
-      var header = $api.dom('header');
-      fixStatusBar_API(header);
 
-      var goodsid,role;
+      var goodsid,gitem,numMax;
       apiready = function(){
-            loading();
+            api.parseTapmode();
+            token = api.getPrefs({
+  							sync: true,
+  							key: 'token'
+  					});
+  					id = api.getPrefs({
+  							sync: true,
+  							key: 'id'
+  					});
             fnInitSwipe();
             goodsid = api.pageParam.goods_id;
-            role = $api.getStorage('role');
-
+            
             vm.getGoodsInfo();
+            setTimeout(function(){
+              var firstSize = $api.first($api.dom('.btn-type'));
+              $api.addCls(firstSize, 'on');
+            },100);
+
       };
 
       var vm = new Vue({
@@ -219,51 +251,38 @@
           data: {
               goodsInfo: [],
               content: [],
-              img: []
+              img: [],
+              size:[],
+              total:''
           },
           methods: {
-              get_Defaddress: function get_Defaddress() {
-                  //读取收货地址列表(默认地址：is_default:'1')
-                  var token = $api.getStorage('token');
-                  var id = $api.getStorage('id');
-                  api.ajax({
-                      url: serverurl,
-                      method: 'get',
-                      cache: true,
-                      dataType: 'json',
-                      data: {
-                          values: {
-                              type: '10113',
-                              token: token,
-                              uid: id,
-                              is_default: '1'
-                          }
-                      }
-                  }, function (ret, err) {
+              goOrder:function goOrder(){
 
-                      if (ret) {
-                          if (ret.status == '5') {
-                              ExitLogin();
-                          } else if (ret.status == '0') {
-                              vm.go_address();
-                          } else {
-                              vm.PlaceOrder();
-                          }
-                      } else {
-                          api.toast({
-                              msg: '网络错误',
-                              duration: 2000,
-                              location: 'bottom'
-                          });
-                      }
-                  });
+                  if (vm.size) {
+                     var type = $api.text($api.dom('.g-spec span'));
+                  }else {
+                     var type = '';
+                  }
+
+                  var RselNum = document.getElementById("num").value;
+                  var imgurl = vm.goodsInfo.imgurl;
+
+                  var pageParam = {
+                       goods_id: goodsid,
+                       total:parseInt(vm.total),
+                       type:type,
+                       RselNum:RselNum,
+                       imgurl:imgurl,
+                       goods_name:vm.goodsInfo.goods_name
+                  }
+                  openWin('6confirmOrder','./6confirmOrder.html',pageParam);
+
+
               },
               getGoodsInfo: function getGoodsInfo() {
                   //读取商品详情
+                 showProgress('努力加载中','请稍后···');
 
-                  $api.css($api.byId('loading'), 'display:block');
-
-                  vm.role = role;
                   api.ajax({
                       url: serverurl,
                       method: 'get',
@@ -272,49 +291,46 @@
                       data: {
                           values: {
                               type: '10032',
-                              goodsid: goodsid
+                              goodsid: goodsid,
+                              uid:id
                           }
                       }
                   }, function (ret, err) {
-                      $api.css($api.byId('loading'), 'display:none');
+                      api.hideProgress();
 
                       if (ret) {
                           vm.goodsInfo = ret.data.info;
                           vm.content = ret.data.content;
                           vm.img = ret.data.img;
+                          vm.size = ret.data.size;
+                          vm.total = vm.goodsInfo.total;
+                          numMax = parseInt(vm.goodsInfo.goods_number);//最大值
+
+
                       } else {
-                          api.toast({
-                              msg: '网络错误',
-                              duration: 2000,
-                              location: 'bottom'
-                          });
+                          msg('网络错误');
                       }
                   });
               },
-              PlaceOrder: function PlaceOrder() {
-                  api.openWin({
-                      name: '6confirmOrder',
-                      url: './6confirmOrder.html',
-                      pageParam: {
-                          goods_id: goodsid
-                      },
-                      reload: true
-                  });
-              },
 
+              selType:function selType(e,item,index){
+                  gitem = item;
+                  var size = document.querySelectorAll(".size");
+                  var firstSize = $api.first($api.dom('.btn-type'));
 
-              //跳到地址页面
-              go_address: function go_address() {
+                  for (var i = 0; i < size.length; i++) {
 
-                api.openWin({
-                    name: '6address2',
-                    url: './6address2.html',
-                    pageParam: {
-                        goods_id:goodsid
-                    },
-                    reload:true
-                });
+                    size[i].classList.remove('on');
+                    if (index != i && $api.hasCls(firstSize,'on')) {
+
+                       $api.removeCls(firstSize, 'on');
+                    }
+
+                  }
+                  $api.addCls(e.currentTarget, 'on');
               }
+
+
           }
       });
 
@@ -334,5 +350,63 @@
 
         });
       }
+
+      // 选择规格
+      function SelGood(){
+          $api.css($api.dom('.Popup'), 'display:block');
+      }
+
+      // 关闭选择规格
+      function closePopup(){
+          $api.css($api.dom('.Popup'), 'display:none');
+
+      }
+
+      // 确定选择规则
+      function Selok(){
+          var selNum = document.getElementById("num").value;
+          if (vm.size) {
+              if (gitem) {
+                  $api.html($api.dom('.g-spec'), '<span>' + gitem + '</span>' + '*' + selNum);
+              }else {
+                  $api.html($api.dom('.g-spec'), '<span>'+vm.size[0].size+ '</span>' + '*' + selNum);
+              }
+          }else {
+              $api.html($api.dom('.g-spec'), '数量' + '*' + selNum);
+          }
+
+          vm.total = parseInt(vm.goodsInfo.total)*selNum;
+          $api.css($api.dom('.Popup'), 'display:none');
+      }
+
+      // 数字减少
+    	function minus(){
+    	    var num = document.getElementById("num").value;
+          var numMin = 1;
+    	    if(num <= numMin){
+    				document.getElementById("num").value = numMin;
+    				api.toast({
+    						msg: '当前已是最小购买数量',
+    						duration: 2000,
+    						location: 'middle'
+    				});
+    				return false;
+    	    }else{
+    	      document.getElementById("num").value--;
+    	    }
+
+    	}
+
+      // 点击增加
+    	function add(){
+          var num = document.getElementById("num").value;
+    	    if(num >= numMax){
+    	        document.getElementById("num").value = numMax;
+              msg('已达到最大购买数量');
+              return false;
+    	    }else{
+              document.getElementById("num").value++;
+    	    }
+    	}
   </script>
   </html>

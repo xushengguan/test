@@ -4,86 +4,237 @@
       <meta charset="utf-8">
       <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
       <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-      <title>注册账户</title>
+      <title>设置昵称</title>
       <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
-      <style>
-          .content{height: 100%; background: #fff;}
-          header{padding:70px 25px 50px 25px;}
-          header .title{height: 27px; line-height: 27px; background: url(../../image/login_icon.png) no-repeat left center;
-          background-size: 7px 20px; padding-left: 15px; font-size: 25px; font-weight: bold;}
-          header .title span{font-size: 20px; color: #999; padding-left: 20px;}
-          .line{height: 48px; line-height: 48px; padding: 0 25px; font-size: 15px; color: #212121; border-bottom: 1px solid #d8d8d8;
-            font-weight: bold; position: relative;}
-          .line em{width: 16px; height: 12px; background: url(../../image/sel.png) no-repeat center; background-size: 16px 12px;
-          position: absolute; top: 17px; right: 25px;}
-          .degree{border-top: 1px solid #d8d8d8;}
-          .btn{margin: 55px 25px 25px;}
-          .btn button{width: 100%; height: 46px; line-height: 46px; border-radius: 3px; background: #ffb300; text-align: center;
-          color: #fff; font-size: 18px;}
+      <style media="screen">
+          body{background: #f3f5f7;}
+          .content{padding: 0 14px;}
+          .back{width: 30px; height: 17px; margin-top:17px; background: url(../../image/back.png) no-repeat  left center;
+          background-size: auto 17px;}
+          .nk-title{font-weight: bold; margin-top: 20px; margin-bottom: 30px; font-size: 22px; text-align: center;}
+          .nk-pic{width: 80px; height: 80px; border-radius: 50%; margin: 0 auto; overflow: hidden;}
+          .nk-pic img{width: 100%; min-height: 80px;}
+          .nickname{padding: 0 36px; margin-top: 50px; height: 42px; line-height: 42px;}
+          .nickname input{width: 100%; height: 100%; font-size: 16px; letter-spacing: 3px; text-align: center;
+            border-bottom: 1px solid #d2d3d5;}
+          .nk-btn{margin: 24px 0; width: 100%; height: 42px; line-height: 42px; color: #fff; font-size: 18px; letter-spacing: 3px;
+          text-align: center; background-color: #ffc708; border-radius: 4px;}
       </style>
   </head>
   <body>
       <div class="content">
-          <header>
-            <div class="title">
-                注册账户
-                <span tapmode onclick="goLogin()">账号登录</span>
-            </div>
-          </header>
-          <div class="degree">
-              <div class="line" tapmode onclick="stuParent(this)">学生及家长<em id="icon1"></em></div>
-              <div class="line" tapmode onclick="teacher(this)">助教<em id="icon2" style="display:none"></em></div>
+          <span class="back" tapmode onclick="go_back()"></span>
+          <div class="nk-title">完善您的信息</div>
+          <div class="nk-pic" tapmode onclick="sel_pic()">
+              <img src="../../image/pic.png" alt="人头像">
           </div>
-          <div class="btn">
-              <button tapmode onclick="Next()">下一步</button>
+          <div class="nickname">
+              <input type="text" placeholder="设置一个好听的昵称">
           </div>
+          <button class="nk-btn" tapmode onclick="FinshInfo()">完成</button>
       </div>
   </body>
   <script type="text/javascript" src="../../script/api.js"></script>
   <script type="text/javascript" src="../../script/my.js"></script>
   <script type="text/javascript">
-  var header = $api.dom('header');
-  fixStatusBar_API(header);
+      var token,id;
       apiready = function(){
+          SetStatusBar('.container','dark','#f3f5f7');//设置状态栏my.js
+          api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
+          //同步返回结果：
+          token = api.getPrefs({
+              sync: true,
+              key: 'token'
+          });
+          id = api.getPrefs({
+              sync: true,
+              key: 'id'
+          });
+
 
       };
-      var index = 1;
-      // 选择学生家长
-      function stuParent(e){
-          $api.css($api.first(e,'em'), 'display:block');
-          $api.css($api.dom('#icon2'), 'display:none');
-          index = 1;
+
+      // 完善信息
+      function FinshInfo(){
+          var url = $api.attr($api.dom('.nk-pic img'), 'src');
+          var nickname = $api.val($api.dom('.nickname input'));
+          if (!nickname) {
+              msg('请设置您的名称');
+              return false;
+          }else {
+
+              if (url == '../../image/pic.png') {
+                  Cname();
+              }else {
+                  uploader();
+              }
+          }
       }
 
-      // 选择助教
-      function teacher(e){
-        $api.css($api.first(e,'em'), 'display:block');
-        $api.css($api.dom('#icon1'), 'display:none');
-        index = 2;
+      //选择头像
+    	function sel_pic() {
+    		api.getPicture({
+    			sourceType: 'album',
+    			encodingType: 'jpg',
+    			mediaValue: 'pic',
+    			destinationType: 'url',
+    			allowEdit: true,
+    			quality: 100,
+    			saveToPhotoAlbum: false
+    		}, function(ret, err) {
+
+    			if (ret) {
+            if (ret.data) {
+
+                $api.attr($api.dom('.nk-pic img'), 'src' ,ret.data);
+            }
+    			} else {
+
+                msg(err);
+    			}
+    		});
+    	}
+
+      //获取阿里云签名
+    	function uploader() {
+    		showProgress('努力加载中','请稍后···');
+    		api.ajax({
+    			url: serverurl,
+    			method: 'post',
+    			data: {
+    				values: {
+    					type: '10033',
+    				},
+
+    			}
+    		}, function(ret, err) {
+
+    			if (ret) {
+    				var host = ret.host;
+    				var policy = ret.policy;
+    				var signature = ret.signature;
+    				var accessid = ret.accessid;
+    				var dir = ret.dir;
+    				var expire = ret.expire;
+    				ALIcloud(host, policy, signature, accessid, dir, expire);
+
+    			} else {
+
+            api.hideProgress();//隐藏进度框
+            msg('网络错误');
+
+    			}
+    		});
+    	}
+
+    	function ALIcloud(host, policy, signature, accessid, dir, expire) {
+    		//将图片上传给阿里云服务器
+        var imgUrl = $api.attr($api.dom('.nk-pic img'), 'src');
+    		api.ajax({
+    			url: host,
+    			method: 'post',
+    			dataType: 'text',
+    			data: {
+    				values: {
+    					OSSAccessKeyId: accessid,
+    					policy: policy,
+    					Signature: signature,
+    					key: dir,
+    					success_action_status: 201
+    				},
+    				files: {
+    					file: imgUrl
+    				}
+    			}
+    		}, function(ret, err) {
+
+    			if (ret) {
+
+    				var div=document.createElement('div');
+    				div.style.display = 'none';
+    				div.innerHTML=ret;
+    				document.body.insertBefore(div, document.body.firstChild);
+    				var url = div.getElementsByTagName('Location')[0].innerHTML;
+
+            if (url) {
+            		ModifyAvatar(url);
+            }
+
+
+    			} else {
+              api.hideProgress();//隐藏进度框
+              msg('网络错误');
+    			}
+    		});
+    	}
+
+      // 修改头像
+      function ModifyAvatar(url){
+        api.ajax({
+            url: serverurl,
+            method: 'get',
+            data: {
+                values: {
+                    type:'10036',
+                    uid: id,
+                    headimgurl:url,
+                    token:token
+                }
+            }
+        },function(ret, err){
+            api.hideProgress();//隐藏进度框
+            if (ret) {
+                if (ret.status == '5') {
+
+                    ExitLogin();
+                }else if (ret.status == '1') {
+
+                    $api.attr($api.dom('.nk-pic img'), 'src' ,url);
+                    Cname();
+
+                }else {
+
+                    msg('网络错误');
+                }
+            } else {
+
+               msg('网络错误');
+            }
+        });
+
       }
 
-      // 跳到登录页
-      function goLogin(){
-          api.openWin({
-              name: 'login0',
-              url: './login0.html',
-              reload:true,
-        			allowEdit:true
-          });
-      }
+      function Cname(){//修改用户名
+        var nickname = $api.val($api.dom('.nickname input'));
+      	api.ajax({
+      		 url: serverurl,
+      		 method: 'get',
+      		 data: {
+      				 values: {
+      						 type:'10160',
+      						 uid: id,
+      						 nickname:nickname,
+      						 token:token
+      				 }
+      		 }
+       },function(ret, err){
 
-      // 下一步
-      function Next(){
-          api.openWin({
-              name: 'login3',
-              url: './login3.html',
-              pageParam: {
-                  index: index
-              },
-              reload:true,
-        			allowEdit:true
-          });
+      		 if (ret) {
+      			   if (ret.status == '5') {
+      							ExitLogin();
+      			   }else if (ret.status == '1') {
+      						 openWin('index','../../index.html','');
 
-      }
+      				 }else {
+
+                   msg('网络错误')
+      				 }
+      		 } else {
+
+             msg('网络错误')
+      		 }
+       });
+    }
+
   </script>
   </html>

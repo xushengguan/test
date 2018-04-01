@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title>我</title>
+      <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+      <style>
+          body{background-color: #fefefe;}
+          header{position: relative; height: 44px; line-height: 44px; box-shadow: 0px 4px 4px 0px rgba(76, 81, 118, 0.15);
+          font-size: 18px; background-color: #fefefe; padding:0 14px; color: #232528;}
+          header em{height: 44px; background: url(../../image/back.png) no-repeat left 12px; background-size: 10px 17px;
+      		padding-left: 30px; padding-right: 30px; float: left;}
+
+          .user-txt{min-height: 200px; padding: 14px; font-size: 16px; width: calc(100% - 28px);}
+
+          footer{height: 50px; background-color: #fefefe; padding: 0 14px; box-shadow: inset 0px 1px 0px 0px #d2d3d5;}
+          footer em{width: 18px; height: 50px; background:url(../../image/img.png) left center no-repeat;
+          background-size: 18px 16px;}
+          .send{width: 75px; height: 32px; border-radius: 32px; background-color: #dedfe0; color: #fff; font-size: 17px;
+          float: right; margin: 9px 0;}
+          .send.on{background-color: #ffc708;}
+
+          .img{overflow: hidden; padding: 12px;background: #fff; }
+          .img .item{width: calc(25% - 4px); margin-right: 2px; margin-left: 2px; position: relative; float: left;
+            margin-bottom: 5px;}
+          .img .item:before{content: ''; display: inline-block; padding-bottom: 100%; width: 0.1px; vertical-align: middle;}
+          .img .item img{position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: block;}
+          .item span{width: 30px; height: 30px; display: block; text-align: center; font-size: 30px; color: #fff;
+            line-height: 30px; text-shadow: 0 1px 5px rgba(0,0,0,.2); -o-transform: rotate(45deg); -moz-transform: rotate(45deg);
+            -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); position: absolute; top: 0; right: 0; z-index: 99;}
+
+          .item.on{background: #eee;}
+          .item em{width: 28px; height: 28px; background: url(../../image/add2.png) no-repeat center; background-size: 28px;
+          position: absolute; top: 50%; left: 50%; -webkit-transform:translate(-50%,-50%);}
+
+          .flexed{width: 100%; height: 100%; background: rgba(0,0,0,.6); position: fixed; top: 0; left: 0; z-index: 99;}
+          .flexed ul{width: 80%; background: #fff; border-radius: 4px; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); -webkit-transform:translate(-50%,-50%);}
+          .flexed ul li{ color: #212121; font-size: 14px; padding: 15px;  border-bottom: 1px solid #f2f2f2;}
+          .flexed ul li:last-child{border-bottom: none;}
+      </style>
+  </head>
+  <body>
+    <div id="wrap">
+        <header>
+          <em tapmode onclick="go_back()">发布新动态</em>
+        </header>
+        <div id="main">
+            <textarea name="name" rows="8" cols="80" class="user-txt" placeholder="分享动态···"></textarea>
+            <div class="img" style="display:none">
+                <!-- <div class="item on" tapmode onclick="sel_channel()" id="uploader">
+                    <em></em>
+                </div> -->
+                <!-- <div class="item">
+                    <span>+</span>
+                    <img src="../../image/pic10.jpg" alt="">
+                </div> -->
+            </div>
+        </div>
+        <footer>
+            <em class="pic" onclick="sel_channel()"></em>
+            <button class="send on" tapmode onclick="SendOut()">发送</button>
+        </footer>
+    </div>
+
+    <div class="flexed" style="display:none">
+        <ul>
+            <li tapmode onclick="camera()">拍照</li>
+            <li tapmode onclick="album()">从相册选择</li>
+        </ul>
+    </div>
+  </body>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/my.js"></script>
+  <script type="text/javascript" src="../../script/vue.js"></script>
+
+  <script type="text/javascript">
+      var token,id;
+      apiready = function(){
+          api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
+          token = api.getPrefs({
+              sync: true,
+              key: 'token'
+          });
+          uid = api.getPrefs({
+              sync: true,
+              key: 'id'
+          });
+
+    }
+
+    // 弹出选择框
+    function sel_channel(){
+
+        var picAll = $api.domAll('.pic');
+        if (picAll.length >= 9) {
+
+           msg('最多只能上传9张图片');
+
+        }else {
+          var flexed = $api.dom('.flexed');
+          $api.css(flexed, 'display:block');
+          flexed.onclick = function(event){
+
+              if (event.target == this) {
+
+                  $api.css(flexed, 'display:none');
+              }
+          }
+
+        }
+
+    }
+
+    //拍照
+    var imgUrl = [];
+    var arr = [];
+    var arrSrc = '';
+
+    function camera(){
+      $api.css($api.dom('.flexed'), 'display:none');
+
+      getPicture('camera',function(ret){
+
+          if (ret.data) {
+
+            var str = '';
+
+            $api.css($api.dom('.img'), 'display:block');
+            var str = '';
+            str += '<div class="item pic">'
+                +        '<span onclick="del(this)">+</span>'
+                +        '<img src="'+ret.data+'" alt="">'
+                +    '</div>'
+
+            $api.prepend($api.dom('.img'), str);//在DOM元素内部，首个子元素前插入HTML字符串
+
+          }
+      })
+    }
+
+    // 从相册选择
+    function album(){
+      $api.css($api.dom('.flexed'), 'display:none');
+      var picAll = $api.domAll('.pic');
+      var max = 9 - picAll.length;
+      var UIMediaScanner = api.require('UIMediaScanner');
+      UIMediaScanner.open({
+          type: 'picture',
+          column: 3,
+          classify: true,
+          max: max,
+          sort: {
+              key: 'time',
+              order: 'desc'
+          },
+          texts: {
+              stateText: '已选择*项',
+              cancelText: '取消',
+              finishText: '完成'
+          },
+          styles: {
+              bg: '#fff',
+              mark: {
+                  icon: '',
+                  position: 'bottom_right',
+                  size: 30
+              },
+              nav: {
+                  bg: '#eee',
+                  stateColor: '#000',
+                  stateSize: 18,
+                  cancelBg: 'rgba(0,0,0,0)',
+                  cancelColor: '#000',
+                  cancelSize: 18,
+                  finishBg: 'rgba(0,0,0,0)',
+                  finishColor: '#000',
+                  finishSize: 18
+              }
+          },
+          exchange: true,
+          rotation: false,
+          showBrowser:true
+      }, function(ret) {
+
+          if (ret && ret.list) {
+            $api.css($api.dom('.img'), 'display:block');
+            var str = '';
+
+            ret.list.forEach(function(item){
+              str += '<div class="item pic">'
+                  +        '<span onclick="del(this)">+</span>'
+                  +        '<img src="'+item.path+'" alt="">'
+                  +  '</div>'
+            })
+
+            $api.prepend($api.dom('.img'), str);//在DOM元素内部，首个子元素前插入HTML字符串
+
+          }
+      });
+
+    }
+
+
+    function getPicture(type,callback){
+      api.getPicture({
+        sourceType: type,
+        encodingType: 'jpg',
+        mediaValue: 'pic',
+        destinationType: 'url',
+        allowEdit: true,
+        quality: 100,
+        saveToPhotoAlbum: false
+      }, function(ret, err) {
+        if (ret) {
+            callback(ret);
+        } else {
+
+           console.log(JSON.stringify(err));
+
+        }
+      });
+    }
+
+
+    //删除图片
+    function del(e){
+        $api.remove($api.closest(e,'.item'));
+    }
+
+    //发送
+    function SendOut(){
+        var content = $api.val($api.dom('.user-txt'));
+        arrSrc = $api.domAll('.pic img');
+
+        if (content == '' && arrSrc.length == 0) {
+
+            msg('发表内容不能为空');
+            return false;
+        }else if(arrSrc.length == 0){
+
+            CirclePublish();
+        }else{
+
+            uploader();
+        }
+    }
+
+    //获取阿里云签名
+  	function uploader() {
+  		showProgress('努力加载中','请稍后···');
+  		api.ajax({
+  			url: serverurl,
+  			method: 'post',
+  			data: {
+  				values: {
+  					type: '10033',
+  				},
+
+  			}
+  		}, function(ret, err) {
+
+  			if (ret) {
+  				var host = ret.host;
+  				var policy = ret.policy;
+  				var signature = ret.signature;
+  				var accessid = ret.accessid;
+  				var dir = ret.dir;
+  				var expire = ret.expire;
+
+          ALIcloud(host, policy, signature, accessid, dir, expire);
+  			} else {
+
+          msg('网络错误');
+
+  			}
+  		});
+  	}
+
+  	function ALIcloud(host, policy, signature, accessid, dir, expire) {
+  		//将图片上传给阿里云服务器
+
+      for (var j = 0; j < arrSrc.length; j++) {
+          imgUrl.push(arrSrc[j].src);
+
+      		api.ajax({
+      			url: host,
+      			method: 'post',
+      			dataType: 'text',
+      			data: {
+      				values: {
+      					OSSAccessKeyId: accessid,
+      					policy: policy,
+      					Signature: signature,
+      					key: dir,
+      					success_action_status: 201
+      				},
+      				files: {
+      					file: imgUrl[j]
+      				}
+      			}
+      		}, function(ret, err) {
+
+      			if (ret) {
+
+              var div=document.createElement('div');
+      				div.style.display = 'none';
+      				div.innerHTML=ret;
+      				document.body.insertBefore(div, document.body.firstChild);
+      				var url = div.getElementsByTagName('Location')[0].innerHTML;
+              arr.push(url);
+
+              if (arr.length == imgUrl.length) {
+                  CirclePublish();
+              }
+
+      			} else {
+
+              msg('网络错误');
+      			}
+      		});
+      }
+  	}
+
+    //发表
+    function CirclePublish(){
+        var content = $api.val($api.dom('.user-txt'));
+        var str = arr.join(',');
+      
+        api.ajax({
+            url: serverurl,
+            method: 'get',
+            data: {
+                values: {
+                    type: '10117',
+                    uid:uid,
+                    token:token,
+                    content:content,
+                    thumb:str,
+                },
+            }
+        },function(ret, err){
+            api.hideProgress();
+
+            if (ret) {
+                if (ret.status == '5') {
+                    ExitLogin();
+                }else if (ret.status == '1') {
+
+                    openWin('index','../../index.html',{indexPublish:1});
+
+                }
+            } else {
+
+                msg('网络错误');
+
+            }
+        });
+
+    }
+  </script>
+  </html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title>新鲜事详情</title>
+      <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+      <style>
+          body{background-color: #fefefe;}
+          header{position: relative; height: 44px; line-height: 44px; box-shadow: 0px 4px 4px 0px rgba(76, 81, 118, 0.15);
+          font-size: 18px; background-color: #fefefe;}
+          header em{height: 44px; background: url(../../image/back.png) no-repeat center 12px; background-size: 10px 17px;
+          padding-left: 14px; padding-right: 30px; float: left;}
+          header span{height: 44px; background: url(../../image/comment1.png) no-repeat 0 14px; background-size: 20px 17px;
+          padding-left: 24px; padding-right: 14px; float: right; font-size: 15px; color: #595959;}
+
+          .article{padding: 24px 14px 14px 14px;}
+          .article-title{line-height: 28px; font-size: 20px;}
+          .time{color: #999; font-size: 12px; line-height: 24px; margin-bottom: 10px;}
+
+      </style>
+  </head>
+  <body>
+      <div id="wrap">
+          <header>
+            <em tapmode onclick="go_back()"></em>
+            <span  id="comment_count" tapmode onclick="goDetail()"></span>
+          </header>
+          <div id="main" class="article" v-cloak>
+              <div v-if="!data.status">
+                  <div class="article-title">
+                      {{data.title}}
+                  </div>
+                  <p class="time">{{data.time |　getInfoDate}}</p>
+                  <div class="cotent" v-html="data.content"></div>
+              </div>
+              <!-- 没有数据 -->
+              <div class="no-data" v-else>
+        					 <img src="../image/ndata.png" alt="没数据图片">
+        					 <p>抱歉，没有数据~</p>
+        			</div>
+          </div>
+
+      </div>
+  </body>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/my.js"></script>
+  <script type="text/javascript" src="../../script/vue.js"></script>
+  <script type="text/javascript" src="../../script/date.js"></script>
+  <script type="text/javascript">
+      apiready = function(){
+          SetStatusBar('#main','dark','#fefefe');//设置状态栏my.js
+          
+          api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
+          vm.getDetails();
+
+          api.addEventListener({
+              name: 'news'
+          }, function(ret, err){
+              if( ret ){
+                   console.log( JSON.stringify( ret ) );
+                   vm.getDetails();
+              }else{
+                   console.log( JSON.stringify( err ) );
+              }
+          });
+
+      };
+
+      var vm = new Vue({
+          el:'#main',
+          data:{
+              data:[]
+          },
+          filters: {
+              getInfoDate: function getInfoDate(time) {
+                  return getDate(time);
+              }
+          },
+          methods:{
+              getDetails:function(){
+                var newid = api.pageParam.newid;
+
+                var token = api.getPrefs({
+                    sync: true,
+                    key: 'token'
+                });
+                var id = api.getPrefs({
+                    sync: true,
+                    key: 'id'
+                });
+
+                showProgress('努力加载中','请稍后···');
+                api.ajax({//获取新鲜事
+                    url: serverurl,
+                    method: 'get',
+                    cache:true,
+                    data: {
+                        values: {
+                            type: '10065',
+                           token: token,
+                           id:newid,
+                           uid:id
+                        },
+                    }
+                },function(ret, err){
+                    api.hideProgress();
+
+                    if (ret) {
+                       if (ret.status == '5') {
+                          ExitLogin();
+                       }else {
+                          vm.data = ret;
+                          $api.text($api.byId('comment_count'), ret.comment_count);
+
+                       }
+                    }else {
+
+                        msg('网络错误');
+                    }
+                });
+              }
+          }
+      })
+
+      function goDetail(){
+          if (vm.data.comment_count > 0) {
+              openWin('cir-artmsg','./cir-artmsg.html',{data:vm.data});
+          }
+      }
+  </script>
+  </html>

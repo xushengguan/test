@@ -5,7 +5,6 @@
 		<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0">
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
-		<link rel="stylesheet" type="text/css" href="../../css/loading.css"/>
 	<title>分类商品</title>
 </head>
 
@@ -23,11 +22,11 @@
 
 
 	.goods_card{overflow: hidden;}
-	.goods_card li{float: left; width: calc(50% - 2px); background: #fff; margin-bottom: 4px;}
+	.goods_card li{float: left; width: calc(50% - 2px); background: #fefefe; margin-bottom: 4px;}
 	.goods_card li:nth-child(odd){margin-right: 2px;}
 	.goods_card li:nth-child(even){margin-left: 2px;}
 	.goods_card li img{width: 100%; height: 145px;}
-	.goods_card .txt{background: #fff; padding: 8px; text-align: center;}
+	.goods_card .txt{background: #fefefe; padding: 8px; text-align: center;}
 	.goods_card .txt .name{font-size: 14px; color: #212121; padding-bottom: 4px; font-weight: bold;}
 	.goods_card .txt .abs{font-size: 12px; color: #999; padding-bottom: 4px;}
 	.goods_card .txt .total{font-size: 14px; color: #f44336; font-weight: bold;}
@@ -36,7 +35,11 @@
 <body>
 
 	<div class="pro_catalog" id="app" v-cloak>
-		<div class="NoAct" v-if="info == '' || info == null">抱歉，该分类暂时还没有商品！</div>
+
+		<div class="no-data" v-if="info == '' || info == null">
+				 <img src="../../image/ndata.png" alt="没数据图片">
+				 <p>抱歉，没有数据~</p>
+		</div>
 		<div v-else>
 			<div class="mallBox">
 					<ul class="goods_card">
@@ -59,64 +62,50 @@
 <script type="text/javascript" src="../../script/my.js"></script>
 <script type="text/javascript" src="../../script/vue.js"></script>
 <script type="text/javascript">
+      var id,token;
       apiready = function(){
+				  api.parseTapmode();
 					var clsid = api.pageParam.clsid;
-					loading();
 					vm.getClass(clsid);
-
-					//刷新
-					api.setRefreshHeaderInfo({
-							loadingImg: 'widget://image/refresh.png',
-							bgColor: '#efeff4',
-	            textColor: '#333',
-							textUp: '释放立即刷新...',
-							textLoading: '加载中···',
-							showTime: false
-					}, function(ret, err) {
-							//在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
-							vm.getClass(clsid);
-							api.refreshHeaderLoadDone();
+					token = api.getPrefs({
+							sync: true,
+							key: 'token'
+					});
+					id = api.getPrefs({
+							sync: true,
+							key: 'id'
 					});
       };
 			var vm = new Vue({
-	        el: '#app',
-	        data: {
-							info:[],
-	        },
-	        methods: {
-	            getClass(clsid) { //读取商品分类列表
-								  $api.css($api.byId('loading'),'display:block');
-	                api.ajax({
-	                    url: serverurl,
-	                    method: 'get',
-											cache:true,
-	                    dataType: 'json',
-	                    data: {
-	                        values: {
-	                            type: '10031',
-															gtypeid: clsid
-	                        }
-	                    }
-	                }, function(ret, err) {
-										  $api.css($api.byId('loading'),'display:none');
-	                    vm.info = ret;
-	                });
-	            },
-
-	            go_goodsDetail(goods_id){
-	              api.openWin({
-	                  name: 'credit_goodDetail',
-	                  url: './credit_goodDetail.html',
-	                  pageParam: {
-	                      goods_id: goods_id
-	                  },
-										reload:true,
-										allowEdit:true
-	              });
-	            },
-
-
-	        }
-	    })
+					el: '#app',
+					data: {
+							info: []
+					},
+					methods: {
+						  getClass: function getClass(clsid) {
+									//读取商品分类列表
+									showProgress('努力加载中','请稍后···');
+									api.ajax({
+											url: serverurl,
+											method: 'get',
+											cache: true,
+											dataType: 'json',
+											data: {
+													values: {
+															type: '10031',
+															gtypeid: clsid,
+															uid: id
+													}
+										 }
+									}, function (ret, err) {
+												api.hideProgress();
+												vm.info = ret;
+									});
+						 },
+						go_goodsDetail: function go_goodsDetail(goods_id) {
+									openWin('goodDetail', './credit_goodDetail.html', { goods_id: goods_id });
+						}
+					}
+      });
 
 </script>

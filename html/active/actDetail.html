@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title>活动详情</title>
+      <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+      <style>
+          /*主页头部*/
+          header{position: relative; top: 0; padding: 0 14px; min-height: 168px; width: calc(100% - 28px);}
+          .bg-index{position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+          }
+          .top{position: relative; height: 44px; line-height: 44px; z-index: 2;}
+          .top em{width: 40px; height: 44px; background: url(../../image/back1.png) no-repeat left 12px; background-size: 10px 17px;
+          float: left;}
+          .top i{width: 20px; height: 44px; background: url(../../image/share4.png) no-repeat 0 12px; background-size: 20px;
+           float: right;}
+          .bg-color{position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,.6);
+          opacity: 0.6}
+
+          .act-title{position: absolute; bottom: 40px; z-index: 2; font-size: 20px; color: #fff; text-align: center;
+          width: calc(100% - 28px);}
+          .act-btn{min-width: 70px; padding: 0 5px; height: 34px; border-radius: 16px; color: #fff; position: absolute; bottom: -16px;
+          left: 50%; transform: translateX(-50%); -webkit-transform: translateX(-50%); background: #ffc708; font-weight: bold;}
+          .act-btn.on{background-color: #46daab;}
+
+          .main{background-color: #fefefe; padding: 35px 14px 14px 14px; margin-bottom: 10px;}
+          .act-info{margin-bottom: 10px;}
+          .act-info li{font-size: 14px; color: #969696; padding-left: 20px; margin-bottom: 10px;}
+          .act-info li:nth-child(1){background: url(../../image/tel.png) no-repeat left center; background-size: 12px;}
+          .act-info li:nth-child(2){background: url(../../image/time1.png) no-repeat left center; background-size: 12px;}
+          .act-info li:nth-child(3){background: url(../../image/address2.png) no-repeat left center; background-size: 12px;}
+          .act-content{font-size: 14px;}
+
+          .act-user{background: #fefefe; padding: 0 14px;}
+          .user-title{padding-left: 20px; background: url(../../image/accout1.png) no-repeat left center; background-size: 15px;
+          color: #999; height: 42px; line-height: 42px; padding-top: 2px; border-bottom: 1px solid #d2d3d5;}
+          .user-pic{padding: 12px 26px; text-align: center;}
+          .user-pic img{width: 30px; height: 30px; border-radius: 50%; margin: 0 5px;}
+
+          .act-remind{padding: 20px 0; text-align: center; color: #999; font-size: 14px;}
+          .act-num{font-size: 16px; color: #262829; padding-bottom: 4px;}
+
+           /*编辑报名弹窗*/
+          .Popup{width: 100%; height: 100%; position: absolute; top: 0; left: 0; background: rgba(0,0,0,.8); z-index: 99;}
+          .PopupBox{background: #fefefe; border-radius: 0px 0px 20px 20px; padding: 26px 24px;}
+          .Popup-title{font-size: 20px; background: url(../../image/accout2.png) no-repeat left center; background-size: 20px;
+          padding-left: 30px; margin-bottom: 50px;}
+          .enlist li{margin-bottom: 20px; font-size: 16px; color: #999;}
+          .enlist li input{width: 100%; border-bottom: 1px solid #d2d3d5; padding: 4px 0;}
+          .sel-num{margin-left: 10px;}
+          .sel-num em{width: 26px; height: 26px;}
+          .sel-num i{font-size: 17px; color: #262829; min-width: 28px; text-align: center; display: inline-block;}
+          .sel-num .reduce{background: url(../../image/reduce.png) no-repeat left top; background-size: 26px; vertical-align: middle;}
+          .sel-num .add{background: url(../../image/add1.png) no-repeat left top; background-size: 26px; vertical-align: middle;}
+          .SignUp{width: 100%; background-color: #ffc708; border-radius: 3px; height: 44px; font-size: 17px; color: #fff; opacity: 0.5;}
+          .SignUp.on{opacity: 1;}
+      </style>
+  </head>
+  <body>
+    <div class="wrap" id="app" v-cloak>
+        <!-- 主页头部 -->
+        <header id="index-top" class="slideNormal">
+            <div class="top">
+                <em tapmode onclick="go_back()"></em>
+                <i></i>
+            </div>
+            <div class="act-title">
+                {{data.title}}
+            </div>
+            <img class="bg-index" :src="data.actimgurl" alt="主页背景图" v-if="data.actimgurl">
+            <img class="bg-index" src="../../image/img1.jpg" alt="主页背景图" v-else>
+            <div class="bg-color"></div>
+            <!-- is_join是否报名 1 已经报名 0 未报名 -->
+            <button class="act-btn" v-if="data.is_join == '0'" tapmode @click="SignUp()">+报名</button>
+            <button class="act-btn on" v-else>已报名</button>
+        </header>
+
+        <div class="main">
+            <ul class="act-info">
+                <li tapmode @click="goCall(data.tel)">{{data.tel}}<span v-if="data.nickname">({{data.nickname}})</span></li>
+                <li>{{data.actstarttime | formatDate}}开始
+                  <!-- 至2月10日 17:20结束 -->
+                </li>
+                <li>{{data.address}}</li>
+            </ul>
+            <div class="act-content" v-html="data.content"></div>
+        </div>
+
+        <div class="act-user" v-if="data.join_member">
+             <div class="user-title">
+                 活动队员
+             </div>
+             <div class="user-pic">
+                  <img :src="v.headimgurl+'?x-oss-process=image/resize,m_fill,h_30,w_30'" alt="用户头像" v-for="v in data.join_member" v-if="v.headimgurl">
+                  <img src="../../image/pic.png" alt="用户头像" v-else>
+             </div>
+             <div class="act-remind">
+                  <p class="act-num">{{data.join_num}}个人已经报名了这次的活动</p>
+                  <p>还等什么快来参加吧</p>
+             </div>
+        </div>
+
+        <!-- 编辑报名弹窗 -->
+        <div class="Popup" v-show="signup == true">
+            <div class="PopupBox">
+                <div class="Popup-title">编辑报名信息</div>
+                <ul class="enlist">
+                    <li>
+                        <input class="tel" type="tel" placeholder="请输入您的手机号码" maxlength="11" oninput="checkValue()" onpropertychange="checkValue()">
+
+                    </li>
+                    <li>
+                        <input class="name" type="text" placeholder="填写您的姓名或昵称" oninput="checkValue()" onpropertychange="checkValue()">
+                    </li>
+                    <li>
+                        <span>选择报名人数:</span>
+                        <span class="sel-num">
+                            <em class="reduce" tapmode @click="cuts()"></em>
+                            <i>{{num}}</i>
+                            <em class="add" tapmode @click="add()"></em>
+                        </span>
+                    </li>
+                </ul>
+                <button class="SignUp" disabled="disabled" tapmode @click="enlist()">确认报名</button>
+            </div>
+        </div>
+
+    </div>
+
+
+
+  </body>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/my.js"></script>
+  <script type="text/javascript" src="../../script/vue.js"></script>
+  <script type="text/javascript" src="../../script/date.js"></script>
+  <script type="text/javascript">
+      var id,token,actid;
+      apiready = function(){
+        api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
+        id = api.getPrefs({
+            sync: true,
+            key: 'id'
+        });
+        token = api.getPrefs({
+            sync: true,
+            key: 'token'
+        });
+        actid = api.pageParam.actid;
+        vm.ActDetail();
+
+        var Popup = $api.dom('.Popup');
+        Popup.onclick = function(event){
+          if(event.target == this){
+             vm.signup = false;
+          }
+        }
+
+      }
+
+      var vm = new Vue({
+          el:'#app',
+          data:{
+              data:[],
+              signup:false,
+              num:1
+          },
+          filters: {
+              formatDate: function (_formatDate) {
+                  function formatDate(_x) {
+                      return _formatDate.apply(this, arguments);
+                  }
+
+                  formatDate.toString = function () {
+                      return _formatDate.toString();
+                  };
+
+                  return formatDate;
+              }(function (time) {
+                  var date = new Date(time * 1000);
+                  return formatDate(date, 'yyyy-MM-dd');
+              })
+          },
+          methods:{
+              // 报名弹窗
+              SignUp:function SignUp(){
+                  vm.signup = true;
+              },
+              cuts:function(){//数量减少
+                  if(vm.num<=1) return
+                  vm.num--;
+              },
+              add:function(){//数量增加
+                  vm.num++;
+              },
+              // 拨打电话
+              goCall:function goCall(tel){
+                  api.call({
+                      type: 'tel_prompt',
+                      number: tel
+                  });
+
+              },
+              // 获取活动详情
+              ActDetail:function ActDetail(){
+                  showProgress('努力加载中','请稍后···');
+                  api.ajax({
+                      url: serverurl,
+                      method: 'get',
+                      data: {
+                          values: {
+                              type: '10018',
+                               id:actid,
+                               uid:id
+                          }
+                      }
+                  },function(ret, err){
+                      api.hideProgress();
+                    
+                      if (ret) {
+
+                          vm.data = ret;
+                      } else {
+
+                          msg('网络错误');
+                      }
+                  });
+              },
+
+              // 用户报名活动
+              enlist:function enlist(){
+                  var myreg = /^1[0-9]{10}$/;//判断是否为手机号码,/^1[34578]\d{9}$/
+                  var tel = trimStr($api.val($api.dom('.tel')));
+                  var name = trimStr($api.val($api.dom('.name')));
+                  if (!myreg.test(tel)) {
+                      msg('请输入正确的手机号码');
+                      return false;
+                  }else if (!name) {
+                      msg('请输入您的姓名或昵称');
+                      return false;
+                  }
+                  showProgress('努力加载中','请稍后···');
+
+                  api.ajax({
+                      url: serverurl,
+                      method: 'get',
+                      data: {
+                          values: {
+                              type: '10082',
+                               tel: tel,
+                               uid:id,
+                               name:name,
+                               act_id:actid,
+                               token:token,
+                               apply_num:vm.num
+                          },
+                      }
+                  },function(ret, err){
+                      api.hideProgress();
+
+                      if (ret) {
+
+                           if (ret.status == '0') {
+
+                              msg('报名失败');
+                           }else if (ret.status == '5') {
+                              ExitLogin();
+                           }else {
+                               msg('报名成功');
+                               vm.ActDetail();
+                               vm.signup = false;
+                           }
+
+                      } else {
+                          msg('网络错误');
+
+                      }
+                  });
+              },
+
+          }
+      })
+
+      // 实时检测输入框事件
+      function checkValue(){
+          var tel = trimStr($api.val($api.dom('.tel')));
+          var name = trimStr($api.val($api.dom('.name')));
+          if (tel && name) {
+
+              AddorRemove('add','.SignUp');
+          }else {
+
+              AddorRemove('remove','.SignUp');
+          }
+      }
+  </script>
+  </html>

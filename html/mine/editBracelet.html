@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title>编辑我的手环</title>
+      <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+      <style>
+          body{background-color: #fefefe;}
+          header{position: relative; height: 44px; line-height: 44px; box-shadow: 0px 4px 4px 0px rgba(76, 81, 118, 0.15);
+          font-size: 18px; background-color: #fefefe; padding:0 14px; color: #232528;}
+          header em{height: 44px; background: url(../../image/back.png) no-repeat left 12px; background-size: 10px 17px;
+          float: left; padding-left: 30px;}
+
+          .bracelet{padding: 8%;}
+          .pic{width: 75px; height: 75px; border-radius: 50%; overflow: hidden; margin: 0 auto;}
+          .pic img{width: 100%; height: 100%;}
+          .edit-name{font-size: 17px; margin-top: 20px; text-align: center;}
+          .edit-name em{width: 13px; height: 12px; background: url(../../image/edit1.png) no-repeat left center;
+          background-size: contain; margin-left: 2px; vertical-align: middle;}
+          .ID{width: 100%; height: 35px; line-height: 35px; text-align: center; border-radius: 3px; border: solid 1px #dedede;
+          background-color: #f4f4f4; font-size: 15px; color: #909090; margin-top: 40px;}
+      </style>
+  </head>
+  <body>
+    <div id="wrap">
+        <header>
+          <em tapmode onclick="go_back()">编辑我的手环</em>
+
+        </header>
+        <div id="main">
+            <div class="bracelet">
+                <div class="pic" tapmode onclick="sel_pic()">
+                    <img src="../../image/pic.png" alt="人头像">
+                </div>
+                <div class="edit-name" tapmode onclick="changeName()">
+                    <span id="name">姓名</span>
+                    <em></em>
+                </div>
+                <div class="ID"></div>
+            </div>
+        </div>
+    </div>
+
+
+  </body>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/my.js"></script>
+
+  <script type="text/javascript">
+      var imgUrl,token,id;
+      apiready = function(){
+          api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
+          token = api.getPrefs({
+              sync: true,
+              key: 'token'
+          });
+          id = api.getPrefs({
+              sync: true,
+              key: 'id'
+          });
+          var braid = api.pageParam.braid;
+          console.log(braid);
+          if (braid) {
+              $api.html($api.dom('.ID'), '手环ID:'+braid);
+          }else {
+              var braceletMsg = api.pageParam.braceletMsg;
+              if (braceletMsg.stu_img) {
+                 $api.attr($api.dom('.pic img'), 'src', braceletMsg.stu_img+'?x-oss-process=image/resize,m_fill,h_75,w_75');
+              }
+              $api.text($api.byId('name'), braceletMsg.stu_name);
+              $api.html($api.dom('.ID'), '手环ID:'+braceletMsg.id);
+          }
+
+
+
+      }
+
+      //选择头像
+    	function sel_pic() {
+    		api.getPicture({
+    			sourceType: 'album',
+    			encodingType: 'jpg',
+    			mediaValue: 'pic',
+    			destinationType: 'url',
+    			allowEdit: true,
+    			quality: 50,
+    			saveToPhotoAlbum: false
+    		}, function(ret, err) {
+    			if (ret) {
+    				imgUrl = ret.data;
+            if (ret.data) {
+    						uploader();
+            }
+    			} else {
+    				console.log(JSON.stringify(err));
+    			}
+    		});
+    	}
+
+      //获取阿里云签名
+    	function uploader() {
+    		showProgress('努力加载中','请稍后···');
+    		api.ajax({
+    			url: serverurl,
+    			method: 'post',
+    			data: {
+    				values: {
+    					type: '10033',
+    				},
+
+    			}
+    		}, function(ret, err) {
+
+    			if (ret) {
+    				var host = ret.host;
+    				var policy = ret.policy;
+    				var signature = ret.signature;
+    				var accessid = ret.accessid;
+    				var dir = ret.dir;
+    				var expire = ret.expire;
+    				ALIcloud(host, policy, signature, accessid, dir, expire);
+
+    			} else {
+            api.hideProgress();
+
+    				msg('网络错误');
+    			}
+    		});
+    	}
+
+    	function ALIcloud(host, policy, signature, accessid, dir, expire) {
+    		//将图片上传给阿里云服务器
+    		api.ajax({
+    			url: host,
+    			method: 'post',
+    			dataType: 'text',
+    			data: {
+    				values: {
+    					OSSAccessKeyId: accessid,
+    					policy: policy,
+    					Signature: signature,
+    					key: dir,
+    					success_action_status: 201
+    				},
+    				files: {
+    					file: imgUrl
+    				}
+    			}
+    		}, function(ret, err) {
+    			if (ret) {
+
+    				var div=document.createElement('div');
+    				div.style.display = 'none';
+    				div.innerHTML=ret;
+    				document.body.insertBefore(div, document.body.firstChild);
+    				var url = div.getElementsByTagName('Location')[0].innerHTML;
+
+            if (url) {
+            		editBracelet(url,'');
+            }
+
+    			} else {
+    				 api.hideProgress();
+
+    				 msg('网络错误');
+    			}
+    		});
+    	}
+
+      //修改手环昵称
+      function changeName(){
+     	 var text = $api.text($api.byId('name'));
+     	 api.prompt({
+     		    title:'修改用户名',
+     				text:text,
+     		    buttons: ['确定', '取消']
+     		}, function(ret, err) {
+     		    var index = ret.buttonIndex;
+
+     		    var text = ret.text;
+     				if (index == 1) {
+     					  if (!text) {
+
+     								msg('请输入您的用户名');
+     					  }else {
+                    showProgress('努力加载中','请稍后···');
+     					  		editBracelet('',text);
+     					  }
+
+     				}
+     		});
+
+      }
+
+      // 修改手环信息
+      function editBracelet(img,name){
+          if (api.pageParam.braid) {
+              var usb_id = api.pageParam.braid;
+              var braid = '';
+          }else{
+              var braid = api.pageParam.braceletMsg.id;
+              var usb_id = api.pageParam.braceletMsg.usb_id;
+          }
+          console.log(id);
+          console.log(name);
+          console.log(usb_id);
+          console.log(braid);
+          api.ajax({
+              url: serverurl,
+              method: 'get',
+              data: {
+                  values: {
+                      type: '10148',
+                      token: token,
+                      uid:id,
+                      stu_name:name,
+                      stu_img:img,
+                      usb_id:usb_id,
+                      id:braid
+                  },
+
+              }
+          },function(ret, err){
+              api.hideProgress();
+              console.log(JSON.stringify(ret));
+              console.log(JSON.stringify(err));
+              if (ret) {
+
+                  if (ret.status == '5') {
+                     ExitLogin();
+                  }else if (ret.status == '0') {
+                     msg('网络错误');
+                  }else {
+                     if (img) {
+                        $api.attr($api.dom('.pic img'), 'src', img+'?x-oss-process=image/resize,m_fill,h_75,w_75');
+                        api.sendEvent({
+                            name: 'BracelectEvent',
+                            extra: {
+                                img: 'img',
+                            }
+                        });
+                     }else if (name) {
+                        $api.text($api.byId('name'), name);
+                        api.sendEvent({
+                            name: 'BracelectEvent',
+                            extra: {
+                                name: 'name',
+                            }
+                        });
+                     }
+
+                  }
+              } else {
+
+                  msg('网络错误');
+              }
+          });
+
+      }
+  </script>
+  </html>

@@ -7,12 +7,7 @@
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title>首页</title>
     <link rel="stylesheet" type="text/css" href="./css/api.css" />
-    <link rel="stylesheet" type="text/css" href="./css/style.css" />
     <style>
-        header {
-            background: #ffb300;
-            box-shadow: 0 2px 2px 0 rgba(0,0,0,.2);
-        }
 
         header ul li {
             display: none;
@@ -34,7 +29,7 @@
             padding-top: 30px;
             padding-bottom: 6px;
             background: url() no-repeat center 6px;
-            background-size: auto 20px;
+            background-size: auto 24px;
             text-align: center;
             color: #3f3f3f;
             font-size: 12px;
@@ -46,18 +41,27 @@
 
         #footer ul li:nth-child(1) {
             background-image: url(./image/home.png);
+
         }
 
         #footer ul li:nth-child(2) {
-            background-image: url(./image/circle.png);
+            background-image: url(./image/msg.png);
+
         }
 
         #footer ul li:nth-child(3) {
-            background-image: url(./image/mall.png);
+            background-image: url(./image/scan.png);
+            background-size: auto 38px;
         }
 
         #footer ul li:nth-child(4) {
-            background-image: url(./image/my.png);
+            background-image: url(./image/mall.png);
+
+        }
+
+        #footer ul li:nth-child(5) {
+            background-image: url(./image/mine.png);
+            /*background-size: 19px 22px;*/
         }
 
         #footer ul li:nth-child(1).active {
@@ -65,47 +69,17 @@
         }
 
         #footer ul li:nth-child(2).active {
-            background-image: url(./image/circle1.png);
-        }
-
-        #footer ul li:nth-child(3).active {
-            background-image: url(./image/mall1.png);
+            background-image: url(./image/msg1.png);
         }
 
         #footer ul li:nth-child(4).active {
-            background-image: url(./image/my1.png);
+            background-image: url(./image/mall1.png);
         }
 
-        .input_box {
-            margin: 8px 10px;
-            position: relative;
-            background: #fff;
-            border-radius: 2px;
-            box-shadow: 0 2px 1px 0 rgba(0,0,0,0.1);
+        #footer ul li:nth-child(5).active {
+            background-image: url(./image/mine1.png);
         }
 
-        .input_box input {
-            width: calc(100% - 55px);
-            height: 40px;
-            line-height: 40px;
-            background: #fff;
-            border-radius: 2px;
-            color: #212121;
-            font-size: 16px;
-            padding-left: 15px;
-            text-align: left;
-        }
-
-        .input_box em {
-            display: block;
-            width: 44px;
-            height: 44px;
-            background: url(./image/search.png) no-repeat center;
-            background-size: 16px;
-            position: absolute;
-            top: 0;
-            right: 10px;
-        }
 
         .title {
             color: #fff;
@@ -114,20 +88,6 @@
             line-height: 50px;
         }
 
-        header li span {
-            line-height: 50px;
-            color: #fff;
-            font-size: 18px;
-            padding: 0 15px;
-        }
-
-        .msg {
-            float: left;
-        }
-
-        .admin {
-            float: right;
-        }
 
 
     </style>
@@ -135,35 +95,30 @@
 
 <body>
     <div id="wrap">
-        <header id="header">
+        <!-- <header id="header">
             <ul>
-                <li class="active"></li>
-                <li>
-                    <div class="input_box active">
-                        <form action="javascript:submitInputContent();">
-                              <input id="text" type="search" placeholder="请输入您想要搜索的内容">
-                              <em tapmode onclick="goSearch()"></em>
-                        </form>
-                    </div>
+                <li class="active">
+
                 </li>
                 <li>
-                    <!-- <div class="title">学分商城</div> -->
+                    <div class="title">消息</div>
                 </li>
                 <li>
-                    <span class="msg" tapmode onclick="MyNews()">消息</span>
-                    <span class="admin" tapmode onclick="MyAccount()">账户管理</span>
+                    <div class="title">商城</div>
+                </li>
+                <li>
+                    <div class="title">我</div>
                 </li>
             </ul>
-        </header>
-        <div id="main">
-
-        </div>
+        </header> -->
+        <div id="main"></div>
         <div id="footer">
             <ul class="flex-wrap">
-                <li tapmode="hover" onclick="randomSwitchBtn(0);" class="flex-con active">首页</li>
-                <li tapmode="hover" onclick="randomSwitchBtn(1);" class="flex-con">学客圈</li>
-                <li tapmode="hover" onclick="randomSwitchBtn(2);" class="flex-con">商城</li>
-                <li tapmode="hover" onclick="randomSwitchBtn(3);" class="flex-con">个人中心</li>
+                <li tapmode="hover" onclick="randomSwitchBtn(0);" class="flex-con flex-item active">首页</li>
+                <li tapmode="hover" onclick="randomSwitchBtn(1);" class="flex-con flex-item">消息</li>
+                <li tapmode="hover" class="flex-con" onclick="openWin('frame5.html','./html/frame-icon.html','')"></li>
+                <li tapmode="hover" onclick="randomSwitchBtn(2);" class="flex-con flex-item">商城</li>
+                <li tapmode="hover" onclick="randomSwitchBtn(3);" class="flex-con flex-item">我</li>
             </ul>
         </div>
     </div>
@@ -173,44 +128,32 @@
 <script type="text/javascript" src="./script/api.js"></script>
 <script type="text/javascript" src="./script/my.js"></script>
 <script type="text/javascript">
-    var header = $api.dom('header');
-    fixStatusBar_API(header);
-
+     var token,id,key;
     //此事件是在api对象准备完毕后产生，在每个Window或Frame的HTML代码中都需要监听此事件，以确定APICloud扩展对象已经准备完毕，可以调用了。
     apiready = function() {
-        //适配iOS7+、Android4.4+系统状态栏，为传入的DOM元素增加适当的上内边距，避免header与状态栏重叠
-        $api.fixStatusBar( $api.dom('header') );
 
-        //设置状态栏样式为白色（适用于深色背景）或黑色（适用于浅色背景），以及设置状态栏背景颜色
-        // api.setStatusBarStyle({
-        //     style: 'dark',
-        //     color: '#ffb300'
-        // });
+        api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
 
-        $api.setStorage('SYSTEMTYPE', api.systemType);
-        $api.setStorage('SYSTEMVERSION', api.systemVersion);
-        $api.setStorage('FULLSCREEN', api.fullScreen);
-        $api.setStorage('IOS7STATUSBARAPPEARANCE', api.iOS7StatusBarAppearance);
+        setTimeout(function(){
+            api.setFullScreen({
+                fullScreen: false
+            });
 
+        },200);
         footerHeight = $api.dom("#footer").offsetHeight;
-        headerHeight = $api.dom("#header").offsetHeight;
-        var NextPage = api.pageParam.index;
-        if (NextPage) {
-            randomSwitchBtn(NextPage);
 
-        } else {
+        setTimeout(function(){
             randomSwitchBtn(0); //默认打开第一个组
-        }
+        },300);
 
-        //监听学客圈刷新
-        api.addEventListener({
-            name: 'clearTxt'
-        }, function(ret, err){
-            if( ret ){
-                 $api.val($api.dom('.input_box input'), '');
-            }else{
-                 console.log( JSON.stringify( err ) );
-            }
+        //同步返回结果：
+        token = api.getPrefs({
+            sync: true,
+            key: 'token'
+        });
+        id = api.getPrefs({
+            sync: true,
+            key: 'id'
         });
 
         //监听返回
@@ -220,11 +163,7 @@
             if (daojishi == 0) {
                 //这里设置了倒计时为2秒
                 daojishi = 2000;
-                api.toast({
-                    msg: '再按一次退出',
-                    duration: 2000,
-                    location: 'bottom'
-                });
+                msg('再按一次退出');
                 kaishiJishi();
             } else {
                 api.closeWidget({
@@ -233,77 +172,23 @@
             }
         });
 
+        // 监听是否扫描二维码
+        api.addEventListener({
+            name: 'scan'
+        }, function(ret, err){
+            if( ret ){
 
-    }
+                 if (ret.value.key) {
+                     key = ret.value.key;
+                     getActInfo();
+                 }
 
-    // 随意切换按钮
-    function randomSwitchBtn(index) {
-        $api.val($api.dom('.input_box input'),'');
-        var eFootLis = $api.domAll('#footer li');
-        var eheaderLis = $api.domAll('#header li');
-        for (var i = 0, len = eFootLis.length; i < len; i++) {
-            if (index == i) {
-                // var y = 0 == index ? 0 : headerHeight;
-
-                if (index == 0 || index == 2) {
-                    var y = 0;
-
-                }else {
-                    var y = headerHeight;
-                }
-                $api.addCls(eFootLis[i], 'active');
-                $api.addCls(eheaderLis[i], 'active');
-                api.openFrame({
-                    name: 'frame' + i,
-                    url: './html/frame' + i + '.html',
-                    bounces: false,
-                    bgColor: '#f2f2f2',
-                    vScrollBarEnabled: false,
-                    hScrollBarEnabled: false,
-                    softInputMode:'resize',
-                    rect: {
-                        x: 0,
-                        y: y,
-                        w: 'auto',
-                        h: api.frameHeight - y - footerHeight
-                    },
-                    pageParam: {
-                        id: api.pageParam.id //获取上一页登录后返回的信息
-                    },
-                    reload: true,
-                    allowEdit:true,
-                    softInputMode:'resize'
-                });
-            } else {
-                $api.removeCls(eFootLis[i], 'active');
-                $api.removeCls(eheaderLis[i], 'active');
-                api.setFrameAttr({
-                    name: 'frame' + i,
-                    hidden: true
-                });
+            }else{
+                 console.log( JSON.stringify( err ) );
             }
-
-        }
-        api.parseTapmode();
-    }
-
-    //  消息
-    function MyNews() {
-        api.openWin({
-            name: 'MyNews',
-            url: './html/setting/MyNews.html',
-            reload:true,
-            allowEdit:true
         });
-    }
 
-    // 账户管理
-    function MyAccount() {
-        api.openWin({
-            name: '7account',
-            url: './html/setting/7account.html',
-            reload:true
-        });
+
     }
 
     var daojishi = 0;
@@ -317,30 +202,185 @@
         }
     }
 
-    // 搜索
-    function submitInputContent(){
-        goSearch();
-    }
-    function goSearch(){
-        var text = trimStr($api.val($api.dom('#text')));
-        if (!text) {
-            api.toast({
-                msg: '请输入搜索内容',
-                duration: 2000,
-                location: 'middle'
-            });
-            return false;
-        }else {
-          api.openWin({
-              name: 'search',
-              url: './html/setting/search.html',
-              pageParam: {
-                  text: text
-              },
-              reload:true
-          });
-          $api.val($api.dom('#text'),"");
+    // 随意切换按钮
+    function randomSwitchBtn(index) {
+
+        $api.val($api.dom('.input_box input'),'');
+        var eFootLis = $api.domAll('#footer .flex-item');
+
+        for (var i = 0, len = eFootLis.length; i < len; i++) {
+            if (index == i) {
+
+                $api.addCls(eFootLis[i], 'active');
+
+                var name = 'frame' + i;
+                var url = './html/frame' + i + '.html';
+                var rect = {
+                    x: 0,
+                    y: 0,
+                    w: 'auto',
+
+                    h: api.frameHeight - footerHeight
+                }
+
+                getFrame(name,url,rect);
+            } else {
+                $api.removeCls(eFootLis[i], 'active');
+
+                api.setFrameAttr({
+                    name: 'frame' + i,
+                    hidden: true
+                });
+            }
+
         }
+        api.parseTapmode();
+    }
+
+    // 家长端扫码时显示活动信息
+    function getActInfo(){
+        api.ajax({
+            url: serverurl,
+            method: 'get',
+            data: {
+                values: {
+                    type: '10178',
+                    token:token,
+                    uid:id,
+                    key:key
+                },
+            }
+        },function(ret, err){
+
+            if (ret) {
+                if (ret.status == '5') {
+                    ExitLogin();
+                }else if (ret.status == '0') {
+
+                    msg('抱歉，没有可领取的学分');
+
+                }else if (ret.status == '3') {
+
+                    msg('抱歉，没有该手环信息');
+                }else {
+                    flexed(ret.score);
+                }
+
+            } else {
+
+                msg('网络错误');
+
+            }
+        });
+
+    }
+
+    // 弹出层领取学分
+    function flexed(score){
+      var dialogBox = api.require('dialogBox');
+      dialogBox.raffle({
+          texts: {
+              title:'扫码领学分',
+              mainText: '恭喜你，通过扫描二维码',
+              subText: '获得了'+score+'学分',
+              leftTitle: '立即领取',
+          },
+          styles: {
+              title:{                    //（可选项）JSON 对象；弹窗标题栏样式配置，若不传则不显示标题区域
+                  size: 17,              //（可选项）数字类型；标题字体大小；默认：14
+                  color: '#262829',      //（可选项）字符串类型；标题字体颜色，支持#、rgb、rgba；默认：#000
+                  marginT: 15             //（可选项）数字类型；距顶部的距离，默认为0.
+              },
+              bg: '#fff',
+              w: 300,
+              icon: {
+                  marginT: 15,
+                  w: 250,
+                  h: 90,
+                  iconPath: 'widget://image/wallet.png'
+              },
+              main: {
+                  marginT: 15,
+                  color: '#999',
+                  size: 15
+              },
+              sub: {
+                  marginT: 8,
+                  color: '#262829',
+                  size: 18
+              },
+              left: {
+                  marginB: 8,
+                  marginL: 15,
+                  w: 270,
+                  h: 42,
+                  corner: 2,
+                  bg: '#518ded',
+                  color: '#fff',
+                  size: 17
+              },
+
+          },
+          tapClose:true
+      }, function(ret, err) {
+          if (ret) {
+
+              if (ret.eventType == 'left') {
+                  dialogBox.close({
+                      dialogName: 'raffle'
+                  });
+                  getCredit(score);
+              }
+
+          } else {
+
+              msg('网络错误');
+
+          }
+      });
+
+    }
+
+    // 点击领取学分
+    function getCredit(){
+      showProgress('努力加载中','请稍后···');
+      api.ajax({
+          url: serverurl,
+          method: 'get',
+          data: {
+              values: {
+                  type: '10155',
+                  token:token,
+                  key:key,
+                  uid:id
+              },
+          }
+      },function(ret, err){
+          api.hideProgress();
+
+          if (ret) {
+              if (ret.status == '1') {
+                  msg('领取成功');
+              }else if (ret.status == '2') {
+                  msg('抱歉，领取时间已过，学分已过期');
+              }else if (ret.status == '3') {
+                  msg('抱歉，没有可领取的学分');
+              }else if (ret.status == '6') {
+                  msg('抱歉，您已绑定过手环');
+              }else if (ret.status == '4') {
+                  msg('抱歉，您不是手环持有者');
+              }else if (ret.status == '5') {
+                  ExitLogin();
+              }else{
+                  msg('领取失败');
+              }
+
+          } else {
+
+              msg('网络错误');
+
+          }
+      });
 
     }
 </script>

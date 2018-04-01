@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title>搜索</title>
+      <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+      <style>
+
+          header{position: relative; height: 44px; line-height: 44px; box-shadow: 0px 4px 4px 0px rgba(76, 81, 118, 0.15);
+          font-size: 18px; background-color: #fefefe; padding:0 14px; color: #232528;}
+          header em{height: 44px; background: url(../image/back.png) no-repeat left 14px; background-size: 10px 17px;
+          float: left; padding-left: 30px;}
+          .input-box{width: calc(100% - 78px); float: left; padding: 8px 8px 8px 40px; box-shadow: inset 0px 2px 2px 0px
+		      rgba(201, 201, 201, 0.15); border-radius: 2px; background-color: #ecedf0; position: relative; margin: 5px 0;}
+          .input-box input{height: 18px; width: 100%; float: left;}
+          .input-box span{position: absolute; left: 0; width: 40px; height: 18px; background:url(../image/search1.png) no-repeat center;
+          background-size: 17px;}
+
+          .navMenu{background-color: #fefefe; border-bottom: 1px solid #f2f2f2;}
+          .navMenu a{flex:1px; -webkit-flex:1; -webkit-flex-box:1; text-align: center;  border-bottom: 2px solid #fefefe;
+          font-size:16px; color: #999; padding: 12px 0;}
+          .navMenu a.on{border-bottom: 2px solid #ffc708;}
+
+          .search-history{padding: 14px; background-color: #fefefe; font-size: 12px; color: #ccc;}
+          .historylis li{margin-top: 8px; background: #e8eaee; text-align: center; padding: 8px 16px; color: #999;
+          font-size: 15px; border-radius: 5px; margin-right: 10px; float: left;}
+          .historyclear{line-height: 25px; font-size: 16px; color: #333; margin-top: 15px;}
+
+          /*活动列表*/
+          .swiper-container {width: 100%;}
+          .swiper-container .swiper-slide:not(:last-child){margin-bottom: 10px;}
+          .swiper-slide {font-size: 18px;background: #fefefe;padding: 14px;box-sizing: border-box;}
+          .swiper-slide .act-title{ border-left: 3px solid #46daab; color: #262829; font-size: 17px;
+            font-weight: bold; padding-left: 5px; margin-bottom: 10px;}
+          .swiper-slide img{width: 100%; max-height: 160px; margin-bottom: 5px;}
+          .act-info{line-height: 22px; letter-spacing: 1px; color: #666; font-size: 15px;}
+          .act-time{font-size: 12px; color: #ccc; margin-bottom: 8px;}
+
+          /*新鲜事*/
+          .content{padding: 0 14px; background: #fefefe;}
+          .newsAll{padding-top: 10px; padding-bottom: 16px;}
+          .newsAll:not(:last-child){border-bottom: 1px solid #d2d3d5;}
+
+          .content .title{line-height: 20px; letter-spacing: 1px; font-size: 17px;}
+          .content .spe-info{line-height: 20px; letter-spacing: 1px; color: #999;}
+          .content .comment{padding-left: 4px; padding-top: 8px; padding-bottom: 6px;}
+          .spe-img{width: 100%; max-height: 160px; border-radius: 3px;}
+          .new-lt{width: calc(70% - 12px); padding-right: 12px; float: left;}
+          .new-lt .title{min-height: 44px;}
+          .news-info{margin-top: 16px;}
+          .news-info span:nth-child(1){float: left;}
+          .new-rt{float: left; width: 30%; border-radius: 3px;}
+          .new-rt img{width: 100%; max-height: 77px;}
+
+          /*学客圈*/
+          .cir-box{background: #fefefe;}
+          .cir-box:not(:last-child){margin-bottom: 10px;}
+          .cir-content{line-height: 25px; font-size: 17px; padding: 14px 14px 7px 14px;}
+          /*九宫格*/
+          .cell {padding:0 14px;max-width: 210px;max-height: 210px;overflow: hidden;padding-bottom: 10px;}
+          .cell img { width: 100%; height: 100%;}
+          .cell9 {padding:0 7px;width: calc(100% - 14px);overflow: hidden;}
+          .cell9 .item { width: calc(33.33% - 14px); float: left; margin: 0 7px 14px 7px; position: relative; }
+          .cell9.cell4 .item {width: calc(50% - 14px);}
+          .cell9 .item:before {content: "";display: inline-block;padding-bottom: 100%;width: 0.1px;vertical-align: middle;}
+          .cell9 .item img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+
+          /*用户列表*/
+          .fans-list li{background-color: #fefefe; padding: 14px; box-shadow: inset 0px -1px 0px 0px #d2d3d5;}
+          .fans-pic{width: 45px; height: 45px; border-radius: 50%; overflow: hidden; margin-right: 18px;}
+          .fans-pic img{width: 100%; min-height: 45px;}
+          .fans-info{flex: 1; -webkit-flex:1; -webkit-flex-box:1;}
+          .fans-name{font-size: 16px; line-height: 20px;}
+          .fans-num{font-size: 13px; color: #999;}
+          .fans-btn{min-width: 62px; height: 30px; border: solid 1px #ffc708; border-radius: 2px;
+          font-size: 15px; color: #ffc708;}
+          .fans-btn.on{color: #ccc; border: solid 1px #ccc;}
+
+          /*商品列表*/
+          .goods_card{overflow: hidden;}
+        	.goods_card li{float: left; width: calc(50% - 2px); background: #fefefe; margin-bottom: 4px;}
+        	.goods_card li:nth-child(odd){margin-right: 2px;}
+        	.goods_card li:nth-child(even){margin-left: 2px;}
+        	.goods_card li img{width: 100%; height: 145px;}
+        	.goods_card .txt{background: #fefefe; padding: 8px; text-align: center;}
+        	.goods_card .txt .name{font-size: 14px; color: #212121; padding-bottom: 4px; font-weight: bold;}
+        	.goods_card .txt .abs{font-size: 12px; color: #999; padding-bottom: 4px;}
+        	.goods_card .txt .total{font-size: 14px; color: #f44336; font-weight: bold;}
+      </style>
+  </head>
+  <body>
+    <div id="wrap" v-cloak>
+        <header class="clearfix">
+            <em tapmode onclick="go_back()"></em>
+            <div class="input-box" class="clearfix">
+                <span tapmode onclick="search()"></span>
+                <form action="javascript:search();">
+                    <input id="search" type="search" placeholder="请输入你想要搜索的内容">
+                </form>
+            </div>
+        </header>
+        <div class="navMenu flex-center">
+            <a :class="{on:changeColor == index}" href="javascript:;" v-for="(item,index) in tabData" tapmode @click="switchTab(index)">
+              {{item.tabName}}
+            </a>
+
+        </div>
+        <div id="main">
+            <!-- 搜索历史 -->
+            <div class="search-history" v-if="history && show == true && !data.status">
+                <p>搜索历史</p>
+                <ul class="historylis clearfix">
+                    <li v-for="v in history" @click="goSearch(v)">{{v}}</li>
+                </ul>
+                <div class="historyclear" tapmode @click="clearhistory()">
+                    清空历史记录
+                </div>
+            </div>
+
+            <!-- 活动列表 -->
+            <div class="swiper-container" v-else-if="changeColor == 0 && show == false && !data.status">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide" tapmode @click="goDetail(v.id,0)" v-for="v in data">
+                    <div class="act-title more">
+                      {{v.title}}
+                    </div>
+                    <!-- <p class="act-time">2018年03月12日</p> -->
+                    <img :src="v.actimgurl" alt="活动图片" class="act-img" v-if="v.actimgurl">
+                    <p class="act-info more3" v-if="v.content">
+                        {{v.content}}
+                    </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- 新鲜事 -->
+            <div class="content" v-else-if="changeColor == 1 && show == false && !data.status">
+                <div class="newsAll clearfix" tapmode @click="goDetail(v.id,1)" v-for="v in data">
+                    <div class="new-lt">
+                        <div class="title more">{{v.title}}</div>
+                        <div class="news-info clearfix">
+                            <span class="spe-info">{{v.time | formatDate}}</span>
+                        </div>
+                    </div>
+                    <div class="new-rt" v-if="v.surface_plot">
+                        <img :src="v.surface_plot+'?x-oss-process=image/resize,m_fill,h_210,w_210'" alt="新闻图片">
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 学客圈 -->
+            <div class="cir-box" v-else-if="changeColor == 2 && show == false && !data.status">
+                <div v-for="v in data" tapmode onclick="openWin('circleDetail2','./circle/circleDetail2.html')">
+                    <div class="cir-content">
+                        {{v.content}}
+                    </div>
+                    <div v-if="v.thumb">
+                        <!-- 1张图片 -->
+                        <ul class="cell clearfix" v-if="v.thumb.length == 1">
+                             <li class="item">
+                                <img :src="v.thumb[0]+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="动态图">
+                             </li>
+                        </ul>
+                        <!-- 4宫格图片 -->
+                        <ul class="cell9 cell4 clearfix" v-else-if="v.thumb.length == 4">
+                             <li class="item" v-for="(item,index) in v.thumb">
+                                <img :src="item+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="动态图">
+                             </li>
+
+                        </ul>
+
+                        <!-- 9宫格图片 -->
+                        <ul class="cell9 clearfix" v-else>
+                             <li class="item" v-for="(item,index) in v.thumb">
+                                <img :src="item+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="动态图">
+                             </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 用户列表 -->
+            <ul class="fans-list" v-else-if="changeColor == 3 && show == false && !data.status">
+                <li class="flex-align-center" v-for="v in data" tapmode @click="goDetail(v.id,3)">
+                    <div class="fans-pic">
+                        <img :src="v.headimgurl+'?x-oss-process=image/resize,m_fill,h_45,w_45'" alt="人头像" v-if="v.headimgurl">
+                        <img src="../image/pic.png" alt="人头像">
+                    </div>
+                    <div class="fans-info">
+                        <p class="fans-name">
+                            {{v.nickname}}
+                        </p>
+                    </div>
+                    <!-- <button class="fans-btn">关注</button> -->
+                </li>
+            </ul>
+
+            <!-- 商品列表 -->
+            <div class="mallBox" v-else-if="changeColor == 4 && show == false && !data.status">
+      					<ul class="goods_card">
+      							<li tapmode @click="goDetail(v.gid,4)" v-for="v in data">
+      									<img :src="v.imgurl+'?x-oss-process=image/resize,m_fill,h_145,w_180'" alt="商品图片">
+      									<div class="txt">
+      											<p class="name single">{{v.goods_name}}</p>
+      											<p class="abs single">{{v.abs}}</p>
+      											<p class="total">{{v.total}}学分</p>
+      									</div>
+      							</li>
+      					</ul>
+      			</div>
+
+            <!-- 没有数据 -->
+            <div class="no-data" v-else>
+                 <img src="../image/ndata.png" alt="没数据图片">
+                 <p>抱歉，没有数据~</p>
+            </div>
+
+        </div>
+    </div>
+
+
+  </body>
+  <script type="text/javascript" src="../script/api.js"></script>
+  <script type="text/javascript" src="../script/my.js"></script>
+  <script type="text/javascript" src="../script/vue.js"></script>
+  <script type="text/javascript" src="../script/date.js"></script>
+  <script type="text/javascript">
+      var id;
+      apiready = function(){
+
+          api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
+          id = api.getPrefs({
+              sync: true,
+              key: 'id'
+          });
+          token = api.getPrefs({
+              sync: true,
+              key: 'token'
+          });
+          vm.showhistroy();
+      }
+
+      var vm = new Vue({
+        el: '#wrap',
+        data: {
+          data: [],
+          tabData:[
+              {tabName:'活动'},
+              {tabName:'新鲜事'},
+              {tabName:'学客圈'},
+              {tabName:'用户'},
+              {tabName:'商品'},
+          ],
+          history:[],
+          newArr:[],
+          show:true,
+          changeColor:0,
+          hisClick:'',
+          loadata:true // 设置一个开关来避免重负请求数据
+
+        },
+        filters: {
+            formatDate: function (_formatDate) {
+                function formatDate(_x) {
+                    return _formatDate.apply(this, arguments);
+                }
+
+                formatDate.toString = function () {
+                    return _formatDate.toString();
+                };
+
+                return formatDate;
+            }(function (time) {
+                var date = new Date(time * 1000);
+                return formatDate(date, 'yyyy-MM-dd');
+            })
+        },
+        methods: {
+          // 历史记录
+          showhistroy:function showhistroy(){
+              vm.history = $api.getStorage('history'+id);
+
+          },
+          // 清空历史记录
+          clearhistory:function clearhistory(){
+              $api.rmStorage('history'+id);
+              vm.show = false;
+
+          },
+          switchTab:function switchTab(index){
+                vm.changeColor = index;
+                if (vm.hisClick) {
+                   var val = vm.hisClick;
+                }else {
+                   var val = trimStr($api.val($api.byId('search')));
+                }
+
+                // 活动：act_into ; 新鲜事 : official_news ; 学客圈 : ccl_content ; 用户 : user_info (传对应的参数)
+                // if (index == 1) {
+                //    vm.goSearch(val);
+                // }else if (index == 2) {
+                //    vm.goSearch(val);
+                // }else if (index == 3) {
+                //    vm.goSearch(val);
+                // }else {
+                   vm.goSearch(val);
+                // }
+          },
+          // 详情页
+          goDetail:function goDetail(id,index){
+              if (index == 1) {
+                  openWin('circleDetail1','./circle/circleDetail1.html',{newid:id});
+              }else if (index == 2) {
+
+              }else if (index == 3) {
+                  openWin('MyIndex','./mine/MyIndex.html',{id:id});
+              }else if (index == 4) {
+                  openWin('credit_goodDetail','./mall/credit_goodDetail.html',{goods_id:id});
+              }else {
+                  openWin('actDetail','./active/actDetail.html',{actid:id});
+              }
+
+          },
+          //  用户搜索内容
+          goSearch:function goSearch(val){
+
+              if (!val) {
+                  return false;
+              }else {
+                  vm.hisClick = val;
+              }
+              if (vm.changeColor == 1) {
+                 var tabname = 'official_news';
+              }else if (vm.changeColor == 2) {
+                 var tabname = 'ccl_content';
+              }else if (vm.changeColor == 3) {
+                 var tabname = 'user_info';
+              }else if (vm.changeColor == 4) {
+                 var tabname = 'goods';
+              }else {
+                 var tabname = 'act_info';
+              }
+
+              showProgress('努力加载中','请稍后···');
+              api.ajax({
+                  url: serverurl,
+                  method: 'get',
+                  data: {
+                      values: {
+                           type: '10068',
+                           uid:id,
+                           token: token,
+                           tabname: tabname,
+                           content: val
+                      }
+                  }
+              },function(ret, err){
+                  api.hideProgress();
+                  console.log(JSON.stringify(ret));
+                  console.log(JSON.stringify(err));
+                  vm.show = false;
+                  if (ret) {
+
+                      if (ret.status == '5') {
+                         ExitLogin();
+                      }else {
+                         vm.data = ret;
+                      }
+                  } else {
+
+                      msg('网络错误');
+                  }
+              });
+
+          }
+
+        }
+     })
+
+     //点击搜索
+     function search(){
+         var val = trimStr($api.val($api.byId('search')));
+         if (val) {
+             if (vm.history) {
+               vm.history.unshift(val);//向数组的开头添加一个或更多元素，并返回新的长度。
+               // 数组去重
+               vm.history.forEach(function(item){ //一次循环，item 即为数组中的每一项
+                   if(vm.newArr.indexOf(item) === -1){
+                       vm.newArr.push(item);
+                   }
+               });
+             }else {
+                 var arr = [];
+                 arr.unshift(val);//向数组的开头添加一个或更多元素，并返回新的长度。
+                 // 数组去重
+                 arr.forEach(function(item){ //一次循环，item 即为数组中的每一项
+                     if(vm.newArr.indexOf(item) === -1){
+                         vm.newArr.push(item);
+                     }
+                 });
+             }
+             $api.setStorage('history'+id, vm.newArr);
+
+             vm.switchTab(0);
+
+         }else {
+             msg('请输入您的搜索内容');
+         }
+
+
+     }
+
+
+  </script>
+  </html>

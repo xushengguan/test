@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title>注册</title>
+      <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+      <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+      <style media="screen">
+          .content{padding: 0 14px;}
+          .back{width: 30px; height: 17px; margin-top:17px; background: url(../../image/back.png) no-repeat  left center;
+          background-size: auto 17px;}
+          .title{font-weight: bold; color: #262829; font-size: 22px; padding-top: 46px; line-height: 27px;}
+          .prompt{color:#aaa; line-height: 27px; font-size: 13px; margin-bottom: 50px;}
+          .prompt em{width: 16px; height: 27px; background: url(../../image/warning.png) no-repeat center; background-size: contain;
+          vertical-align: middle; margin-right: 5px; margin-top: -3px;}
+          .content .code-tel{width:100%; height: 42px; line-height: 42px; border-bottom: 1px solid #ccc; font-size: 17px;}
+          .content .code-tel.no-bd{border-bottom: none; text-align: center;}
+          .code-tel .code-num{width: calc(15.66% - 10px); margin-right: 10px; height: 100%; border-bottom: 1px solid #ccc; text-align: center;}
+          .code-tel .code-num:last-child{margin-right:0;}
+          .get-code{width: 100%; height: 42px; text-align: center; border-radius: 3px; background-color: #ffc708;
+          letter-spacing: 2px; color: #fffefe; font-size: 17px; margin-top: 40px; opacity: 0.5;}
+          .get-code.on{opacity: 1; }
+          .num-pro{color: #aaa; margin: 20px 0; font-size: 14px;}
+
+          .code-tel em{width: 24px; height: 42px; background: url(../../image/key1.png) no-repeat left center;
+          background-size: auto 20px; float: left;}
+          .code-tel span{width: 24px; height: 42px; float: left; background: url(../../image/eye.png) no-repeat right center;
+          background-size: auto 11px;}
+          .code-tel span.on{background: url(../../image/eye1.png) no-repeat right center; background-size: auto 11px;}
+          .code-tel .password{height: 100%; width: calc(100% - 48px); float: left;}
+      </style>
+  </head>
+  <body>
+      <!-- 获取验证码 -->
+      <div class="content" id="content0">
+        <span class="back" tapmode onclick="go_back()"></span>
+        <div class="title">请输入手机号</div>
+        <div class="prompt">注册登录用户即表示已同意用户协议</div>
+        <input class="code-tel" id="tel" type="tel" placeholder="请输入您的手机号码" maxlength="11" oninput="checkValue(0)" onpropertychange="checkValue(0)">
+        <button class="get-code" id="getCode" disabled="disabled" tapmode onclick="goNext(0)">获取验证码</button>
+      </div>
+
+      <!-- 注册 -->
+      <div class="content" id="content1" style="display:none">
+        <span class="back" tapmode onclick="go_back()"></span>
+        <div class="title">请输入验证码</div>
+        <div class="prompt">验证码已经发送 请注意查收</div>
+        <div class="code-tel no-bd">
+            <input class="code-num" id="code-num0" type="tel" oninput="checkNum()" onpropertychange="checkNum()">
+            <input class="code-num" id="code-num1" type="tel" oninput="checkNum()" onpropertychange="checkNum()">
+            <input class="code-num" id="code-num2" type="tel" oninput="checkNum()" onpropertychange="checkNum()">
+            <input class="code-num" id="code-num3" type="tel" oninput="checkNum()" onpropertychange="checkNum()">
+            <input class="code-num" id="code-num4" type="tel" oninput="checkNum()" onpropertychange="checkNum()">
+            <input class="code-num" id="code-num5" type="tel" oninput="checkNum()" onpropertychange="checkNum()">
+        </div>
+
+        <button class="get-code" id="register" disabled="disabled" tapmode onclick="goNext(1)" style="display:none;">注册</button>
+        <button class="get-code" id="setPassword" disabled="disabled" tapmode onclick="goNext(1)" style="display:none;">下一步</button>
+        <button class="get-code" id="login" disabled="disabled" tapmode onclick="CodeLogin()" style="display:none;">登录</button>
+
+        <input type="button" class="num-pro" value="获取验证码" tapmode onclick="SendCode(this,60)">
+      </div>
+
+      <!-- 设置密码 -->
+      <div class="content" id="content2" style="display:none">
+        <span class="back" tapmode onclick="go_back()"></span>
+        <div class="title">请设置密码</div>
+        <div class="prompt"><em></em>密码长度不少于6位,并且由数字和字符组成</div>
+        <div class="code-tel clearfix">
+            <em></em>
+            <input type="password" class="password" oninput="checkValue(1)" onpropertychange="checkValue(1)">
+            <span tapmode onclick="showPassword()"></span>
+        </div>
+        <button class="get-code" id="finsh" disabled="disabled" tapmode onclick="ResFinsh()" >完成</button>
+
+      </div>
+
+      <footer id="footer">
+          <p>注册登录用户即表示已同意用户协议</p>
+          <p>
+            <a href="javascript:;">条款与条件</a>
+            <em>|</em>
+            <a href="javascript:;">隐私政策</a>
+          </p>
+      </footer>
+  </body>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/my.js"></script>
+  <script type="text/javascript">
+      var wait = 60;
+      var token,id;
+      apiready = function(){
+          SetStatusBar('.container','dark','#f3f5f7');//设置状态栏my.js
+          api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
+
+          setTimeout(function(){
+              focus_footer();
+          },100);
+          goNextInput('.code-num');
+
+          if (api.pageParam.index == '1') {
+              $api.css($api.byId('login'), 'display:block');
+          }else if (api.pageParam.index == '2') {
+              $api.css($api.byId('setPassword'), 'display:block');
+              $api.css($api.byId('setPassword'), 'display:block');
+              $api.text($api.dom('#content2 .title'), '请重新设置密码');
+
+          }else {
+              $api.css($api.byId('register'), 'display:block');
+          }
+
+          //同步返回结果：
+          token = api.getPrefs({
+              sync: true,
+              key: 'token'
+          });
+          id = api.getPrefs({
+              sync: true,
+              key: 'id'
+          });
+
+      };
+
+      // 下一步执行显示不同界面动作
+      function goNext(index,obj){
+
+          if (index == 1) {
+
+              showHide('content2','content0','content1');
+          }else if (index == 2) {
+
+              showHide('content0','content1','content2');
+          }else {
+
+              getCode(obj);
+          }
+      }
+
+
+      //实时监测输入框输入事件
+      function checkValue(index){
+          if (index == 0) {
+              var tel = trimStr($api.val($api.dom('#tel')));
+              if (tel) {
+
+                  AddorRemove('add','#getCode');
+              }else {
+
+                  AddorRemove('remove','#getCode');
+              }
+          }else if (index == 1) {
+              var password = trimStr($api.val($api.dom('.password')));
+              if (password) {
+
+                  AddorRemove('add','#finsh');
+              }else {
+
+                  AddorRemove('remove','#finsh');
+              }
+          }
+      }
+      // 判断验证码输入框是否已填满
+      var num0,num1,num2,num3,num4,num5;
+      function checkNum(el){
+          num0 = document.querySelector('#code-num0').value;
+          num1 = document.querySelector('#code-num1').value;
+          num2 = document.querySelector('#code-num2').value;
+          num3 = document.querySelector('#code-num3').value;
+          num4 = document.querySelector('#code-num4').value;
+          num5 = document.querySelector('#code-num5').value;
+
+          if (num0&&num1&&num2&&num3&&num4&&num5) {
+
+              if (api.pageParam.index == '1') {
+
+                  AddorRemove('add','#login');
+              }else if (api.pageParam.index == '2') {
+
+                  AddorRemove('add','#setPassword');
+
+              }else {
+
+                  AddorRemove('add','#register');
+              }
+          }else {
+
+              if (api.pageParam.index == '1') {
+
+                  AddorRemove('remove','#login');
+              }else if (api.pageParam.index == '2') {
+
+                  AddorRemove('remove','#setPassword');
+
+              }else {
+
+                  AddorRemove('remove','#register');
+              }
+          }
+      }
+
+      // 切换密码显示
+      function showPassword(){
+          if ($api.hasCls($api.dom('.code-tel span'),'on')) {
+
+              $api.attr($api.dom('.password'), 'type', 'password');
+              $api.removeCls($api.dom('.code-tel span'), 'on');
+          }else{
+
+              $api.attr($api.dom('.password'), 'type', 'text');
+              $api.addCls($api.dom('.code-tel span'), 'on');
+          }
+      }
+
+      // input框输入1位数字后自动跳到下一个input聚焦
+      function goNextInput(el){
+          var txts = document.querySelectorAll(el);
+          for(var i = 0; i<txts.length;i++){
+            var t = txts[i];
+            t.index = i;
+            t.setAttribute("readonly", true);
+            t.onkeyup=function(){
+                if(event.keyCode==8){
+
+                   var pre = this.index - 1;
+                   if(pre < 0) return;
+                   txts[pre].focus();
+
+                }else {
+                    this.value=this.value.replace(/^(.).*$/,'$1');
+                    var next = this.index + 1;
+
+                    if(next > txts.length - 1) return;
+                    txts[next].removeAttribute("readonly");
+                    if (this.value) {
+                        txts[next].focus();
+                    }
+                }
+
+
+            }
+
+          }
+          txts[0].removeAttribute("readonly");
+      }
+
+      // 获取验证码
+      function getCode(){
+          var myreg = /^1[0-9]{10}$/;//判断是否为手机号码,/^1[34578]\d{9}$/
+          var tel = $api.val($api.dom('#tel'));
+          if (!myreg.test(tel)) {
+              msg('请输入有效的手机号码');
+              return false;
+          }else{
+              showHide('content1','content0','content2');
+              var obj = $api.dom('.num-pro');
+
+              SendCode(obj,wait);
+          }
+      };
+
+      // 发送验证码倒计时
+      function SendCountDown(obj, wait) {
+          if (wait == 0) {
+              obj.removeAttribute("disabled");
+              obj.value = "重新发送";
+              wait = 60;
+              return;
+          } else {
+              obj.setAttribute("disabled", true);
+              obj.value = + wait +"秒后可重新获取";
+              wait--;
+          }
+          setTimeout(function() {
+              SendCountDown(obj, wait);
+          }, 1000)
+      }
+
+
+      // 发送手机验证码
+      function SendCode(obj, wait) {
+          var tel = $api.val($api.dom('#tel'));
+          api.ajax({
+              url: serverurl,
+              method: 'get',
+              data: {
+                  values: {
+                      type: '10042',
+                      phone: tel
+                  },
+              }
+          }, function(ret, err) {
+
+              switch (ret.status) {
+                  case '1':
+
+                      msg('验证码已发送，请留意短信');
+                      SendCountDown(obj, wait);
+                      break;
+                  case '2':
+
+                      msg('一个小时只能发送5条');
+                      break;
+                  case '3':
+
+                      msg('请间隔60s后重新获取');
+                      break;
+                  case '4':
+
+                      msg('手机号已经注册');
+                      break;
+                  case '5':
+
+                    msg('超过一天接收数量');
+                    break;
+              }
+          });
+
+      }
+
+      // 完成注册
+      function ResFinsh(){
+
+          var mypwd = /^[0-9A-Za-z]{6,}$/;//密码长度不少于6位,并且由数字和字符组成
+          var password = $api.val($api.dom('.password'));
+          var tel = $api.val($api.dom('#tel'));
+          var code = num0+num1+num3+num4+num5;
+
+          if (!mypwd.test(password)) {
+              msg('请输入至少6位数非中文密码');
+              return false;
+          }else {
+              showProgress('努力加载中','请稍后···');
+              if (api.pageParam.index == 2) {
+                  setPassword(tel,password,code);//修改密码
+              }else{
+                  api.ajax({
+                      url: serverurl,
+                      method: 'post',
+                      data: {
+                          values: {
+                              type: '10001',
+                               tel: tel,
+                               pwd: password,
+                              role:'1',//角色代号 1：学生家长，2：班主任，3：联盟商
+                              code:code,
+                              invite:''
+                          },
+                      }
+                  },function(ret, err){
+                      api.hideProgress();//隐藏进度提示框
+                      if (ret) {
+
+                          if (ret.status == '1') {
+                             login(tel,password);
+
+
+                          }else if (ret.status == '2') {
+
+                            msg('该号码已经注册');
+                          }else if (ret.status == '4') {
+
+                            msg('验证码不正确');
+                          }else if (ret.status == '5') {
+                             ExitLogin();
+                          }else if (ret.status == '6') {
+
+                              msg('邀请人不存在');
+                          }else {
+
+                            msg('注册失败');
+                          }
+                      } else {
+
+                          msg('网络错误');
+                      }
+                  });
+              }
+          }
+      }
+
+      // 登录
+      function login(tel,pwd){
+          var regId;
+          api.getPrefs({//获取偏好设置值
+              key: 'registrationId'
+          }, function(ret, err){
+              if( ret ){
+
+                   regId = ret.value;
+              }else{
+                   console.log( JSON.stringify( err ) );
+              }
+          });
+
+          if (regId) {
+              var registerId = regId;
+          }else {
+              var registerId = "";
+          }
+          api.ajax({
+              url: serverurl,
+              method: 'post',
+              data: {
+                  values: {
+                      type: '10003',
+                       tel: tel,
+                       pwd:pwd,
+                       role:'1',
+                       registrationid_id:registerId
+                  },
+              }
+          },function(ret, err){
+
+              if (ret) {
+
+                   if (ret.status == '1') {
+
+                      api.setPrefs({
+                          key: 'token',
+                          value: ret.token
+                      });
+                      api.setPrefs({
+                          key: 'id',
+                          value: ret.data.id
+                      });
+                      openWin('login2','./login2.html','');
+
+                   }else if (ret.status == '0') {
+
+                      msg('密码错误');
+                   }else if (ret.status == '5') {
+                      ExitLogin();
+                   }else{
+
+                     msg('账号未注册');
+                   }
+
+              } else {
+                  msg('网络错误');
+
+              }
+          });
+
+      }
+
+      // 验证码登陆
+      function CodeLogin(){
+        var regId;
+        var tel = $api.val($api.dom('#tel'));
+        var code = num0+num1+num3+num4+num5;
+
+        showProgress('努力加载中','请稍后···');
+        api.getPrefs({//获取偏好设置值
+            key: 'registrationId'
+        }, function(ret, err){
+            if( ret ){
+
+                 regId = ret.value;
+            }else{
+                 console.log( JSON.stringify( err ) );
+            }
+        });
+
+        if (regId) {
+            var registerId = regId;
+        }else {
+            var registerId = "";
+        }
+        api.ajax({
+            url: serverurl,
+            method: 'post',
+            data: {
+                values: {
+                    type: '10063',
+                     tel: tel,
+                     code:code,
+                     role:'1'
+                },
+            }
+        },function(ret, err){
+            api.hideProgress();
+
+            if (ret) {
+
+                 if (ret.status == '1') {
+
+                    api.setPrefs({
+                        key: 'token',
+                        value: ret.token
+                    });
+                    api.setPrefs({
+                        key: 'id',
+                        value: ret.data.id
+                    });
+                    openWin('index','../../index.html','');
+
+                 }else if (ret.status == '0') {
+
+                    msg('密码错误');
+                 }else if (ret.status == '5') {
+                    ExitLogin();
+                 }else{
+
+                    msg('账号未注册');
+                 }
+
+            } else {
+                msg('网络错误');
+
+            }
+        });
+
+      }
+
+      // 修改用户密码
+      function setPassword(tel,password,code){
+
+        api.ajax({
+            url: serverurl,
+            method: 'post',
+            data: {
+                values: {
+                     type: '10009',
+                      tel:tel,
+                     code:code,
+                      pwd:password,
+                     token:token,
+                     role:'1'
+                },
+            }
+        },function(ret, err){
+            api.hideProgress();
+
+            if (ret) {
+                if (ret.status == '1') {
+
+                    msg('重置密码成功');
+                    openWin('login0','./login0.html','');
+                }else if (ret.status == '2') {
+
+                   msg('验证码不正确');
+                }else if (ret.status == '0') {
+
+                    msg('账号未注册');
+                }else{
+
+                  msg('重置密码失败');
+                }
+            } else {
+
+                msg('网络错误');
+            }
+        });
+
+      }
+
+
+
+      // 封装的函数
+      function showHide(show,hide1,hide2){
+          $api.css($api.byId(show), 'display:block');
+          $api.css($api.byId(hide1), 'display:none');
+          $api.css($api.byId(hide2), 'display:none');
+      }
+      function AddorRemove(type,el){
+          if (type == 'add') {
+              $api.addCls($api.dom(el), 'on');
+              $api.removeAttr($api.dom(el), 'disabled');
+          }else if(type == 'remove'){
+              $api.removeCls($api.dom(el), 'on');
+              $api.attr($api.dom(el), 'disabled');
+          }
+      }
+
+
+  </script>
+  </html>

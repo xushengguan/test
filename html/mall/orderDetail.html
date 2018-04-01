@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>我的订单</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+
+	<style media="screen">
+
+		header{position: relative; height: 44px; line-height: 44px; font-size: 18px; background-color: #fefefe;
+      box-shadow: 0px 4px 4px 0px rgba(76, 81, 118, 0.15);}
+		header em{height: 44px; background: url(../../image/back.png) no-repeat center 12px; background-size: 10px 17px;
+		padding-left: 14px; padding-right: 30px; float: left;}
+		header span{width: 18px; height: 44px; background: url(../../image/sever.png) no-repeat 0 14px; background-size: 18px;
+		float: right; margin-right: 14px;}
+
+    .navMenu{background-color: #fefefe; border-bottom: 1px solid #f2f2f2;}
+    .navMenu a{flex:1px; -webkit-flex:1; -webkit-flex-box:1; text-align: center;}
+    .navMenu span{ font-size:16px; color: #999; padding: 12px 0; border-bottom: 2px solid #fefefe;}
+    .navMenu span.on{border-bottom: 2px solid #ffc708;}
+
+    .order-list .orderli{background-color: #fefefe;}
+		.order-list .orderli:not(:last-child){ margin-bottom: 10px;}
+    .order-title{padding: 10px 14px; font-size: 13px; color: #666;}
+    .order-title .order-num{width: 80%; float: left;}
+    .order-title .order-state{width: 20%; float: left; text-align: right;}
+
+    .orderMall-info{background-color: #fefefe;}
+    .order-handle{background-color: #fefefe; padding: 0 14px 10px 14px;}
+    .order-handle li{min-width: 70px; text-align: center; font-size: 14px; border: solid 1px #666;
+    border-radius: 15px; height: 30px; line-height: 30px; float:right; padding: 0 5px; margin-top: 10px; margin-left: 10px;}
+
+    .mall-box{background-color: #f4f4f4; padding: 14px 64px 14px 14px; position: relative;}
+		.mall-pic{width: 85px; height: 85px; margin-right: 15px;}
+		.mall-info{width: calc(100% - 100px); }
+		.mall-name{font-size: 17px; margin-bottom: 6px;}
+    .mall-total{font-size: 14px; margin-top: 30px;}
+    .morder-num{position: absolute; right: 14px; font-size: 12px; color: #999; width: 42px; text-align: right;}
+    .morder-num em{font-size: 14px;}
+	</style>
+</head>
+
+<body>
+
+	<!-- 确认兑换 -->
+	<div id="wrap" v-cloak>
+		<header>
+				<em tapmode onclick="go_back()"></em>
+				我的订单
+				<span onclick="meiQia()"></span>
+		</header>
+    <div class="navMenu flex-center">
+        <a href="javascript:;" v-for="(item,index) in tabData" tapmode @click="switchTab(index)">
+					<span :class="{on:changeColor == index}">{{item.tabName}}</span>
+				</a>
+
+    </div>
+		<div id="main">
+				<div class="no-data" v-if="data.status == '0'">
+						 <img src="../../image/ndata.png" alt="没数据图片">
+						 <p>抱歉，没有数据~</p>
+				</div>
+        <ul class="order-list" v-else>
+            <li class="orderli" v-for="(v,index) in data">
+                <div class="order-title clearfix">
+                    <span class="order-num">订单号:{{v.order_sn}}</span>
+                    <!-- pay_status支付状态;0未付款;1付款中;2已付款 -->
+										<!-- shipping_status商品配送情况;0未发货,1已发货,2已收货,4申请退货;5退货处理中;6:退货完成 -->
+										<!-- 订单的状态order_status;0未确认,1确认,2已取消,3无效,4退货 -->
+                    <span class="order-state" v-if="v.pay_status == '0'">未付款</span>
+										<span class="order-state" v-else-if="v.order_status == '2'">已取消</span>
+										<span class="order-state" v-else-if="v.order_status == '3'">无效</span>
+										<span class="order-state" v-else-if="v.pay_status == '2' && v.shipping_status == '0'">待发货</span>
+										<span class="order-state" v-else-if="v.pay_status == '2' && v.shipping_status == '1'">待收货</span>
+										<span class="order-state" v-else-if="v.pay_status == '2' && v.shipping_status == '2'">已签收</span>
+										<span class="order-state" v-else-if="v.pay_status == '2' && v.shipping_status == '4'">申请退货</span>
+										<span class="order-state" v-else-if="v.pay_status == '2' && v.shipping_status == '5'">退货处理中</span>
+										<span class="order-state" v-else-if="v.pay_status == '2' && v.shipping_status == '6'">退货完成</span>
+                </div>
+                <!-- 商品信息 -->
+                <div class="orderMall-info">
+                    <div class="mall-box flex-align-center" tapmode @click="OrderDetail(v.order_id)">
+                        <img :src="v.imgurl+'?x-oss-process=image/resize,m_fill,h_85,w_85'" alt="商品缩略图" class="mall-pic">
+                        <div class="mall-info">
+                            <p class="mall-name more">{{v.goods_name}}</p>
+                            <p class="mall-total">合计:{{v.goods_amount}}学分(含运费)</p>
+                        </div>
+                        <div class="morder-num">&#935;<em>{{v.goods_number}}</em></div>
+                    </div>
+                    <ul class="order-handle clearfix">
+												<!-- pay_status支付状态;0未付款;1付款中;2已付款 -->
+												<!--  shipping_status商品配送情况;0未发货,1已发货,2已收货,4申请退货;5退货处理中;6:退货完成 -->
+												<!-- 订单的状态order_status;0未确认,1确认,2已取消,3无效,4退货 -->
+												<li v-show="v.order_status == '2' || v.order_status == '3' || v.shipping_status == '2' || v.shipping_status == '6'" tapmode @click="get_DelOrder(v)">删除订单</li>
+                        <li v-show="v.pay_status == '0'" tapmode @click="get_weiChat(v)">付款</li>
+												<li v-show="v.pay_status == '2' && v.shipping_status == '0'" v-if="v.order_status != '2'" tapmode @click="get_cancelOrder(v)">取消订单</li>
+                        <li v-show="v.pay_status == '2' && v.shipping_status == '1'" tapmode @click="confirmReceipt(v)">确认收货</li>
+												<li v-show="v.pay_status == '2' && v.shipping_status == '2'" tapmode @click="appReturn(v)">申请退货</li>
+												<li v-show="v.shipping_status == '1'" tapmode @click="Checklog(v)">查看物流</li>
+
+                    </ul>
+
+              </div>
+            </li>
+
+        </ul>
+
+
+		</div>
+
+
+  </div>
+
+</body>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript">
+    var token,id,page=1;
+	  apiready = function(){
+        api.parseTapmode();
+				token = api.getPrefs({
+						sync: true,
+						key: 'token'
+				});
+				id = api.getPrefs({
+						sync: true,
+						key: 'id'
+				});
+        vm.switchTab(0);
+
+		}
+
+		var vm = new Vue({
+			el: '#wrap',
+			data: {
+				data: [],
+				tabData:[
+						{tabName:'全部'},
+						{tabName:'待发货'},
+						{tabName:'待收货'},
+						{tabName:'已完成'},
+						{tabName:'退换货'}
+				],
+				changeColor:0,
+				loadata:true, // 设置一个开关来避免重负请求数据
+        updata:false
+			},
+			methods: {
+					get_orderLis: function get_orderLis(page) {
+							//查看订单
+							showProgress('努力加载中','请稍后···');
+
+							api.ajax({
+								url: serverurl,
+								method: 'get',
+								data: {
+									values: {
+										type: '10108',
+										token: token,
+										uid: id,
+										limit:page
+									}
+								}
+							}, function(ret, err) {
+							  api.hideProgress();
+
+								if (ret) {
+									if (ret.status == '5') {
+										ExitLogin();
+									} else {
+
+                   if (vm.updata == true) {
+											 ret.forEach(function(item){
+													vm.data.push(item);
+											 })
+											 vm.loadata = true;
+                   }else {
+                   		 vm.data = ret;
+                   }
+
+									}
+								} else {
+
+									msg('网络错误');
+								}
+							});
+						},
+
+						get_notdOrder: function get_notdOrder(page) {
+							//获取未发货的订单
+							showProgress('努力加载中','请稍后···');
+							api.ajax({
+								url: serverurl,
+								method: 'get',
+								data: {
+									values: {
+										type: '10074',
+										token: token,
+										uid: id,
+                    limit:page
+									}
+								}
+							}, function (ret, err) {
+
+								api.hideProgress();
+
+								if (ret) {
+									if (ret.status == '5') {
+										ExitLogin();
+									} else {
+											if (vm.updata == true) {
+	 											 ret.forEach(function(item){
+	 													vm.data.push(item);
+	 											 })
+	 											 vm.loadata = true;
+	                    }else {
+	                    		 vm.data = ret;
+	                    }
+									}
+								} else {
+									msg('网络错误');
+
+								}
+							});
+						},
+
+						get_notOrder: function get_notOrder(page) {
+							//获取未收货的订单
+							showProgress('努力加载中','请稍后···');
+							api.ajax({
+								url: serverurl,
+								method: 'get',
+								data: {
+									values: {
+										type: '10110',
+										token: token,
+										uid: id,
+										limit:page
+									}
+								}
+							}, function (ret, err) {
+
+								api.hideProgress();
+
+								if (ret) {
+									if (ret.status == '5') {
+										ExitLogin();
+									} else {
+										if (vm.updata == true) {
+											 ret.forEach(function(item){
+													vm.data.push(item);
+											 })
+											 vm.loadata = true;
+										}else {
+												 vm.data = ret;
+										}
+									}
+								} else {
+									msg('网络错误');
+
+								}
+							});
+						},
+
+						get_quitOrder: function get_quitOrder(page) {
+							//获取退换货的订单
+							showProgress('努力加载中','请稍后···');
+							api.ajax({
+								url: serverurl,
+								method: 'get',
+								data: {
+									values: {
+										type: '10111',
+										token: token,
+										uid: id,
+										limit:page
+									}
+								}
+							}, function (ret, err) {
+
+								api.hideProgress();
+
+								if (ret) {
+									if (ret.status == '5') {
+										ExitLogin();
+									} else {
+										if (vm.updata == true) {
+											 ret.forEach(function(item){
+													vm.data.push(item);
+											 })
+											 vm.loadata = true;
+										}else {
+											 vm.data = ret;
+										}
+
+									}
+								} else {
+									msg('网络错误');
+
+								}
+							});
+						},
+
+						get_okOrder: function get_okOrder(page) {
+							//获取完成的订单
+							showProgress('努力加载中','请稍后···');
+							api.ajax({
+								url: serverurl,
+								method: 'get',
+								data: {
+									values: {
+										type: '100019',
+										token: token,
+										uid: id,
+										limit:page
+									}
+								}
+							}, function (ret, err) {
+
+								api.hideProgress();
+
+								if (ret) {
+									if (ret.status == '5') {
+										ExitLogin();
+									} else {
+										if (vm.updata == true) {
+											 ret.forEach(function(item){
+													vm.data.push(item);
+											 })
+											 vm.loadata = true;
+										}else {
+											 vm.data = ret;
+										}
+									}
+								} else {
+									msg('网络错误');
+
+								}
+							});
+						},
+
+						get_cancelOrder: function get_cancelOrder(item) {
+							//取消订单
+							api.confirm({
+								title: '取消订单',
+								msg: '确定取消订单？',
+								buttons: ['确定', '取消']
+							}, function (ret, err) {
+									var index = ret.buttonIndex;
+									if (index == '1') {
+										showProgress('努力加载中','请稍后···');
+										api.ajax({
+											url: serverurl,
+											method: 'get',
+											data: {
+												values: {
+													type: '10051',
+													token: token,
+													uid: id,
+													order_sn: item.order_sn
+												}
+											}
+										}, function (ret, err) {
+
+											api.hideProgress();
+
+											if (ret) {
+												if (ret.status == '5') {
+													ExitLogin();
+												} else {
+
+													if (vm.changeColor == 0 || vm.changeColor == 5) {
+														 item.order_status = '2';
+													}else {
+	                           vm.data.splice(item,1);
+													}
+
+												}
+											} else {
+												msg('网络错误');
+
+											}
+										});
+									}
+							});
+
+						},
+
+						get_DelOrder:function get_DelOrder(item){
+							//删除订单
+							api.confirm({
+								title: '删除订单',
+								msg: '确定删除此订单？',
+								buttons: ['确定', '取消']
+							}, function (ret, err) {
+									var index = ret.buttonIndex;
+									if (index == '1') {
+										showProgress('努力加载中','请稍后···');
+										api.ajax({
+											url: serverurl,
+											method: 'get',
+											data: {
+												values: {
+													type: '10052',
+													token: token,
+													uid: id,
+													order_sn: item.order_sn
+												}
+											}
+										}, function (ret, err) {
+
+											api.hideProgress();
+
+											if (ret) {
+												if (ret.status == '5') {
+													ExitLogin();
+												} else {
+													vm.data.splice(item,1);
+
+												}
+											} else {
+												msg('网络错误');
+
+											}
+										});
+									}
+							});
+
+						},
+
+						confirmReceipt: function confirmReceipt(item) {
+
+							//确认收货
+							api.confirm({
+								title: '确认收货',
+								msg: '请确认收到货后，再进行确认操作',
+								buttons: ['确定', '取消']
+							}, function(ret, err) {
+								var index = ret.buttonIndex;
+								if (index == '1') {
+									showProgress('努力加载中','请稍后···');
+									api.ajax({
+										url: serverurl,
+										method: 'get',
+										data: {
+											values: {
+												type: '10131',
+												token: token,
+												order_id: item.order_id
+											}
+										}
+									}, function(ret, err) {
+                    api.hideProgress();
+
+										if (ret) {
+											if (ret.status == '5') {
+												ExitLogin();
+											} else if (ret.status == '0') {
+
+                        msg('确认收货失败');
+											} else {
+
+												if (vm.changeColor == 0 || vm.changeColor == 5) {
+													 item.shipping_status = '2';
+												}else {
+                           vm.data.splice(item,1);
+												}
+
+
+											}
+										} else {
+
+											msg('网络错误');
+										}
+									});
+								};
+							});
+						},
+
+						appReturn:function appReturn(item){
+							//申请退货
+							showProgress('努力加载中','请稍后···');
+							api.ajax({
+								url: serverurl,
+								method: 'get',
+								data: {
+									values: {
+										type: '10132',
+										token: token,
+										uid: id,
+										order_id:item.order_id
+									}
+								}
+							}, function (ret, err) {
+
+								api.hideProgress();
+
+								if (ret) {
+									if (ret.status == '5') {
+										ExitLogin();
+									} else {
+											if (vm.changeColor == 0 || vm.changeColor == 5) {
+												 item.shipping_status = '5';
+											}else {
+												 vm.data.splice(item,1);
+											}
+									}
+								} else {
+									msg('网络错误');
+
+								}
+							});
+						},
+
+						OrderDetail:function OrderDetail(order_id){
+								openWin('OrderState','./OrderState.html',{order_id:order_id});
+						},
+
+						// 获取微信签名
+						get_weiChat: function get_weiChat(content) {
+							var order_total = content.goods_amount * 0.2;
+							api.ajax({
+								url: serverurl,
+								method: 'post',
+								data: {
+									values: {
+										type: '10029',
+										token: token,
+										uid: id,
+										goods_name: content.goods_name,
+										order_total: order_total,
+										order_sn: content.order_sn
+									}
+								}
+							}, function(ret, err) {
+
+								if (ret) {
+									if (ret.status == '5') {
+										ExitLogin();
+									} else {
+										goPay(ret, content.order_sn);
+									}
+								} else {
+
+									msg('网络错误');
+								}
+							});
+						},
+
+						Checklog:function Checklog(item){
+
+								var pageParam = {
+										 tracking_number:item.tracking_number,
+										 logistics_company:item.logistics_company,
+
+								};
+								openWin('logistic','./logistic.html',pageParam);
+						},
+
+						switchTab:function switchTab(index){
+									if (index == 1) {
+
+											vm.get_notdOrder(page);
+
+									}else if (index == 2) {
+
+											vm.get_notOrder(page);
+
+									}else if (index == 3) {
+
+											vm.get_okOrder(page);
+
+									}else if (index == 4) {
+
+											vm.get_quitOrder(page);
+
+									}else {
+
+											vm.get_orderLis(page);
+
+									}
+									vm.changeColor = index;
+
+
+									api.addEventListener({
+				              name:'scrolltobottom',
+				              extra:{
+				                  threshold:50            //设置距离底部多少距离时触发，默认值为0，数字类型
+				              }
+				          }, function(ret, err){
+                      vm.updata = true;
+				              if (index == 1) {
+				                  if (vm.loadata == true) {
+				                      vm.loadata = false;
+				                      vm.get_notdOrder(page+=1);
+				                  }
+
+				              }else if (index == 2) {
+													if (vm.loadata == true) {
+															vm.loadata = false;
+															vm.get_notOrder(page+=1);
+													}
+				              }else if (index == 3) {
+													if (vm.loadata == true) {
+															vm.loadata = false;
+															vm.get_okOrder(page+=1);
+													}
+				              }else if (index == 4) {
+													if (vm.loadata == true) {
+															vm.loadata = false;
+															vm.get_quitOrder(page+=1);
+													}
+				              }else {
+													if (vm.loadata == true) {
+															vm.loadata = false;
+															vm.get_orderLis(page+=1);
+													}
+				              }
+
+				          });
+						}
+
+		  	}
+			})
+
+			// 微信支付
+			function goPay(content, order_sn) {
+				var wxPay = api.require('wxPay');
+				wxPay.payOrder({
+					apiKey: content.appid, //从微信开放平台获取的 appid
+					orderId: content.prepayid, //获取的订单号 （prepay_id）
+					mchId: content.partnerid, //商家和微信合作的 id 号，审核通过后微信服务器会发送到商家邮箱
+					nonceStr: content.noncestr, //随机字符串，防重发
+					timeStamp: content.timestamp, //时间戳，防重发
+					sign: content.sign //商家根据微信开放平台文档对数据做的签名
+				}, function(ret, err) {
+
+					if (ret.status) {
+						//支付成功
+						getweiPay(order_sn);
+
+					} else {
+						console.log(err.code);
+					}
+
+				});
+			}
+
+			// 微信支付成功更新订单
+			function getweiPay(order_sn) {
+
+				api.ajax({
+					url: serverurl,
+					method: 'post',
+					data: {
+						values: {
+							type: '10190',
+							token: token,
+							order_sn: order_sn
+						},
+					}
+				}, function(ret, err) {
+
+					if (ret) {
+						if (ret.status == '5') {
+							ExitLogin();
+						} else if (ret.status == '1') {
+							vm.get_orderLis(page);
+						} else {
+
+              msg('获取订单失败');
+						}
+
+					} else {
+
+						msg('网络错误');
+
+					}
+				});
+			}
+
+			// 打开客服界面
+			function meiQia(){
+					var mq = api.require('meiQia');
+					mq.show();//弹出美洽聊天界面
+			}
+</script>

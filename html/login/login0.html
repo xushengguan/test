@@ -6,438 +6,187 @@
       <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
       <title>登录</title>
       <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
-      <link rel="stylesheet" type="text/css" href="../../css/loading.css"/>
-      <style>
-          .content{padding: 0 25px; height: 100%; background: #fff;}
-          header{padding:70px 0 50px 0;}
-          header .title{height: 27px; line-height: 27px; background: url(../../image/login_icon.png) no-repeat left center;
-          background-size: 7px 20px; padding-left: 15px; font-size: 25px; font-weight: bold;}
-          header .title span{font-size: 20px; color: #999; padding-left: 20px;}
-          .line{width: 100%; position: relative; margin-bottom: 25px;}
-          .line input{height: 35px; line-height: 35px; width: 100%; font-size: 16px; color: #212121; border-bottom: 1px solid #d8d8d8;}
-          .line input:focus{border-bottom: 1px solid #ffb300;}
-          .line input.password{width: calc(100% - 25px); padding-right: 25px;}
-          .line em{width: 25px; height: 35px; position: absolute;  top: 0; right: 0; background: url(../../image/eye2.png) center no-repeat;
-          background-size: 22px 18px;}
-          .line em.on{background: url(../../image/eye1.png) center no-repeat; background-size: 22px 16px;}
-          .login{width: 100%; height: 43px; line-height: 43px; border-radius: 3px; background: #b1b1b1; text-align: center;
-          color: #fff; font-size: 18px; margin-top: 20px;}
-          .login.on{background: #ffb300;}
-          .forget{float: right; margin-top: 15px; font-size: 15px; color: #ffb300;}
-      </style>
+      <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+
   </head>
   <body>
-      <div class="content">
-          <header>
-            <div class="title">
-                账号登录
-                <span tapmode onclick="register()">注册账户</span>
-            </div>
+     <div id="acc-container">
+          <header class="login-header">
+            登录<em>学令牌</em>
+            <p>帐号密码登录</p>
           </header>
-
-          <div class="line">
-              <input class="tel" type="tel" placeholder="请输入您的手机号码" oninput="checkValue()" onpropertychange="checkValue()">
+          <ul class="login-box">
+              <li>
+                  <em class="tel"></em>
+                  <input class="tel-num" type="tel" placeholder="请输入您的手机号码" maxlength="11" oninput="checkValue()" onpropertychange="checkValue()">
+              </li>
+              <li>
+                  <em class="password"></em>
+                  <input class="password-num" type="password" placeholder="请输入您的密码" oninput="checkValue()" onpropertychange="checkValue()">
+                  <a href="javascript:;" tapmode onclick="openWin('login1','./login1.html',{index:'2'})">忘记密码</a>
+              </li>
+          </ul>
+          <button class="login-btn" disabled="disabled" tapmode onclick="login()">登 录</button>
+          <div class="login-menu clearfix">
+              <a href="javascript:;" class="register" tapmode onclick="openWin('login1','./login1.html',{index:'0'})">注册新账户</a>
+              <a href="javascript:;" class="code" tapmode onclick="openWin('login1','./login1.html',{index:'1'})">验证码登录</a>
           </div>
-          <div class="line">
-              <input class="password" type="password" placeholder="请输入密码" oninput="checkValue()" onpropertychange="checkValue()">
-              <em class="on" tapmode onclick="change(this)"></em>
-          </div>
-          <button class="login" disabled="disabled" tapmode onclick="login()">登录</button>
+     </div>
 
-          <span class="forget" tapmode onclick="FindPassword()">忘记密码?</span>
-      </div>
+     <footer id="footer">
+         <p>注册登录用户即表示已同意用户协议</p>
+         <p>
+           <a href="javascript:;">条款与条件</a>
+           <em>|</em>
+           <a href="javascript:;">隐私政策</a>
+         </p>
+     </footer>
   </body>
   <script type="text/javascript" src="../../script/api.js"></script>
   <script type="text/javascript" src="../../script/my.js"></script>
   <script type="text/javascript">
-      var jpush = null;
+
       apiready = function(){
-          loading();
-          var uid = $api.getStorage('id');
-          var token = $api.getStorage('token');
-          var role = $api.getStorage('role');
-          var complete_info = $api.getStorage('complete_info');
-          var activate_status = $api.getStorage('activate_status');
+          SetStatusBar('.container','dark','#f3f5f7');//设置状态栏my.js
+          api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
+          setTimeout(function(){
+              focus_footer();
+          },100);
 
-          if (uid && token) {
+          //监听返回
+          api.addEventListener({
+              name: 'keyback'
+          }, function(ret, err) {
+              if (daojishi == 0) {
+                  //这里设置了倒计时为2秒
+                  daojishi = 2000;
 
-              if (role == '2' && !activate_status) {
-                  api.openWin({
-                      name: 'login5',
-                      url: './login5.html',
-                      reload:true,
+                  msg('再按一次退出');
+                  kaishiJishi();
+              } else {
+                  api.closeWidget({
+                      silent: false
                   });
-             }else if (role == '2') {//角色代号 1：学生家长，2：班主任
-                api.openWin({
-                    name: 'index',
-                    url: '../../index.html',
-                    reload:true,
-                    slidBackEnabled:false
-                });
-            }else if(role == '1'){
-                api.openWin({
-                    name: 'index',
-                    url: '../../index1.html',
-                    reload:true,
-                    slidBackEnabled:false
-                });
-            }
-
-          }
-
-          // 静默修复
-          api.addEventListener({
-              name:'smartupdatefinish'
-          }, function(ret, err){
-              api.rebootApp();//重启应用
-          });
-
-          // 监听网络
-          api.addEventListener({
-              name:'offline'
-          }, function(ret, err){
-              api.toast({
-                  msg: '网络连接不可用，请检查网络',
-                  duration: 2000,
-                  location: 'bottom'
-              });
-
-          });
-
-
-          // 极光推送
-          ajpush = api.require('ajpush');
-          ajpush.init(function(ret) {
-              if (ret && ret.status){
-                  //success
               }
-          })
-
-          //JPush服务器给客户端返回一个唯一的该设备的标识RegistrationID
-          ajpush.getRegistrationId(function(ret) {
-              var registrationId = ret.id;
-              $api.setStorage('registrationId', registrationId);
-
           });
-
-          api.addEventListener({name:'appintent'}, function(ret,err) {
-
-            if (ret.appParam.ajpush.content.indexOf("重新登陆") > -1 || ret.appParam.ajpush.content.indexOf("信息审核") > 0) {
-                ExitLogin();
-            }else if (ret.appParam.ajpush.content.indexOf("系统消息") > -1) {
-
-                api.openWin({
-                    name: 'MyNews',
-                    url: '../setting/MyNews.html',
-                    reload:true,
-                    allowEdit:true
-                });
-
-            }else {
-
-                api.openWin({
-                    name: 'circleNews',
-                    url: '../circle/circleNews.html',
-                    reload:true,
-                    allowEdit:true
-                });
-            }
-
-          })
-          api.addEventListener({name:'pause'}, function(ret,err) {
-              onPause();//监听应用进入后台，通知jpush暂停事件
-          })
-
-          api.addEventListener({name:'resume'}, function(ret,err) {
-              onResume();//监听应用恢复到前台，通知jpush恢复事件
-          })
-
-
-
 
       };
 
-      //统计-app恢复（极光推送）
-      function onResume(){
-          jpush.onResume();
-
+      var daojishi = 0;
+      //倒计时
+      function kaishiJishi() {
+          if (daojishi > 0) {
+              setTimeout(function() {
+                  daojishi = daojishi - 20;
+                  kaishiJishi();
+              }, 20);
+          }
       }
 
-      //统计-app暂停（极光推送）
-      function onPause(){
-          jpush.onPause();
+      // 实时检测输入框事件
+      function checkValue(){
+          var tel = trimStr($api.val($api.dom('.tel-num')));
+          var password = trimStr($api.val($api.dom('.password-num')));
+          if (tel && password) {
 
+              AddorRemove('add','.login-btn');
+          }else {
+
+              AddorRemove('remove','.login-btn');
+          }
       }
 
-      // 跳到注册页
-      function register(){
-          api.openWin({
-              name: 'login2',
-              url: './login2.html',
-              reload:true
-          });
-      }
+
 
       // 登录
       function login(){
-
-          var tel = $api.val($api.dom('.tel'));
-          var password = $api.val($api.dom('.password'));
           var myreg = /^1[0-9]{10}$/;//判断是否为手机号码,/^1[34578]\d{9}$/
           var mypatrn = /^[0-9A-Za-z]{6,}$/;//密码长度不少于6位,并且由数字和字符组成
+          var tel = $api.val($api.dom('.tel-num'));
+          var password = $api.val($api.dom('.password-num'));
           if (!myreg.test(tel)) {
-              api.toast({
-                  msg: '请输入有效的手机号码',
-                  duration: 2000,
-                  location: 'middle'
-              });
+              msg('请输入正确的手机号码');
               return false;
           }else if (!mypatrn.test(password)) {
-              api.toast({
-                  msg: '请输入至少6位数非中文密码',
-                  duration: 2000,
-                  location: 'middle'
-              });
+              msg('请输入至少6位非中文密码');
               return false;
           }
+          showProgress('努力加载中','请稍后···');
+          var regId;
+          api.getPrefs({//获取偏好设置值
+              key: 'registrationId'
+          }, function(ret, err){
+              if( ret ){
 
-          checkRole(tel,password);//检查用户身份
-
-
-      }
-
-      //实时监测输入框输入事件
-      function checkValue(){
-          var tel = $api.val($api.dom('.tel'));
-          var password = $api.val($api.dom('.password'));
-          if (tel && password) {
-              $api.addCls($api.dom('.login'), 'on');
-              $api.removeAttr($api.dom('.login'), 'disabled');
-          }else {
-              $api.removeCls($api.dom('.login'), 'on');
-              $api.attr($api.dom('.login'), 'disabled','disabled');
-          }
-      }
-
-      // 切换显示密码
-      function change(e){
-          if ($api.hasCls(e,'on')) {
-              $api.attr($api.dom('.password'), 'type', 'text');
-              $api.removeCls(e, 'on');
-          }else{
-              $api.attr($api.dom('.password'), 'type', 'password');
-              $api.addCls(e, 'on');
-          }
-      }
-
-      // 找回密码
-      function FindPassword(){
-          api.openWin({
-              name: 'login6',
-              url: './login6.html',
-              reload:true,
-              allowEdit:true
-          });
-
-      }
-
-      // 选择身份弹出层
-      function selRole(tel,password){
-        var dialogBox = api.require('dialogBox');
-          dialogBox.scene({
-              rect: {
-                  w: 280,
-                  h: 150
-              },
-              texts: {
-                  title: '请选择身份',
-              },
-              styles: {
-                  bg: '#fff',
-                  corner: 5,
-                  title: {
-                      bg: '#ffb300',
-                      h: 50,
-                      size: 20,
-                      color: '#fff'
-                  },
-                  cell: {
-                      bg: '#fff',
-                      h: 50,
-                      text: {
-                          color: '#212121',
-                          size: 18,
-                          align: 'center'
-                      },
-                  },
-              },
-              optionDatas: [{
-                  text: '学生家长'
-              }, {
-                  text: '助教'
-              }],
-              tapClose:true
-          }, function(ret, err) {
-              if (ret.eventType == 'cell') {
-
-                  dialogBox.close({
-                      dialogName: 'scene'
-                  });
-                  if (ret.index == '0') {
-                      var index = 1;
-                  }else {
-                      var index = 2;
-                  }
-                  userLogin(index,tel,password);
-              } else {
-                  console.log(JSON.stringify(err));
+                   regId = ret.value;
+              }else{
+                   console.log( JSON.stringify( err ) );
               }
           });
-      }
 
-      // 用户登录
-      function userLogin(index,tel,password){
-        $api.css($api.dom('#loading'), 'display:block');
-            var regId = $api.getStorage('registrationId');
-            if (regId) {
-                var registerId = regId;
-            }else {
-                var registerId = "";
-            }
-            
-            api.ajax({
-                url: serverurl,
-                method: 'post',
-                data: {
-                    values: {
-                        type: '10003',
-                         tel: tel,
-                         pwd:password,
-                        role:index,	//角色代号 ：1.学生家长，2：班主任
-                        registrationid_id:registerId
-                    },
-                }
-            },function(ret, err){
-                $api.css($api.dom('#loading'), 'display:none');
-
-                if (ret) {
-                     if (ret.status == '1') {
-                         $api.setStorage('token', ret.token);
-                         $api.setStorage('id', ret.data.id);
-                         $api.setStorage('tel',ret.data.tel);
-                         $api.setStorage('role',ret.data.role);
-                          api.toast({
-                              msg: '登录成功',
-                              duration: 2000,
-                              location: 'middle'
-                          });
-
-                        if (ret.data.role == '2' && ret.data.activate_status == '0') {
-                            api.openWin({
-                                name: 'login5',
-                                url: './login5.html',
-                                reload:true,
-                                allowEdit:true
-                            });
-
-                        }else{
-
-                            if (ret.data.role == '2') {//角色代号 1：学生家长，2：班主任
-                                $api.setStorage('activate_status',ret.data.activate_status);
-                                api.openWin({
-                                    name: 'index',
-                                    url: '../../index.html',
-                                    reload:true,
-                                    slidBackEnabled:false
-                                });
-
-                            }else {
-
-                                api.openWin({
-                                    name: 'index',
-                                    url: '../../index1.html',
-                                    reload:true,
-                                    slidBackEnabled:false
-                                });
-
-                            }
-
-                        }
-
-
-                        $api.val($api.dom('.tel'),"");
-                        $api.val($api.dom('.password'),"");
-                     }else if (ret.status == '0') {
-                        api.toast({
-                            msg: '密码错误',
-                            duration: 2000,
-                            location: 'middle'
-                        });
-                     }else{
-                       api.toast({
-                           msg: '账号未注册',
-                           duration: 2000,
-                           location: 'middle'
-                       });
-                     }
-
-                } else {
-
-                    api.toast({
-                        msg: '网络错误',
-                        duration: 2000,
-                        location: 'bottom'
-                    });
-
-
-                }
-            });
-
-
-      }
-
-      // 检查用户身份
-      function checkRole(tel,password){
+          if (regId) {
+              var registerId = regId;
+          }else {
+              var registerId = "";
+          }
 
           api.ajax({
               url: serverurl,
-              method: 'get',
+              method: 'post',
               data: {
                   values: {
-                      type: '10179',
-                       tel:tel
+                      type: '10003',
+                       tel: tel,
+                       pwd:password,
+                       role:'1',
+                       registrationid_id:registerId
                   },
               }
           },function(ret, err){
-
+              api.hideProgress();
+      
               if (ret) {
 
-                  if (ret.length > 1) {
-                      selRole(tel,password);
-                  }else if (ret.status == '0') {
-                      api.toast({
-                          msg: '账号未注册',
-                          duration: 2000,
-                          location: 'middle'
+                   if (ret.status == '1') {
+
+                      api.setPrefs({
+                          key: 'token',
+                          value: ret.token
+                      });
+                      api.setPrefs({
+                          key: 'id',
+                          value: ret.data.id
                       });
 
-                  }else {
-                      var index = ret[0].role;
-                      userLogin(index,tel,password);
-                  }
-              } else {
+                      api.setPrefs({
+                          key: 'user_name',
+                          value: ret.data.nickname
+                      });
 
-                  api.toast({
-                      msg: '网络错误',
-                      duration: 2000,
-                      location: 'bottom'
-                  });
+                      api.setPrefs({
+                          key: 'headimgurl',
+                          value: ret.data.headimgurl
+                      });
+
+                      setTimeout(function(){
+                          openWin('index','../../index.html','');
+                      },100);
+
+
+                   }else if (ret.status == '0') {
+
+                      msg('密码错误');
+                   }else{
+                     msg('账号未注册');
+                   }
+
+              } else {
+                  msg('网络错误');
 
               }
           });
 
       }
-
 
   </script>
   </html>

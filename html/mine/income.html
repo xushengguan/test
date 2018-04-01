@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title>收支明细</title>
+      <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+      <style>
+
+          header{position: relative; height: 44px; line-height: 44px; box-shadow: 0px 4px 4px 0px rgba(76, 81, 118, 0.15);
+          font-size: 18px; background-color: #fefefe; padding:0 14px; color: #232528;}
+          header em{height: 44px; background: url(../../image/back.png) no-repeat left 12px; background-size: 10px 17px;
+          float: left; padding-left: 30px;}
+
+          .income-time{font-size: 15px; color: #909090; padding: 14px; }
+          .income-list{background-color: #fefefe; box-shadow: 0px 1px 0px 0px #d2d3d5, inset 0px 1px 1px 0px #d2d3d5;
+          padding: 14px;}
+          .income-list span{float: left; margin-right: 10px; display: block; width: 80px; font-size: 17px;}
+          .rt-box{padding-left: 26px; border-left: 1px solid #d2d3d5; float: left; padding-bottom: 30px; width: calc(100% - 122px);
+          position: relative; top: 6px;}
+          .income-line:last-child .rt-box{border-left: none; padding-bottom: 8px;}
+          .rt-box .rt-title{font-size: 17px; line-height: 20px; margin-top: -6px;}
+          .rt-box .handle{font-size: 14px; line-height: 20px; color: #999; padding-top: 2px;}
+          .rt-box em{width: 7px; height: 7px; border-radius: 50%; background-color: #46daab; position: absolute; top: 0; left: -3px;
+          z-index: 3;}
+          .income-line:first-child em{background-color: #ffb608;}
+      </style>
+  </head>
+  <body>
+    <div id="wrap">
+        <header>
+            <em tapmode onclick="go_back()">收支明细</em>
+        </header>
+        <div id="main" v-cloak>
+             <div class="income-box" v-for="v in data" v-if="data">
+                 <div class="income-time">
+                    {{v.date}}
+                 </div>
+                 <div class="income-list">
+                     <div class="income-line clearfix" v-for="item in v.data">
+                       <span>{{item.log_time}}</span>
+                       <div class="rt-box">
+                            <p class="rt-title">{{item.shouzhi}}学分</p>
+                            <p class="handle">{{item.log}}</p>
+                            <em></em>
+                       </div>
+                     </div>
+                 </div>
+             </div>
+
+             <div class="no-data" v-else>
+                  <img src="../../image/ndata.png" alt="没数据图片">
+                  <p>抱歉，没有数据~</p>
+             </div>
+
+             <div class="income-box">
+                 <div class="income-time">
+                    2018年03月20日
+                 </div>
+                 <div class="income-list">
+                     <div class="income-line clearfix">
+                       <span>09:30</span>
+                       <div class="rt-box">
+                            <p class="rt-title">600学分</p>
+                            <p class="handle">扫码领取学分</p>
+                            <em></em>
+                       </div>
+                     </div>
+
+                 </div>
+             </div>
+
+        </div>
+    </div>
+
+
+  </body>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/my.js"></script>
+  <script type="text/javascript" src="../../script/vue.js"></script>
+  <script type="text/javascript">
+      apiready = function(){
+        SetStatusBar('#main','dark','#fefefe');//设置状态栏my.js
+        
+          api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
+          token = api.getPrefs({
+              sync: true,
+              key: 'token'
+          });
+          id = api.getPrefs({
+              sync: true,
+              key: 'id'
+          });
+          vm.getIncome();
+      }
+
+      var vm = new Vue({
+          el:'#main',
+          data:{
+              data:[],
+          },
+          methods:{
+              // 收支明细
+              getIncome:function getIncome(){
+                showProgress('努力加载中','请稍后···');
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    data: {
+                        values: {
+                             type: '10158',
+                              uid:id,
+                            token: token
+                        }
+                    }
+                },function(ret, err){
+                    api.hideProgress();
+
+                    if (ret) {
+
+                      if (ret.status == '5') {
+                         ExitLogin();
+                      }else if (ret.status == '0') {
+                         msg('网络错误');
+                      }else {
+                         vm.data = ret;
+                      }
+
+                    } else {
+
+                        msg('网络错误');
+                    }
+                });
+
+              },
+
+
+          }
+      })
+
+  </script>
+  </html>

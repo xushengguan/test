@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title>我</title>
+      <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+      <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+      <style>
+          header{position: relative; height: 44px; line-height: 44px; box-shadow: 0px 4px 4px 0px rgba(76, 81, 118, 0.15);
+          font-size: 18px; background-color: #fefefe; padding:0 14px; color: #232528;}
+          header em{height: 44px; background: url(../../image/back.png) no-repeat left 12px; background-size: 10px 17px;
+          float: left; padding-left: 30px;}
+          header span{width: 18px; height: 44px; background: url(../../image/add.png) no-repeat 0 12px; background-size: 18px;
+          float: right;}
+
+          .Buser-list{background-color: #fefefe;}
+          .Buser-list li{box-shadow: inset 0px -1px 0px 0px #c7c7cc; padding: 12px 0;}
+          .pic{width: 50px; height: 50px; border-radius: 50%; overflow: hidden; margin-left: 14px;}
+          .pic img{width: 100%; height: 100%; }
+          .Buser-info{ padding: 0 10px; flex: 1; -webkit-flex:1; -webkit-box-flex:1; border-right: 1px solid #d2d3d5;}
+          .Buser-info .nickname{font-size: 16px; line-height: 20px;}
+          .Buser-info .ID{font-size: 13px; line-height: 20px; color: #999;}
+          .edit{width: 65px; min-height: 52px; background: url(../../image/edit.png) no-repeat center;
+          background-size: auto 18px;}
+
+
+      </style>
+  </head>
+  <body>
+    <div id="wrap">
+        <header>
+          <em tapmode onclick="go_back()">我的手环</em>
+          <span tapmode onclick="scan()"></span>
+        </header>
+        <div id="main" v-cloak>
+            <ul class="Buser-list" v-if="status != '0'">
+                <li class="flex-align-center" v-for="(v,index) in data">
+                    <div class="pic">
+                        <img :src="v.stu_img+'?x-oss-process=image/resize,m_fill,h_50,w_50'" alt="人头像" v-if="v.stu_img">
+                        <img src="../../image/pic.png" alt="人头像" v-else>
+                    </div>
+                    <div class="Buser-info">
+                        <p class="nickname">{{v.stu_name}}</p>
+                        <p class="ID">手环ID:{{v.id}}</p>
+                    </div>
+                    <div class="flex-align-center edit" tapmode @click="showMenu(v,index)"></div>
+                </li>
+
+            </ul>
+            <div class="no-data" v-else>
+                 <img src="../../image/ndata.png" alt="没数据图片">
+                 <p>抱歉，没有数据~</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 弹窗 -->
+    <div class="Popup" tapmode>
+        <ul class="handleMenu">
+            <li tapmode onclick="goEdit()">编辑</li>
+            <li tapmode onclick="Delbracelet()">删除</li>
+        </ul>
+    </div>
+  </body>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/my.js"></script>
+  <script type="text/javascript" src="../../script/vue.js"></script>
+  <script type="text/javascript">
+      apiready = function(){
+          api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
+          token = api.getPrefs({
+              sync: true,
+              key: 'token'
+          });
+          id = api.getPrefs({
+              sync: true,
+              key: 'id'
+          });
+          vm.getbracelet();
+          api.addEventListener({
+              name: 'BracelectEvent'
+          }, function(ret, err){
+              if( ret ){
+
+                   vm.getbracelet();
+              }else{
+
+              }
+          });
+
+
+          var Popup = $api.dom('.Popup');
+          Popup.ontouchstart = function(event){
+            if(event.target == this){
+              $api.css($api.dom('.Popup'), 'display:none');
+            }
+          }
+
+
+      }
+
+
+      var vm = new Vue({
+          el:'#main',
+          data:{
+              data:[],
+              itembracelet:[],
+              index:'',
+              status:''
+          },
+          methods:{
+              // 手环信息
+              getbracelet:function getbracelet(){
+                showProgress('努力加载中','请稍后···');
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    data: {
+                        values: {
+                             type: '10180',
+                              uid:id,
+                            token: token
+                        }
+                    }
+                },function(ret, err){
+                    api.hideProgress();
+
+                    if (ret) {
+
+                      if (ret.status == '5') {
+                         ExitLogin();
+                      }else if (ret.status == '0') {
+                         vm.status = ret.status;
+                      }else {
+                         vm.data = ret;
+                      }
+
+                    } else {
+
+                        msg('网络错误');
+                    }
+                });
+
+              },
+
+              showMenu:function showMenu(item,index){
+                   $api.css($api.dom('.Popup'), 'display:block');
+                   vm.itembracelet = item;
+                   vm.index = index;
+              },
+
+
+          }
+      })
+
+      // 编辑
+      function goEdit(){
+          $api.css($api.dom('.Popup'), 'display:none');
+          openWin('editBracelet','./editBracelet.html',{braceletMsg:vm.itembracelet});
+      }
+
+      // 删除手环
+      function Delbracelet(){
+
+        showProgress('努力加载中','请稍后···');
+        api.ajax({
+            url: serverurl,
+            method: 'get',
+            data: {
+                values: {
+                     type: '10077',
+                     uid:id,
+                     token: token,
+                     key:vm.itembracelet.key,
+                      id:vm.itembracelet.id
+                }
+            }
+        },function(ret, err){
+            api.hideProgress();
+
+            $api.css($api.dom('.Popup'), 'display:none');
+            if (ret) {
+
+              if (ret.status == '5') {
+                 ExitLogin();
+              }else {
+
+                 if (vm.data === undefined || vm.data.length == 0) {
+                      vm.status == 0;
+                 }else {
+                     var newData = vm.data.del(vm.index);
+                     vm.data = newData;
+                 }
+
+              }
+
+            } else {
+
+                msg('网络错误');
+            }
+        });
+
+      };
+
+      // 扫描手环
+      function scan(){
+        var FNScanner = api.require('FNScanner');
+        FNScanner.openScanner({
+            autorotation: true
+        }, function(ret, err) {
+            if (ret) {
+
+                if (ret.eventType == 'success') {
+
+                    if (ret.content.indexOf("xly1.cn") >= 0) {
+                        var key = ret.content.substr(0,4);//提取字符串前四位
+                        Addbracelet(key);
+                    }else {
+
+                        msg('二维码不正确');
+                    }
+
+
+                }else if (ret.eventType == 'fail') {
+
+                    msg('扫描失败')
+
+                }
+            } else {
+
+                msg(err);
+            }
+        });
+      }
+
+      // 添加手环
+      function Addbracelet(key){
+
+        showProgress('努力加载中','请稍后···');
+        api.ajax({
+            url: serverurl,
+            method: 'get',
+            data: {
+                values: {
+                     type: '10078',
+                     uid:id,
+                     token: token,
+                     key:key
+                }
+            }
+        },function(ret, err){
+            api.hideProgress();
+
+            if (ret) {
+              // 4 手环不存在 3手环已经绑定 1绑定成功 0绑定失败
+              if (ret.status == '5') {
+                 ExitLogin();
+              }else if (ret.status == '4') {
+                 msg('手环不正确');
+              }else if(ret.status == '3'){
+                 msg('手环已绑定');
+              }else if (ret.status == '0') {
+                 msg('绑定失败');
+              }else {
+                  openWin('editBracelet','./editBracelet.html',{braid:ret.id});
+              }
+
+            } else {
+
+                msg('网络错误');
+            }
+        });
+
+      };
+
+
+  </script>
+  </html>

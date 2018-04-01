@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title>聊天</title>
+      <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+      <style>
+          header{position: relative; height: 44px; line-height: 44px; box-shadow: 0px 4px 4px 0px rgba(76, 81, 118, 0.15);
+          font-size: 18px; background-color: #fefefe; padding-left:34px; padding-right:42px; color: #232528; text-align: center;}
+          header em{height: 44px; background: url(../../image/back.png) no-repeat left 12px; background-size: 10px 17px;
+          position: absolute; left: 14px; width: 10px; padding-right: 10px;}
+          header span{width: 17px; height: 44px; background: url(../../image/per-list.png) no-repeat 0 12px; background-size: 17px 20px;
+          position: absolute; right: 14px;}
+
+          .cotent{padding: 20px 14px;}
+          .msg-list{margin-bottom: 30px; font-size: 16px; position: relative; padding-left: 52px;}
+          .rmsg-list{margin-bottom: 30px; font-size: 16px; position: relative; padding-right: 52px;}
+          .pic{width: 42px; height: 42px; border-radius: 50%; position: absolute; left: 0;}
+          .r-pic{width: 42px; height: 42px; border-radius: 50%; position: absolute; right: 0;}
+          .rt-msg{min-height: 42px;}
+          .pos-rt{text-align: right;}
+          .username{font-size: 13px; color: #999; margin-bottom: 6px;}
+          .msg-content{line-height: 25px; background-color: #fefefe; padding: 4px 10px; border-radius: 3px;
+          display: inline-block; text-align: left;}
+          .rt-msglist{right: 0; padding-right: 52px;}
+
+          footer{height: 50px;}
+      </style>
+  </head>
+  <body>
+      <div id="wrap" v-cloak>
+          <header class="single clearfix">
+            <em tapmode onclick="go_back()"></em>
+               {{nickname}}
+            <span tapmode onclick=""></span>
+          </header>
+          <div id="main">
+              <!-- 刚进来的聊天详情 -->
+              <div class="cotent" v-show="!data.status">
+                  <div v-for="v in data">
+                      <div class="rmsg-list" v-if="v.user_id == id">
+                          <img class="r-pic" :src="headimgurl+'?x-oss-process=image/resize,m_fill,h_42,w_42'" alt="用户头像" tapmode @click="goDetail(id)" v-if="headimgurl">
+                          <img class="r-pic" src="../../image/pic.png" alt="用户头像" tapmode @click="goDetail(id)" v-else>
+                          <div class="rt-msg pos-rt">
+                              <p class="username pos-rt">{{user_name}}</p>
+                              <p class="username pos-rt time">{{v.time | formatDate}}</p>
+                              <div class="msg-content">{{v.content}}</div>
+                          </div>
+                      </div>
+
+                      <div class="msg-list" v-else>
+                          <img class="pic" :src="userimgurl+'?x-oss-process=image/resize,m_fill,h_42,w_42'" alt="用户头像"  tapmode @click="goDetail(peer)" v-if="userimgurl">
+                          <img class="pic" src="../../image/pic.png" alt="用户头像" tapmode @click="goDetail(peer)" v-else>
+                          <div class="rt-msg">
+                              <p class="username">{{nickname}}</p>
+                              <p class="username time">{{v.time | formatDate}}</p>
+                              <div class="msg-content">{{v.content}}</div>
+                          </div>
+                      </div>
+
+                  </div>
+              </div>
+              <!-- 聊天 -->
+              <div v-for="v in chatdata" v-show="chatdata">
+                  <div class="rmsg-list" v-if="v.from_client_name == user_name">
+                      <img class="r-pic" :src="headimgurl+'?x-oss-process=image/resize,m_fill,h_42,w_42'" alt="用户头像" tapmode @click="goDetail(id)" v-if="headimgurl">
+                      <img class="r-pic" src="../../image/pic.png" alt="用户头像" tapmode @click="goDetail(id)" v-else>
+                      <div class="rt-msg pos-rt">
+                          <p class="username pos-rt">{{v.from_client_name}}</p>
+                          <p class="username pos-rt time">{{v.time}}</p>
+                          <div class="msg-content">{{v.content}}</div>
+                      </div>
+                  </div>
+
+                  <div class="msg-list" v-else>
+                      <img class="pic" :src="userimgurl+'?x-oss-process=image/resize,m_fill,h_42,w_42'" alt="用户头像" tapmode @click="goDetail(peer)" v-if="userimgurl">
+                      <img class="pic" src="../../image/pic.png" alt="用户头像" tapmode @click="goDetail(peer)" v-else>
+                      <div class="rt-msg">
+                          <p class="username">{{v.from_client_name}}</p>
+                          <p class="username time">{{v.time}}</p>
+                          <div class="msg-content">{{v.content}}</div>
+                      </div>
+                  </div>
+
+              </div>
+
+          </div>
+          <footer></footer>
+      </div>
+  </body>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/my.js"></script>
+  <script type="text/javascript" src="../../script/vue.js"></script>
+  <script type="text/javascript" src="../../script/date.js"></script>
+  <script type="text/javascript">
+      var ws;
+      apiready = function(){
+        api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
+        vm.id = api.getPrefs({
+            sync: true,
+            key: 'id'
+        });
+        vm.token = api.getPrefs({
+            sync: true,
+            key: 'token'
+        });
+        vm.user_name = api.getPrefs({
+            sync: true,
+            key: 'user_name'
+        });
+        vm.headimgurl = api.getPrefs({
+            sync: true,
+            key: 'headimgurl'
+        });
+
+        vm.peer = api.pageParam.peer;
+        vm.nickname = api.pageParam.nickname;
+        vm.userimgurl = api.pageParam.headimgurl;
+        vm.chatid = api.pageParam.id;
+        vm.openInput();
+        if (vm.chatid) {
+            vm.getMsg();
+        }
+
+        connect();
+
+      }
+
+      var vm = new Vue({
+          el:'#wrap',
+          data:{
+              chatdata:[],
+              data:[],
+              peer:'',
+              nickname:'',
+              user_name:'',
+              headimgurl:'',
+              userimgurl:'',
+              chatid:'',
+              id:'',
+              token:''
+          },
+          filters: {
+              formatDate: function (_formatDate) {
+                  function formatDate(_x) {
+                      return _formatDate.apply(this, arguments);
+                  }
+
+                  formatDate.toString = function () {
+                      return _formatDate.toString();
+                  };
+
+                  return formatDate;
+              }(function (time) {
+                  var date = new Date(time * 1000);
+                  return formatDate(date, 'yyyy-MM-dd');
+              })
+          },
+          methods:{
+            goDetail:function(id){
+                openWin('MyIndex','../mine/MyIndex.html',{id:id});
+            },
+            // 弹出input输入框
+            openInput:function openInput(){
+                var inputField = api.require('inputField');
+                inputField.open({
+                  bgColor: '#fefefe',
+                  lineColor: '#eeeff7',
+                  fileBgColor: '#eeeff7',
+                  borderColor: '#eeeff7',
+                  autoFocus:false,
+                  placeholder:'',
+                  maxLines:40,
+                  sendBtn:{
+                     bg: '#ffc708',          //字符串类型；发送按钮常态背景色
+                     inputBg:'#ffc708',      //(可选项)字符串类型；当输入文字发时送按钮的背景色；默认：bg的色值
+                     bgHighlight: '#FFCC00', //字符串类型；发送按钮点击时的高亮背景色
+                     title: '发送',        //字符串类型；发送按钮的标题
+                     titleSize: 12,    //数字类型；发送按钮的标题字体大小
+                     titleColor: '#fff',  //字符串类型；发送按钮标题文字颜色
+                     corner: 10,            //数字类型；发送按钮圆角大小
+
+                  }
+                }, function(ret, err) {
+                  if (ret) {
+
+                      if (ret.msg) {
+                         onSubmit(ret.msg);
+                      }
+                  } else {
+                      console.log(JSON.stringify(err));
+                  }
+                });
+            },
+            // 对话详情
+            getMsg: function getMsg(){
+
+                showProgress('努力加载中', '请稍后···');
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    data: {
+                        values: {
+                             type: '10091',
+                             token:vm.token,
+                             uid:vm.id,
+                             id:vm.chatid
+                        }
+                    }
+                },function(ret, err){
+                    api.hideProgress();
+
+                    if (ret) {
+
+                        if (ret.status == '5') {
+                            ExitLogin();
+                        }else{
+                            vm.data = ret;
+                        }
+                    } else {
+
+                        msg('网络错误');
+                    }
+                });
+
+            }
+
+          }
+      })
+
+      // 连接服务端
+      function connect() {
+         // 创建websocket
+        //  ws = new WebSocket("ws://192.168.110.14:7272");//本地
+         ws = new WebSocket("ws://"+"119.23.50.152:7272");//服务器
+         // 当socket连接打开时，输入用户名
+         ws.onopen = onopen;
+         // 当有消息时根据消息类型显示不同信息
+         ws.onmessage = onmessage;
+         ws.onclose = function() {
+
+            connect();
+         };
+         ws.onerror = function() {
+       	  console.log("出现错误");
+         };
+      }
+
+      // 连接建立时发送登录信息
+      function onopen(){
+          var login_data = '{"type":"login","client_name":"'+vm.user_name+'","room_id":"1","uid":"'+vm.id+'"}';
+          ws.send(login_data);
+      }
+
+      // 服务端发来消息时
+    function onmessage(e){
+        var data = eval("("+e.data+")");
+
+        switch (data['type']) {
+          // 服务端ping客户端
+          case 'ping':
+            ws.send('{"type":"pong"}');
+            break;
+          // 发言
+          case 'say':
+            vm.chatdata.push(data);
+            api.sendEvent({
+                name: 'chat',
+                extra: {
+                    key: 'chat'
+                }
+            });
+
+            break;
+        }
+
+
+    }
+
+    // 提交对话
+    function onSubmit(msg) {
+       ws.send('{"type":"say","to_client_id":"'+vm.peer+'","to_client_name":"'+vm.nickname+'","content":"'+msg+'"}');
+    }
+  </script>
+  </html>

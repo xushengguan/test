@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title>登录/注册</title>
+      <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+      <style>
+          .cotent{width: 100%; height: 100%; background: url(../../image/bg.png) no-repeat center; background-size: cover;
+          position: relative;}
+          .handle-box{position: absolute; bottom: 18%; left: 0; margin: 0 9%; width: calc(100% - 18%);}
+          .handle-box li{margin-bottom: 15px; height: 40px; line-height: 40px; width: 100%; text-align: center;
+          font-size: 18px; border-radius: 3px; border: 1px solid #ffc708; color: #ffc708;}
+          .handle-box li.on{background: #ffc708; color: #fff;}
+          .handle-box li:last-child{margin-bottom: 0; margin-bottom: none;}
+      </style>
+  </head>
+  <body>
+      <div class="cotent">
+          <ul class="handle-box">
+              <li class="on" tapmode onclick="goNext('0')">注 册</li>
+              <li tapmode onclick="goNext('1')">登 录</li>
+          </ul>
+      </div>
+  </body>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/my.js"></script>
+  <script type="text/javascript">
+      apiready = function(){
+          // 设置是否全屏
+          api.setFullScreen({
+            fullScreen: true
+          });
+          api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
+          // 监听网络
+          api.addEventListener({
+              name:'offline'
+          }, function(ret, err){
+
+              msg('网络连接不可用，请检查网络');
+
+          });
+
+          ajpush();
+          meiqia();
+
+          //同步返回结果：
+          var token = api.getPrefs({
+              sync: true,
+              key: 'token'
+          });
+          var id = api.getPrefs({
+              sync: true,
+              key: 'id'
+          });
+
+          if (token && id) { //取本地的token和id和服务器做校对，查询是否当前储存的是否和服务器状态一样。
+            api.ajax({
+                url: serverurl,
+                method: 'get',
+                data: {
+                    values: {
+                        type:10081,
+                        token: token,
+                        uid:id
+                    }
+                }
+            }, function(ret, err) {
+
+                if (ret) {
+
+                    if (ret.status == '1') {
+                    openWin('index','../../index.html','','');
+                  }else {
+
+                    msg('您的登录信息已失效，请重新登录!');
+                  }
+                } else {
+                    msg('网络错误，请重试!');
+                }
+            });
+          }
+          // console.log("token---"+token);
+          // if (token) {
+          //     openWin('index','../../index.html','','');
+          // }
+      };
+
+      function goNext(index){
+          setTimeout(function(){
+              api.setFullScreen({
+                  fullScreen: false
+              });
+
+          },100);
+          if (index == '0') {
+                openWin('login1','./login1.html',{index:index});
+          }else {
+                openWin('login0','./login0.html','');
+          }
+
+      }
+
+      // 极光推送
+      function ajpush(){
+          // var jpush = null;
+          // 极光推送
+          ajpush = api.require('ajpush');
+          ajpush.init(function(ret) {//初始化推送服务，只Android有效，iOS上会自动初始化
+              if (ret && ret.status){
+                  //success
+              }
+          });
+
+          var param = {id:-1};//打开程序就清除推送信息提示
+          ajpush.clearNotification(param,function(ret) {
+              if(ret && ret.status){
+                  //success
+              };
+
+          });
+
+          ajpush.setBadge({
+              badge:0
+          });
+
+          api.addEventListener({name:'resume'}, function(ret,err) { //应用从后台进入到前台清除推送信息提示
+            var param = {id:-1};//打开程序就清除推送信息提示
+            ajpush.clearNotification(param,function(ret) {
+                if(ret && ret.status){
+                    //success
+                }
+            });
+            ajpush.setBadge({//ios清除角标
+                badge:0
+            });
+          });
+
+          api.addEventListener({name:'pause'}, function(ret,err) { //应用从前台进入到后清除推送信息提示
+            var param = {id:-1};//打开程序就清除推送信息提示
+            ajpush.clearNotification(param,function(ret) {
+                if(ret && ret.status){
+                    //success
+                }
+            });
+            ajpush.setBadge({//ios清除角标
+                badge:0
+            });
+          });
+
+
+
+          //JPush服务器给客户端返回一个唯一的该设备的标识RegistrationID
+          ajpush.getRegistrationId(function(ret) {
+              var registrationId = ret.id;
+
+              api.setPrefs({//设置偏好值
+                  key: 'registrationId',
+                  value: registrationId
+              });
+
+          });
+
+      }
+
+      // 初始化美洽客服系统
+      function meiqia(){
+        //创建美洽
+        var mq = api.require('meiQia');
+        //配置初始化美洽需要的appkey
+        var param = {
+          appkey: "0c337ac24c08f876f97e70dde4d4bb6a"
+        };
+        //初始化美洽
+        mq.initMeiQia(param, function(ret, err) {
+          if (ret) {
+              //初始化成功
+              console.log(JSON.stringify(ret));
+          } else {
+              //初始化失败
+              console.log(JSON.stringify(err));
+          }
+        })
+      }
+  </script>
+  </html>

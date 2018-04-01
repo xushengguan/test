@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title>新鲜事互动消息</title>
+      <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+      <style>
+          body{background-color: #fefefe;}
+          header{position: relative; height: 44px; line-height: 44px; box-shadow: 0px 4px 4px 0px rgba(76, 81, 118, 0.15);
+          font-size: 18px; letter-spacing: 2px; background-color: #fefefe;}
+          header em{height: 44px; background: url(../../image/back.png) no-repeat center 12px; background-size: 10px 17px;
+          padding-left: 14px; padding-right: 30px; float: left;}
+
+          .user-main{margin: 14px 14px 0 14px; border-bottom: 1px solid #d2d3d5; padding-bottom: 10px;}
+          .user-main:last-child{border-bottom: none;}
+          .pic{width: 40px; height: 40px; border-radius: 50%; overflow: hidden; float: left;}
+          .pic img{width: 100%; height: 100%;}
+          .userInfo{margin-left: 14px; float: left; width: calc(100% - 54px);}
+          .flex-box{display: -webkit-box;display: -ms-flexbox;display: -webkit-flex; display: flex; -webkit-box-align: center;
+            -ms-flex-align: center;-webkit-align-items: center;align-items: center; color: #666;  position: relative;}
+          .flex-box .item{width: 80%; line-height: 20px;}
+          .item .nickname{font-size: 14px;}
+          .item .time{font-size: 13px;}
+          .flex-box .item2{font-size: 15px; position: absolute; right: 0;}
+          .item2 em{width: 15px; height: 17px; background: url(../../image/love2.png) center no-repeat;
+          background-size: contain; margin-top: -2px;}
+          .item2 em.on{background: url(../../image/love3.png) center no-repeat; background-size: contain;}
+          .item2 span{float: left; color: #666; margin-right: 3px;}
+          .user-cotent{line-height: 25px; font-size: 16px; color: #262829; margin-bottom: 10px;}
+          .user-cotent span{color: #999;}
+          .user-cotent em{margin-left: 8px; color: #3046a7;}
+          .rt-content{margin-left: 14px; float: left; color: #262829; font-size: 17px;}
+          .user-info{background-color: #f2f2f4; padding: 6px 10px;}
+          .info-line{line-height: 22px; font-size: 15px;}
+          .info-line .user,.replay-user{color: #3046a7;}
+
+          footer{padding: 5px 0; box-shadow: 0px -2px 4px 0px rgba(76, 81, 118, 0.15), inset 0px 1px 0px 0px #d2d3d5;
+          background-color: #fefefe;}
+          .f-btn{width: calc(100% - 28px); height: 40px; line-height: 40px; text-align: left; padding: 0 14px; font-size: 15px;
+          color: #ccc;}
+
+      </style>
+  </head>
+  <body>
+      <div id="wrap" v-cloak>
+          <header>
+            <em tapmode onclick="go_back()"></em>
+          </header>
+          <div id="main" class="article">
+            <div class="user-box1" v-for="v in data.comment">
+                <div class="user-main clearfix">
+                    <div class="pic">
+                        <img :src="v.headimgurl+'?x-oss-process=image/resize,m_fill,h_40,w_40'" alt="人头像" v-if="v.headimgurl">
+                        <img src="../../image/pic.png" alt="人头像" v-else>
+                    </div>
+                    <div class="userInfo">
+                        <div class="flex-box">
+                              <div class="item">
+                                  <p class="nickname">{{v.nickname}}</p>
+                                  <p class="time">{{v.comment_time | getInfoDate}}</p>
+                              </div>
+
+                              <div class="item2 clearfix">
+                                  <span>{{v.praise}}</span>
+                                  <!-- is_like用户是否点赞该评论 1 已经点赞 0 未点赞 -->
+                                  <em class="" tapmode @click="giveLike(v)" v-if="v.is_like == '0'"></em>
+                                  <em class="on" tapmode @click="giveLike(v)" v-else></em>
+                              </div>
+                        </div>
+                        <div class="user-cotent" tapmode @click="openInput('回复:'+v.nickname,v.user_id,v.id)">
+                            {{v.comments}}
+                        </div>
+                        <div class="user-info" v-for="vv in v.data">
+                            <div class="info-line" tapmode @click="openInput('回复:'+vv.u_name,vv.u_id,v.id)" v-if="!vv.peer.p_id">
+                                <span class="user">{{vv.u_name}}:</span>
+                                {{vv.rew_content}}
+                            </div>
+                            <div class="info-line" tapmode @click="openInput('回复:'+vv.u_name,vv.u_id,v.id)" v-else>
+                                <span class="replay-user">{{vv.u_name}}</span>
+                                回复
+                                <span class="user">{{vv.peer.p_name}}:</span>
+                                {{vv.rew_content}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <footer class="flex-box">
+                <div class="f-btn" tapmode @click="openInput('请输入您想要说的内容')">说点什么吧</div>
+          </footer>
+      </div>
+  </body>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/my.js"></script>
+  <script type="text/javascript" src="../../script/vue.js"></script>
+  <script type="text/javascript" src="../../script/date.js"></script>
+  <script type="text/javascript">
+      var token,id;
+      apiready = function(){
+          api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
+          token = api.getPrefs({
+              sync: true,
+              key: 'token'
+          });
+          id = api.getPrefs({
+              sync: true,
+              key: 'id'
+          });
+          if (api.pageParam.data) {
+              vm.data = api.pageParam.data;
+          }
+
+      };
+
+      var vm = new Vue({
+          el:'#wrap',
+          data:{
+              data:[],
+          },
+          filters: {
+              getInfoDate: function getInfoDate(time) {
+                  return getDate(time);
+              }
+          },
+          methods:{
+            // 弹出input输入框
+            openInput:function openInput(placeholder,replayid,comment_id){
+              if (replayid != id) {
+                var inputField = api.require('inputField');
+                inputField.open({
+                  bgColor: '#fefefe',
+                  lineColor: '#eeeff7',
+                  fileBgColor: '#eeeff7',
+                  borderColor: '#eeeff7',
+                  autoFocus:true,
+                  placeholder:placeholder,
+                  maxLines:40,
+                  sendBtn:{
+                     bg: '#ffc708',          //字符串类型；发送按钮常态背景色
+                     inputBg:'#ffc708',      //(可选项)字符串类型；当输入文字发时送按钮的背景色；默认：bg的色值
+                     bgHighlight: '#FFCC00', //字符串类型；发送按钮点击时的高亮背景色
+                     title: '发送',        //字符串类型；发送按钮的标题
+                     titleSize: 12,    //数字类型；发送按钮的标题字体大小
+                     titleColor: '#fff',  //字符串类型；发送按钮标题文字颜色
+                     corner: 10,            //数字类型；发送按钮圆角大小
+
+                  }
+                }, function(ret, err) {
+                  if (ret) {
+                      
+                      if (ret.msg) {
+                         if (replayid) {
+                            Reply(ret.msg,replayid,comment_id);
+                         }else {
+                            comment(ret.msg);
+                         }
+
+                      }
+                  } else {
+                      console.log(JSON.stringify(err));
+                  }
+                });
+              }
+            },
+
+            //为文章下面的评论点赞
+            giveLike:function giveLike(item){
+                showProgress('努力加载中','请稍后···');
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    data: {
+                        values: {
+                            type: '10088',
+                             uid: id,//用户id
+                           token:token,
+                           comment_id:item.id//评论id
+                        },
+                    }
+                },function(ret, err){
+                    api.hideProgress();
+
+                    if (ret) {
+                        if (ret.status == '5') {
+                            ExitLogin();
+                        }else {
+                            // state:1点赞成功，再次点取消点赞 返回0
+                            if (ret.status == 1) {
+                                //  <!--  is_like是否点赞 1 已经点赞 0 没有点赞 -->
+                                item.is_like = 1;
+                            }else {
+                                item.is_like = 0;
+                            }
+                            item.praise = ret.count;
+
+                        }
+                    }else {
+                        msg('网络错误');
+
+                    }
+                });
+            },
+
+
+          }
+      })
+
+
+      // 用户评论文章
+      function comment(content){
+          showProgress('努力加载中','请稍后···');
+          var time = Math.round(new Date().getTime()/1000);
+          api.ajax({
+              url: serverurl,
+              method: 'get',
+              data: {
+                  values: {
+                      type: '10069',
+                      news_id:vm.data.id,//文章id
+                      uid:id,//本人id
+                      comments: content,//回复内容
+                      token:token,
+                      time:time
+                  }
+              }
+          },function(ret, err){
+              api.hideProgress();
+
+              if (ret) {
+
+                  if (ret.status == '5') {
+                       ExitLogin();
+                  }else {
+                       vm.data.comment = ret;
+                       var inputField = api.require('inputField');
+                       inputField.close();
+                       api.sendEvent({
+                           name: 'news',
+                           extra: {
+                               key: 'comment'
+                           }
+                       });
+                  }
+              } else {
+
+                  msg('网络错误');
+              }
+          });
+      }
+
+      // 用户之间的评论
+      function Reply(content,peer,comment_id){
+          showProgress('努力加载中','请稍后···');
+          var time = Math.round(new Date().getTime()/1000);
+          api.ajax({
+              url: serverurl,
+              method: 'get',
+              data: {
+                  values: {
+                      type: '10070',
+                      news_id:vm.data.id,//文章id
+                      uid:id,//本人id
+                      content: content,//回复内容
+                      token:token,
+                      time:time,
+                      comment_id: comment_id,//评论id
+                      peer: peer//对象id （回复文章的评论则传 该条文章的评论 的用户id）
+                  }
+              }
+          },function(ret, err){
+              api.hideProgress();
+
+              if (ret) {
+
+                  if (ret.status == '5') {
+                       ExitLogin();
+                  }else {
+                       vm.data.comment = ret;
+                       var inputField = api.require('inputField');
+                       inputField.close();
+                       api.sendEvent({
+                           name: 'news',
+                           extra: {
+                               key: 'reply'
+                           }
+                       });
+                  }
+              } else {
+
+                  msg('网络错误');
+              }
+          });
+      }
+  </script>
+  </html>

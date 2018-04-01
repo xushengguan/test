@@ -6,454 +6,654 @@
       <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
       <title>首页</title>
       <link rel="stylesheet" type="text/css" href="../css/api.css"/>
-      <link rel="stylesheet" type="text/css" href="../css/loading.css"/>
+      <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+      <link rel="stylesheet" type="text/css" href="../css/video-js.css"/>
+      <link rel="stylesheet" type="text/css" href="../css/swiper.min.css"/>
+      <link rel="stylesheet" type="text/css" href="../css/examples.css"/>
       <style>
-          header{background: #ffb300; padding: 15px; }
-          .info{padding-bottom: 20px; display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;
-          -webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center; margin-top: 4px;}
-          .info img{width: 35px; height: 35px; border-radius: 50%;}
-          .info span{font-size: 15px; color: #fff; padding-left: 10px; padding-right: 5px;}
-          .info em{width: 12px; height: 26px; background: url(../image/ident.png) no-repeat center; background-size: contain;}
-          .assets{font-size: 14px; color: #fff1cf; padding-bottom: 10px;}
-          .money{overflow: hidden; margin-bottom: 18px; display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;
-          -webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;}
-          .money .num{font-size: 18px; color: #ffebbf; width: 70%; float: left;}
-          .money .num em{font-size: 29px; font-weight: bold; color: #fff; }
-          .money button{display: block; position: absolute; right: 15px; width: 80px; height: 26px; border-radius: 25px; border: 1px solid #ffd876;
-            background-color: #ffcc4e; color: #fff; font-size: 14px; font-weight: bold; line-height: 26px;}
-          .menu{width: 100%; overflow: hidden;}
-          .menu li{float: left; position: relative; width: 50%; margin-top: 18px;}
-          .menu li .menu_title{font-size: 13px; color: #fff1cf; line-height: 14px;}
-          .menu li .num{font-size: 15px; color: #fff; line-height: 14px; padding-top: 5px; font-weight: bold;}
-          .menu li em{position: absolute; right: 50px; top: 50%; transform: translateY(-50%); background: url(../image/rt.png) no-repeat center;
-          background-size: 6px 10px; width: 6px; height: 10px;}
+          header{padding: 0 14px;}
+          header{height: 44px; line-height: 44px; box-shadow: 0px 4px 4px 0px rgba(76, 81, 118, 0.15);
+            background-color: #fefefe; text-align: center; position: relative;}
 
-          .nav{background: #fff; display: -webkit-flex; display: -webkit-box; display: flex; padding: 5px 0;
-          box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2); margin-bottom: 8px;}
-          .nav li{flex: 1; -webkit-box-flex:1; -webkit-flex:1; border-right: 1px solid #f2f2f2; padding-top: 56px; padding-bottom: 14px;
-          background: url() no-repeat center 20px; background-size: auto 25px; text-align: center; font-size: 15px; color: #000;}
-          .nav li:nth-child(1){background: url(../image/nav_bar1.png) no-repeat center 20px; background-size: auto 25px;}
-          .nav li:nth-child(2){background: url(../image/nav_bar2.png) no-repeat center 20px; background-size: auto 25px;}
-          .nav li:nth-child(3){background: url(../image/nav_bar3.png) no-repeat center 20px; background-size: auto 25px;}
-          .nav li:nth-child(4){background: url(../image/nav_bar4.png) no-repeat center 20px; background-size: auto 25px;}
-          .nav li:last-child{border-right: none;}
+          header .title{font-size: 18px; color: #999; line-height: 42px; border-bottom: 2px solid #fefefe;
+          margin: 0 15px; -webkit-transition: all .2s;
+            transition: all .2s;}
+          header .title.on{border-bottom: 2px solid #ffc708; color: #262829; -webkit-transition: all .3s cubic-bezier(.4,0,.2,1);
+            transition: all .3s cubic-bezier(.4,0,.2,1);}
 
-          .box{margin-bottom: 8px; box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2); background: #fff;}
-          .box .top{padding: 10px 25px 10px 15px; position: relative; border-bottom: 1px solid #f2f2f2;}
-          .top .awardName{font-size: 15px; color: #212121; font-weight: bold;}
-          .top .explain{font-size: 13px; color: #999; margin-top: 2px;}
-          .top em{position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: url(../image/rt.png) no-repeat center;
-          background-size: 7px 11px; width: 7px; height: 11px;}
-          .income{display: -webkit-box; display: -webkit-flex; display: flex; border-bottom: 1px solid #f2f2f2;}
-          .income .num{font-size: 15px; flex: 1; -webkit-flex:1; -webkit-box-flex:1; border-right: 1px solid #f2f2f2; padding: 10px 15px;}
-          .income .num:last-child{border-right: none;}
-          .income .num .txt{color: #999; padding-bottom: 10px;}
-          .income .num .total{color: #ffb300; font-weight: bold;}
-          .chartBox{padding: 10px; display: none;}
-          .chartBox .title{padding: 2px 5px 10px 5px; font-size: 15px; color: #999;}
-          .chartBox .chart{width: 100%; height: 250px; background: #f2f2f2;}
+          header em{height: 44px;}
+          header .scan{background: url(../image/sscan.png) no-repeat center; float: left; width: 19px;
+            background-size: 19px 18px;}
+          header .search{background: url(../image/search.png) no-repeat center; float: right; width: 18px;
+            background-size: 18px;}
+          .content{padding: 0 14px; background: #fefefe;}
+          .newsAll{padding-top: 10px; padding-bottom: 16px; border-bottom: 1px solid #d2d3d5;}
+
+          .content .title{line-height: 20px; letter-spacing: 1px; font-size: 17px;}
+          .content .spe-info{line-height: 20px; letter-spacing: 1px; color: #999;}
+          .content .comment{padding-left: 4px; padding-top: 8px; padding-bottom: 6px;}
+          .spe-img{width: 100%; max-height: 160px; border-radius: 3px;}
+          .new-lt{width: calc(70% - 12px); padding-right: 12px; float: left;}
+          .new-lt .title{min-height: 44px;}
+          .news-info{margin-top: 16px;}
+          .news-info span:nth-child(1){float: left;}
+          .news-info span:nth-child(2){float: right;}
+          .new-rt{float: left; width: 30%; border-radius: 3px;}
+          .new-rt img{width: 100%; max-height: 77px;}
+
+          .circle .top{padding: 14px 13px; font-size: 17px; line-height: 20px; box-shadow: 0px 1px 2px 0px rgba(76, 81, 118, 0.15);
+             background-color: #fefefe; display: flex; display: -wekit-flex; align-items: center; -webkit-align-items: center;
+             margin-bottom: 10px;}
+          .circle .top em{padding: 0px 5px; border: solid 1px #ffc708; letter-spacing: 1px; font-size: 12px;
+             border-radius: 2px; color: #ffc708; margin-right: 5px; text-align: center;}
+          .circle .act{height: 40px; line-height: 40px; border-bottom: 1px solid #d2d3d5; letter-spacing: 1px;
+          color: #999; padding-right: 14px; padding-left: 36px; font-size: 15px; background: url(../image/act.jpg) no-repeat 14px center;
+          background-size: 14px; background-color: #fefefe;}
+          .act a{float: right; color: #999; display: block; background:url(../image/more.png) no-repeat right center;
+            background-size: 16px; min-width: 52px;}
+
+          .swiper-container {
+            width: 100%;
+            height: 314px;
+          }
+
+          .swiper-slide {
+            font-size: 18px;
+            background: #fefefe;
+            padding: 14px;
+            box-sizing: border-box;
+            width: 85%;
+
+          }
+
+          .swiper-slide.on{
+              width: 100%;
+          }
+
+          .swiper-slide .act-title{ border-left: 3px solid #46daab; color: #262829; font-size: 17px;
+            font-weight: bold; padding-left: 5px; margin-bottom: 10px;}
+          .swiper-slide img{width: 100%; max-height: 160px; margin-bottom: 5px;}
+          .act-info{line-height: 22px; letter-spacing: 1px; color: #666; font-size: 15px;}
+
+          .actBox{margin-bottom: 10px;}
+          .cir-container .cir-box{background: #fefefe; margin-bottom: 10px;}
+          .cir-box:last-child{margin-bottom: 0;}
+          .cir-container .cir-title{padding: 14px 14px 0 14px; display: -webkit-box;display: -ms-flexbox;display: -webkit-flex;
+            display: flex; -webkit-box-align: center;-ms-flex-align: center;-webkit-align-items: center;align-items: center;
+           margin-bottom: 8px;}
+          .cir-title img{width: 36px; height: 36px; border-radius: 50%;}
+          .cir-title .cir-info{margin-left: 12px; -webkit-box-flex: 1;-webkit-flex: 1;flex: 1;}
+          .cir-name{font-size: 15px; line-height: 20px;}
+          .cir-time{font-size: 12px; line-height: 20px; color: #ced1d5;}
+          .cir-title .cir-rt{min-width: 90px; }
+          .cir-rt .cir-btn{width: 63px; height: 30px; line-height: 30px; border: solid 1px #dadada; border-radius: 15px;
+            font-size: 15px; letter-spacing: 2px; color: #dadada; text-align: center; float: right;}
+          .cir-rt .down-arrow{display: inline-block; width: 16px; height: 10px; background: url(../image/down-arrow.png) no-repeat center;
+          background-size: contain; margin-left: 10px;}
+          .cir-content{font-size: 17px; margin: 0 14px 7px 14px;}
+          .cir-navmenu{border-top: 1px solid #f2f2f2;height: 35px; text-align: center;display: -webkit-box;display: -ms-flexbox;display: -webkit-flex;
+           display: flex; font-size: 13px; text-align:justify; margin: 0 14px;}
+          .cir-navmenu span{-webkit-box-flex: 1;-webkit-flex: 1;flex: 1;overflow-y: auto; display: -webkit-box;display: -ms-flexbox;
+            display: -webkit-flex; display: flex; -webkit-box-align: center ;-ms-flex-align: center; -webkit-align-items: center;
+            align-items: center; -webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center; }
+          .cir-navmenu span em{width: 20px; height: 30px; }
+          .cir-navmenu span i{margin-left: 3px; color: #999;}
+          .cir-navmenu span:nth-child(3) i{margin-left: 4px;}
+          .cir-navmenu span:nth-child(1) em{background: url(../image/love.png) no-repeat center 1px; background-size: auto 20px;}
+          .cir-navmenu span:nth-child(2) em{background: url(../image/comment.png) no-repeat center; background-size: auto 20px;}
+          .cir-navmenu span:nth-child(3) em{background: url(../image/share.png) no-repeat center; background-size: auto 20px;}
+          .cir-navmenu span:nth-child(1) em.on{background: url(../image/love1.png) no-repeat center 1px; background-size: auto 20px;}
+
+          /*九宫格*/
+          .cell {padding:0 14px;max-width: 210px;max-height: 210px;overflow: hidden;padding-bottom: 10px;}
+          .cell img { width: 100%; height: 100%;}
+          .cell9 {padding:0 7px;width: calc(100% - 14px);overflow: hidden;}
+          .cell9 .item { width: calc(33.33% - 14px); float: left; margin: 0 7px 14px 7px; position: relative; }
+          .cell9.cell4 .item {width: calc(50% - 14px);}
+          .cell9 .item:before {content: "";display: inline-block;padding-bottom: 100%;width: 0.1px;vertical-align: middle;}
+          .cell9 .item img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+
+          .bad-video{margin:0 14px 14px 14px; position: relative; height: 200px;}
+          .videoPlay{position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); height: 58px;}
+          .video{ width:100%; height:100%;}
+          .video-num{color: #fff; font-size: 13px; letter-spacing: 2px; position: absolute; right: 10px; bottom: 13px;}
+
       </style>
   </head>
   <body>
-    <div id="app" v-cloak>
-        <header id="header">
-            <div class="info">
-                <img :src="data.headimgurl" alt="" v-if="data.headimgurl">
-                <img src="../image/pic.png" alt="" v-else>
-                <span v-if="data.nickname">{{data.nickname}}</span>
-                <span v-else>{{data.tel}}</span>
-                <em></em>
-            </div>
-            <div class="assets">现金资产</div>
-            <div class="money">
-                <div class="num">
-                    <em v-if="data.winmoney">{{data.winmoney}}</em>
-                    <em v-else>0</em>
-                    学分
-                </div>
-                <button tapmode onclick="ApplyFor()">申请提现</button>
-            </div>
-            <ul class="menu">
-                <li tapmode onclick="isActive()">
-                  <p class="menu_title">已激活产品(套)</p>
-                  <p class="num" v-if="Info.count_actvate_product">{{Info.count_actvate_product}}</p>
-                  <p class="num" v-else>0</p>
-                  <em></em>
-                </li>
-                <li tapmode onclick="goStudentAll()">
-                  <p class="menu_title">已激活学员(人)</p>
-                  <p class="num" v-if="Info.count_actvate">{{Info.count_actvate}}</p>
-                  <p class="num" v-else>0</p>
-                  <em></em>
-                </li>
-                <li>
-                  <p class="menu_title">冻结资产(学分)</p>
-                  <p class="num" v-if="Info.money">{{Info.money}}</p>
-                  <p class="num" v-else>0</p>
-                </li>
-                <li tapmode onclick="goStudent()">
-                  <p class="menu_title">待激活学员(人)</p>
-                  <p class="num" v-if="Info.count_not_actvate">{{Info.count_not_actvate}}</p>
-                  <p class="num" v-else>0</p>
-                  <em></em>
-                </li>
-            </ul>
-        </header>
-        <ul class="nav">
-          <li tapmode onclick="creatAct()">发起活动</li>
-          <li tapmode onclick="goAdmin()">管理活动</li>
-          <li tapmode onclick="isActive()">产品激活</li>
-          <li tapmode onclick="inviteToreg()">邀请注册</li>
-        </ul>
-        <div class="box">
-            <div class="top" tapmode onclick="goProfit(2)">
-                <div class="awardName">参与奖</div>
-                <p class="explain">参与奖说明</p>
-                <em></em>
-            </div>
-            <div class="income">
-                <div class="num">
-                    <p class="txt">总收益(学分)</p>
-                    <p class="total total2"></p>
-                </div>
-                <div class="num">
-                    <p class="txt">最近7天收益(学分)</p>
-                    <p class="total week2"></p>
-                </div>
-            </div>
-            <div class="chartBox ebox2">
-               <div class="title">近1周收益折线图</div>
-               <div class="chart" id="chart2"></div>
-            </div>
-        </div>
+      <div id="wrap" v-cloak>
+          <header>
 
-        <div class="box">
-            <div class="top" tapmode onclick="goProfit(1)">
-                <div class="awardName">生源奖</div>
-                <p class="explain">参与奖说明</p>
-                <em></em>
-            </div>
-            <div class="income">
-                <div class="num">
-                    <p class="txt">总收益(学分)</p>
-                    <p class="total total1"></p>
-                </div>
-                <div class="num">
-                    <p class="txt">最近7天收益(学分)</p>
-                    <p class="total week1"></p>
-                </div>
-            </div>
-            <div class="chartBox ebox1">
-               <div class="title">近1周收益折线图</div>
-               <div class="chart" id="chart1"></div>
-            </div>
-        </div>
+              <a class="title" :class="{on:changeColor == index}" href="javascript:;" v-for="(item,index) in tabData" tapmode @click="switchTab(index)">
+                {{item.tabName}}
+              </a>
+              <em class="scan" tapmode onclick="ScanCode()"></em>
+              <em class="search" tapmode onclick="openWin('search','./search.html','')"></em>
+          </header>
+          <div id="main">
+              <div class="container">
+                  <!-- 新鲜事 -->
+                  <div class="content" v-if="changeColor == 0 && !data.status">
+                    <div v-for="v in data">
+                      <div class="newsAll" tapmode @click="goDetail(v.id,1)" v-if="v.type == 1">
+                          <div class="title more">{{v.title}}</div>
+                          <div class="spe-info">
+                              <span>{{v.time | getInfoDate}}</span>
+                              <span class="comment">{{v.count}}评论</span>
+                          </div>
+                          <img class="spe-img" :src="v.surface_plot" alt="新闻图片">
+                      </div>
+                      <div class="newsAll clearfix" tapmode @click="goDetail(v.id,1)" v-else>
+                          <div class="new-lt">
+                              <div class="title more">{{v.title}}</div>
+                              <div class="news-info clearfix">
+                                  <span class="spe-info">{{v.time | getInfoDate}}</span>
+                                  <span class="spe-info">{{v.count}}评论</span>
+                              </div>
+                          </div>
+                          <div class="new-rt">
+                              <img :src="v.surface_plot+'?x-oss-process=image/resize,m_fill,h_210,w_210'" alt="新闻图片">
+                          </div>
+                      </div>
+                    </div>
+                  </div>
 
-        <div class="box">
-            <div class="top" tapmode onclick="goProfit(3)">
-                <div class="awardName">线下收益</div>
-                <p class="explain">参与奖说明</p>
-                <em></em>
-            </div>
-            <div class="income">
-                <div class="num">
-                    <p class="txt">总收益(学分)</p>
-                    <p class="total total3"></p>
-                </div>
-                <div class="num">
-                    <p class="txt">最近7天收益(学分)</p>
-                    <p class="total week3"></p>
-                </div>
-            </div>
-            <div class="chartBox ebox3">
-               <div class="title">近1周收益折线图</div>
-               <div class="chart" id="chart3"></div>
-            </div>
-        </div>
-    </div>
+                  <!-- 学客圈 -->
+                  <div class="circle" v-else-if="changeColor == 1 && circledata && acts">
+                      <div class="top" v-if="grooms">
+                          <em>官推</em>
+                          {{grooms.title}}>>
+                      </div>
+                      <div class="actBox" v-if="!acts.status">
+                          <div class="act">
+                              学令牌活动
+                              <!-- <a href="javascript:;" tapmode onclick="getUser()">更多</a> -->
+                          </div>
+
+                          <!-- Swiper -->
+                          <div class="swiper-container">
+                            <div class="swiper-wrapper">
+                              <div class="swiper-slide" :class="{on:acts.length == 1}" v-for="v in acts" tapmode @click="goDetail(v.id,2)">
+                                  <div class="act-title more">
+                                    {{v.title}}
+                                  </div>
+                                  <img :src="v.actimgurl+'?x-oss-process=image/resize,p_50'" alt="活动图片" class="act-img">
+                                  <p class="act-info more3">
+                                      {{v.content}}
+                                  </p>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                      <!-- 用户发表的学科圈 -->
+                      <div class="cir-container" v-if="circledata">
+
+                          <div class="cir-box" v-for="v in circledata">
+                              <div class="cir-title">
+                                  <img :src="v.headimgurl+'?x-oss-process=image/resize,m_fill,h_36,w_36'" alt="人头像" v-if="v.headimgurl" tapmode @click="goDetail(v.uid,3)">
+                                  <img src="../image/pic.png" alt="人头像" v-else tapmode @click="goDetail(v.uid,3)">
+                                  <div class="cir-info">
+                                      <p class="cir-name">{{v.nickname}}</p>
+                                      <p class="cir-time">{{v.last_reply_at | getInfoDate}}</p>
+                                  </div>
+                                  <div class="cir-rt" v-if="v.uid != id">
+                                      <!-- is_follow是否关注 1 已经关注 0 没有关注 -->
+                                      <span class="cir-btn" tapmode @click="follow(v,0)" v-if="v.is_follow == '1'">已关注</span>
+                                      <span class="cir-btn" tapmode @click="follow(v,1)" v-else>+关注</span>
+                                      <!-- <span class="down-arrow"></span> -->
+                                  </div>
+                              </div>
+                              <div class="cir-content more3" v-if="v.content" tapmode @click="goDetail(v.id,4)">
+                                  {{v.content}}
+                              </div>
+
+                              <div v-if="v.thumb">
+                                  <!-- 1张图片 -->
+                                  <ul class="cell clearfix" v-if="v.thumb.length == 1">
+                                       <li class="item">
+                                          <img :src="v.thumb[0]+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="动态图" @click="viewPicture(v.thumb,index)">
+                                       </li>
+                                  </ul>
+                                  <!-- 4宫格图片 -->
+                                  <ul class="cell9 cell4 clearfix" v-else-if="v.thumb.length == 4">
+                                       <li class="item" v-for="(item,index) in v.thumb">
+                                          <img :src="item+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="动态图" @click="viewPicture(v.thumb,index)">
+                                       </li>
+
+                                  </ul>
+
+                                  <!-- 9宫格图片 -->
+                                  <ul class="cell9 clearfix" v-else>
+                                       <li class="item" v-for="(item,index) in v.thumb">
+                                          <img :src="item+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="动态图" @click="viewPicture(v.thumb,index)">
+                                       </li>
+
+                                  </ul>
+                              </div>
+
+                              <!-- 视频 -->
+                              <!-- <div class="bad-video">
+                                <video class="video" poster="../image/img.jpg" webkit-playsinline style="object-fit:fill;">
+                                  <source src="http://www.runoob.com/try/demo_source/movie.mp4" type="video/mp4">
+                                  您的浏览器不支持 HTML5 video 标签。
+                                </video>
+                                <img class="videoPlay" src="../image/play.png" alt="播放按钮" tapmode onclick="videoPlay()">
+                                <span class="video-num">591次播放</span>
+                              </div> -->
+
+                              <div class="cir-navmenu">
+                                  <!--  is_like是否点赞 1 已经点赞 0 没有点赞 -->
+                                  <span tapmode @click="giveLike(v)"><em :class="{on:v.is_like == 1}"></em><i>{{v.like}}</i></span>
+                                  <span tapmode @click="goDetail(v.id,4)"><em></em><i>{{v.rew}}</i></span>
+                                  <span><em></em><i>{{v.smit}}</i></span>
+                              </div>
+                          </div>
+
+
+                      </div>
+
+                  </div>
+
+                  <!-- 没有数据 -->
+                  <div class="no-data" v-else>
+            					 <img src="../image/ndata.png" alt="没数据图片">
+            					 <p>抱歉，没有数据~</p>
+            			</div>
+              </div>
+          </div>
+      </div>
+
   </body>
   <script type="text/javascript" src="../script/api.js"></script>
   <script type="text/javascript" src="../script/my.js"></script>
   <script type="text/javascript" src="../script/vue.js"></script>
-  <script type="text/javascript" src="../script/echarts.min.js"></script>
+  <script type="text/javascript" src="../script/swiper.min.js"></script>
+  <script type="text/javascript" src="../script/date.js"></script>
+  <script src="http://cdn.bootcss.com/zepto/1.2.0/zepto.js"></script>
+  <script type="text/javascript" src="../script/pull.min.js"></script>
   <script type="text/javascript">
-      var header = $api.dom('header');
-      fixStatusBar_API(header);
-      var uid,token;
+      var token,id;
+      var page = 1;
 
       apiready = function(){
-        uid = $api.getStorage('id');
-        token = $api.getStorage('token');
-        loading();
-        $api.css($api.byId('app'), 'display:none');
-        $api.css($api.byId('loading'), 'display:block');
-        vm.getUser();
-        vm.getInfo();
-        getProfit(2);//form收益类型 1:生源奖 2:参与奖 3:线下收益
-        getProfit(1);
-        getProfit(3);
-        $api.css($api.byId('app'), 'display:block');
-        $api.css($api.byId('loading'), 'display:none');
+          SetStatusBar('#main','dark','#fefefe');//设置状态栏my.js
 
-        //刷新
-        api.setRefreshHeaderInfo({
-            loadingImg: 'widget://image/refresh.png',
-            bgColor: '#efeff4',
-            textColor: '#333',
-            textUp: '释放立即刷新...',
-            textLoading: '加载中···',
-            showTime: false
-        }, function(ret, err) {
-            //在这里从服务器加载数据，加载完成后调用api.refreshHeaderLoadDone()方法恢复组件到默认状态
-            window.location.reload();
-            api.refreshHeaderLoadDone();
-        });
+          api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
+          token = api.getPrefs({
+              sync: true,
+              key: 'token'
+          });
+          id = api.getPrefs({
+              sync: true,
+              key: 'id'
+          });
+          vm.switchTab(0);
 
-      };
+          api.addEventListener({
+              name: 'circle'
+          }, function(ret, err){
+              if( ret ){
+
+                   vm.getCircle();
+              }else{
+                   console.log( JSON.stringify( err ) );
+              }
+          });
+
+      }
+
       var vm = new Vue({
-          el:"#app",
+          el:'#wrap',
           data:{
               data:[],
-              Info:[]
+              grooms:'',
+              acts:[],
+              circledata:[],
+              loadata:true, // 设置一个开关来避免重负请求数据
+              updata:false,
+              changeColor:0,
+              id:'',
+              tabData:[
+                  {tabName:'新鲜事'},
+                  {tabName:'学客圈'}
+              ],
+          },
+          filters: {
+              getInfoDate: function getInfoDate(time) {
+                  return getDate(time);
+              }
           },
           methods:{
-              getUser:function(){
-                  api.ajax({//获取用户基本信息
-                      url: serverurl,
-                      method: 'get',
-                      cache:true,
-                      data: {
-                          values: {
-                              type: '10035',
-                               uid: uid,
-                             token: token
-                          },
-                      }
-                  },function(ret, err){
 
-                      if (ret.status == '1') {
-                          vm.data = ret.data;
-                      }else if (ret.status == '5') {
-                         ExitLogin();
-                      }else {
-                          api.toast({
-                              msg: '网络错误',
-                              duration: 2000,
-                              location: 'middle'
-                          });
+            goDetail:function(id,index){
+                if (index == 1) {
+                    // 跳到新鲜事详情页
+                    openWin('circleDetail1','./circle/circleDetail1.html',{newid:id});
+                }else if (index == 2) {
+                    // 打开活动详情页
+                    openWin('actDetail','./active/actDetail.html',{actid:id});
+                }else if (index == 3) {
+                    // 打开主页
+                    openWin('MyIndex','./mine/MyIndex.html',{id:id});
+                }else {
+                    // 学客圈详情页
+                    openWin('circleDetail2','./circle/circleDetail2.html',{cirid:id});
+                }
 
-                      }
-                  });
-              },
+            },
 
-              getInfo:function(){
-                  api.ajax({//个人中心
-                      url: serverurl,
-                      method: 'get',
-                      cache:true,
-                      data: {
-                          values: {
-                              type: '10171',
-                               uid: uid,
-                             token: token
-                          },
-                      }
-                  },function(ret, err){
+            switchTab:function switchTab(index){
+                  vm.changeColor = index;
+                  if (index == 1) {
 
-                      if (ret) {
-                          if (ret.status == '5') {
-                              ExitLogin();
-                          }else {
-                              vm.Info = ret;
-                          }
-                      }else {
-                          api.toast({
-                              msg: '网络错误',
-                              duration: 2000,
-                              location: 'bottom'
-                          });
-
-                      }
-
-                  });
-              }
-          }
-      })
-      // 管理活动
-      function goAdmin(){
-          api.openWin({
-              name: 'Actadmin_title',
-              url: './activity/Actadmin_title.html',
-              reload:true
-          });
-
-      }
-
-      // 发起活动
-      function creatAct(){
-          api.openWin({
-              name: 'creat_Act_title',
-              url: './activity/creat_Act_title.html',
-              reload:true,
-              allowEdit:true
-          });
-      }
-
-      //去到待激活学员
-      function goStudent(){
-          api.openWin({
-              name: 'stuLis_title',
-              url: './setting/stuLis_title.html',
-              reload:true
-          });
-      }
-
-      // 全部学员
-      function goStudentAll(){
-        api.openWin({
-            name: 'stuAll_title',
-            url: './setting/stuAll_title.html',
-            reload:true
-        });
-      }
-
-      // 已激活产品
-      function isActive(){
-        api.openWin({
-            name: 'activeProduct_title',
-            url: './setting/activeProduct_title.html',
-            reload:true
-        });
-      }
-
-      // 申请提现
-      function ApplyFor(){
-        api.openWin({
-            name: 'widthdraw',
-            url: './MyBank/widthdraw.html',
-            reload:true,
-            allowEdit:true
-        });
-      }
-
-      // 跳到收益页面
-      function goProfit(index){
-          api.openWin({
-              name: 'profit_title',
-              url: './setting/profit_title.html',
-              pageParam: {
-                  index: index
-              },
-              reload:true
-          });
-
-      }
-
-      // 助教收益
-      function getProfit(form){//form收益类型 1:生源奖 2:参与奖 3:线下收益
-          api.ajax({
-              url: serverurl,
-              method: 'get',
-              cache:true,
-              data: {
-                  values: {
-                       type: '10174',
-                      token: token,
-                       uid:uid,
-                      form:form
-                  },
-              }
-          },function(ret, err){
-              
-              if (ret) {
-
-                  if (!ret.status) {
-                      if (ret.total) {
-                          $api.text($api.dom('.total'+form),ret.total);
-                      }else {
-                          $api.text($api.dom('.total'+form),0);
-                      }
-
-                      if (ret.week) {
-                          $api.text($api.dom('.week'+form),ret.week);
-                      }else {
-                          $api.text($api.dom('.week'+form),0);
-                      }
-
-
-                      if (ret.data) {
-                          $api.css($api.dom('.ebox'+form),'display:block');
-                          var data = [];
-                          var time = [];
-                          ret.data.forEach(function(e){
-                              data.push(e.count);
-                              time.push(e.time);
-                          })
-                          var myChart = echarts.init(document.getElementById('chart'+form));  // 基于准备好的dom，初始化echarts实例
-                          option = {
-
-                                    title: {
-                                        text: '近1周收益'
-                                    },
-                                    tooltip: {
-                                        trigger: 'axis'
-                                    },
-
-                                    grid: {
-                                        left: '3%',
-                                        right: '4%',
-                                        bottom: '3%',
-                                        containLabel: true
-                                    },
-
-                                    xAxis: {
-                                        type: 'category',
-                                        boundaryGap: false,
-                                        data: time
-                                    },
-                                    yAxis: {
-                                        type: 'value'
-                                    },
-                                    series: [
-                                        {
-                                            name:'参与奖收益',
-                                            type:'line',
-                                            stack: '总量',
-                                            data:data
-                                        }
-                                    ]
-                                };
-
-                          myChart.setOption(option);// 使用刚指定的配置项和数据显示图表。
-                      }
+                     vm.getgroom();
+                     vm.getActs();
+                     vm.getCircle();
+                     vm.data = [];
+                     page = 1;
                   }else {
-                      $api.text($api.dom('.total'+form),0);
-                      $api.text($api.dom('.week'+form),0);
+
+                     vm.getNews(page);
+                     api.addEventListener({
+                         name:'scrolltobottom',
+                         extra:{
+                             threshold:50            //设置距离底部多少距离时触发，默认值为0，数字类型
+                         }
+                     }, function(ret, err){
+                         vm.updata = true;
+
+                         if(vm.changeColor == 0){
+                           if (vm.loadata == true) {
+                               vm.loadata = false;
+                               vm.getNews(page+=1);
+                           }
+                         }
+                     });
                   }
-              }else if (ret.status == '5') {
-                  ExitLogin();
-              } else {
+            },
+            // 显示大图
+            viewPicture: function viewPicture(data, index) {
+                if (data) {
+                    var url = [];
+                    data.forEach(function (ret) {
+                        url.push(ret);
+                    });
+                    var imageBrowser = api.require('imageBrowser');
+                    imageBrowser.openImages({
+                        imageUrls: url,
+                        showList:false,
+                        activeIndex: index
+                    });
+                }
+            },
+            //获取新鲜事
+            getNews:function getNews(page){
+                showProgress('努力加载中','请稍后···');
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    cache:true,
+                    data: {
+                        values: {
+                            type: '10064',
+                           token: token,
+                           uid:id,
+                           limit: page
+                        },
+                    }
+                },function(ret, err){
+                    api.hideProgress();
 
-                  api.toast({
-                      msg: '网络错误',
-                      duration: 2000,
-                      location: 'middle'
-                  });
+                    if (ret) {
+                      if (ret.status == '5') {
 
-              }
+                         ExitLogin();
+                      }else if (ret.status == '0') {
+                         msg('没有更多数据');
+                      } else {
+                          if (vm.updata == true) {
+                              ret.forEach(function(item){
+                                  vm.data.push(item);
+                              })
+                              vm.loadata = true;
+
+                          }else {
+                              vm.data = ret;
+                          }
+
+                      }
+                    }else {
+                        msg('网络错误');
+                    }
+                });
+            },
+            // 获取官方推荐
+            getgroom:function getgroom(){
+                showProgress('努力加载中','请稍后···');
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    cache:true,
+                    data: {
+                        values: {
+                            type: '10087',
+                           token: token,
+                             uid:id
+                        },
+                    }
+                },function(ret, err){
+                    api.hideProgress();
+
+                    if (ret) {
+                        if (ret.status == '5') {
+
+                           ExitLogin();
+                        }else{
+                           vm.grooms = ret;
+                        };
+                    }else {
+                        msg('网络错误');
+                    }
+                });
+            },
+            // 获取活动列表
+            getActs:function getActs(){
+                showProgress('努力加载中','请稍后···');
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    cache:true,
+                    data: {
+                        values: {
+                            type: '10066',
+                           token: token,
+                             uid:id,
+                            form:'2'//活动类型 1 个人活动 2官方活动
+                        },
+                    }
+                },function(ret, err){
+                    api.hideProgress();
+
+                    if (ret) {
+                        if (ret.status == '5') {
+
+                           ExitLogin();
+                        }else{
+                           vm.acts = ret;
+                           swiper();
+
+                        };
+                    }else {
+                        msg('网络错误');
+                    }
+                });
+            },
+            // 学客圈列表
+            getCircle:function getCircle(){
+                showProgress('努力加载中','请稍后···');
+
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    cache:true,
+                    data: {
+                        values: {
+                            type: '10115',
+                           token: token,
+                           uid:id
+                        },
+                    }
+                },function(ret, err){
+                    api.hideProgress();
+                    vm.id = id;
+
+                    if (ret) {
+                      if (ret.status == '5') {
+
+                         ExitLogin();
+                      }else if (ret.status == '0') {
+                         msg('没有更多数据');
+                      } else {
+                         vm.circledata = ret.data;
+                      }
+                    }else {
+                        msg('网络错误');
+                    }
+                });
+            },
+            //用户关注
+            follow:function follow(item,status){
+                var time = Math.round(new Date().getTime()/1000);
+                showProgress('努力加载中','请稍后···');
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    data: {
+                        values: {
+                            type: '10072',
+                             uid: id,
+                           token:token,
+                          follower_id: item.uid,
+                            time: time,
+                          status: status//关注 ： 1 取消关注 ：0
+                        },
+                    }
+                },function(ret, err){
+                    api.hideProgress();
+
+                    if (ret) {
+                        if (ret.status == '5') {
+                            ExitLogin();
+                        }else if(ret.status == '0'){
+                            msg('操作失败');
+
+                        }else {
+                            // <!-- is_follow是否关注 1 已经关注 0 没有关注 -->
+                            if (status == 1) {//关注 ： 1 取消关注 ：0
+                               item.is_follow = 1;
+                            }else {
+                               item.is_follow = 0;
+                            }
+
+                        }
+                    }else {
+                        msg('网络错误');
+
+                    }
+                });
+            },
+
+            //学客圈点赞
+            giveLike:function giveLike(item){
+                showProgress('努力加载中','请稍后···');
+                api.ajax({
+                    url: serverurl,
+                    method: 'get',
+                    data: {
+                        values: {
+                            type: '10119',
+                             uid: id,
+                           token:token,
+                              id:item.id
+                        },
+                    }
+                },function(ret, err){
+                    api.hideProgress();
+                    if (ret) {
+                        if (ret.status == '5') {
+                            ExitLogin();
+                        }else {
+                            // state:1点赞成功，再次点取消点赞 返回0
+                            if (ret.status == 1) {
+                                //  <!--  is_like是否点赞 1 已经点赞 0 没有点赞 -->
+                                item.is_like = 1;
+                            }else {
+                                item.is_like = 0;
+                            }
+                            item.like = ret.count;
+                        }
+                    }else {
+                        msg('网络错误');
+
+                    }
+                });
+            }
+
+
+          }
+
+      })
+
+      // swiper
+      function swiper(){
+          var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 'auto',
+            spaceBetween: 6,
+            observer:true, //修改swiper自己或子元素时，自动初始化swiper
+            observeParents:true,//修改swiper的父元素时，自动初始化swiper
           });
+      }
+
+      // 打开h5视频播放器
+      function videoPlay(){
+          var video = $api.prev($api.dom('.videoPlay'));
+          $api.css($api.dom('.videoPlay'), 'display:none');
+          $api.css($api.dom('.video-num'), 'display:none');
+
+          video.play();
+          $api.attr(video, 'controls', 'true');
+
 
       }
 
+      // 扫描二维码
+      function ScanCode(){
+        var FNScanner = api.require('FNScanner');
+        FNScanner.openScanner({
+            autorotation: true
+        }, function(ret, err) {
 
-      // 邀请注册
-      function inviteToreg(){
-          api.openWin({
-              name: 'invite',
-              url: './setting/invite.html',
-              reload:true
-          });
-
+            if (ret) {
+                if (ret.eventType == 'success') {
+                    if (ret.content.indexOf("xly1.cn") >= 0) {
+                        var key = ret.content.substr(0,4);//提取字符串前四位
+                        api.sendEvent({
+                            name: 'scan',
+                            extra: {
+                                key: key
+                            }
+                        });
+                      
+                    }else {
+                        msg('二维码不正确');
+                    }
+                }else if (ret.eventType == 'fail') {
+                    msg('扫描失败');
+                }
+            } else {
+                msg(err);
+            }
+        });
       }
   </script>
   </html>

@@ -1,113 +1,184 @@
-
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
-    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>助教个人中心</title>
-    <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title>我</title>
+      <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+      <style>
+          header{position: relative; height: 44px; line-height: 44px; box-shadow: 0px 4px 4px 0px rgba(76, 81, 118, 0.15);
+          font-size: 18px; background-color: #fefefe; padding:0 14px; color: #232528;}
+          header em{width: 18px; height: 44px; background: url(../image/setting.png) no-repeat center 12px; background-size: 18px 17px;
+          padding-left: 14px; float: right;}
 
-    <style>
-        .top_bg{padding: 0 15px 15px 15px; background: #ffb300; position: relative; height: 67px;}
-        .pic{width: 63px; height: 63px; border: 2px solid #fff; border-radius: 2px; float: left;
-        position: relative; margin-right: 15px;}
-        .pic img{width: 100%; height: 100%;}
-        .pic em{display: block; width: 12px; height: 15px; background: url(../image/ident.png) no-repeat center;
-        background-size: contain; position: absolute; bottom: -3px; right: -7px;}
-        .msg{width: 70%; float: left; }
-        .msg .name{font-size: 17px; font-weight: bold; color: #fff; margin-bottom: 5px;}
-        .msg .id{font-size: 14px; color: #ffeaba;}
-        .nav{height: 60px; background: #fff;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;
-        margin-bottom: 7px; box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2);}
-        .nav li{-webkit-box-flex: 1;-webkit-flex: 1;flex: 1;background: url() no-repeat center 10px; background-size:24px;
-        text-align: center; font-size: 13px; color: #999; padding-top: 36px;}
-        .nav li.nav1{background: url(../image/nav1.png) no-repeat center 10px; background-size:24px;}
-        .nav li.nav2{background: url(../image/nav2.png) no-repeat center 10px; background-size:24px;}
-        .nav li.nav3{background: url(../image/nav3.png) no-repeat center 10px; background-size:24px;}
+          .info{margin-top: 10px; background-color: #fefefe; padding: 14px; }
+          .pic{width: 70px; height: 70px; overflow: hidden; border-radius: 50%;}
+          .pic img{width: 100%; height: 100%;}
+          .user-info{flex: 1; -webkit-flex:1; -webkit-box-flex:1; margin-left: 20px;}
+          .user-info .user-nickname{font-size: 17px; color: #232528; font-weight: bold; margin-bottom: 12px;}
+          .user-info .credit{background-color: #d6dbe2; padding: 4px 10px; text-align: center; border-radius: 12px;
+            font-size: 15px; color: #fff;}
+          .more{width: 10px; height: 16px; background: url(../image/more1.png) no-repeat center;
+          background-size: 10px 16px; margin-left: 10px;}
 
-        .navMenu{background: #fff; box-shadow: 0 1px 1px 0 rgba(0,0,0,0.2); border-radius: 3px;}
-        .navMenu li{height: 50px; line-height: 50px; border-bottom: 1px solid #efeff4; padding-right: 15px; padding-left: 43px;
-          background: url() no-repeat 15px center; font-size: 15px; color: #333; position: relative;}
-        .navMenu li:last-child{border-bottom: none;}
-        /*.navMenu li:nth-child(1){background: url(../image/menu1.png) no-repeat 15px center; background-size: 18px;}*/
-        .navMenu li:nth-child(1){background: url(../image/menu2.png) no-repeat 15px center; background-size: 15px 19px;}
-        .navMenu li:nth-child(2){background: url(../image/menu3.png) no-repeat 15px center; background-size: 17px 19px;}
-        .navMenu li:nth-child(3){background: url(../image/menu4.png) no-repeat 15px center; background-size: 18px 14px;}
-        .navMenu li:nth-child(4){background: url(../image/menu5.png) no-repeat 15px center; background-size: 18px;}
-        .navMenu li em{display: block; width: 100px; height: 50px; background: url(../image/rt.png) no-repeat right center;
-          background-size: 8px 15px; position: absolute; top: 0; right: 15px; text-align: right; padding-right: 18px; font-size: 15px;
-        color: #999;}
+          .act-box{margin-top: 10px; background-color: #fefefe; padding: 5px 0;}
+          .act-lf{width: calc(75% - 28px); padding: 8px 14px;}
+          .act-state{font-size: 14px; line-height: 20px; height: 20px;}
+          .wait{background: url(../image/act1.png) no-repeat left 1px; background-size: 13px 16px; padding-left: 18px;
+          color: #ffb608;}
+          .underway{background: url(../image/act2.png) no-repeat left 2px; background-size: 15px; padding-left: 20px;
+          color: #46daab;}
+          .act-info{font-size: 15px;}
+          .act-rt{border-left: 1px solid #e2e3e5; text-align: center; padding: 14px; width: calc(25% - 28px);}
+          .act-rt span{width: 15px; height:13px; background: url(../image/menu1.png) no-repeat center;
+          background-size: 15px 13px;}
+          .my-act{font-size: 12px; color: #999; line-height: 20px; padding-top: 6px;}
 
-        .top_bg .switch{display: block; width: 84px; height: 28px; background: url(../image/switch.png) no-repeat center;
-        background-size: contain; position: absolute; bottom: 15px; right: 0;}
-    </style>
-</head>
-<body>
-    <header class="top_bg">
-        <div class="pic">
-            <img src="../image/pic3.png" alt="" id="img" tapmode onclick="viewPicture()">
-            <em></em>
+          .menu-li{font-size: 16px; color: #232528; height: 50px; line-height: 50px; padding-right:14px;
+           background-color: #fefefe; margin-top: 10px;}
+          .menu-li.on{margin-top: 0; border-top: 1px solid #d2d3d5;}
+          .menu1{background-image: url(../image/menu1.png); background-repeat: no-repeat; background-size: 15px 13px;
+          background-position: 14px center; padding-left: 42px;}
+          .menu2{background-image: url(../image/menu2.png); background-repeat: no-repeat; background-size: 10px 16px;
+          background-position: 14px center; padding-left: 37px;}
+          .menu3{background-image: url(../image/menu3.png); background-repeat: no-repeat; background-size: 15px 16px;
+          background-position: 14px center; padding-left: 42px;}
+          .menu4{background-image: url(../image/menu4.png); background-repeat: no-repeat; background-size: 13px 15px;
+          background-position: 14px center; padding-left: 40px;}
+          .menu5{background-image: url(../image/menu5.png); background-repeat: no-repeat; background-size: 15px 13px;
+          background-position: 14px center; padding-left: 42px;}
+          .menu6{background-image: url(../image/menu6.png); background-repeat: no-repeat; background-size: 15px;
+          background-position: 14px center; padding-left: 42px;}
+      </style>
+  </head>
+  <body>
+    <div id="wrap">
+        <header>
+          <span tapmode onclick="openWin('myBracelet','./mine/myBracelet.html','')">我的手环</span>
+          <em tapmode onclick="openWin('7account','./mine/7account.html','')"></em>
+        </header>
+        <div id="main" v-cloak>
+            <div class="info flex-align-center" tapmode onclick="openWin('MyAct','./mine/MyIndex.html','')">
+                <div class="pic">
+                    <img src="../image/pic.png" alt="人头像">
+                </div>
+                <div class="user-info">
+                    <p class="user-nickname"></p>
+                    <p><span class="credit" style="display:none"></span></p>
+                </div>
+                <div class="more"></div>
+            </div>
+
+            <div class="act-box flex-align-center" v-if="data">
+                <!-- actsta活动状态.0已结束，1活动进行中，2活动未开始 -->
+                <div class="act-lf" tapmode @click="ActDetail(data.id)" v-if="data.actsta == '1' || data.actsta == '2'">
+                   <div class="act-state wait" v-show="data.actsta == '2'">等待开始</div>
+                   <div class="act-state underway" v-show="data.actsta == '1'">正在进行</div>
+                   <div class="act-info single">{{data.title}}</div>
+                </div>
+
+                <div class="act-rt">
+                    <span></span>
+                    <div class="my-act" tapmode onclick="openWin('MyAct','./mine/MyAct.html','')">我的活动</div>
+                </div>
+            </div>
+
+            <div class="menu-li menu1" tapmode onclick="openWin('MyAct','./mine/MyAct.html','')" v-else>
+                我的活动
+            </div>
+            <!-- <div class="menu-li menu2" tapmode onclick="openWin('MyAct','./mine/MyIndex.html','')">
+                我的主页
+            </div> -->
+            <div class="menu-li menu3" tapmode onclick="openWin('orderDetail','./mall/orderDetail.html','')">
+                我的订单
+            </div>
+            <div class="menu-li menu4 on" tapmode onclick="openWin('6address_title','./mall/6address_title.html','')">
+                收货地址
+            </div>
+            <div class="menu-li menu5" tapmode onclick="openWin('income','./mine/income.html','')">
+                收支明细
+            </div>
+            <div class="menu-li menu6 on">
+                信用评级
+            </div>
         </div>
-        <div class="msg">
-            <p class="name"></p>
-            <p class="id"></p>
-        </div>
-        <span class="switch" tapmode onclick="exitLogin()"></span>
-    </header>
-    <ul class="nav">
-        <li class="nav1" tapmode onclick="MyCircle()">我的动态</li>
-        <li class="nav2" tapmode onclick="BillDetail()">账单明细</li>
-        <li class="nav3" tapmode onclick="MyOrder()">我的订单</li>
-    </ul>
 
-    <ul class="navMenu" id="app">
-        <!-- <li>成长记录<em></em></li> -->
-        <li tapmode onclick="Address()">收货地址<em></em></li>
-        <li tapmode onclick="Rating()">信用评级<em id="star"></em></li>
-        <li tapmode onclick="goBindCard()">绑定银行卡<em class="isBind"></em></li>
-        <li>规则与帮助<em></em></li>
-    </ul>
+    </div>
+  </body>
+  <script type="text/javascript" src="../script/api.js"></script>
+  <script type="text/javascript" src="../script/my.js"></script>
+  <script type="text/javascript" src="../script/vue.js"></script>
+  <script type="text/javascript">
+      var token,id;
+      apiready = function(){
+          SetStatusBar('#main','dark','#fefefe');//设置状态栏my.js
 
-</body>
-</html>
-<script type="text/javascript" src="../script/api.js"></script>
-<script type="text/javascript" src="../script/my.js"></script>
-<script type="text/javascript">
-var id,token,index;
-apiready = function(){
+          api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
+          token = api.getPrefs({
+              sync: true,
+              key: 'token'
+          });
+          id = api.getPrefs({
+              sync: true,
+              key: 'id'
+          });
+          getUser();
+          vm.getAct();
+          // 监听用户信息修改
+          api.addEventListener({
+              name: 'ExInfo'
+          }, function(ret, err){
+              if( ret ){
+                   getUser();
+              }else{
+                   console.log( JSON.stringify( err ) );
+              }
+          });
+    }
 
-  id = $api.getStorage('id');
-  token = $api.getStorage('token');
+    var vm = new Vue({
+        el:'#main',
+        data:{
+            data:[]
+        },
 
-  api.addEventListener({
-      name: 'isBind'
-  }, function(ret, err){
-      if( ret.value.key ){
-           getWidthDraw();
-      }else{
-           console.log( JSON.stringify( err ) );
-      }
-  });
+        methods:{
+            // 打开活动详情页
+           ActDetail:function ActDetail(actid){
+               openWin('actDetail','./active/actDetail.html',{actid:actid});
+           },
+           // 获取用户报名活动列表
+           getAct:function getAct(){
+               showProgress('努力加载中','请稍后···');
+               api.ajax({
+                   url: serverurl,
+                   method: 'get',
+                   data: {
+                       values: {
+                            type: '10028',
+                             uid:id,
+                           token: token
+                       }
+                   }
+               },function(ret, err){
+                   api.hideProgress();
 
-  getUser();
-  getStar();
-  getWidthDraw();
+                   if (ret) {
 
-  // 监听用户信息修改
-  api.addEventListener({
-      name: 'ExInfo'
-  }, function(ret, err){
-      if( ret ){
+                       vm.data = ret[0];
+                   } else {
 
-           getUser();
-      }else{
-           console.log( JSON.stringify( err ) );
-      }
-  });
+                       msg('网络错误');
+                   }
+               });
 
-}
+           }
+        }
+    })
+
     function getUser(){
+
         api.ajax({//获取用户基本信息
             url: serverurl,
             method: 'get',
@@ -121,205 +192,24 @@ apiready = function(){
             }
         },function(ret, err){
 
-            if (ret.status == '5') {
-              ExitLogin();
-            }else if (ret.status == '1') {
-              if (!ret.data.headimgurl) {
-                  $api.attr($api.dom('#img'), 'src', '../image/pic3.png');
-              }else {
-                  $api.attr($api.dom('#img'), 'src', ret.data.headimgurl);
-              }
-              if (ret.data.nickname) {
-                  $api.text($api.dom('.name'), ret.data.nickname);
-              }else {
-                  $api.text($api.dom('.name'), ret.data.tel);
-              }
-
-              $api.text($api.dom('.id'), 'ID:'+ret.data.id);
+            if (ret) {
+                if (ret.status == '5') {
+                    ExitLogin();
+                }else {
+                    if (ret.data.headimgurl) {
+                        $api.attr($api.dom('.pic img'), 'src', ret.data.headimgurl+'?x-oss-process=image/resize,m_fill,h_70,w_70');
+                    }
+                    $api.text($api.dom('.user-nickname'), ret.data.nickname);
+                    $api.text($api.dom('.credit'), ret.data.winmoney+'学分');
+                    $api.css($api.dom('.credit'),'display:inline-block');
+                }
             }else {
-                api.toast({
-                    msg: '网络错误',
-                    duration: 2000,
-                    location: 'middle'
-                });
+                msg('网络错误');
 
             }
         });
     }
 
-    function getWidthDraw(){//用户银行卡列表
-        api.ajax({
-            url: serverurl,
-            method: 'get',
-            cache:true,
-            data: {
-                values: {
-                    type: '10128',
-                   token:	token,
-                     uid:id
-                },
-            }
-        },function(ret, err){
-            if (ret.status == '5') {
-              ExitLogin();
-            }else {
-              if (ret.data) {
-                  $api.text($api.dom('.isBind'), '已绑定');
-                  index = 1;
-              }else{
-                  index = 2;
-                  $api.text($api.dom('.isBind'), '未绑定');
-              }
-            }
 
-        });
-
-    }
-
-  //查看信用星级
-  function getStar(){
-    api.ajax({
-        url: serverurl,
-        method: 'get',
-        cache:true,
-        data: {
-            values: {
-                 type: '10157',
-                 token:token,
-                 uid:id
-            },
-        }
-    },function(ret, err){
-          if (ret) {
-              if (ret.status == '5') {
-                  ExitLogin();
-              }else {
-                  $api.html($api.byId('star'), ret.credit+'星');
-              }
-          }
-    });
-  };
-
-// 我的学客圈
-function MyCircle(){
-    api.openWin({
-        name: 'CircleIndex',
-        url: './circle/CircleIndex.html',
-        pageParam: {
-            id: id
-        },
-        reload:true
-    });
-
-}
-
-// 订单管理
-function MyOrder(){
-  api.openWin({
-      name: 'order_title',
-      url: './mall/order_title.html',
-      pageParam: {
-          name: 'test'
-      },
-      reload:true
-  });
-}
-
-//信用评级
-function Rating(){
-    api.openWin({
-        name: 'Rating_title',
-        url: './setting/Rating_title.html',
-        reload:true
-    });
-}
-
-//收货地址
-function Address(){
-    api.openWin({
-        name: '6address_title',
-        url: './mall/6address_title.html',
-        reload:true
-    });
-}
-
-//账单明细
-function BillDetail(){
-    api.openWin({
-        name: 'BillDetail',
-        url: './setting/BillDetail_title.html',
-        reload:true
-    });
-}
-
-// 去绑定银行卡
-function goBindCard(){
-
-    if (index == 1) {//index-1已绑定，2-未绑定
-        api.openWin({
-            name: 'widthdraw',
-            url: './MyBank/widthdraw.html',
-            reload:true,
-      			allowEdit:true
-        });
-
-    }else{
-        api.openWin({
-            name: 'BindBankCard',
-            url: './MyBank/BindBankCard.html',
-            reload:true,
-      			allowEdit:true
-        });
-    }
-}
-
-//退出登录
-function exitLogin() {
-  api.confirm({
-      title: '切换身份',
-      msg: '确定要切换身份吗？',
-      buttons: ['确定', '取消']
-  }, function(ret, err) {
-      var index = ret.buttonIndex;
-      if (index == 1) {
-        api.ajax({
-           url: serverurl,
-           method: 'get',
-           data: {
-               values: {
-                   type:'10039',
-                   uid: id
-               },
-           }
-       },function(ret, err){
-
-           if (ret) {
-               if (ret.status == '1') {
-                   ExitLogin();
-               }
-           } else {
-               api.toast({
-                   msg: '网络错误',
-                   duration: 2000,
-                   location: 'middle'
-               });
-           }
-       });
-      }
-  });
-}
-
-// 查看头像放大
-function viewPicture(){
-  var img = $api.attr($api.dom('#img'), 'src');
-  if (img !== '../image/pic3.png') {
-      var url = [];
-      url.push($api.attr($api.dom('#img'), 'src'));
-      var imageBrowser = api.require('imageBrowser');
-      imageBrowser.openImages({
-          imageUrls: url
-      });
-  }
-
-}
-</script>
+  </script>
+  </html>

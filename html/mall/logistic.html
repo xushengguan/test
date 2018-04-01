@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>物流信息</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+
+	<style media="screen">
+
+		header{position: relative; height: 44px; line-height: 44px; box-shadow: 0px 4px 4px 0px rgba(76, 81, 118, 0.15);
+		font-size: 18px; background-color: #fefefe;}
+		header em{height: 44px; background: url(../../image/back.png) no-repeat center 12px; background-size: 10px 17px;
+		padding-left: 14px; padding-right: 30px; float: left;}
+
+    .order-info{padding: 0 14px; background-color: #fefefe; margin-bottom: 10px; box-shadow: 0px 1px 0px 0px #d2d3d5;}
+    .info-lines:not(:last-child){border-bottom: 1px solid #d2d3d5;}
+    .info-lines li{line-height: 20px;}
+    .info-lines li:not(:last-child){ padding-bottom: 4px;}
+    .info-lines{padding: 12px 0; font-size: 16px; color: #666;}
+    .info-lines li span{color: #262829;}
+
+    /*物流信息*/
+    .log-info{padding: 0 14px; background-color: #fefefe;}
+    .log-title{height: 45px; line-height: 45px; font-size: 16px; color: #666; border-bottom: 1px solid #d2d3d5;}
+    .income-list{background-color: #fefefe; padding: 14px 0;}
+    .rt-box{padding-left: 26px; border-left: 1px solid #d2d3d5; float: left; padding-bottom: 30px; width: calc(100% - 26px);
+    position: relative; top: 6px;}
+    .income-line:last-child .rt-box{border-left: none;}
+    .rt-box .rt-title{font-size: 16px; line-height: 20px; margin-top: -6px;}
+    .rt-box .handle{font-size: 12px; line-height: 20px; color: #999; padding-top: 2px;}
+    .rt-box em{width: 9px; height: 9px; border-radius: 50%; background-color: #e5e5e5; position: absolute; top: 0; left: -4px;
+    z-index: 3;}
+    .income-line:first-child em{width:15px; height: 15px; background:url(../../image/log1.png) no-repeat center top;
+      background-size: 15px; top: -5px; left: -7px;}
+	</style>
+</head>
+
+<body>
+
+	<!-- 确认兑换 -->
+	<div id="wrap">
+  		<header>
+  				<em tapmode onclick="go_back()"></em>
+  				物流信息
+  		</header>
+  		<div id="main" v-cloak>
+
+          <!-- 订单信息 -->
+          <div class="order-info">
+              <ul class="info-lines">
+                 <li>快递单号: <span>{{number}}</span></li>
+                 <li>物流: {{type}}</span></li>
+              </ul>
+          </div>
+
+          <!-- 物流信息 -->
+          <div class="log-info">
+              <div class="log-title">物流信息</div>
+              <div class="income-list">
+                  <div class="income-line clearfix" v-for="v in data">
+                      <div class="rt-box">
+                           <p class="rt-title">{{v.status}}</p>
+                           <p class="handle">{{v.time}}</p>
+                           <em></em>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+
+		</div>
+
+
+</body>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript">
+
+	  apiready = function(){
+				api.parseTapmode();
+				var logistics_company = api.pageParam.logistics_company;
+				var tracking_number = api.pageParam.tracking_number;
+				var order_id = api.pageParam.order_id;
+        vm.getLogInfo(logistics_company,tracking_number,order_id);
+		}
+
+		var vm = new Vue({
+				el:'#main',
+				data:{
+						data:[],
+						number:'',
+						type:''
+				},
+				methods:{
+						getLogInfo(logistics_company,tracking_number,order_id){//查询物流信息
+
+                showProgress('努力加载中','请稍后···');
+								api.ajax({
+								    url: serverurl,
+								    method: 'get',
+								    data: {
+								        values: {
+								            type: '10020',
+														tracking_number:tracking_number,
+														logistics_company:logistics_company,
+													
+								        },
+								    }
+								},function(ret, err){
+                    api.hideProgress();
+
+								    if (ret) {
+
+												vm.data = ret.result.list;
+												vm.number = ret.result.number;
+												vm.type = ret.result.type;
+								    } else {
+
+												msg('网络错误');
+
+								    }
+								});
+						}
+				}
+		})
+</script>

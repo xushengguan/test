@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title>联系人列表</title>
+      <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+      <style>
+          header{position: relative; height: 44px; line-height: 44px; box-shadow: 0px 4px 4px 0px rgba(76, 81, 118, 0.15);
+          font-size: 18px; background-color: #fefefe; padding-left:34px; padding-right:42px; color: #232528; text-align: center;}
+          header em{height: 44px; background: url(../../image/back.png) no-repeat left 12px; background-size: 10px 17px;}
+
+      </style>
+  </head>
+  <body>
+      <div id="wrap" v-cloak>
+          <header class="single clearfix">
+            <em tapmode onclick="go_back()"></em>
+
+          </header>
+          <div id="main">
+
+          </div>
+          <footer></footer>
+      </div>
+  </body>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/my.js"></script>
+  <script type="text/javascript" src="../../script/vue.js"></script>
+  <script type="text/javascript">
+      apiready = function(){
+        api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
+
+      }
+
+      var vm = new Vue({
+          el:'#wrap',
+          data:{
+              chatdata:[],
+              data:[],
+              id:'',
+              token:''
+          },
+
+          methods:{
+
+          }
+      })
+
+
+
+  </script>
+  </html>

@@ -7,7 +7,6 @@
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
     <title>学分商城</title>
     <link rel="stylesheet" type="text/css" href="../css/api.css" />
-    <link rel="stylesheet" type="text/css" href="../css/loading.css" />
     <link rel="stylesheet" type="text/css" href="../icon/iconfonts/iconfont.css" />
     <link rel="stylesheet" type="text/css" href="../css/swiper.min.css">
     <style>
@@ -15,7 +14,7 @@
         /*个人信息区*/
 
         .personal_title {
-            background: #fff;
+            background: #fefefe;
             padding: 6px 25px;
             box-sizing: border-box;
             -webkit-box-sizing: border-box;
@@ -90,7 +89,7 @@
         /*功能图标*/
 
         .credit_icon {
-            background: #fff;
+            background: #fefefe;
             padding: 10px 0;
             margin-bottom: 10px;
             box-shadow: 0 1px 1px rgba(0,0,0,.2);
@@ -141,7 +140,7 @@
          .swiper-slide {
            text-align: center;
            font-size: 18px;
-           background: #fff;
+           background: #fefefe;
 
            /* Center slide text vertically */
            display: -webkit-box;
@@ -172,73 +171,92 @@
          .rtgoods .img2 img{width: 100%; min-height: 100px;}
 
          .goods_card{overflow: hidden;}
-         .goods_card li{float: left; width: calc(50% - 1px); background: #fff;}
+         .goods_card li{float: left; width: calc(50% - 1px); background: #fefefe;}
          .goods_card li:nth-child(odd){margin-right: 1px;}
          .goods_card li:nth-child(even){margin-left: 1px;}
          .goods_card li img{width: 100%; height: 145px;}
-         .goods_card .txt{background: #fff; padding: 8px; text-align: center;}
+         .goods_card .txt{background: #fefefe; padding: 8px; text-align: center;}
          .goods_card .txt .name{font-size: 14px; color: #212121; padding-bottom: 4px; font-weight: bold;}
          .goods_card .txt .abs{font-size: 12px; color: #999; padding-bottom: 4px;}
          .goods_card .txt .total{font-size: 14px; color: #f44336; font-weight: bold;}
 
          .mallBox:not(last-child){margin-bottom: 10px; box-shadow: 0 1px 1px rgba(0,0,0,.2);}
+
+         header{height: 44px; padding: 5px 0 5px 14px; background: #fefefe; box-shadow: 0px 4px 4px 0px rgba(76, 81, 118, 0.15);}
+         .inputBox{position: relative; flex: 1; -webkit-flex:1; -webkit-flex-box:1;
+           box-shadow: inset 0px 2px 2px 0px rgba(201, 201, 201, 0.15); height: 34px; background-color: #ecedf0;
+         border-radius: 2px; padding-left: 45px; color: #ccc;}
+         /*.inputBox input{height: 100%; margin-left: 40px; margin-right: 10px; width: calc(100% - 50px); }*/
+         .inputBox em{position: absolute; left: 0; width: 40px; height: 34px; background:url(../image/search1.png) no-repeat center;
+         background-size: 17px;}
+         header span{width: 45px; height: 44px; background: url(../image/order.png) no-repeat center; background-size: 15px 17px;}
     </style>
 </head>
 
 <body>
 
-    <div id="app" v-cloak v-if="ClassInfo ||　hotInfo　|| newInfo">
-        <!-- Swiper -->
-        <div class="swiper-container">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="v in swipe">
-                <img :src="v.imgurl" alt="广告">
+    <div id="wrap" v-cloak v-if="ClassInfo ||　hotInfo　|| newInfo">
+        <header class="flex-align-center">
+            <div class="inputBox flex-align-center" tapmode onclick="openWin('search','./search.html','')">
+                <em></em>
+                搜索您想要的商品
+                <!-- <input type="button" value="搜索您想要的商品"> -->
             </div>
-          </div>
-          <!-- Add Pagination -->
-          <div class="swiper-pagination"></div>
-        </div>
-        <!-- 功能图标区 -->
-        <div class="credit_icon clearfix" v-if="ClassInfo">
-            <a href="javascript:;" class="credit_icon_btn" tapmode v-for="v in ClassInfo" @click="go_clsLis(v.id,v.tname)">
-                <span class="icon1" v-bind:style="{background:v.color}">
-                  <i class="icon iconfont" v-bind:class="v.fonticon" style="font-size: 20px; color:#fff;"></i>
-                </span>
-                <p>{{v.tname}}</p>
-            </a>
-        </div>
-
-        <!-- 热门商品 -->
-        <div class="mallBox">
-          <div class="title">热门商品</div>
-          <div class="box clearfix">
-              <div class="lfgoods" tapmode @click="go_goodsDetail(hotid1)">
-                  <img :src="hot1" alt="左边热门商品图">
+            <span tapmode onclick="openWin('orderDetail','./mall/orderDetail.html','')"></span>
+        </header>
+        <div id="main">
+            <!-- Swiper -->
+            <div class="swiper-container">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide" v-for="v in swipe">
+                    <img :src="v.imgurl" alt="广告">
+                </div>
               </div>
-              <div class="rtgoods">
-                  <div class="img1" tapmode @click="go_goodsDetail(hotid2)">
-                      <img :src="hot2" alt="右边热门商品图">
-                  </div>
+              <!-- Add Pagination -->
+              <div class="swiper-pagination"></div>
+            </div>
+            <!-- 功能图标区 -->
+            <div class="credit_icon clearfix" v-if="ClassInfo">
+                <a href="javascript:;" class="credit_icon_btn" tapmode v-for="v in ClassInfo" @click="go_clsLis(v.id,v.tname)">
+                    <span class="icon1" v-bind:style="{background:v.color}">
+                      <i class="icon iconfont" v-bind:class="v.fonticon" style="font-size: 20px; color:#fff;"></i>
+                    </span>
+                    <p>{{v.tname}}</p>
+                </a>
+            </div>
 
-                  <div class="img2" tapmode @click="go_goodsDetail(hotid3)">
-                      <img :src="hot3" alt="右边热门商品图">
+            <!-- 热门商品 -->
+            <div class="mallBox">
+              <div class="title">热门商品</div>
+              <div class="box clearfix">
+                  <div class="lfgoods" tapmode @click="go_goodsDetail(hotid1)">
+                      <img :src="hot1" alt="左边热门商品图">
+                  </div>
+                  <div class="rtgoods">
+                      <div class="img1" tapmode @click="go_goodsDetail(hotid2)">
+                          <img :src="hot2" alt="右边热门商品图">
+                      </div>
+
+                      <div class="img2" tapmode @click="go_goodsDetail(hotid3)">
+                          <img :src="hot3" alt="右边热门商品图">
+                      </div>
                   </div>
               </div>
-          </div>
-        </div>
-        <!-- 推荐商品 -->
-        <div class="mallBox">
-            <div class="title groom">推荐商品</div>
-            <ul class="goods_card">
-                <li tapmode v-for="v in newInfo" @click="go_goodsDetail(v.id)">
-                    <img :src="v.imgurl" alt="推荐商品">
-                    <div class="txt">
-                        <p class="name single">{{v.goods_name}}</p>
-                        <p class="abs single">{{v.abs}}</p>
-                        <p class="total">{{v.total}}学分</p>
-                    </div>
-                </li>
-            </ul>
+            </div>
+            <!-- 推荐商品 -->
+            <div class="mallBox">
+                <div class="title groom">推荐商品</div>
+                <ul class="goods_card">
+                    <li tapmode v-for="v in newInfo" @click="go_goodsDetail(v.id)">
+                        <img :src="v.imgurl" alt="推荐商品">
+                        <div class="txt">
+                            <p class="name single">{{v.goods_name}}</p>
+                            <p class="abs single">{{v.abs}}</p>
+                            <p class="total">{{v.total}}学分</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 
@@ -250,19 +268,24 @@
 <script type="text/javascript">
 
     apiready = function() {
-        loading();
+        SetStatusBar('#main','dark','#fefefe');//设置状态栏my.js
+        
+        api.parseTapmode();
+
         fnInitSwipe();
-        $api.css($api.dom('#loading'), 'display:block');
+        showProgress();
         vm.getSwipe();
         vm.getClass();
         vm.get_hotgoods();
         vm.get_Newsgoods();
-        $api.css($api.dom('#loading'), 'display:none');
+        api.hideProgress();
+
+
 
     };
 
     var vm = new Vue({
-        el: '#app',
+        el: '#wrap',
         data: {
             ClassInfo: [],
             hot1: '',
@@ -288,14 +311,12 @@
                         }
                     }
                 }, function(ret, err) {
+
                     if (ret) {
                         vm.swipe = ret;
                     } else {
-                        api.toast({
-                            msg: '网络错误',
-                            duration: 2000,
-                            location: 'middle'
-                        });
+
+                        msg('网络错误');
 
                     }
                 });
@@ -317,11 +338,7 @@
                         vm.ClassInfo = ret;
 
                     } else {
-                        api.toast({
-                            msg: '网络错误',
-                            duration: 2000,
-                            location: 'middle'
-                        });
+                        msg('网络错误');
 
                     }
                 });
@@ -349,11 +366,7 @@
                         vm.hotid2 = ret[1].id;
                         vm.hotid3 = ret[2].id;
                     } else {
-                        api.toast({
-                            msg: '网络错误',
-                            duration: 2000,
-                            location: 'middle'
-                        });
+                        msg('网络错误');
 
                     }
                 });
@@ -378,37 +391,19 @@
                         vm.newInfo = ret;
 
                     } else {
-                        api.toast({
-                            msg: '网络错误',
-                            duration: 2000,
-                            location: 'middle'
-                        });
+                        msg('网络错误');
 
                     }
                 });
             },
 
             go_goodsDetail:function(goods_id){
-              api.openWin({
-                  name: 'credit_goodDetail',
-                  url: './mall/credit_goodDetail.html',
-                  pageParam: {
-                      goods_id: goods_id
-                  },
-                  reload:true
-              });
+
+              openWin('goodDetail','./mall/credit_goodDetail.html',{goods_id: goods_id});
             },
 
             go_clsLis:function(clsid,tname){
-              api.openWin({
-                  name: 'ClassifiedGoods_title',
-                  url: './mall/ClassifiedGoods_title.html',
-                  pageParam: {
-                      clsid: clsid,
-                      tname:tname
-                  },
-                  reload:true
-              });
+              openWin('ClassifiedGoods_title','./mall/ClassifiedGoods_title.html',{clsid: clsid,tname:tname});
             }
         }
     })

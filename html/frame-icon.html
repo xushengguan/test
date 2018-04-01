@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title></title>
+      <link rel="stylesheet" type="text/css" href="../css/api.css"/>
+      <link rel="stylesheet" type="text/css" href="../css/swiper.min.css"/>
+      <style>
+      body{background-color: #f6f3f3;}
+      .swiper-container {
+          width: calc(100% - 60px);
+          height: auto;
+          padding: 0 30px;
+          position: absolute;
+          bottom: 30px;
+
+      }
+      .swiper-slide {
+        text-align: center;
+        font-size: 14px;
+        color: #666;
+        line-height: 20px;
+      }
+      .swiper-slide img{
+          width: 53px; height: 53px;
+      }
+      .close{
+          text-align: center;
+          color: #595959;
+          font-size: 30px;
+          font-weight: bold;
+          padding-top: 30px;
+      }
+      .close span{
+          width: 50px;
+      }
+      </style>
+  </head>
+  <body>
+    <!-- Swiper -->
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" tapmode onclick="goPage(1)">
+          <img src="../image/icon1.png" alt="icon图标">
+          <p>文字</p>
+        </div>
+        <div class="swiper-slide" tapmode onclick="goPage(2)">
+          <img src="../image/icon5.png" alt="icon图标">
+          <p>扫码</p>
+        </div>
+        <div class="swiper-slide">
+          <img src="../image/icon2.png" alt="icon图标">
+          <p>拍摄</p>
+        </div>
+        <div class="swiper-slide">
+          <img src="../image/icon6.png" alt="icon图标">
+          <p>小视频</p>
+        </div>
+        <div class="swiper-slide">
+          <img src="../image/icon3.png" alt="icon图标">
+          <p>直播</p>
+        </div>
+        <div class="swiper-slide" tapmode onclick="goPage(6)">
+          <img src="../image/icon7.png" alt="icon图标">
+          <p>主页</p>
+        </div>
+        <div class="swiper-slide">
+          <img src="../image/icon4.png" alt="icon图标">
+          <p>相册</p>
+        </div>
+
+        <div class="swiper-slide" tapmode onclick="goPage(8)">
+          <img src="../image/icon8.png" alt="icon图标">
+          <p>订单</p>
+        </div>
+      </div>
+      <!-- Add Pagination -->
+      <!-- <div class="swiper-pagination"></div> -->
+      <div class="close">
+          <span tapmode onclick="goPage(0)">&times;</span>
+      </div>
+    </div>
+  </body>
+  <script type="text/javascript" src="../script/api.js"></script>
+  <script type="text/javascript" src="../script/my.js"></script>
+  <script type="text/javascript" src="../script/vue.js"></script>
+  <script type="text/javascript" src="../script/swiper.min.js"></script>
+  <script type="text/javascript">
+      apiready = function(){
+        SetStatusBar('#main','dark','#f6f3f3');//设置状态栏my.js
+        api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
+        var swiper = new Swiper('.swiper-container', {
+          slidesPerView: 4,
+          slidesPerColumn: 2,
+          spaceBetween: 30,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+        });
+      }
+
+
+      function goPage(index){
+           SetStatusBar('#main','dark','#fefefe');
+           if (index == 1) {
+               openWin('circlePulish','./circle/circlePulish.html','');
+           }else if (index == 2) {
+               ScanCode();
+           }else if (index == 6) {
+               openWin('MyIndex','./mine/MyIndex.html','');
+           }else if (index == 8) {
+               openWin('orderDetail','./mall/orderDetail.html','');
+           }else {
+               go_back();
+           }
+      }
+
+      // 扫描二维码
+      function ScanCode(){
+        var FNScanner = api.require('FNScanner');
+        FNScanner.openScanner({
+            autorotation: true
+        }, function(ret, err) {
+
+            if (ret) {
+                if (ret.eventType == 'success') {
+                    if (ret.content.indexOf("xly1.cn") >= 0) {
+                        var key = ret.content.substr(0,4);//提取字符串前四位
+                        api.sendEvent({
+                            name: 'scan',
+                            extra: {
+                                key: key
+                            }
+                        });
+                        go_back();
+
+                    }else {
+                        msg('二维码不正确');
+                    }
+                }else if (ret.eventType == 'fail') {
+                    msg('扫描失败');
+                }
+            } else {
+                msg(err);
+            }
+        });
+      }
+
+      
+  </script>
+  </html>

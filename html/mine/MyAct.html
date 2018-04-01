@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+      <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+      <title>我的活动</title>
+      <link rel="stylesheet" type="text/css" href="../../css/api.css"/>
+      <style>
+
+          header{position: relative; height: 44px; line-height: 44px; box-shadow: 0px 4px 4px 0px rgba(76, 81, 118, 0.15);
+          font-size: 18px; background-color: #fefefe; padding:0 14px; color: #232528;}
+          header em{height: 44px; background: url(../../image/back.png) no-repeat left 12px; background-size: 10px 17px;
+          float: left; padding-left: 30px;}
+
+          .act-list li{padding: 0 14px; background-color: #fefefe; margin-bottom: 10px;}
+          .act-list li:last-child{margin-bottom: 0;}
+          .act-title{font-size: 16px; padding: 16px 0;}
+          .act-title span{width: calc(100% - 69px);}
+          .act-title em{width: 64px; text-align: right; color: #46daab; vertical-align: top;}
+          .act-title em.wait{color: #ffb608;}
+          .act-title em.isOver{color: #999;}
+          .act-address{font-size: 14px; color: #999; padding-bottom: 10px; background: url(../../image/address.png) no-repeat left 4px;
+          background-size: 10px 12px; padding-left: 16px;}
+          .act-time{font-size: 14px; color: #999;  border-top: 1px solid #d2d3d5; padding-top: 10px; padding-bottom: 10px;
+          background: url(../../image/time.png) no-repeat left 12px; background-size: 11px; padding-left: 17px;}
+          .act-result{width: 100%; height: 30px; background-color: #f0f0f0; border-radius: 2px; text-align: center; font-size: 15px;
+          color: #999; margin-bottom: 10px;}
+      </style>
+  </head>
+  <body>
+    <div id="wrap">
+        <header>
+            <em tapmode onclick="go_back()">我的活动</em>
+        </header>
+        <div id="main" v-cloak>
+            <div class="no-data" v-if="data.status == '0'">
+                 <img src="../../image/ndata.png" alt="没数据图片">
+                 <p>抱歉，没有数据~</p>
+            </div>
+            <ul class="act-list" v-else>
+                <li v-for="v in data" @click="ActDetail(v.id)">
+                    <div class="act-title">
+                        <span>{{v.title}}</span>
+                        <!-- actsta活动状态.0已结束，1活动进行中，2活动未开始 -->
+                        <em v-if="v.actsta == '1'">正在进行</em>
+                        <em class="isOver" v-else-if="v.actsta == '0'">已结束</em>
+                        <em class="wait" v-else>等待开始</em>
+                    </div>
+                    <div class="act-address">
+                        {{v.address}}
+                    </div>
+                    <div class="act-time">{{v.actstarttime | formatDate}}</div>
+                    <button class="act-result" tapmode onclick="openWin('ResultRanking','./ResultRanking.html','',true)" v-if="v.actsta == '0'">查看成绩板>></button>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+  </body>
+  <script type="text/javascript" src="../../script/api.js"></script>
+  <script type="text/javascript" src="../../script/my.js"></script>
+  <script type="text/javascript" src="../../script/vue.js"></script>
+  <script type="text/javascript" src="../../script/date.js"></script>
+  <script type="text/javascript">
+      var token,id;
+      apiready = function(){
+          api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
+          token = api.getPrefs({
+              sync: true,
+              key: 'token'
+          });
+          id = api.getPrefs({
+              sync: true,
+              key: 'id'
+          });
+          vm.getAct();
+      }
+
+      var vm = new Vue({
+          el:'#main',
+          data:{
+              data:[]
+          },
+          filters: {
+              formatDate: function (_formatDate) {
+                  function formatDate(_x) {
+                      return _formatDate.apply(this, arguments);
+                  }
+
+                  formatDate.toString = function () {
+                      return _formatDate.toString();
+                  };
+
+                  return formatDate;
+              }(function (time) {
+                  var date = new Date(time * 1000);
+                  return formatDate(date, 'yyyy-MM-dd');
+              })
+          },
+          methods:{
+             // 打开活动详情页
+             ActDetail:function ActDetail(actid){
+                 openWin('actDetail','../active/actDetail.html',{actid:actid});
+             },
+             getAct:function getAct(){
+                 showProgress('努力加载中','请稍后···');
+                 api.ajax({
+                     url: serverurl,
+                     method: 'get',
+                     data: {
+                         values: {
+                              type: '10028',
+                               uid:id,
+                             token: token
+                         }
+                     }
+                 },function(ret, err){
+                     api.hideProgress();
+                    
+                     if (ret) {
+                         if (ret.status == '5') {
+                            ExitLogin();
+                         }else {
+                            vm.data = ret;
+                         }
+
+                     } else {
+
+                         msg('网络错误');
+                     }
+                 });
+
+             }
+          }
+      })
+  </script>
+  </html>

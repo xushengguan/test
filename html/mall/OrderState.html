@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>订单状态信息</title>
+	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
+	<link rel="stylesheet" type="text/css" href="../../icon/iconfonts/iconfont.css" />
+
+	<style media="screen">
+
+		header{position: relative; height: 44px; line-height: 44px; box-shadow: 0px 4px 4px 0px rgba(76, 81, 118, 0.15);
+		font-size: 18px; background-color: #fefefe;}
+		header em{height: 44px; background: url(../../image/back.png) no-repeat center 12px; background-size: 10px 17px;
+		padding-left: 14px; padding-right: 30px; float: left;}
+		header span{width: 18px; height: 44px; background: url(../../image/sever.png) no-repeat 0 14px; background-size: 18px;
+		float: right; margin-right: 14px;}
+
+		.mall-box{background-color: #f4f4f4; padding: 14px;}
+		.mall-pic{width: 85px; height: 85px; margin-right: 15px;}
+		.mall-info{width: calc(100% - 100px); }
+		.mall-name{font-size: 17px; margin-bottom: 6px;}
+		.mall-total{color: #ffc708; font-size: 13px; margin-bottom: 10px;}
+		.mall-total span{font-size: 16px;}
+		.mall-total em{font-size: 13px; color: #999;}
+		.mall-type{font-size: 14px; color: #ccc;}
+		.mall-type span:nth-child(1){float: left; display: block; width: calc(50% - 5px); margin-right: 5px;}
+		.mall-type span:nth-child(2){float: right; display: block; width: 50%; text-align: right;}
+
+
+		/*========================底部========================*/
+		/*学分不足*/
+
+		#nopay_footer {
+			width: 100%;
+			background: #fefefe;
+			border-top: 1px solid #f2f2f2;
+			display: table;
+		}
+
+		#nopay_footer .fo_left {
+			display: table-cell;
+			width: 70%;
+		}
+
+		#nopay_footer .fo_left .lf_txt {
+			font-size: 13px;
+			padding-left: 14px;
+			padding-right: 2%;
+			padding-top: 14px;
+			padding-bottom: 14px;
+			color: #ffb300;
+		}
+
+		#nopay_footer .total-credit {
+			font-size: 16px;
+		}
+
+		#nopay_footer .total-cash {
+			color: #999;
+		}
+
+
+		#nopay_footer .btn_pay {
+			display: table-cell;
+			width: 30%;
+			text-align: center;
+			color: #fff;
+			font-size: 18px;
+			background: #ff5252;
+			position: relative;
+		}
+
+		#nopay_footer .btn_pay.submit {
+			background: #ffb300;
+		}
+		.btn_txt{
+			position: absolute;
+			top: 50%;
+			width: 100%;
+			left: 50%;
+			transform: translate(-50%,-50%);
+			-webkit-transform: translate(-50%,-50%);
+		}
+		/*======================底部==========================*/
+
+    .state-pic{width: 100%; display: block; margin-bottom: 10px;}
+    .order-info{padding: 0 14px; background-color: #fefefe; margin-bottom: 10px;}
+    .info-lines:not(:last-child){border-bottom: 1px solid #d2d3d5;}
+    .info-lines li{line-height: 20px;}
+    .info-lines li:not(:last-child){ padding-bottom: 4px;}
+    .info-lines{padding: 6px 0; font-size: 16px;}
+
+    .orderMall-info{margin-bottom: 10px; background-color: #f4f4f4;}
+    .order-handle{background-color: #fefefe; padding: 0 14px 10px 14px;}
+		.order-handle li{min-width: 70px; text-align: center; font-size: 14px; border: solid 1px #666;
+    border-radius: 15px; height: 30px; line-height: 30px; float:right; padding: 0 5px; margin-top: 10px; margin-left: 10px;}
+    .order-handle li:not(:first-child){margin-right: 10px;}
+
+    /*物流信息*/
+    .logistics{padding: 14px; font-size: 13px; color:#999; background-color: #fefefe; margin-bottom: 10px;}
+    .log-title{margin-bottom: 20px;}
+		.log-more{color: #232528; float: right; }
+		.log-title em{width: 14px; height: 14px; background: url(../../image/more.png) no-repeat center;
+			background-size: 14px; vertical-align: middle; margin-top: -2px; margin-left: 5px;}
+		.log-cotent{font-size: 15px;}
+
+		/*输入快递单号*/
+		.track-num{padding: 14px; font-size: 16px; background-color: #fefefe; margin-bottom: 10px;}
+		.track-num input{width: 85%;}
+		.track-num span{color: #46daab; text-align: right; width: calc(15% - 5px);}
+		.track-num span.on{color: #999;}
+
+		.prompt{color: #9e9e9e; font-size: 15px; padding: 0 14px;}
+	</style>
+</head>
+
+<body>
+
+	<div id="wrap">
+		<header>
+				<em tapmode onclick="go_back()"></em>
+				订单详情
+				<span onclick="meiQia()"></span>
+		</header>
+		<div id="main" v-cloak>
+				<!-- pay_status支付状态;0未付款;1付款中;2已付款 -->
+				<!--  shipping_status商品配送情况;0未发货,1已发货,2已收货,4申请退货;5退货处理中;6:退货完成 -->
+				<!-- 订单的状态order_status;0未确认,1确认,2已取消,3无效,4退货 -->
+
+        <!-- 商品配送中 -->
+        <img class="state-pic" src="../../image/state2.png" alt="订单状态" v-if="data.shipping_status == '1'">
+        <!-- 交易已完成 -->
+        <img class="state-pic" src="../../image/state3.png" alt="订单状态" v-else-if="data.shipping_status == '2'">
+        <!-- 退货处理中 -->
+        <img class="state-pic" src="../../image/state4.png" alt="订单状态" v-else-if="data.shipping_status == '5'">
+        <!-- 退货完成 -->
+        <img class="state-pic" src="../../image/state5.png" alt="订单状态" v-else-if="data.shipping_status == '6'">
+				<!-- 支付成功 -->
+				<img class="state-pic" src="../../image/state1.png" alt="订单状态" v-else-if="data.pay_status == '2'">
+
+        <!-- 物流信息 -->
+        <div class="logistics" v-if="status">
+            <div class="log-title clearfix">
+                <span>物流信息</span>
+                <div class="log-more" tapmode @click="Checklog(data.logistics_company,data.tracking_number)">更多<em></em></div>
+            </div>
+						<div class="log-cotent">{{status.time}} {{status.status}}</div>
+        </div>
+
+				<!-- 输入快递单号 -->
+				<div class="track-num" v-if="data.shipping_status == '4'">
+						<input type="number" placeholder="请输入退货快递单号">
+						<span>确认</span>
+						<!-- <span class="on">已提交</span> -->
+				</div>
+
+        <!-- 订单信息 -->
+        <div class="order-info">
+            <ul class="info-lines">
+               <li>订单编号: {{data.order_sn}}</li>
+               <li>下单时间: {{data.add_time | formatDate}}</li>
+            </ul>
+            <ul class="info-lines">
+              <li>收件人: {{data.consignee}}</li>
+              <li>联系电话: {{data.tel}}</li>
+              <li>收货地址: {{data.address}}</li>
+            </ul>
+        </div>
+
+        <!-- 商品信息 -->
+        <div class="orderMall-info">
+            <div class="mall-box flex-align-center" tapmode @click="goDetail(data.id)">
+    						<img :src="data.imgurl+'?x-oss-process=image/resize,m_fill,h_85,w_85'" alt="商品缩略图" class="mall-pic">
+    						<div class="mall-info">
+    								<p class="mall-name more">{{data.goods_name}}</p>
+    								<p class="mall-total">
+    										总价:<span>{{data.goods_amount}}</span>
+    										<span>学分</span>
+    										<em>(现金{{data.goods_amount*0.2}}元)</em>
+    								</p>
+    								<p class="mall-type clearfix">
+    										<span v-if="data.goods_size">类型:{{data.goods_size}}</span>
+    										<span>数量:{{data.goods_number}}</span>
+    								</p>
+    						</div>
+    				</div>
+
+						<ul class="order-handle clearfix">
+								<!-- pay_status支付状态;0未付款;1付款中;2已付款 -->
+								<!--  shipping_status商品配送情况;0未发货,1已发货,2已收货,4申请退货;5退货处理中;6:退货完成 -->
+								<!-- 订单的状态order_status;0未确认,1确认,2已取消,3无效,4退货 -->
+
+								<li v-show="data.pay_status == '0'" tapmode @click="get_weiChat()">付款</li>
+								<li v-show="data.pay_status == '2' && data.shipping_status == '0'" v-if="data.order_status != '2'" tapmode @click="get_cancelOrder()">取消订单</li>
+								<li v-show="data.pay_status == '2' && data.shipping_status == '1'" tapmode @click="confirmReceipt()">确认收货</li>
+								<li v-show="data.pay_status == '2' && data.shipping_status == '2'" tapmode @click="appReturn()">申请退货</li>
+
+						</ul>
+
+      </div>
+
+			<div class="prompt">收到货物后，系统会在7天后自动确认收货</div>
+
+		</div>
+
+
+  </div>
+
+</body>
+</html>
+<script type="text/javascript" src="../../script/api.js"></script>
+<script type="text/javascript" src="../../script/my.js"></script>
+<script type="text/javascript" src="../../script/vue.js"></script>
+<script type="text/javascript" src="../../script/date.js"></script>
+<script type="text/javascript">
+    var token,id;
+	  apiready = function(){
+				api.parseTapmode();
+				token = api.getPrefs({
+						sync: true,
+						key: 'token'
+				});
+				id = api.getPrefs({
+						sync: true,
+						key: 'id'
+				});
+
+        vm.get_orderDetail();
+		}
+
+    var vm = new Vue({
+				el:'#main',
+				data:{
+						data:[],
+						status:'',
+						order_id:''
+				},
+				filters: {
+					formatDate: function (_formatDate) {
+						function formatDate(_x) {
+							return _formatDate.apply(this, arguments);
+						}
+
+						formatDate.toString = function () {
+							return _formatDate.toString();
+						};
+
+						return formatDate;
+					}(function (time) {
+						var date = new Date(time * 1000);
+						return formatDate(date, 'yyyy-MM-dd');
+					})
+				},
+				methods:{
+					//订单详情
+					get_orderDetail: function get_orderDetail() {
+						showProgress('努力加载中','请稍后···');
+						vm.order_id = api.pageParam.order_id;
+						api.ajax({
+							url: serverurl,
+							method: 'get',
+							cache: true,
+							data: {
+								values: {
+									type: '10129',
+									token: token,
+									uid:id,
+									order_id: vm.order_id
+								}
+							}
+						}, function (ret, err) {
+              api.hideProgress();
+
+							if (ret) {
+								if (ret.status == '5') {
+									ExitLogin();
+								} else {
+									vm.data = ret;
+									vm.status = ret.status;
+								}
+							} else {
+
+								msg('网络错误');
+							}
+						});
+					},
+
+					goDetail:function goDetail(goods_id){
+							openWin('credit_goodDetail','./credit_goodDetail.html',{goods_id:goods_id});
+					},
+
+					appReturn:function appReturn(){
+						//申请退货
+						showProgress('努力加载中','请稍后···');
+						api.ajax({
+							url: serverurl,
+							method: 'get',
+							data: {
+								values: {
+									type: '10132',
+									token: token,
+									uid: id,
+									order_id:vm.order_id
+								}
+							}
+						}, function (ret, err) {
+
+							api.hideProgress();
+
+							if (ret) {
+								if (ret.status == '5') {
+									ExitLogin();
+								} else {
+										vm.get_orderDetail();
+								}
+							} else {
+								msg('网络错误');
+
+							}
+						});
+					},
+
+					confirmReceipt: function confirmReceipt() {
+						//确认收货
+						api.confirm({
+							title: '确认收货',
+							msg: '请确认收到货后，再进行确认操作',
+							buttons: ['确定', '取消']
+						}, function(ret, err) {
+							var index = ret.buttonIndex;
+							if (index == '1') {
+								showProgress('努力加载中','请稍后···');
+								api.ajax({
+									url: serverurl,
+									method: 'get',
+									data: {
+										values: {
+											type: '10131',
+											token: token,
+											order_id: vm.order_id
+										}
+									}
+								}, function(ret, err) {
+									api.hideProgress();
+
+									if (ret) {
+										if (ret.status == '5') {
+											ExitLogin();
+										} else if (ret.status == '0') {
+
+											msg('确认收货失败');
+										} else {
+
+											vm.get_orderDetail();
+
+
+										}
+									} else {
+
+										msg('网络错误');
+									}
+								});
+							};
+						});
+					},
+
+					get_cancelOrder: function get_cancelOrder() {
+						//取消订单
+						api.confirm({
+							title: '取消订单',
+							msg: '确定取消订单？',
+							buttons: ['确定', '取消']
+						}, function (ret, err) {
+								var index = ret.buttonIndex;
+								if (index == '1') {
+									showProgress('努力加载中','请稍后···');
+									api.ajax({
+										url: serverurl,
+										method: 'get',
+										data: {
+											values: {
+												type: '10051',
+												token: token,
+												uid: id,
+												order_sn: vm.data.order_sn
+											}
+										}
+									}, function (ret, err) {
+
+										api.hideProgress();
+
+										if (ret) {
+											if (ret.status == '5') {
+												ExitLogin();
+											} else {
+
+												vm.get_orderDetail();
+
+											}
+										} else {
+											msg('网络错误');
+
+										}
+									});
+								}
+						});
+
+					},
+
+					Checklog:function Checklog(logistics_company,tracking_number){
+
+							var pageParam = {
+									 tracking_number:tracking_number,
+									 logistics_company:logistics_company,
+
+							};
+							openWin('logistic','./logistic.html',pageParam);
+					},
+
+					// 获取微信签名
+					get_weiChat: function get_weiChat() {
+						var order_total = vm.data.goods_amount * 0.2;
+						api.ajax({
+							url: serverurl,
+							method: 'post',
+							data: {
+								values: {
+									type: '10029',
+									token: token,
+									uid: id,
+									goods_name: vm.data.goods_name,
+									order_total: order_total,
+									order_sn: vm.data.order_sn
+								}
+							}
+						}, function(ret, err) {
+
+							if (ret) {
+								if (ret.status == '5') {
+									ExitLogin();
+								} else {
+									goPay(ret, vm.data.order_sn);
+								}
+							} else {
+
+								msg('网络错误');
+							}
+						});
+					},
+
+				}
+		})
+
+		// 微信支付
+		function goPay(content, order_sn) {
+			var wxPay = api.require('wxPay');
+			wxPay.payOrder({
+				apiKey: content.appid, //从微信开放平台获取的 appid
+				orderId: content.prepayid, //获取的订单号 （prepay_id）
+				mchId: content.partnerid, //商家和微信合作的 id 号，审核通过后微信服务器会发送到商家邮箱
+				nonceStr: content.noncestr, //随机字符串，防重发
+				timeStamp: content.timestamp, //时间戳，防重发
+				sign: content.sign //商家根据微信开放平台文档对数据做的签名
+			}, function(ret, err) {
+
+				if (ret.status) {
+					//支付成功
+					getweiPay(order_sn);
+
+				} else {
+					console.log(err.code);
+				}
+
+			});
+		}
+
+		// 微信支付成功更新订单
+		function getweiPay(order_sn) {
+
+			api.ajax({
+				url: serverurl,
+				method: 'post',
+				data: {
+					values: {
+						type: '10190',
+						token: token,
+						order_sn: order_sn
+					},
+				}
+			}, function(ret, err) {
+
+				if (ret) {
+					if (ret.status == '5') {
+						ExitLogin();
+					} else if (ret.status == '1') {
+						vm.get_orderDetail();
+					} else {
+
+						msg('获取订单失败');
+					}
+
+				} else {
+
+					msg('网络错误');
+
+				}
+			});
+		}
+
+		// 打开客服界面
+		function meiQia(){
+				var mq = api.require('meiQia');
+				mq.show();//弹出美洽聊天界面
+		}
+</script>
