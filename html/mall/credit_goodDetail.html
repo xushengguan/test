@@ -138,7 +138,7 @@
         <header>
             <em tapmode onclick="go_back()"></em>
             商品详情
-            <span></span>
+            <span tapmode onclick="Share()"></span>
         </header>
     		<div id="main">
           <!-- Swiper -->
@@ -237,7 +237,7 @@
   					});
             fnInitSwipe();
             goodsid = api.pageParam.goods_id;
-            
+
             vm.getGoodsInfo();
             setTimeout(function(){
               var firstSize = $api.first($api.dom('.btn-type'));
@@ -408,5 +408,95 @@
               document.getElementById("num").value++;
     	    }
     	}
+
+      function Share() {
+
+          var dialogBox = api.require('dialogBox');
+          dialogBox.actionMenu({
+              rect: {
+                  h: 150
+              },
+              texts: {
+                  cancel: '取消'
+              },
+              items: [{
+                  text: '朋友圈',
+                  icon: 'widget://image/share2.png'
+              }, {
+                  text: '微信好友',
+                  icon: 'widget://image/share1.png'
+              }],
+              styles: {
+                  bg: '#FFF',
+                  column: 3,
+                  itemText: {
+                      color: '#000',
+                      size: 14,
+                      marginT: 8
+                  },
+                  itemIcon: {
+                      size: 40
+                  },
+                  cancel: {
+                      bg: 'fs://icon.png',
+                      color: '#000',
+                      h: 44,
+                      size: 16
+                  }
+              },
+              tapClose: true
+          }, function (ret) {
+
+              if (ret.eventType == 'cancel') {
+                  dialogBox.close({
+                      dialogName: 'actionMenu'
+                  });
+              } else {
+                  dialogBox.close({
+                      dialogName: 'actionMenu'
+                  });
+                  if (ret.index == 0) {
+                      weiShare('timeline', vm.goodsInfo.goods_name, vm.goodsInfo.abs, goodsid);//朋友圈
+                  } else if (ret.index == '1') {
+                      weiShare('session', vm.goodsInfo.goods_name, vm.goodsInfo.abs, goodsid);//会话
+                  }
+              }
+          });
+      }
+
+      // 微信分享网页
+      function weiShare(scene,title,content,goodsid){
+
+          var contentUrl = 'https://wechat.123win.com.cn/xlp/mall/credit_goodDetail.html?goodsid='+goodsid+'&uid='+id;
+          var wx = api.require('wx');
+          wx.isInstalled(function(ret, err) {//判断当前设备是否已经安装微信
+              if (ret.installed) {
+
+                  wx.shareWebpage({
+                      apiKey: '',
+                      scene: scene,
+                      title: title,
+                      description: content,
+                      thumb: 'widget://icon/icon2.png',
+                      contentUrl: contentUrl
+                  }, function(ret, err) {
+
+                      if (ret.status) {
+                          msg('分享成功');
+
+                      } else {
+
+                          console.log(err.code);
+
+                      }
+                  });
+              } else {
+
+                  msg('当前设备未安装微信客户端');
+
+              }
+          });
+
+      }
   </script>
   </html>

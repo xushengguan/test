@@ -458,7 +458,6 @@
 
 		// 获取微信签名
 		function get_weiChat(goods_name,order_total,order_sn){
-
 				api.ajax({
 				    url: serverurl,
 				    method: 'post',
@@ -478,7 +477,7 @@
 	              if (ret.status == '5') {
 										ExitLogin();
 	              }else {
-	              		goPay(ret,order_sn);
+	              		goPay(ret,ret.order_sn);
 	              }
 
 				    } else {
@@ -534,11 +533,7 @@
 	            		ExitLogin();
 	            }else if (ret.status == '1') {
 
-								var pageParam = {
-										time: add_time,
-										goods_name:vm.goods_name
-								}
-								openWin('OrderState','./OrderState.html',pageParam);
+								openWin('orderDetail','./orderDetail.html','');
 							}else {
 
 									msg('兑换失败');
@@ -571,17 +566,13 @@
 				    }
 				},function(ret, err){
 					  api.hideProgress();
-            console.log(JSON.stringify(ret));
-						console.log(JSON.stringify(err));
+          
 				    if (ret) {
 							  if (ret.status == '5') {
 										ExitLogin();
 							  }else if (ret.status == '1') {
-									var pageParam = {
-											time: add_time,
-											goods_name:vm.goods_name
-									}
-									// openWin('OrderState','./OrderState.html',pageParam);
+
+									openWin('orderDetail','./orderDetail.html','');
 
 								}else if (ret.status == '0') {
 

@@ -204,7 +204,7 @@
                 <div class="f-btn" tapmode @click="openInput('请输入您要说的内容')">说点什么吧</div>
                 <!-- is_like是否点赞 1 已经点赞 0 没有点赞 -->
                 <span class="f-icon1" :class="{on:data.is_like == 1}" tapmode @click="giveLike(data)"></span>
-                <span class="f-icon2"></span>
+                <span class="f-icon2" tapmode @click="Share(data.content,data.id)"></span>
           </footer>
       </div>
   </body>
@@ -429,6 +429,62 @@
                   });
               },
 
+              Share: function Share(content, circle_id) {
+
+                  var dialogBox = api.require('dialogBox');
+                  dialogBox.actionMenu({
+                      rect: {
+                          h: 150
+                      },
+                      texts: {
+                          cancel: '取消'
+                      },
+                      items: [{
+                          text: '朋友圈',
+                          icon: 'widget://image/share2.png'
+                      }, {
+                          text: '微信好友',
+                          icon: 'widget://image/share1.png'
+                      }],
+                      styles: {
+                          bg: '#FFF',
+                          column: 3,
+                          itemText: {
+                              color: '#000',
+                              size: 14,
+                              marginT: 8
+                          },
+                          itemIcon: {
+                              size: 40
+                          },
+                          cancel: {
+                              bg: 'fs://icon.png',
+                              color: '#000',
+                              h: 44,
+                              size: 16
+                          }
+                      },
+                      tapClose: true
+                  }, function (ret) {
+
+                      if (ret.eventType == 'cancel') {
+                          dialogBox.close({
+                              dialogName: 'actionMenu'
+                          });
+                      } else {
+                          dialogBox.close({
+                              dialogName: 'actionMenu'
+                          });
+                          if (ret.index == 0) {
+                              weiShare('timeline', content, content, circle_id);
+                          } else if (ret.index == '1') {
+                              weiShare('session', '学客圈', content, circle_id);
+                          }
+                      }
+                  });
+              }
+
+
           }
       })
 
@@ -511,6 +567,73 @@
                            }
                        });
                   }
+              } else {
+
+                  msg('网络错误');
+              }
+          });
+
+      }
+
+      // 微信分享网页
+      function weiShare(scene,title,content,circle_id){
+          var contentUrl = 'https://wechat.123win.com.cn/xlp/circle/circleDetail2.html?circle_id='+circle_id+'&token='+token+'&uid='+uid;
+          var wx = api.require('wx');
+          wx.isInstalled(function(ret, err) {//判断当前设备是否已经安装微信
+              if (ret.installed) {
+
+                  wx.shareWebpage({
+                      apiKey: '',
+                      scene: scene,
+                      title: title,
+                      description: content,
+                      thumb: 'widget://icon/icon2.png',
+                      contentUrl: contentUrl
+                  }, function(ret, err) {
+
+                      if (ret.status) {
+
+                          msg('分享成功');
+                          sharenum(circle_id);
+
+                      } else {
+
+                          console.log(err.code);
+
+                      }
+                  });
+              } else {
+
+                  msg('当前设备未安装微信客户端');
+
+              }
+          });
+
+      }
+
+      // 学客圈转发
+      function sharenum(ccl_id){
+          var time = Math.round(new Date().getTime()/1000);
+          api.ajax({
+              url: serverurl,
+              method: 'get',
+              data: {
+                  values: {
+                      type: '10089',
+                      uid:uid,
+                      token: token,
+                      ccl_id: ccl_id,
+                       time: time
+                  },
+              }
+          },function(ret, err){
+              if (ret) {
+                if (ret.status == '5') {
+                    ExitLogin();
+                }else {
+                    vm.getDetails();
+                }
+
               } else {
 
                   msg('网络错误');
