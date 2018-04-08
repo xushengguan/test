@@ -7,9 +7,7 @@
       <title>首页</title>
       <link rel="stylesheet" type="text/css" href="../css/api.css"/>
       <link rel="stylesheet" type="text/css" href="../css/style.css"/>
-      <link rel="stylesheet" type="text/css" href="../css/video-js.css"/>
       <link rel="stylesheet" type="text/css" href="../css/swiper.min.css"/>
-      <link rel="stylesheet" type="text/css" href="../css/examples.css"/>
       <style>
           header{padding: 0 14px;}
           header{height: 44px; line-height: 44px; box-shadow: 0px 4px 4px 0px rgba(76, 81, 118, 0.15);
@@ -287,6 +285,7 @@
           });
           vm.switchTab(0);
 
+          // 监听学客圈变化
           api.addEventListener({
               name: 'circle'
           }, function(ret, err){
@@ -297,7 +296,17 @@
                    console.log( JSON.stringify( err ) );
               }
           });
+          // 监听新鲜事变化
+          api.addEventListener({
+              name: 'news'
+          }, function(ret, err){
+              if( ret ){
 
+                   vm.getNews(1);
+              }else{
+                   console.log( JSON.stringify( err ) );
+              }
+          });
       }
 
       var vm = new Vue({

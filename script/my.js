@@ -95,6 +95,7 @@ function openWin(name,url,pageParam){
     api.openWin({
         name: name,
         url: url,
+        bgColor: '#f2f2f2',
         pageParam: pageParam,
         scrollToTop:true,//当点击状态栏，页面是否滚动到顶部,只 iOS 有效
         slidBackEnabled:false,//（可选项）是否支持滑动返回。iOS7.0及以上系统中，在新打开的页面中向右滑动，可以返回到上一个页面，该字段只 iOS 有效

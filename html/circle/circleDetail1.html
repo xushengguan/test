@@ -51,7 +51,7 @@
   <script type="text/javascript">
       apiready = function(){
           SetStatusBar('#main','dark','#fefefe');//设置状态栏my.js
-          
+
           api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
           vm.getDetails();
 
@@ -125,9 +125,7 @@
       })
 
       function goDetail(){
-          if (vm.data.comment_count > 0) {
-              openWin('cir-artmsg','./cir-artmsg.html',{data:vm.data});
-          }
+          openWin('cir-artmsg','./cir-artmsg.html',{data:vm.data});        
       }
   </script>
   </html>

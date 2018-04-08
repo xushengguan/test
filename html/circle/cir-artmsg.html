@@ -49,7 +49,12 @@
             <em tapmode onclick="go_back()"></em>
           </header>
           <div id="main" class="article">
-            <div class="user-box1" v-for="v in data.comment">
+            <!-- 没有数据 -->
+            <div class="no-data" v-if="!data.comment">
+                 <img src="../../image/ndata.png" alt="没数据图片">
+                 <p>抱歉，没有数据~</p>
+            </div>
+            <div class="user-box1" v-for="v in data.comment" v-else>
                 <div class="user-main clearfix">
                     <div class="pic">
                         <img :src="v.headimgurl+'?x-oss-process=image/resize,m_fill,h_40,w_40'" alt="人头像" v-if="v.headimgurl">
@@ -150,7 +155,7 @@
                   }
                 }, function(ret, err) {
                   if (ret) {
-                      
+
                       if (ret.msg) {
                          if (replayid) {
                             Reply(ret.msg,replayid,comment_id);
