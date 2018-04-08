@@ -37,20 +37,23 @@ input,button,textarea {
 	padding:0;
 	font-size:1em;
 	line-height:1em;
-	/*-webkit-appearance:none;*/
 	background-color:rgba(0, 0, 0, 0);
 	outline: none;
+	/*解决ios端按钮和输入框自带圆角的问题*/
+	-webkit-appearance: none ;
+	border-radius: 0;
+	/*解决ios端按钮和输入框自带圆角的问题*/
 }
 span{
 	display:inline-block;
 }
 a:active, a:hover {
   outline: 0;
-	color: #262829;
+	/*color: #262829;*/
 }
 a, a:visited{
 	text-decoration:none;
-	color: #262829;
+	/*color: #262829;*/
 }
 
 label, .wordWrap{

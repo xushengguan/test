@@ -144,7 +144,7 @@
               }
           },function(ret, err){
               api.hideProgress();
-          
+
               if (ret) {
 
                    if (ret.status == '1') {
@@ -168,9 +168,7 @@
                           value: ret.data.headimgurl
                       });
 
-                      setTimeout(function(){
-                          openWin('index','../../index.html','');
-                      },100);
+                      checkname(ret.token,ret.data.id);
 
 
                    }else if (ret.status == '0') {
@@ -188,5 +186,31 @@
 
       }
 
+      //检测是否有设置昵称
+      function checkname(token,id) {
+          api.ajax({
+              url: serverurl,
+              method: 'get',
+              data: {
+                  values: {
+                      type:'10100',
+                      token: token,
+                      uid:id
+                  }
+              }
+          }, function(ret, err) {
+              if (ret) {
+                if (ret.status == '0') {//1 已经设置 0 未设置
+                  openWin('login2','./login2.html','');
+                }else {
+                  setTimeout(function(){
+                      openWin('index','../../index.html','');
+                  },100);
+                }
+              } else {
+                  msg('网络错误，请重试!');
+              }
+          });
+      }
   </script>
   </html>

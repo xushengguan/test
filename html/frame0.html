@@ -119,7 +119,7 @@
       </style>
   </head>
   <body>
-      <div id="wrap" v-cloak>
+      <div id="wrap" v-cloak style="background-color: #fff;">
           <header>
               <a class="title" :class="{on:changeColor == index}" href="javascript:;" v-for="(item,index) in tabData" tapmode @click="switchTab(index)">
                 {{item.tabName}}
@@ -127,7 +127,7 @@
               <em class="scan" tapmode onclick="ScanCode()"></em>
               <em class="search" tapmode onclick="openWin('search','./search.html','')"></em>
           </header>
-          <div id="main">
+          <div id="main" style="background-color: #eeeff7;">
               <div class="container">
                   <!-- 新鲜事 -->
                   <div class="content" v-if="changeColor == 0 && !data.status">
@@ -175,7 +175,7 @@
                                     {{v.title}}
                                   </div>
                                   <img :src="v.actimgurl+'?x-oss-process=image/resize,p_50'" alt="活动图片" class="act-img">
-                                  <p class="act-info more3" v-html="v.content"></p>                                               
+                                  <p class="act-info more3" v-html="v.content"></p>
                               </div>
                             </div>
                           </div>
@@ -270,7 +270,14 @@
       var page = 1;
 
       apiready = function(){
-          SetStatusBar('#main','dark','#fefefe');//设置状态栏my.js
+        //iphonex适应开始
+        $api.fixStatusBar($api.byId('wrap'));
+        // $api.fixTabBar($api.byId('footer'));
+        //iphonex适应结束
+
+          api.setStatusBarStyle({
+            style: 'dark'
+          });
 
           api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
           token = api.getPrefs({
@@ -305,6 +312,7 @@
                    console.log( JSON.stringify( err ) );
               }
           });
+
       }
 
       var vm = new Vue({
@@ -362,7 +370,7 @@
                      api.addEventListener({
                          name:'scrolltobottom',
                          extra:{
-                             threshold:50            //设置距离底部多少距离时触发，默认值为0，数字类型
+                             threshold:400            //设置距离底部多少距离时触发，默认值为0，数字类型
                          }
                      }, function(ret, err){
                          vm.updata = true;
@@ -397,7 +405,6 @@
                 api.ajax({
                     url: serverurl,
                     method: 'get',
-                    cache:true,
                     data: {
                         values: {
                             type: '10064',
@@ -438,7 +445,6 @@
                 api.ajax({
                     url: serverurl,
                     method: 'get',
-                    cache:true,
                     data: {
                         values: {
                             type: '10087',
@@ -467,7 +473,6 @@
                 api.ajax({
                     url: serverurl,
                     method: 'get',
-                    cache:true,
                     data: {
                         values: {
                             type: '10066',
@@ -500,7 +505,6 @@
                 api.ajax({
                     url: serverurl,
                     method: 'get',
-                    cache:true,
                     data: {
                         values: {
                             type: '10115',
