@@ -8,7 +8,7 @@
       <link rel="stylesheet" type="text/css" href="../css/api.css"/>
       <style>
           header{position: relative; height: 44px; line-height: 44px; box-shadow: 0px 4px 4px 0px rgba(76, 81, 118, 0.15);
-          font-size: 18px; background-color: #fefefe; padding:0 14px; color: #232528;}
+          font-size: 18px; background-color: #fefefe; padding:0 14px; color: #232528; text-align: center;}
           header em{width: 18px; height: 44px; background: url(../image/setting.png) no-repeat center 12px; background-size: 18px 17px;
           padding-left: 14px; float: right;}
 
@@ -40,7 +40,7 @@
           .menu-li.on{margin-top: 0; border-top: 1px solid #d2d3d5;}
           .menu1{background-image: url(../image/menu1.png); background-repeat: no-repeat; background-size: 15px 13px;
           background-position: 14px center; padding-left: 42px;}
-          .menu2{background-image: url(../image/menu2.png); background-repeat: no-repeat; background-size: 10px 16px;
+          .menu2{background-image: url(../image/menu2.png); background-repeat: no-repeat; background-size: 15px;
           background-position: 14px center; padding-left: 37px;}
           .menu3{background-image: url(../image/menu3.png); background-repeat: no-repeat; background-size: 15px 16px;
           background-position: 14px center; padding-left: 42px;}
@@ -53,12 +53,13 @@
       </style>
   </head>
   <body>
-    <div id="wrap">
+    <div id="wrap" style="background-color: #fff;">
         <header>
-          <span tapmode onclick="openWin('myBracelet','./mine/myBracelet.html','')">我的手环</span>
+          <!-- <span tapmode onclick="openWin('myBracelet','./mine/myBracelet.html','')">我的手环</span> -->
+          我的
           <em tapmode onclick="openWin('7account','./mine/7account.html','')"></em>
         </header>
-        <div id="main" v-cloak>
+        <div id="main" v-cloak style="background-color: #eeeff7;">
             <div class="info flex-align-center" tapmode onclick="openWin('MyAct','./mine/MyIndex.html','')">
                 <div class="pic">
                     <img src="../image/pic.png" alt="人头像">
@@ -87,9 +88,9 @@
             <div class="menu-li menu1" tapmode onclick="openWin('MyAct','./mine/MyAct.html','')" v-else>
                 我的活动
             </div>
-            <!-- <div class="menu-li menu2" tapmode onclick="openWin('MyAct','./mine/MyIndex.html','')">
-                我的主页
-            </div> -->
+            <div class="menu-li menu2" tapmode onclick="openWin('myBracelet','./mine/myBracelet.html','')">
+                我的手环
+            </div>
             <div class="menu-li menu3" tapmode onclick="openWin('orderDetail','./mall/orderDetail.html','')">
                 我的订单
             </div>
@@ -112,8 +113,13 @@
   <script type="text/javascript">
       var token,id;
       apiready = function(){
-          SetStatusBar('#main','dark','#fefefe');//设置状态栏my.js
-
+        //iphonex适应开始
+        $api.fixStatusBar($api.byId('wrap'));
+        // $api.fixTabBar($api.byId('footer'));
+        //iphonex适应结束
+          api.setStatusBarStyle({
+            style: 'dark'
+          });
           api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
           token = api.getPrefs({
               sync: true,

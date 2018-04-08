@@ -27,6 +27,7 @@
   <script type="text/javascript" src="../../script/api.js"></script>
   <script type="text/javascript" src="../../script/my.js"></script>
   <script type="text/javascript">
+      var token,id;
       apiready = function(){
           // 设置是否全屏
           api.setFullScreen({
@@ -56,32 +57,9 @@
           });
 
           if (token && id) { //取本地的token和id和服务器做校对，查询是否当前储存的是否和服务器状态一样。
-            api.ajax({
-                url: serverurl,
-                method: 'get',
-                data: {
-                    values: {
-                        type:10081,
-                        token: token,
-                        uid:id
-                    }
-                }
-            }, function(ret, err) {
-
-                if (ret) {
-
-                    if (ret.status == '1') {
-                    openWin('index','../../index.html','','');
-                  }else {
-
-                    msg('您的登录信息已失效，请重新登录!');
-                  }
-                } else {
-                    msg('网络错误，请重试!');
-                }
-            });
+              checktoken();
           }
-        
+
       };
 
       function goNext(index){
@@ -97,6 +75,33 @@
                 openWin('login0','./login0.html','');
           }
 
+      }
+      //取本地的token和id和服务器做校对，查询是否当前储存的是否和服务器状态一样。
+      function checktoken() {
+          api.ajax({
+              url: serverurl,
+              method: 'get',
+              data: {
+                  values: {
+                      type:10081,
+                      token: token,
+                      uid:id
+                  }
+              }
+          }, function(ret, err) {
+
+              if (ret) {
+
+                if (ret.status == '1') {
+                  openWin('index','../../index.html','','');
+                }else {
+
+                  msg('您的登录信息已失效，请重新登录!');
+                }
+              } else {
+                  msg('网络错误，请重试!');
+              }
+          });
       }
 
       // 极光推送

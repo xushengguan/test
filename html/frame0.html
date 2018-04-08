@@ -175,9 +175,7 @@
                                     {{v.title}}
                                   </div>
                                   <img :src="v.actimgurl+'?x-oss-process=image/resize,p_50'" alt="活动图片" class="act-img">
-                                  <p class="act-info more3">
-                                      {{v.content}}
-                                  </p>
+                                  <p class="act-info more3" v-html="v.content"></p>                                               
                               </div>
                             </div>
                           </div>

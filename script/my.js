@@ -85,7 +85,7 @@ function getFrame(name,url,rect,pageParam){
         softInputMode:'resize',
         rect:rect,
         pageParam: pageParam,
-        reload: true,
+        reload: false,
         allowEdit:true,
     });
 }

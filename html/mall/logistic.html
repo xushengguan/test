@@ -98,35 +98,32 @@
 						type:''
 				},
 				methods:{
-						getLogInfo(logistics_company,tracking_number,order_id){//查询物流信息
+					getLogInfo:function getLogInfo(logistics_company,tracking_number,order_id){//查询物流信息
+							showProgress('努力加载中','请稍后···');
+							api.ajax({
+									url: serverurl,
+									method: 'get',
+									data: {
+											values: {
+													type: '10020',
+													tracking_number:tracking_number,
+													logistics_company:logistics_company,
+											},
+									}
+							},function(ret, err){
+									api.hideProgress();
 
-                showProgress('努力加载中','请稍后···');
-								api.ajax({
-								    url: serverurl,
-								    method: 'get',
-								    data: {
-								        values: {
-								            type: '10020',
-														tracking_number:tracking_number,
-														logistics_company:logistics_company,
-													
-								        },
-								    }
-								},function(ret, err){
-                    api.hideProgress();
+									if (ret) {
+											vm.data = ret.result.list;
+											vm.number = ret.result.number;
+											vm.type = ret.result.type;
+									} else {
 
-								    if (ret) {
+											msg('网络错误');
 
-												vm.data = ret.result.list;
-												vm.number = ret.result.number;
-												vm.type = ret.result.type;
-								    } else {
-
-												msg('网络错误');
-
-								    }
-								});
-						}
+									}
+							});
+					}
 				}
 		})
 </script>
