@@ -50,7 +50,11 @@
           <img src="../image/icon5.png" alt="icon图标">
           <p>扫码</p>
         </div>
-        <div class="swiper-slide">
+        <div class="swiper-slide" tapmode onclick="goPage(3)">
+          <img src="../image/icon4.png" alt="icon图标">
+          <p>图文</p>
+        </div>
+        <!-- <div class="swiper-slide">
           <img src="../image/icon2.png" alt="icon图标">
           <p>拍摄</p>
         </div>
@@ -61,16 +65,11 @@
         <div class="swiper-slide">
           <img src="../image/icon3.png" alt="icon图标">
           <p>直播</p>
-        </div>
+        </div> -->
         <div class="swiper-slide" tapmode onclick="goPage(6)">
           <img src="../image/icon7.png" alt="icon图标">
           <p>主页</p>
         </div>
-        <div class="swiper-slide">
-          <img src="../image/icon4.png" alt="icon图标">
-          <p>相册</p>
-        </div>
-
         <div class="swiper-slide" tapmode onclick="goPage(8)">
           <img src="../image/icon8.png" alt="icon图标">
           <p>订单</p>
@@ -92,9 +91,9 @@
         SetStatusBar('#main','dark','#f6f3f3');//设置状态栏my.js
         api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
         var swiper = new Swiper('.swiper-container', {
-          slidesPerView: 4,
-          slidesPerColumn: 2,
-          spaceBetween: 30,
+          slidesPerView: 5,
+          slidesPerColumn: 1,
+          spaceBetween: 15,
           pagination: {
             el: '.swiper-pagination',
             clickable: true,
@@ -109,6 +108,8 @@
                openWin('circlePulish','./circle/circlePulish.html','');
            }else if (index == 2) {
                ScanCode();
+           }else if (index == 3) {
+               openWin('circlePulish','./circle/circlePulish.html',{icon:index});
            }else if (index == 6) {
                openWin('MyIndex','./mine/MyIndex.html','');
            }else if (index == 8) {
@@ -149,6 +150,6 @@
         });
       }
 
-      
+
   </script>
   </html>

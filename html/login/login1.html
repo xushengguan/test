@@ -91,6 +91,7 @@
   <script type="text/javascript">
       var wait = 60;
       var token,id;
+      var longitude,latitude;
       apiready = function(){
           SetStatusBar('.container','dark','#f3f5f7');//设置状态栏my.js
           api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
@@ -98,6 +99,18 @@
           setTimeout(function(){
               focus_footer();
           },100);
+          var bMap = api.require('bMap');
+          bMap.getLocation({
+              accuracy: '10m'
+          }, function(ret, err) {
+              if (ret.status) {
+                  console.log(JSON.stringify(ret));
+                  longitude = ret.lon;
+                  latitude = ret.lat;
+              } else {
+                  console.log(err.code);
+              }
+          });
           goNextInput('.code-num');
 
           if (api.pageParam.index == '1') {
@@ -382,23 +395,10 @@
 
       // 登录
       function login(tel,pwd){
-          var regId;
-          api.getPrefs({//获取偏好设置值
+          var registerId = api.getPrefs({
+              sync: true,
               key: 'registrationId'
-          }, function(ret, err){
-              if( ret ){
-
-                   regId = ret.value;
-              }else{
-                   console.log( JSON.stringify( err ) );
-              }
           });
-
-          if (regId) {
-              var registerId = regId;
-          }else {
-              var registerId = "";
-          }
           api.ajax({
               url: serverurl,
               method: 'post',
@@ -408,7 +408,14 @@
                        tel: tel,
                        pwd:pwd,
                        role:'1',
-                       registrationid_id:registerId
+                       registrationid_id:registerId,
+                       system_type:api.systemType,// 系统类型
+                       system_version:api.systemVersion,//手机平台的系统版本，字符串类型
+                       unit_type:api.deviceModel,//设备型号，字符串类型
+                       devicename:api.deviceName,//设备名称，字符串类型
+                       network_state:api.connectionType,//网络类型，字符串类型
+                       longitude:longitude,
+                       latitude:latitude
                   },
               }
           },function(ret, err){

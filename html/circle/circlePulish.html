@@ -89,6 +89,10 @@
               key: 'id'
           });
 
+          if (api.pageParam.icon == 3) {
+              album();
+          }
+
     }
 
     // 弹出选择框
@@ -328,7 +332,7 @@
     function CirclePublish(){
         var content = $api.val($api.dom('.user-txt'));
         var str = arr.join(',');
-      
+
         api.ajax({
             url: serverurl,
             method: 'get',

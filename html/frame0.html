@@ -119,7 +119,7 @@
       </style>
   </head>
   <body>
-      <div id="wrap" v-cloak style="background-color: #fff;">
+      <div id="wrap" v-cloak>
           <header>
               <a class="title" :class="{on:changeColor == index}" href="javascript:;" v-for="(item,index) in tabData" tapmode @click="switchTab(index)">
                 {{item.tabName}}
@@ -127,7 +127,7 @@
               <em class="scan" tapmode onclick="ScanCode()"></em>
               <em class="search" tapmode onclick="openWin('search','./search.html','')"></em>
           </header>
-          <div id="main" style="background-color: #eeeff7;">
+          <div id="main">
               <div class="container">
                   <!-- 新鲜事 -->
                   <div class="content" v-if="changeColor == 0 && !data.status">
@@ -138,7 +138,8 @@
                               <span>{{v.time | getInfoDate}}</span>
                               <span class="comment">{{v.count}}评论</span>
                           </div>
-                          <img class="spe-img" :src="v.surface_plot" alt="新闻图片">
+                          <img class="spe-img" src="../image/defalut.png" v-cache-src="v.surface_plot" alt="新闻图片">
+
                       </div>
                       <div class="newsAll clearfix" tapmode @click="goDetail(v.id,1)" v-else>
                           <div class="new-lt">
@@ -149,7 +150,7 @@
                               </div>
                           </div>
                           <div class="new-rt">
-                              <img :src="v.surface_plot+'?x-oss-process=image/resize,m_fill,h_210,w_210'" alt="新闻图片">
+                              <img src="../image/defalut.png" v-cache-src="v.surface_plot+'?x-oss-process=image/resize,m_fill,h_210,w_210'" alt="新闻图片">
                           </div>
                       </div>
                     </div>
@@ -174,7 +175,7 @@
                                   <div class="act-title more">
                                     {{v.title}}
                                   </div>
-                                  <img :src="v.actimgurl+'?x-oss-process=image/resize,p_50'" alt="活动图片" class="act-img">
+                                  <img src="../image/defalut.png" v-cache-src="v.actimgurl+'?x-oss-process=image/resize,p_50'" alt="活动图片" class="act-img">
                                   <p class="act-info more3" v-html="v.content"></p>
                               </div>
                             </div>
@@ -185,7 +186,7 @@
 
                           <div class="cir-box" v-for="v in circledata">
                               <div class="cir-title">
-                                  <img :src="v.headimgurl+'?x-oss-process=image/resize,m_fill,h_36,w_36'" alt="人头像" v-if="v.headimgurl" tapmode @click="goDetail(v.uid,3)">
+                                  <img src="../image/pic.png" v-cache-src="v.headimgurl+'?x-oss-process=image/resize,m_fill,h_36,w_36'" alt="人头像" v-if="v.headimgurl" tapmode @click="goDetail(v.uid,3)">
                                   <img src="../image/pic.png" alt="人头像" v-else tapmode @click="goDetail(v.uid,3)">
                                   <div class="cir-info">
                                       <p class="cir-name">{{v.nickname}}</p>
@@ -206,13 +207,13 @@
                                   <!-- 1张图片 -->
                                   <ul class="cell clearfix" v-if="v.thumb.length == 1">
                                        <li class="item">
-                                          <img :src="v.thumb[0]+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="动态图" @click="viewPicture(v.thumb,index)">
+                                          <img src="../image/defalut.png" v-cache-src="v.thumb[0]+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="动态图" @click="viewPicture(v.thumb,index)">
                                        </li>
                                   </ul>
                                   <!-- 4宫格图片 -->
                                   <ul class="cell9 cell4 clearfix" v-else-if="v.thumb.length == 4">
                                        <li class="item" v-for="(item,index) in v.thumb">
-                                          <img :src="item+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="动态图" @click="viewPicture(v.thumb,index)">
+                                          <img src="../image/defalut.png" v-cache-src="item+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="动态图" @click="viewPicture(v.thumb,index)">
                                        </li>
 
                                   </ul>
@@ -220,7 +221,7 @@
                                   <!-- 9宫格图片 -->
                                   <ul class="cell9 clearfix" v-else>
                                        <li class="item" v-for="(item,index) in v.thumb">
-                                          <img :src="item+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="动态图" @click="viewPicture(v.thumb,index)">
+                                          <img src="../image/defalut.png" v-cache-src="item+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="动态图" @click="viewPicture(v.thumb,index)">
                                        </li>
 
                                   </ul>
@@ -270,15 +271,7 @@
       var page = 1;
 
       apiready = function(){
-        //iphonex适应开始
-        $api.fixStatusBar($api.byId('wrap'));
-        // $api.fixTabBar($api.byId('footer'));
-        //iphonex适应结束
-
-          api.setStatusBarStyle({
-            style: 'dark'
-          });
-
+          SetStatusBar('#main','dark','#fefefe');//设置状态栏my.js
           api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
           token = api.getPrefs({
               sync: true,
@@ -314,7 +307,20 @@
           });
 
       }
+      //统一处理图片,Vue.directive自定义全局指令
+      Vue.directive('cacheSrc', function(el, binding) {
+          setTimeout(function() {
+              api.imageCache({
+                  url: binding.value,
+                  thumbnail: false
+              }, function (ret, err) {
+                 if (ret && ret.status) {
+                    el.setAttribute("src", ret.url);
+                 }
+              });
 
+          });
+      });
       var vm = new Vue({
           el:'#wrap',
           data:{
@@ -362,6 +368,9 @@
                      vm.getgroom();
                      vm.getActs();
                      vm.getCircle();
+                     setTimeout(function(){
+                       swiper();
+                     },100);
                      vm.data = [];
                      page = 1;
                   }else {
@@ -489,8 +498,8 @@
 
                            ExitLogin();
                         }else{
+
                            vm.acts = ret;
-                           swiper();
 
                         };
                     }else {
@@ -515,7 +524,6 @@
                 },function(ret, err){
                     api.hideProgress();
                     vm.id = id;
-
                     if (ret) {
                       if (ret.status == '5') {
 
@@ -524,6 +532,7 @@
                          msg('没有更多数据');
                       } else {
                          vm.circledata = ret.data;
+
                       }
                     }else {
                         msg('网络错误');
@@ -707,11 +716,14 @@
       // swiper
       function swiper(){
           var swiper = new Swiper('.swiper-container', {
+            initialSlide :0,//设定初始化时slide的索引。
             slidesPerView: 'auto',
             spaceBetween: 6,
             observer:true, //修改swiper自己或子元素时，自动初始化swiper
             observeParents:true,//修改swiper的父元素时，自动初始化swiper
+
           });
+
       }
 
       // 打开h5视频播放器

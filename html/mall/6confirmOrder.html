@@ -120,7 +120,7 @@
 	<div id="wrap" v-cloak>
 		<header>
 				<em tapmode onclick="cancel()"></em>
-				订单详情
+				确认订单
 				<span></span>
 		</header>
 		<div id="main">
@@ -566,7 +566,7 @@
 				    }
 				},function(ret, err){
 					  api.hideProgress();
-          
+
 				    if (ret) {
 							  if (ret.status == '5') {
 										ExitLogin();

@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
 	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-	<title>订单状态信息</title>
+	<title>订单详情</title>
 	<link rel="stylesheet" type="text/css" href="../../css/api.css" />
 	<link rel="stylesheet" type="text/css" href="../../icon/iconfonts/iconfont.css" />
 
@@ -273,7 +273,7 @@
 							}
 						}, function (ret, err) {
               api.hideProgress();
-
+              
 							if (ret) {
 								if (ret.status == '5') {
 									ExitLogin();

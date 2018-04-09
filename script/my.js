@@ -118,7 +118,7 @@ function openWin(name,url,pageParam){
 function msg(msg){
     api.toast({
         msg: msg,
-        duration: 3000,
+        duration: 5000,
         location: 'middle'
     });
 }
