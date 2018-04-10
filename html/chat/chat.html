@@ -63,7 +63,7 @@
                   </div>
               </div>
               <!-- 聊天 -->
-              <div v-for="v in chatdata" v-show="chatdata">
+              <div class="cotent" v-for="v in chatdata" v-show="chatdata">
                   <div class="rmsg-list" v-if="v.from_client_name == user_name">
                       <img class="r-pic" :src="headimgurl+'?x-oss-process=image/resize,m_fill,h_42,w_42'" alt="用户头像" tapmode @click="goDetail(id)" v-if="headimgurl">
                       <img class="r-pic" src="../../image/pic.png" alt="用户头像" tapmode @click="goDetail(id)" v-else>
@@ -86,6 +86,7 @@
 
               </div>
 
+              <div id="bottom"></div>
           </div>
           <footer></footer>
       </div>
@@ -97,6 +98,7 @@
   <script type="text/javascript">
       var ws;
       apiready = function(){
+      
         api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
         vm.id = api.getPrefs({
             sync: true,
@@ -159,8 +161,17 @@
               })
           },
           methods:{
-            goDetail:function(id){
+            goDetail:function goDetail(id){
                 openWin('MyIndex','../mine/MyIndex.html',{id:id});
+            },
+            addmsg:function addmsg(){
+                vm.$nextTick(function () {
+                  // DOM 现在更新了
+                  // `this` 绑定到当前实例
+                  var div = $api.byId('bottom');
+                  div.scrollIntoView();//将元素滚动到可见位置
+
+                })
             },
             // 弹出input输入框
             openInput:function openInput(){
@@ -227,7 +238,8 @@
 
             }
 
-          }
+          },
+
       })
 
       // 连接服务端
@@ -252,6 +264,7 @@
       function onopen(){
           var login_data = '{"type":"login","client_name":"'+vm.user_name+'","room_id":"1","uid":"'+vm.id+'"}';
           ws.send(login_data);
+
       }
 
       // 服务端发来消息时
@@ -266,6 +279,7 @@
           // 发言
           case 'say':
             vm.chatdata.push(data);
+            vm.addmsg();
             api.sendEvent({
                 name: 'chat',
                 extra: {
@@ -281,7 +295,19 @@
 
     // 提交对话
     function onSubmit(msg) {
-       ws.send('{"type":"say","to_client_id":"'+vm.peer+'","to_client_name":"'+vm.nickname+'","content":"'+msg+'"}');
+        var inputField = api.require('inputField');
+        inputField.resignFirstResponder();//隐藏键盘
+        inputField.setMsg({
+            msg: ''
+        }, function(ret, err) {
+            if (ret.status) {
+                console.log(JSON.stringify(ret));
+            } else {
+                console.log(JSON.stringify(err));
+            }
+        });
+        ws.send('{"type":"say","to_client_id":"'+vm.peer+'","to_client_name":"'+vm.nickname+'","content":"'+msg+'"}');
+
     }
   </script>
   </html>
