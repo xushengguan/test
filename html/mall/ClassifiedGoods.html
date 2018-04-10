@@ -44,7 +44,7 @@
 			<div class="mallBox">
 					<ul class="goods_card">
 							<li tapmode v-for="v in info" @click="go_goodsDetail(v.id)">
-									<img :src="v.imgurl" alt="分类商品">
+									<img class="mall-img" src="../../image/defalut.png" :srcs="v.imgurl+'?x-oss-process=image/resize,p_50'" alt="分类商品">
 									<div class="txt">
 											<p class="name single">{{v.goods_name}}</p>
 											<p class="abs single">{{v.abs}}</p>
@@ -64,6 +64,7 @@
 <script type="text/javascript">
       var id,token;
       apiready = function(){
+			
 				  api.parseTapmode();
 					var clsid = api.pageParam.clsid;
 					vm.getClass(clsid);
@@ -76,6 +77,7 @@
 							key: 'id'
 					});
       };
+
 			var vm = new Vue({
 					el: '#app',
 					data: {
@@ -100,6 +102,11 @@
 									}, function (ret, err) {
 												api.hideProgress();
 												vm.info = ret;
+												vm.$nextTick(function () {
+													// DOM 现在更新了
+													// `this` 绑定到当前实例
+													imageCache('.mall-img');
+												})
 									});
 						 },
 						go_goodsDetail: function go_goodsDetail(goods_id) {

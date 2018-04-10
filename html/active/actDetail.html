@@ -73,8 +73,8 @@
             <img class="bg-index" src="../../image/img1.jpg" alt="主页背景图" v-else>
             <div class="bg-color"></div>
             <!-- is_join是否报名 1 已经报名 0 未报名 -->
-            <button class="act-btn" v-if="data.is_join == '0'" tapmode @click="SignUp()">+报名</button>
-            <button class="act-btn on" v-else>已报名</button>
+            <button class="act-btn on" v-if="data.is_join == '1'">已报名</button>
+            <button class="act-btn" tapmode @click="SignUp()" v-else>+报名</button>
         </header>
 
         <div class="main">

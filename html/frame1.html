@@ -51,7 +51,7 @@
       </style>
   </head>
   <body>
-      <div id="wrap" v-cloak>
+      <div id="wrap" v-cloak style="background-color: #fff;">
           <header>
               <a class="title" :class="{on:changeColor == index}" href="javascript:;" v-for="(item,index) in tabData" tapmode @click="switchTab(index)">
                   {{item.tabName}}
@@ -60,12 +60,12 @@
               <em class="scan" tapmode onclick="ScanCode()"></em>
 
           </header>
-          <div id="main">
+          <div id="main" style="background-color: #eeeff7;">
               <!-- 通知 -->
               <ul class="notice-list" v-if="!data.status && changeColor == 0">
                   <li tapmode @click="goDetail(v.ccl_id)" v-for="v in data">
                     <div class="cir-title">
-                        <img :src="v.headimgurl+'?x-oss-process=image/resize,m_fill,h_36,w_36'" alt="人头像" v-if="v.headimgurl">
+                        <img class="mimg" :srcs="v.headimgurl+'?x-oss-process=image/resize,m_fill,h_36,w_36'" alt="人头像" v-if="v.headimgurl">
                         <img src="../image/pic.png" alt="人头像" v-else>
                         <div class="cir-info">
                             <p class="cir-name">{{v.nickname}}</p>
@@ -78,7 +78,7 @@
                         </div>
                         <div class="bg-love flex-align-center">
                             <div class="love-img" v-if="v.thumb">
-                                <img :src="v.thumb[0]" alt="图片">
+                                <img class="mimg" src="../image/defalut.png" :srcs="v.thumb[0]+'?x-oss-process=image/resize,m_fill,h_54,w_54'" alt="图片">
                             </div>
                             <div class="love-cotent more" :class="{on:v.thumb == ''}" v-if="v.content">
                                 {{v.content}}
@@ -106,7 +106,7 @@
                   <li v-for="v in data" @touchstart="gtouchstart(v)" @touchmove="gtouchmove()" @touchend="gtouchend(v)">
                         <div class="press">
                             <div class="msg-pic">
-                                <img :src="v.headimgurl+'?x-oss-process=image/resize,m_fill,h_44,w_44'" alt="人头像" v-if="v.headimgurl">
+                                <img class="mimg" :srcs="v.headimgurl+'?x-oss-process=image/resize,m_fill,h_44,w_44'" alt="人头像" v-if="v.headimgurl">
                                 <img src="../image/pic.png" alt="人头像">
                             </div>
                             <div class="msg-rt">
@@ -145,7 +145,6 @@
       var token,id,timeOutEvent = 0,chat=false;
       apiready = function(){
           SetStatusBar('#main','dark','#fefefe');//设置状态栏my.js
-
           api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
           token = api.getPrefs({
               sync: true,
@@ -234,6 +233,11 @@
                               ExitLogin();
                           }else{
                               vm.data = ret;
+                              vm.$nextTick(function () {
+                                // DOM 现在更新了
+                                // `this` 绑定到当前实例
+                                imageCache('.mimg');
+                              })
                           }
                       } else {
 

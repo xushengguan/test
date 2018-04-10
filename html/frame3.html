@@ -71,9 +71,9 @@
                 <div class="more"></div>
             </div>
 
-            <div class="act-box flex-align-center" v-if="data">
+            <div class="act-box flex-align-center" v-if="data && data.actsta != '0'">
                 <!-- actsta活动状态.0已结束，1活动进行中，2活动未开始 -->
-                <div class="act-lf" tapmode @click="ActDetail(data.id)" v-if="data.actsta == '1' || data.actsta == '2'">
+                <div class="act-lf" tapmode @click="ActDetail(data.id)">
                    <div class="act-state wait" v-show="data.actsta == '2'">等待开始</div>
                    <div class="act-state underway" v-show="data.actsta == '1'">正在进行</div>
                    <div class="act-info single">{{data.title}}</div>
@@ -100,9 +100,9 @@
             <div class="menu-li menu5" tapmode onclick="openWin('income','./mine/income.html','')">
                 收支明细
             </div>
-            <div class="menu-li menu6 on">
+            <!-- <div class="menu-li menu6 on">
                 信用评级
-            </div>
+            </div> -->
         </div>
 
     </div>
@@ -113,7 +113,7 @@
   <script type="text/javascript">
       var token,id;
       apiready = function(){
-    
+
           api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
           token = api.getPrefs({
               sync: true,

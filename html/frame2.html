@@ -209,7 +209,7 @@
             <div class="swiper-container">
               <div class="swiper-wrapper">
                 <div class="swiper-slide" v-for="v in swipe">
-                    <img src="../image/defalut.png" v-cache-src="v.imgurl+'?x-oss-process=image/resize,p_50'" alt="广告">
+                    <img class="sw-img" src="../image/defalut.png" :srcs="v.imgurl+'?x-oss-process=image/resize,p_50'" alt="广告">
                 </div>
               </div>
               <!-- Add Pagination -->
@@ -230,15 +230,15 @@
               <div class="title">热门商品</div>
               <div class="box clearfix">
                   <div class="lfgoods" tapmode @click="go_goodsDetail(hotid1)">
-                      <img src="../image/defalut.png" v-cache-src="hot1+'?x-oss-process=image/resize,p_50'" alt="左边热门商品图">
+                      <img class="hot-img" src="../image/defalut.png" :srcs="hot1+'?x-oss-process=image/resize,p_50'" alt="左边热门商品图">
                   </div>
                   <div class="rtgoods">
                       <div class="img1" tapmode @click="go_goodsDetail(hotid2)">
-                          <img src="../image/defalut.png" v-cache-src="hot2+'?x-oss-process=image/resize,p_50'" alt="右边热门商品图">
+                          <img class="hot-img" src="../image/defalut.png" :srcs="hot2+'?x-oss-process=image/resize,p_50'" alt="右边热门商品图">
                       </div>
 
                       <div class="img2" tapmode @click="go_goodsDetail(hotid3)">
-                          <img src="../image/defalut.png" v-cache-src="hot3+'?x-oss-process=image/resize,p_50'" alt="右边热门商品图">
+                          <img class="hot-img" src="../image/defalut.png" :srcs="hot3+'?x-oss-process=image/resize,p_50'" alt="右边热门商品图">
                       </div>
                   </div>
               </div>
@@ -248,7 +248,7 @@
                 <div class="title groom">推荐商品</div>
                 <ul class="goods_card">
                     <li tapmode v-for="v in newInfo" @click="go_goodsDetail(v.id)">
-                        <img src="../image/defalut.png" v-cache-src="v.imgurl+'?x-oss-process=image/resize,p_50'" alt="推荐商品">
+                        <img class="groom-img" src="../image/defalut.png" :srcs="v.imgurl+'?x-oss-process=image/resize,p_50'" alt="推荐商品">
                         <div class="txt">
                             <p class="name single">{{v.goods_name}}</p>
                             <p class="abs single">{{v.abs}}</p>
@@ -280,20 +280,6 @@
         api.hideProgress();
 
     };
-    //统一处理图片,Vue.directive自定义全局指令
-    Vue.directive('cacheSrc', function(el, binding) {
-        setTimeout(function() {
-            api.imageCache({
-                url: binding.value,
-                thumbnail: false
-            }, function (ret, err) {
-               if (ret && ret.status) {
-                  el.setAttribute("src", ret.url);
-               }
-            });
-
-        },100);
-    });
     var vm = new Vue({
         el: '#wrap',
         data: {
@@ -308,7 +294,7 @@
             swipe:[]
         },
         methods: {
-            getSwipe:function() { //读取商品分类
+            getSwipe:function() {
                 api.ajax({
                     url: serverurl,
                     method: 'get',
@@ -323,7 +309,14 @@
                 }, function(ret, err) {
 
                     if (ret) {
+
                         vm.swipe = ret;
+                        vm.$nextTick(function () {
+                          // DOM 现在更新了
+                          // `this` 绑定到当前实例
+                          imageCache('.sw-img');
+
+                        })
                     } else {
 
                         msg('网络错误');
@@ -375,6 +368,12 @@
                         vm.hotid1 = ret[0].id;
                         vm.hotid2 = ret[1].id;
                         vm.hotid3 = ret[2].id;
+                        vm.$nextTick(function () {
+                          // DOM 现在更新了
+                          // `this` 绑定到当前实例
+                          imageCache('.hot-img');
+
+                        })
                     } else {
                         msg('网络错误');
 
@@ -399,7 +398,12 @@
 
                     if (ret) {
                         vm.newInfo = ret;
+                        vm.$nextTick(function () {
+                          // DOM 现在更新了
+                          // `this` 绑定到当前实例
+                          imageCache('.groom-img');
 
+                        })
                     } else {
                         msg('网络错误');
 

@@ -163,3 +163,40 @@ function AddorRemove(type,el){
         $api.attr($api.dom(el), 'disabled');
     }
 }
+// 底部导航加声音效果
+function onclickplay() {
+  api.startPlay({
+    path: 'widget://res/9243.mp3'
+    }, function(ret, err) {
+        if (ret) {
+            // alert('播放完成');
+        } else {
+            // alert(JSON.stringify(err));
+        }
+    });
+
+}
+// 图片缓存
+function imageCache(el){
+    var srcs = $api.domAll(el);
+    if (srcs.length > 0) {
+         for (var i = 0; i < srcs.length; i++) {
+           (function(obj){
+               api.imageCache({
+                   url: $api.attr(obj, 'srcs'),
+                   thumbnail:false
+               }, function(ret, err){
+
+                   if( ret && ret.status){
+
+                        $api.attr(obj, 'src', ret.url);
+
+                   }else{
+
+                        console.log( JSON.stringify( err ) );
+                   }
+               });
+           })(srcs[i]);
+         }
+    }
+}

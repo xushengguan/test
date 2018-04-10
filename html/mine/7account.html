@@ -105,6 +105,7 @@
 				<span class="fl">更改密码</span>
 				<i class="iconfont icon-gengduo1 icon-more fr"></i>
 			</div>
+			<p class="msg-con" tapmode onclick="clearCache()"><span>清除缓存</span></p>
 			<p class="msg-con" tapmode onclick="exitLogin()"><span style="color:#757575;">退出登录</span></p>
 		</div>
 	</div>
@@ -387,5 +388,9 @@ function Cname(nickname){//修改用户名
  });
 }
 
-
+// 清除缓存
+function clearCache(){
+		api.clearCache();//清除缓存，包括下载的文件、拍照临时文件、网页缓存文件等，清除时可能需要消耗一定时间。
+		msg('清除缓存成功');
+}
 </script>

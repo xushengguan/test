@@ -10,13 +10,7 @@
       <style>
           /*主页头部*/
           header{position: absolute; top: 0; padding: 0 14px; height: 168px; width: calc(100% - 28px);}
-          .bg-index{position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            filter: url(blur.svg#blur); /* FireFox, Chrome, Opera */
-            -webkit-filter: blur(3px); /* Chrome, Opera */
-               -moz-filter: blur(3px);
-                -ms-filter: blur(3px);
-                    filter: blur(3px);
-          filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=3, MakeShadow=false); /* IE6~IE9 */}
+          .bg-index{position: absolute; top: 0; left: 0; width: 100%; height: 100%;}
           .top{position: relative; height: 44px; line-height: 44px; z-index: 2;}
           .top em{width: 40px; height: 44px; background: url(../../image/back1.png) no-repeat left 12px; background-size: 10px 17px;
           float: left;}
@@ -383,7 +377,7 @@
 
             if (id != uid) {
                vm.isme = false;
-          
+
             }
         }else {
             id = api.getPrefs({
