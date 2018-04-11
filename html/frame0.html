@@ -206,8 +206,8 @@
                               <div v-if="v.thumb">
                                   <!-- 1张图片 -->
                                   <ul class="cell clearfix" v-if="v.thumb.length == 1">
-                                       <li class="item">
-                                          <img class="cir-img" src="../image/defalut.png" :srcs="v.thumb[0]+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="动态图" @click="viewPicture(v.thumb,index)">
+                                       <li class="item" v-for="(item,index) in v.thumb">
+                                          <img class="cir-img" src="../image/defalut.png" :srcs="item+'?x-oss-process=image/resize,m_fill,h_180,w_180'" alt="动态图" @click="viewPicture(v.thumb,index)">
                                        </li>
                                   </ul>
                                   <!-- 4宫格图片 -->

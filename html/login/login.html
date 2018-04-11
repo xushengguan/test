@@ -100,7 +100,7 @@
               if (ret) {
 
                 if (ret.status == '1') {
-                  openWin('index','../../index.html','','');
+                  checkname(token,id);
                 }else {
 
                   msg('您的登录信息已失效，请重新登录!');
@@ -191,6 +191,33 @@
               console.log(JSON.stringify(err));
           }
         })
+      }
+
+      //检测是否有设置昵称
+      function checkname(token,id) {
+          api.ajax({
+              url: serverurl,
+              method: 'get',
+              data: {
+                  values: {
+                      type:'10100',
+                      token: token,
+                      uid:id
+                  }
+              }
+          }, function(ret, err) {
+              if (ret) {
+                if (ret.status == '0') {//1 已经设置 0 未设置
+                  openWin('login2','./login2.html','');
+                }else {
+
+                  openWin('index','../../index.html','');
+
+                }
+              } else {
+                  msg('网络错误，请重试!');
+              }
+          });
       }
   </script>
   </html>
