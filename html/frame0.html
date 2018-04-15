@@ -27,7 +27,7 @@
           .content{padding: 0 14px; background: #fefefe;}
           .newsAll{padding-top: 10px; padding-bottom: 16px; border-bottom: 1px solid #d2d3d5;}
 
-          .content .title{line-height: 20px; letter-spacing: 1px; font-size: 17px;}
+          .content .title{letter-spacing: 1px; font-size: 17px;}
           .content .spe-info{line-height: 20px; letter-spacing: 1px; color: #999;}
           .content .comment{padding-left: 4px; padding-top: 8px; padding-bottom: 6px;}
           .spe-img{width: 100%; max-height: 160px; border-radius: 3px;}
@@ -71,7 +71,7 @@
           .swiper-slide .act-title{ border-left: 3px solid #46daab; color: #262829; font-size: 17px;
             font-weight: bold; padding-left: 5px; margin-bottom: 10px;}
           .swiper-slide img{width: 100%; max-height: 160px; margin-bottom: 5px;}
-          .act-info{line-height: 22px; letter-spacing: 1px; color: #666; font-size: 15px;}
+          .act-info{letter-spacing: 1px; color: #666; font-size: 15px;}
 
           .actBox{margin-bottom: 10px;}
           .cir-container .cir-box{background: #fefefe; margin-bottom: 10px;}
@@ -135,7 +135,8 @@
                       <div class="newsAll" tapmode @click="goDetail(v.id,1)" v-if="v.type == 1">
                           <div class="title more">{{v.title}}</div>
                           <div class="spe-info">
-                              <span>{{v.time | getInfoDate}}</span>
+                              <!-- {{v.time | getInfoDate}} -->
+                              <span>2018-4-13</span>
                               <span class="comment">{{v.count}}评论</span>
                           </div>
                           <img class="spe-img" src="../image/defalut.png" :srcs="v.surface_plot" alt="新闻图片">
@@ -145,7 +146,8 @@
                           <div class="new-lt">
                               <div class="title more">{{v.title}}</div>
                               <div class="news-info clearfix">
-                                  <span class="spe-info">{{v.time | getInfoDate}}</span>
+                                  <!-- {{v.time | getInfoDate}} -->
+                                  <span class="spe-info">2018-4-13</span>
                                   <span class="spe-info">{{v.count}}评论</span>
                               </div>
                           </div>
@@ -167,7 +169,6 @@
                               学令牌活动
                               <!-- <a href="javascript:;" tapmode onclick="getUser()">更多</a> -->
                           </div>
-
                           <!-- Swiper -->
                           <div class="swiper-container">
                             <div class="swiper-wrapper">
@@ -176,10 +177,11 @@
                                     {{v.title}}
                                   </div>
                                   <img src="../image/defalut.png" :srcs="v.actimgurl+'?x-oss-process=image/resize,p_50'" alt="活动图片" class="act-img">
-                                  <p class="act-info more3" v-html="v.content"></p>
+                                  <p class="act-info" v-html="maxSlice(v.content)"></p>
                               </div>
                             </div>
                           </div>
+                          <!-- Swiper -->
                       </div>
                       <!-- 用户发表的学科圈 -->
                       <div class="cir-container" v-if="circledata">
@@ -319,6 +321,7 @@
               updata:false,
               changeColor:0,
               id:'',
+              maxlength:50,
               tabData:[
                   {tabName:'新鲜事'},
                   {tabName:'学客圈'}
@@ -330,8 +333,10 @@
               }
           },
           methods:{
-
-            goDetail:function(id,index){
+            maxSlice:function maxSlice(v){
+                return v.length > this.maxlength ? v.slice(0,this.maxlength) + '...' : v;
+            },
+            goDetail:function goDetail(id,index){
                 if (index == 1) {
                     // 跳到新鲜事详情页
                     openWin('circleDetail1','./circle/circleDetail1.html',{newid:id});

@@ -47,7 +47,7 @@
   <script type="text/javascript">
       var longitude,latitude;
       apiready = function(){
-          SetStatusBar('.container','dark','#f3f5f7');//设置状态栏my.js
+          SetStatusBar('header','dark','#f3f5f7');//设置状态栏my.js
           api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
           setTimeout(function(){
               focus_footer();
@@ -65,35 +65,10 @@
 
               }
           });
-          //监听返回
-          api.addEventListener({
-              name: 'keyback'
-          }, function(ret, err) {
-              if (daojishi == 0) {
-                  //这里设置了倒计时为2秒
-                  daojishi = 2000;
 
-                  msg('再按一次退出');
-                  kaishiJishi();
-              } else {
-                  api.closeWidget({
-                      silent: false
-                  });
-              }
-          });
 
       };
 
-      var daojishi = 0;
-      //倒计时
-      function kaishiJishi() {
-          if (daojishi > 0) {
-              setTimeout(function() {
-                  daojishi = daojishi - 20;
-                  kaishiJishi();
-              }, 20);
-          }
-      }
 
       // 实时检测输入框事件
       function checkValue(){

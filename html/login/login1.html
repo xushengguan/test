@@ -93,7 +93,9 @@
       var token,id;
       var longitude,latitude;
       apiready = function(){
-          SetStatusBar('.container','dark','#f3f5f7');//设置状态栏my.js
+          SetStatusBar('#content0','dark','#f3f5f7');//设置状态栏my.js
+          SetStatusBar('#content1','dark','#f3f5f7');//设置状态栏my.js
+          SetStatusBar('#content2','dark','#f3f5f7');//设置状态栏my.js
           api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
 
           setTimeout(function(){
@@ -104,7 +106,7 @@
               accuracy: '10m'
           }, function(ret, err) {
               if (ret.status) {
-                  
+
                   longitude = ret.lon;
                   latitude = ret.lat;
               } else {
@@ -132,6 +134,15 @@
           id = api.getPrefs({
               sync: true,
               key: 'id'
+          });
+
+          //监听返回
+          api.addEventListener({
+              name: 'keyback'
+          }, function(ret, err) {
+              api.setFullScreen({
+                fullScreen: true
+              });
           });
 
       };
