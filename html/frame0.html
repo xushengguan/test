@@ -135,8 +135,7 @@
                       <div class="newsAll" tapmode @click="goDetail(v.id,1)" v-if="v.type == 1">
                           <div class="title more">{{v.title}}</div>
                           <div class="spe-info">
-                              <!-- {{v.time | getInfoDate}} -->
-                              <span>2018-4-13</span>
+                              <span>{{v.time | getInfoDate}}</span>
                               <span class="comment">{{v.count}}评论</span>
                           </div>
                           <img class="spe-img" src="../image/defalut.png" :srcs="v.surface_plot" alt="新闻图片">
@@ -146,8 +145,8 @@
                           <div class="new-lt">
                               <div class="title more">{{v.title}}</div>
                               <div class="news-info clearfix">
-                                  <!-- {{v.time | getInfoDate}} -->
-                                  <span class="spe-info">2018-4-13</span>
+
+                                  <span class="spe-info">{{v.time | getInfoDate}}</span>
                                   <span class="spe-info">{{v.count}}评论</span>
                               </div>
                           </div>

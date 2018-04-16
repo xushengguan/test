@@ -10,7 +10,7 @@
       <style>
       header{padding: 0 14px;}
       header{height: 44px; line-height: 44px; box-shadow: 0px 4px 4px 0px rgba(76, 81, 118, 0.15);
-        background-color: #fefefe; text-align: center; position: relative;}
+        background-color: #fefefe; text-align: center; position: relative; z-index: 2;}
       header .title{font-size: 18px; color: #999; line-height: 42px; border-bottom: 2px solid #fefefe;
       margin: 0 15px; -webkit-transition: all .2s;
         transition: all .2s;}
@@ -51,7 +51,7 @@
       </style>
   </head>
   <body>
-      <div id="wrap" v-cloak style="background-color: #fff;">
+      <div id="wrap" v-cloak>
           <header>
               <a class="title" :class="{on:changeColor == index}" href="javascript:;" v-for="(item,index) in tabData" tapmode @click="switchTab(index)">
                   {{item.tabName}}
@@ -60,7 +60,7 @@
               <em class="scan" tapmode onclick="ScanCode()"></em>
 
           </header>
-          <div id="main" style="background-color: #eeeff7;">
+          <div id="main">
               <!-- 通知 -->
               <ul class="notice-list" v-if="!data.status && changeColor == 0">
                   <li tapmode @click="goDetail(v.ccl_id)" v-for="v in data">
@@ -103,11 +103,11 @@
 
               <!-- 消息 -->
               <ul class="msg-list" v-else-if="!data.status && changeColor == 1">
-                  <li v-for="v in data" @touchstart="gtouchstart(v)" @touchmove="gtouchmove()" @touchend="gtouchend(v)">
+                  <li v-for="(v,index) in data" @touchstart="gtouchstart(v,index)" @touchmove="gtouchmove()" @touchend="gtouchend(v,index)">
                         <div class="press">
                             <div class="msg-pic">
                                 <img class="mimg" :srcs="v.headimgurl+'?x-oss-process=image/resize,m_fill,h_44,w_44'" alt="人头像" v-if="v.headimgurl">
-                                <img src="../image/pic.png" alt="人头像" v-else>
+                                <img src="../image/pic.png" alt="人头像">
                             </div>
                             <div class="msg-rt">
                                 <p class="line1 clearfix">
@@ -188,6 +188,8 @@
                   {tabName:'消息'},
               ],
               changeColor:0,
+              msgid:'',
+              msgindex:''
           },
           filters: {
               getInfoDate: function getInfoDate(time) {
@@ -215,6 +217,7 @@
               },
               // type:'10080'用户消息，10084首页通知
               getNews: function getNews(type){
+                  showProgress('努力加载中','请稍后···');
                   api.ajax({
                       url: serverurl,
                       method: 'get',
@@ -226,6 +229,7 @@
                           }
                       }
                   },function(ret, err){
+                      api.hideProgress();
 
                       if (ret) {
 
@@ -248,14 +252,14 @@
               },
 
               //开始按
-              gtouchstart:function gtouchstart(item){
+              gtouchstart:function gtouchstart(item,index){
                   timeOutEvent = setTimeout(function(){
-                      vm.longPress(item)
+                      vm.longPress(item,index)
                   },500);//这里设置定时器，定义长按500毫秒触发长按事件，时间可以自己改，个人感觉500毫秒非常合适
                   return false;
               },
               //手释放，如果在500毫秒内就释放，则取消长按事件，此时可以执行onclick应该执行的事件
-              gtouchend:function gtouchend(item){
+              gtouchend:function gtouchend(item,index){
                   clearTimeout(timeOutEvent);//清除定时器
                   if(timeOutEvent!=0){
                       //这里写要执行的内容（尤如onclick事件）
@@ -271,7 +275,11 @@
               },
 
               //真正长按后应该执行的内容
-              longPress:function longPress(item){
+              longPress:function longPress(item,index){
+
+                  vm.msgid = item.id;
+                  vm.msgindex = index;
+
                   timeOutEvent = 0;
                   //执行长按要执行的内容，如弹出菜单
                   $api.css($api.dom('.Popup'), 'display:block');
@@ -310,6 +318,45 @@
                 msg(err);
             }
         });
+      }
+
+      // 用户删除对话
+      function Delete(){
+          showProgress('努力加载中','请稍后···');
+          api.ajax({
+              url: serverurl,
+              method: 'get',
+              data: {
+                  values: {
+                      type: '10083',
+                      token: token,
+                      uid:id,
+                      id:vm.msgid
+                  },
+              }
+          },function(ret, err){
+              api.hideProgress();
+
+              if (ret) {
+
+                  if (ret.status == '5') {
+                      ExitLogin();
+                  }else if (ret.status == '0') {
+                      msg('删除失败');
+                  }else {
+                      $api.css($api.dom('.Popup'), 'display:none');
+                      msg('删除成功');
+                      // vm.getNews('10080');
+                      var newdata = vm.data.del(vm.msgindex);
+                      vm.data = newdata;
+                      console.log(typeof vm.data);
+                  }
+              } else {
+
+                  msg('网络错误');
+              }
+          });
+
       }
   </script>
   </html>
