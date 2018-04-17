@@ -187,8 +187,8 @@
 
                           <div class="cir-box" v-for="v in circledata">
                               <div class="cir-title">
-                                  <img src="../image/pic.png" :srcs="v.headimgurl+'?x-oss-process=image/resize,m_fill,h_36,w_36'" alt="人头像" v-if="v.headimgurl" tapmode @click="goDetail(v.uid,3)">
-                                  <img src="../image/pic.png" alt="人头像" v-else tapmode @click="goDetail(v.uid,3)">
+                                  <img class="pimg" src="../image/pic.png" :srcs="v.headimgurl+'?x-oss-process=image/resize,m_fill,h_36,w_36'" alt="人头像" tapmode @click="goDetail(v.uid,3)" v-if="v.headimgurl">
+                                  <img src="../image/pic.png" alt="人头像" tapmode @click="goDetail(v.uid,3)" v-else>
                                   <div class="cir-info">
                                       <p class="cir-name">{{v.nickname}}</p>
                                       <p class="cir-time">{{v.last_reply_at | getInfoDate}}</p>
@@ -527,6 +527,7 @@
                     }
                 },function(ret, err){
                     api.hideProgress();
+
                     vm.id = id;
                     if (ret) {
                       if (ret.status == '5') {

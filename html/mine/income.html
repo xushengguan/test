@@ -33,7 +33,7 @@
             <em tapmode onclick="go_back()">收支明细</em>
         </header>
         <div id="main" v-cloak>
-             <div class="income-box" v-for="v in data" v-if="data">
+             <div class="income-box" v-for="v in data" v-if="!data.status">
                  <div class="income-time">
                     {{v.date}}
                  </div>
@@ -54,23 +54,6 @@
                   <p>抱歉，没有数据~</p>
              </div>
 
-             <div class="income-box">
-                 <div class="income-time">
-                    2018年03月20日
-                 </div>
-                 <div class="income-list">
-                     <div class="income-line clearfix">
-                       <span>09:30</span>
-                       <div class="rt-box">
-                            <p class="rt-title">600学分</p>
-                            <p class="handle">扫码领取学分</p>
-                            <em></em>
-                       </div>
-                     </div>
-
-                 </div>
-             </div>
-
         </div>
     </div>
 
@@ -82,7 +65,7 @@
   <script type="text/javascript">
       apiready = function(){
         SetStatusBar('#main','dark','#fefefe');//设置状态栏my.js
-        
+
           api.parseTapmode();//解析元素 tapmode 属性，优化点击事件处理
           token = api.getPrefs({
               sync: true,
@@ -121,8 +104,6 @@
 
                       if (ret.status == '5') {
                          ExitLogin();
-                      }else if (ret.status == '0') {
-                         msg('网络错误');
                       }else {
                          vm.data = ret;
                       }

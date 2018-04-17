@@ -124,7 +124,7 @@
             <div class="top">
                 <em tapmode onclick="go_back()"></em>
                 <span></span>
-                <i tapmode @click="goChat(infodata)"></i>
+                <i tapmode @click="goChat(infodata)" v-show="isme == false"></i>
             </div>
             <div class="i-info flex-align-center">
                 <div class="i-pic">
@@ -151,7 +151,7 @@
         <div class="Tab-top slideNormal" id="Tab-top" v-show="showtop == 2">
             <em tapmode onclick="go_back()">{{infodata.nickname}}</em>
             <span></span>
-            <i></i>
+            <i tapmode @click="goChat(infodata)" v-show="isme == false"></i>
         </div>
 
         <div class="navMenu flex-center">
