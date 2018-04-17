@@ -99,7 +99,7 @@
 												<li v-show="v.pay_status == '2' && v.shipping_status == '0'" v-if="v.order_status != '2'" tapmode @click="get_cancelOrder(v)">取消订单</li>
                         <li v-show="v.pay_status == '2' && v.shipping_status == '1'" tapmode @click="confirmReceipt(v)">确认收货</li>
 												<li v-show="v.pay_status == '2' && v.shipping_status == '2'" tapmode @click="appReturn(v)">申请退货</li>
-												<li v-show="v.shipping_status == '1'" tapmode @click="Checklog(v)">查看物流</li>
+												<li v-show="v.shipping_status == '1' && v.pay_status == '2'" tapmode @click="Checklog(v)">查看物流</li>
 
                     </ul>
 
@@ -547,7 +547,7 @@
 									}
 								}
 							}, function(ret, err) {
-              
+
 								if (ret) {
 									if (ret.status == '5') {
 										ExitLogin();

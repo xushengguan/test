@@ -102,7 +102,7 @@
               </ul>
 
               <!-- 消息 -->
-              <ul class="msg-list" v-else-if="!data.status && changeColor == 1">
+              <ul class="msg-list" v-else-if="!data.status && changeColor == 1 && data != ''">
                   <li v-for="(v,index) in data" @touchstart="gtouchstart(v,index)" @touchmove="gtouchmove()" @touchend="gtouchend(v,index)">
                         <div class="press">
                             <div class="msg-pic">
@@ -349,7 +349,7 @@
                       // vm.getNews('10080');
                       var newdata = vm.data.del(vm.msgindex);
                       vm.data = newdata;
-                      console.log(typeof vm.data);
+                      
                   }
               } else {
 

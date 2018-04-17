@@ -130,16 +130,18 @@
 				<!--  shipping_status商品配送情况;0未发货,1已发货,2已收货,4申请退货;5退货处理中;6:退货完成 -->
 				<!-- 订单的状态order_status;0未确认,1确认,2已取消,3无效,4退货 -->
 
-        <!-- 商品配送中 -->
-        <img class="state-pic" src="../../image/state2.png" alt="订单状态" v-if="data.shipping_status == '1'">
-        <!-- 交易已完成 -->
-        <img class="state-pic" src="../../image/state3.png" alt="订单状态" v-else-if="data.shipping_status == '2'">
-        <!-- 退货处理中 -->
-        <img class="state-pic" src="../../image/state4.png" alt="订单状态" v-else-if="data.shipping_status == '5'">
-        <!-- 退货完成 -->
-        <img class="state-pic" src="../../image/state5.png" alt="订单状态" v-else-if="data.shipping_status == '6'">
-				<!-- 支付成功 -->
-				<img class="state-pic" src="../../image/state1.png" alt="订单状态" v-else-if="data.pay_status == '2'">
+				<div v-if="data.pay_status == '2'">
+		        <!-- 商品配送中 -->
+		        <img class="state-pic" src="../../image/state2.png" alt="订单状态" v-if="data.shipping_status == '1'">
+		        <!-- 交易已完成 -->
+		        <img class="state-pic" src="../../image/state3.png" alt="订单状态" v-else-if="data.shipping_status == '2'">
+		        <!-- 退货处理中 -->
+		        <img class="state-pic" src="../../image/state4.png" alt="订单状态" v-else-if="data.shipping_status == '5'">
+		        <!-- 退货完成 -->
+		        <img class="state-pic" src="../../image/state5.png" alt="订单状态" v-else-if="data.shipping_status == '6'">
+						<!-- 支付成功 -->
+						<img class="state-pic" src="../../image/state1.png" alt="订单状态" v-else-if="data.pay_status == '2'">
+				</div>
 
         <!-- 物流信息 -->
         <div class="logistics" v-if="status">
@@ -273,7 +275,7 @@
 							}
 						}, function (ret, err) {
               api.hideProgress();
-              
+
 							if (ret) {
 								if (ret.status == '5') {
 									ExitLogin();

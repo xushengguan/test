@@ -159,10 +159,10 @@
 
                   <!-- 学客圈 -->
                   <div class="circle" v-else-if="changeColor == 1 && circledata && acts">
-                      <div class="top" v-if="grooms">
+                      <!-- <div class="top" v-if="grooms">
                           <em>官推</em>
                           {{grooms.title}}>>
-                      </div>
+                      </div> -->
                       <div class="actBox" v-if="!acts.status">
                           <div class="act">
                               学令牌活动
@@ -313,7 +313,7 @@
           el:'#wrap',
           data:{
               data:[],
-              grooms:'',
+              // grooms:'',
               acts:[],
               circledata:[],
               loadata:true, // 设置一个开关来避免重负请求数据
@@ -356,7 +356,7 @@
                   vm.changeColor = index;
                   if (index == 1) {
 
-                     vm.getgroom();
+                    //  vm.getgroom();
                      vm.getActs();
                      vm.getCircle();
 
