@@ -31,6 +31,8 @@
       .cir-title .cir-info{margin-left: 12px; -webkit-box-flex: 1;-webkit-flex: 1;flex: 1;}
       .cir-name{font-size: 15px; line-height: 20px;}
       .cir-time{font-size: 12px; line-height: 20px; color: #ced1d5;}
+      .cir-rt .down-arrow{display: inline-block; width: 16px; height: 10px; background: url(../image/down-arrow.png) no-repeat center;
+      background-size: contain; margin-left: 10px;}
       .cir-content{line-height: 25px; font-size: 17px; margin-bottom: 7px;}
       .bg-love{background-color: #e9eaf1; border-radius: 4px; padding: 4px; overflow: hidden; max-width: calc(100% - 8px);}
       .love-img{width: 54px; height: 54px; overflow: hidden; margin-right: 10px;}
@@ -62,8 +64,8 @@
           </header>
           <div id="main">
               <!-- 通知 -->
-              <ul class="notice-list" v-if="!data.status && changeColor == 0">
-                  <li tapmode @click="goDetail(v.ccl_id)" v-for="v in data">
+              <ul class="notice-list" v-if="!data.status && changeColor == 0 && data != ''">
+                  <li v-for="(v,index) in data">
                     <div class="cir-title">
                         <img class="mimg" :srcs="v.headimgurl+'?x-oss-process=image/resize,m_fill,h_36,w_36'" alt="人头像" v-if="v.headimgurl">
                         <img src="../image/pic.png" alt="人头像" v-else>
@@ -71,8 +73,11 @@
                             <p class="cir-name">{{v.nickname}}</p>
                             <p class="cir-time">{{v.time | getInfoDate}}</p>
                         </div>
+                        <div class="cir-rt">
+                            <span class="down-arrow" tapmode @click="showDel(v,index)"></span>
+                        </div>
                     </div>
-                    <div v-if="v.status == '1'">
+                    <div tapmode @click="goDetail(v.ccl_id)" v-if="v.status == '1'">
                         <div class="cir-content">
                             为您的动态点了一个赞
                         </div>
@@ -85,13 +90,13 @@
                             </div>
                         </div>
                     </div>
-                    <div v-else-if="v.ccl_rew">
+                    <div tapmode @click="goDetail(v.ccl_id)" v-else-if="v.ccl_rew">
                         <div class="msg-reply">
                           <span>回复您的动态:</span>
                           {{v.ccl_rew}}
                         </div>
                     </div>
-                    <div v-else>
+                    <div tapmode @click="goDetail(v.ccl_id)" v-else>
                         <div class="msg-reply">
                           <span>回复您的评论:</span>
                           {{v.ccl_comment}}
@@ -107,7 +112,7 @@
                         <div class="press">
                             <div class="msg-pic">
                                 <img class="mimg" :srcs="v.headimgurl+'?x-oss-process=image/resize,m_fill,h_44,w_44'" alt="人头像" v-if="v.headimgurl">
-                                <img src="../image/pic.png" alt="人头像">
+                                <img src="../image/pic.png" alt="人头像" v-else>
                             </div>
                             <div class="msg-rt">
                                 <p class="line1 clearfix">
@@ -154,6 +159,7 @@
               sync: true,
               key: 'id'
           });
+
           if (chat == false) {
               vm.switchTab(0);
           }
@@ -189,7 +195,8 @@
               ],
               changeColor:0,
               msgid:'',
-              msgindex:''
+              msgindex:'',
+              islove:''
           },
           filters: {
               getInfoDate: function getInfoDate(time) {
@@ -210,6 +217,7 @@
 
               },
               goDetail:function goDetail(id){
+
                   openWin('circleDetail2','./circle/circleDetail2.html',{cirid:id});
               },
               goChat:function goChat(item){
@@ -283,6 +291,15 @@
                   timeOutEvent = 0;
                   //执行长按要执行的内容，如弹出菜单
                   $api.css($api.dom('.Popup'), 'display:block');
+              },
+
+              showDel:function showDel(item,index){
+                  vm.msgid = item.id;
+                  vm.msgindex = index;
+                  if (item.status) {
+                      vm.islove = item.status;
+                  }
+                  $api.css($api.dom('.Popup'), 'display:block');
               }
           },
           mounted:function mounted(){
@@ -320,23 +337,36 @@
         });
       }
 
-      // 用户删除对话
       function Delete(){
           showProgress('努力加载中','请稍后···');
+          if (vm.changeColor == 1) {// 用户删除对话
+              var type = '10083';
+          }else {//删除首页通知
+              var type = '100103';
+              if (vm.islove) {
+                  var form = '1';
+              }else {
+                  var form = '0';
+              }
+
+          }
+
           api.ajax({
               url: serverurl,
               method: 'get',
               data: {
                   values: {
-                      type: '10083',
+                      type: type,
                       token: token,
                       uid:id,
-                      id:vm.msgid
+                      id:vm.msgid,
+                      form:form
                   },
               }
           },function(ret, err){
               api.hideProgress();
 
+              $api.css($api.dom('.Popup'), 'display:none');
               if (ret) {
 
                   if (ret.status == '5') {
@@ -344,12 +374,12 @@
                   }else if (ret.status == '0') {
                       msg('删除失败');
                   }else {
-                      $api.css($api.dom('.Popup'), 'display:none');
+
                       msg('删除成功');
                       // vm.getNews('10080');
                       var newdata = vm.data.del(vm.msgindex);
                       vm.data = newdata;
-                      
+
                   }
               } else {
 
