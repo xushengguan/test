@@ -121,7 +121,7 @@
 		<header>
 				<em tapmode onclick="cancel()"></em>
 				确认订单
-				<span></span>
+				<span onclick="meiQia()"></span>
 		</header>
 		<div id="main">
 			  <!-- 无收获地址 -->
@@ -472,7 +472,7 @@
 				        },
 				    }
 				},function(ret, err){
-
+					
 				    if (ret) {
 	              if (ret.status == '5') {
 										ExitLogin();

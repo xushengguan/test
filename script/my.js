@@ -235,3 +235,9 @@ function imageCache(el){
          }
     }
 }
+
+// 打开客服界面
+function meiQia(){
+    var mq = api.require('meiQia');
+    mq.show();//弹出美洽聊天界面
+}
