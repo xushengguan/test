@@ -61,7 +61,7 @@
               key: 'id'
           });
           var braid = api.pageParam.braid;
-          console.log(braid);
+
           if (braid) {
               $api.html($api.dom('.ID'), '手环ID:'+braid);
           }else {
@@ -203,10 +203,7 @@
               var braid = api.pageParam.braceletMsg.id;
               var usb_id = api.pageParam.braceletMsg.usb_id;
           }
-          console.log(id);
-          console.log(name);
-          console.log(usb_id);
-          console.log(braid);
+
           api.ajax({
               url: serverurl,
               method: 'get',
@@ -224,8 +221,7 @@
               }
           },function(ret, err){
               api.hideProgress();
-              console.log(JSON.stringify(ret));
-              console.log(JSON.stringify(err));
+            
               if (ret) {
 
                   if (ret.status == '5') {
