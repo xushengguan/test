@@ -43,7 +43,12 @@ input,button,textarea {
 	-webkit-appearance: none ;
 	border-radius: 0;
 	/*解决ios端按钮和输入框自带圆角的问题*/
+	/*解决ios重影边框问题*/
+	-webkit-touch-callout: text;
+   -webkit-user-select: text;
+	 /*解决ios重影边框问题*/
 }
+
 span{
 	display:inline-block;
 }
@@ -128,7 +133,6 @@ td,th {
 
 
 /*单行文本溢出显示省略号*/
-
 .single {
     overflow: hidden;
     text-overflow: ellipsis;
